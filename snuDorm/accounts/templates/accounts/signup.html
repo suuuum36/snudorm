@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="info">
+        <div>회원가입</div>
+        {{ error }}<br>
+
+        <form method="POST" action="{% url 'signup' %}">
+            {% csrf_token %}
+            <div>   
+                사용자 이름</br>
+                <input name="username" type="text" required>
+            </div></br>
+            <div>
+                비밀번호</br>
+                <input name="password1" type="password" id="info2" required>
+            </div></br>
+            <div>
+                비밀번호 확인</br>
+                <input name="password2" type="password" id="info3" required>
+            </div></br>
+            <div>
+                학교</br>
+                <input name="college" type="text" id="info4" required>
+            </div></br>
+            <div>
+                전공</br>
+                <input name="major" type="text" id="info5" required>
+            </div></br>
+            <div>
+                이메일</br>
+                <input name="email" type="text" id="info6" required>
+            </div></br>
+            <div>
+                생일</br>
+                <input name="birthday" type="date" 
+                    id="info7"placeholder="YYYY-MM-DD" pattern="\d{4}-\d{1,2}-\d{1,2}" required>
+            </div></br>
+            <div>
+                주소</br>
+                <input name="address" type="text" id="info8" required>
+            </div></br>
+            <button type="submit">Sign Up</button>
+        </form>
+    </div>
+{% endblock content %}
