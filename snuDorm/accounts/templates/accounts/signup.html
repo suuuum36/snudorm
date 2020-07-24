@@ -3,7 +3,6 @@
     <div class="info">
         <div>회원가입</div>
         {{ error }}<br>
-
         <form method="POST" action="{% url 'signup' %}">
             {% csrf_token %}
             <div>   

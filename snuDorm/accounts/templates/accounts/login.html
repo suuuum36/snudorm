@@ -2,19 +2,17 @@
 {% block content %}
     <div class="info" style="margin:50px">
         <div>
-            <span>
-                <span>로그인</span>
-            </span>
+            <span>로그인</span>
         </div>
         <form method="post" action="{% url 'login' %}">
             {% csrf_token %}
             <div>
+                 <label for="username">사용자 이름</label>
                 <input name="username" type="text" id="username" required>
-                <label for="username">사용자 이름</label>
             </div></br>
             <div>
+                <label for="password">비밀번호</label>
                 <input name="password" type="password" id="password" required>
-                <label  for="password">비밀번호</label>
             </div></br>
             <button type="submit">로그인</button>
         </form>

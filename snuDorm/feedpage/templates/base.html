@@ -23,7 +23,7 @@
                 <!-- TODO: logo image needed -->
                 <a href="/main/" style="justify-content: center;"> SNU DORM </a>
                 <div class="search" style="text-align: center;">
-                    <form action="/main/search" method="get"> 
+                    <form action="/main/" method="get"> 
                         <input type="text" id="search_box">
                         <button type="submit" id="search_button">
                             <i class="glyphicon glyphicon-search"></i>
@@ -51,20 +51,20 @@
             <div style="padding: 10px">
                 <ul class="nav nav-tabs">
                     <li role="presentation" class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" type="button" aria-expanded="false">
-                        민원 게시판 <span class="caret"></span> </a>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" type="button" aria-expanded="false">
-                        생필품 게시판 <span class="caret"></span>
-                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="{% url 'minwon' %}"
+                            type="button" aria-expanded="false"> 민원 게시판 <span class="caret"></span> </a>
                         <ul class="dropdown-menu" role="menu">
                         </ul>
                     </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                        자유 게시판 <span class="caret"></span>
-                        </a>
+                    <li role="presentation" class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="{% url 'market' %}" 
+                            type="button" aria-expanded="false"> 생필품 게시판 <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                        </ul>
+                    </li>
+                    <li role="presentation" class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="{% url 'freeboard' %}"
+                            role="button" aria-expanded="false"> 자유 게시판 <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                         </ul>
                     </li>
