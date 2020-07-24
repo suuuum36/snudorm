@@ -3,45 +3,50 @@
     <div class="contents" style="margin: 5%"> 
         <!-- 민원 게시판 -->
         <div class="panel panel-primary">
-            <div class="panel-body">
-                Panel content
+            <div class="panel-body">민원게시판</div>
+            <div class="panel-footer">
+                <div class="panel panel-info">
+                    <div class="panel-body">전체 소리함</div>
+                    <div class="panel-footer">게시글 ~~~</div>
+                </div>
+                <div class="panel panel-info">
+                    <div class="panel-body">동 게시판</div>
+                    <div class="panel-footer">게시글 ~~</div>
+                </div>
             </div>
-            <div class="panel-footer">Panel footer</div>
         </div>
         <!-- 생필품 게시판 -->
         <div class="panel panel-success">
-            <div class="panel-body">
-                Panel content
-            </div>
+            <div class="panel-body">생필품 게시판</div>
             <div class="panel-footer">
-            <div>
-                <div> 
-                    <div class="panel panel-info">
-                    <div class="panel-body">
-                            Panel content
+                <div style="display: flex;">
+                    <div class="panel panel-warning">
+                        <div class="panel-body">
+                            <a href="{% url 'cobuy' %}"> 공구 게시판</a> 
+                        </div>
+                        <div class="panel-footer">게시글 ~~~</div>
+                    </div> 
+                    <div class="panel panel-warning">
+                        <div class="panel-body">
+                            <a href="{% url 'share' %}">대여 게시판</a>
+                        </div>
+                        <div class="panel-footer">게시글 ~~ </div>
                     </div>
-                    <div class="panel-footer">Panel footer</div>
+                </div> 
+                <div style="display: flex;">
+                    <div class="panel panel-danger">
+                        <div class="panel-body">
+                            <a href="{% url 'store' %}">보관 게시판</a> 
+                        </div>
+                        <div class="panel-footer">게시글 ~~</div>
+                    </div>  
+                    <div class="panel panel-danger">
+                        <div class="panel-body">
+                            <a href="{% url 'deal' %}">거래 게시판</a> 
+                        </div>
+                        <div class="panel-footer">게시글 ~~ </div>
+                    </div>  
                 </div>
-                <div class="panel panel-warning">
-                    <div class="panel-body">
-                        Panel content
-                    </div>
-                    <div class="panel-footer">Panel footer</div>
-                </div>
-            </div>
-            <div class="panel panel-danger">
-                <div class="panel-body">
-                    Panel content
-                </div>
-                <div class="panel-footer">Panel footer</div>
-            </div>   
-            <div class="panel panel-danger">
-                <div class="panel-body">
-                    Panel content
-                </div>
-                <div class="panel-footer">Panel footer</div>
-            </div>   
-            </div>
             </div>
         </div>
     </div> 

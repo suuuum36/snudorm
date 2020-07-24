@@ -13,7 +13,6 @@ from multiselectfield import MultiSelectField
     3) 보관:
     4) 거래: 
 """
-# 생필품 게시판-(거래 게시판) 게시한 사람 option 선택
 
 class Feed(models.Model): 
     title = models.CharField(max_length=256)
@@ -25,12 +24,6 @@ class Feed(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(blank=True, null=True)   
 
-    # market part
-    product = models.CharField(max_length=256)
-    quantity = models.IntegerField()
-    price = models.IntegerField()
-    explanation = models.TextField() 
-
     def update_date(self): 
         self.updated_at = timezone.now()
         self.save()
@@ -38,26 +31,56 @@ class Feed(models.Model):
     def __str__(self):
         return self.title
 
-class Cobuy(Feed):
-    duedate = models.DateTimeField(blank=True, null=True)
-    page_link = models.CharField(max_length=256)
+class Cobuy(models.Model):
+    author = models.ForeignKey(User, null=True, on_delete= models.CASCADE)        
+
+    product = models.CharField(max_length=256)
+    quantity = models.IntegerField(blank=True)
+    price = models.IntegerField(blank=True)
+    explanation = models.TextField(blank=True) 
+
+    duedate = models.DateTimeField(blank=True)
+    pagelink = models.CharField(max_length=256)
     contact = models.CharField(max_length=256)
     state = models.CharField(max_length=256)  # 진행중, 마감, etc
 
-class Share(Feed): 
+   
+class Share(models.Model): 
+    author = models.ForeignKey(User, null=True, on_delete= models.CASCADE)        
+
+    product = models.CharField(max_length=256)
+    quantity = models.IntegerField(blank=True)
+    price = models.IntegerField(blank=True)
+    explanation = models.TextField(blank=True) 
+
     start_at = models.DateTimeField(default=timezone.now) 
     end_at = models.DateTimeField(blank=True, null=True)
 
-class Store(Feed):
+class Store(models.Model):
+    author = models.ForeignKey(User, null=True, on_delete= models.CASCADE)        
+
+    product = models.CharField(max_length=256)
+    quantity = models.IntegerField(blank=True)
+    price = models.IntegerField(blank=True)
+    explanation = models.TextField(blank=True) 
+
     start_at = models.DateTimeField(default=timezone.now)
     end_at = models.DateTimeField(blank=True, null=True)
 
-class Deal(Feed):
+class Deal(models.Model):
+    author = models.ForeignKey(User, null=True, on_delete= models.CASCADE)        
+
+    product = models.CharField(max_length=256)
+    quantity = models.IntegerField(blank=True)
+    price = models.IntegerField(blank=True)
+    explanation = models.TextField(blank=True) 
+
+    # 생필품 게시판-(거래 게시판) 게시한 사람 option 선택
     ROLE_OPTION = (('seller', '판매자'), ('buyer', '구매자'))
     author_role = MultiSelectField(choices=ROLE_OPTION, null=True, blank=True)
     """ 
         template에서 커스터마이징 시에는 {{ object.author_role }} 등으로 사용 
-    """
+   """
 
 class FeedComment(models.Model):
     content = models.TextField()
@@ -66,21 +89,27 @@ class FeedComment(models.Model):
     feed = models.ForeignKey(Feed, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)
 
-class Info(models.Model):
+class FeedLike(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now) 
-
-class FeedLike(Info):
     feed = models.ForeignKey(Feed, on_delete=models.CASCADE)
 
-class FeedUnlike(Info):
+class FeedUnlike(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(default=timezone.now) 
     feed = models.ForeignKey(Feed, on_delete=models.CASCADE)
 
-class CommentLike(Info):
+class CommentLike(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(default=timezone.now) 
     comment = models.ForeignKey(FeedComment, on_delete=models.CASCADE)
 
-class CommentUnlike(Info):
+class CommentUnlike(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(default=timezone.now) 
     comment = models.ForeignKey(FeedComment, on_delete=models.CASCADE)
 
-class CommentReply(Info):
+class CommentReply(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(default=timezone.now) 
     pre_comment = models.ForeignKey(FeedComment, on_delete=models.CASCADE)
