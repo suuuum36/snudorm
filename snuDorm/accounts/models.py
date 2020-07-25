@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+
 # from faker import Faker
 from django.contrib.auth.models import User   
 from django.db.models.signals import post_save  
@@ -45,5 +46,4 @@ class Profile(models.Model):
             address = myfake.address()
 
             Profile.objects.filter(user=user).update(college=college,\
-                major=major, email=email, birthday=birthday, address=address)
- 
+                major=major, email=email, birthday=birthday, address=address

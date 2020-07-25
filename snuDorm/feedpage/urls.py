@@ -12,7 +12,11 @@ urlpatterns = [
     path('<int:id>/new/', views.new, name='new'),
     path('<int:id>/show/', views.show, name='show'),
 
+    path('int:id')
+
     path('minwon/', views.minwon, name='minwon'),
+    path('minwon/', views.minwon, name='minwon'),
+
     path('market/', views.market, name='market'),
     path('freeboard/', views.freeboard, name='freeboard'),
 ]
