@@ -3,21 +3,25 @@
 <div class="info">
     {{ error }}<br>
     {% if user.is_authenticated %}
-        {% if board_id is 1 %}
+        {% if name == "cobuy" %}
             <div> 공구게시판 글 작성하기</div>
-            <form method="POST" action="{% url 'new' 1 %}">
+            <form method="POST" action="{% url 'new' "life" "cobuy" %}">
                 {% csrf_token %}
+                <div>   
+                    제목 </br>
+                    <input name="title" type="text" required>
+                </div></br>
                 <div>   
                     품목 </br>
                     <input name="product" type="text" required>
                 </div></br>
                 <div>
-                    개수</br>
-                    <input name="quantity" type="text"required>
+                    가격</br>
+                    <input name="price" type="text"required>
                 </div></br>
                 <div>
                     제품링크</br>
-                    <input name="pagelink" type="text" required>
+                    <input name="url" type="text" required>
                 </div></br>
                 <div>
                     마감기한</br>
@@ -25,8 +29,39 @@
                         pattern="\d{4}-\d{1,2}-\d{1,2}" required>
                 </div></br>
                 <div>
+                    연락처</br>
+                    <input name="contact" type="text" required>
+                </div></br>
+                <div>
+                    기타</br>
+                    <input name="content" type="text"required>
+                </div></br>
+                <button type="submit">게시글 작성하기 </button>
+            </form>
+        {% elif name == "rent" %}
+            <div> 대여게시판 글 작성하기</div>
+            <form method="POST" action="{% url 'new' "life" "rent" %}">
+                {% csrf_token %}
+                <div>   
+                    제목 </br>
+                    <input name="title" type="text" required>
+                </div></br>
+                <div>   
+                    품목 </br>
+                    <input name="product" type="text" required>
+                </div></br>
+                <div>
                     가격</br>
-                    <input name="price" type="text" required>
+                    <input name="price" type="text"required>
+                </div></br>
+                <div>
+                    제품링크</br>
+                    <input name="url" type="text" required>
+                </div></br>
+                <div>
+                    마감기한</br>
+                    <input name="duedate" type="text" placeholder="YYYY-MM-DD" 
+                        pattern="\d{4}-\d{1,2}-\d{1,2}" required>
                 </div></br>
                 <div>
                     연락처</br>
@@ -34,83 +69,77 @@
                 </div></br>
                 <div>
                     기타</br>
-                    <input name="explanation" type="text"required>
+                    <input name="content" type="text"required>
                 </div></br>
                 <button type="submit">게시글 작성하기 </button>
             </form>
-        {% elif board_id == 2 %}
-            <div> 대여게시판 글 작성하기</div>
-            <form method="POST" action="{% url 'new' 2 %}">
-                {% csrf_token %}
-                <div>   
-                    품목 </br>
-                    <input name="product" type="text" required>
-                </div></br>
-                <div>
-                    보관 시작기간</br>
-                    <input name="start_at" type="text" required></br> 
-                    보관 마감기간</br> 
-                    <input name="end_at" type="text" required>
-                </div></br>
-                <div>
-                    사례금</br>
-                    <input name="price" type="text" required>
-                </div></br>
-                <div>
-                    기타</br>
-                    <input name="explanation" type="text"required>
-                </div></br>
-                <button type="submit">게시글 작성하기 </button>
-            </form>
-        {% elif board_id == 3 %}
+        {% elif name == "keep" %}
             <div> 보관 게시판 글 작성하기</div>
-            <form method="POST" action="{% url 'new' 3 %}">
+            <form method="POST" action="{% url 'new' "life" "keep" %}">
                 {% csrf_token %}
+                <div>   
+                    제목 </br>
+                    <input name="title" type="text" required>
+                </div></br>
                 <div>   
                     품목 </br>
                     <input name="product" type="text" required>
                 </div></br>
                 <div>
-                    보관 시작기간</br>
-                    <input name="start_at" type="text" required></br> 
-                    보관 마감기간</br> 
-                    <input name="end_at" type="text" required>
+                    가격</br>
+                    <input name="price" type="text"required>
                 </div></br>
                 <div>
-                    사례금</br>
-                    <input name="price" type="text" required>
+                    제품링크</br>
+                    <input name="url" type="text" required>
+                </div></br>
+                <div>
+                    마감기한</br>
+                    <input name="duedate" type="text" placeholder="YYYY-MM-DD" 
+                        pattern="\d{4}-\d{1,2}-\d{1,2}" required>
+                </div></br>
+                <div>
+                    연락처</br>
+                    <input name="contact" type="text" required>
                 </div></br>
                 <div>
                     기타</br>
-                    <input name="explanation" type="text"required>
+                    <input name="content" type="text"required>
                 </div></br>
                 <button type="submit">게시글 작성하기 </button>
             </form>
-        {% elif board_id == 4 %}
+        {% elif name == "resell" %}
             <div> 거래 게시판 글 작성하기</div>
-            <form method="POST" action="{% url 'new' 4 %}">
+            <form method="POST" action="{% url 'new' "life" "resell" %}">
                 {% csrf_token %}
+                <div>   
+                    제목 </br>
+                    <input name="title" type="text" required>
+                </div></br>
                 <div>   
                     품목 </br>
                     <input name="product" type="text" required>
                 </div></br>
-                <div>   
-                    수량 </br>
-                    <input name="quantity" type="text" required>
+                <div>
+                    가격</br>
+                    <input name="price" type="text"required>
                 </div></br>
                 <div>
-                    가격 </br> 
-                    <input name="price" type="text" required>
+                    제품링크</br>
+                    <input name="url" type="text" required>
                 </div></br>
                 <div>
-                    <select name="role" required>
-                        <option value="판매자">판매자</option> 
-                        <option value="구매자">구매자</option> 
-                    </select> 
+                    마감기한</br>
+                    <input name="duedate" type="text" placeholder="YYYY-MM-DD" 
+                        pattern="\d{4}-\d{1,2}-\d{1,2}" required>
+                </div></br>
+                <div>
+                    연락처</br>
+                    <input name="contact" type="text" required>
                 </div></br>
                 <div>
                     기타</br>
-                    <input name="explanation" type="text"required>
+                    <input name="content" type="text"required>
                 </div></br>
                 <button type="submit">게시글 작성하기 </button>
             </form>
