@@ -197,3 +197,28 @@ def minwon_gong_feedlike(request, fid):
         FeedLike.objects.create(user_id=request.user.id, feed_id=feed.id)
 
     return redirect('minwon_gong_show', feed.id)
+
+# 민원게시판 게시글 수정
+
+
+def minwon_gong_feed_edit(request, fid):
+    feed = Feed.objects.get(id=fid)
+
+    if request.method == 'GET':
+        return render(request, 'feedpage/minwon_gong_feed_edit.html', {'feed': feed})
+
+    elif request.method == 'POST':
+        new_feed = Feed.objects.get(id=fid)
+        new_feed.title = request.POST['title']
+        new_feed.content = request.POST['content']
+        new_feed.photo = request.POST['photo']
+        new_feed.save()
+
+    return redirect('minwon_gong_show', feed.id)
+
+
+def minwon_gong_feed_delete(request, fid):
+    feed = Feed.objects.get(id=fid)
+    feed.delete()
+
+    return redirect('minwon')

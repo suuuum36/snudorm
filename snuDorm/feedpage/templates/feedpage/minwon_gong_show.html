@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
+{% if feed.author == request.user %}
 <div style="background-color: coral; margin: 10px; text-align: right;">
-    <a href="" style="margin-right: 10px;">수정하기</a>
-    <a href="" style="margin-right: 10px">삭제하기</a>
+    <a href="{% url 'minwon_gong_feed_edit' feed.id %}" style="margin-right: 10px;">수정하기</a>
+    <a href="{% url 'minwon_gong_feed_delete' feed.id %}" style="margin-right: 10px">삭제하기</a>
 </div>
+{% endif %}
 <div style="background-color: bisque; margin:10px">
-    작성자 : {{ request.user }}</br>
-    제목 : {{ feed.title }}</br>
-    내용 : {{ feed.content }}</br>
-    그림 : {{ feed.photo }}</br>
+    작성자 : {{ feed.author }} </br>
+    제목 : {{ feed.title }} </br>
+    내용 : {{ feed.content }} </br>
+    그림 : {{ feed.photo }} </br>
 </div>
 <div style="background-color: burlywood; margin: 10px; text-align: center;">
     {{ feed.like_users.count }} <a href="{% url 'minwon_gong_feedlike' feed.id %}"> 추천</a>
