@@ -98,9 +98,11 @@ class FeedComment(models.Model):
 
 
 class FeedLike(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)
-    feed = models.ForeignKey(Feed, on_delete=models.CASCADE)
+    feed = models.ForeignKey(
+        Feed, on_delete=models.CASCADE, related_name='feedlike') # 역참조를 위한 related_name 지정
 
 
 class FeedUnlike(models.Model):

@@ -16,16 +16,6 @@ def index(request):
         return redirect('/feeds')
 
 
-def minwon(request):
-    if request.method == 'GET':
-        feeds = Feed.objects.all()
-        return render(request, 'feedpage/minwon.html', {'feeds': feeds})
-
-    elif request.method == 'POST':
-
-        return redirect('/feeds/minwon')
-
-
 def market(request):
     if request.method == 'GET':
 
@@ -163,9 +153,21 @@ def show(request):
     redirect('/feeds')
 
 
+# 민원 게시판 List page 보여주기
+def minwon(request):
+    if request.method == 'GET':
+        feeds = Feed.objects.all()
+        return render(request, 'feedpage/minwon.html', {'feeds': feeds})
+
+    elif request.method == 'POST':
+
+        return redirect('/feeds/minwon')
+
+
+# 민원게시판 게시글 작성
 def minwon_gong_new(request):
     if request.method == 'GET':
-        return render(request, 'feedpage/minwon_new.html')
+        return render(request, 'feedpage/minwon_gong_new.html')
 
     elif request.method == 'POST':
         title = request.POST['title']
@@ -175,3 +177,23 @@ def minwon_gong_new(request):
         Feed.objects.create(title=title, content=content,
                             photo=photo, author=request.user)
         return redirect('/feeds/minwon/')
+
+
+# 민원게시판 게시글 보기
+def minwon_gong_show(request, fid):
+    feed = Feed.objects.get(id=fid)
+
+    return render(request, 'feedpage/minwon_gong_show.html', {'feed': feed})
+
+
+# 민원게시판 게시글 좋아요
+def minwon_gong_feedlike(request, fid):
+    feed = Feed.objects.get(id=fid)
+    user_like = feed.feedlike.filter(user_id=request.user.id)
+
+    if user_like.count() > 0:
+        feed.feedlike.get(user_id=request.user.id).delete()
+    else:
+        FeedLike.objects.create(user_id=request.user.id, feed_id=feed.id)
+
+    return redirect('minwon_gong_show', feed.id)
