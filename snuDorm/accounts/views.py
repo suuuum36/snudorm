@@ -11,17 +11,11 @@ def signup(request):
         username = request.POST["username"]
         email = request.POST["email"]
         password = request.POST["password1"]
-        college = request.POST["college"]
-        major = request.POST["major"]
-        birthday = request.POST["birthday"]
-        address = request.POST["address"]
+        building = request.POST["building"]
 
         user = User.objects.create_user(username=username, email=email, password=password)
 
-        user.profile.college = college
-        user.profile.major = major
-        user.profile.birthday = birthday
-        user.profile.address = address
+        user.profile.building = building
         user.save()
 
         login_user = django_authenticate(username=username, password=password)
@@ -53,9 +47,8 @@ def logout(request):
 def user_edit(request, id):
     if request.method == 'POST':
         user = User.objects.get(id = id)
-        Profile.objects.filter(user = user).update(college = request.POST['college'], \
-                major = request.POST['major'], email = request.POST['email'], \
-                birthday = request.POST['birthday'], address = request.POST['address'])
+        Profile.objects.filter(user = user).update( email = request.POST['email'], \
+           nickname = requet.POST['nickname'], building = request.POST['building'])
         return redirect('/feeds')
 
     elif request.method == 'GET':

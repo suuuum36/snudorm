@@ -21,9 +21,9 @@
         <header> 
             <div class="main_header" style="display: flex; justify-content:space-around;"> 
                 <!-- TODO: logo image needed -->
-                <a href="/main/" style="justify-content: center;"> SNU DORM </a>
+                <a href="{% url 'index' %}" style="justify-content: center;"> SNU DORM </a>
                 <div class="search" style="text-align: center;">
-                    <form action="/main/" method="get"> 
+                    <form action="{% url 'index' %}" method="get"> 
                         <input type="text" id="search_box">
                         <button type="submit" id="search_button">
                             <i class="glyphicon glyphicon-search"></i>

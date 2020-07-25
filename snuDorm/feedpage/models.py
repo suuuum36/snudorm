@@ -48,9 +48,9 @@ class CoBuy(Feed):
 class Rent(Feed): 
     product = models.CharField(max_length=256)
     price = models.IntegerField(blank=True)
-    status = models.DateTimeField(bank=True, null=True)
+    status = models.CharField(max_length=256)
     contact = models.CharField(max_length=256)
-    deposit = models.CharFiedl(max_length=256)
+    deposit = models.CharField(max_length=256)
     start_date = models.DateTimeField(default=timezone.now) 
     end_date = models.DateTimeField(blank=True, null=True)
 
@@ -58,7 +58,7 @@ class Keep(Feed):
     product = models.CharField(max_length=256)
     start_date = models.DateTimeField(default=timezone.now)
     end_date = models.DateTimeField(blank=True, null=True)
-    status = models.DateTimeField(bank=True, null=True)
+    status = models.CharField(max_length=256)
     contact = models.CharField(max_length=256)
 
     # template에서 협의 가능 써주기 
@@ -85,20 +85,20 @@ class FeedComment(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     noname = models.BooleanField(default=False)
 
-class FeedLike(Info):
+class FeedLike(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now) 
     feed = models.ForeignKey(Feed, on_delete=models.CASCADE)
 
-class CommentLike(Info):
+class CommentLike(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now) 
     comment = models.ForeignKey(FeedComment, on_delete=models.CASCADE)
 
-class Recomment(Info):
+class Recomment(models.Model):
     content = models.TextField()
     feed = models.ForeignKey(Feed, on_delete=models.CASCADE)
-    author = models.ForeignKey(User, null=True, on_delete=models.CASCADE)    created_at = models.DateTimeField(default=timezone.now) 
+    author = models.ForeignKey(User, null=True, on_delete=models.CASCADE)  
     comment = models.ForeignKey(FeedComment, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)
     noname = models.BooleanField(default=False)
