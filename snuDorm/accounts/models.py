@@ -23,6 +23,7 @@ class Profile(models.Model):
         return f'id={self.id}, user_id={self.user.id}, nickname={self.nickname}, \
                 email={self.email}, building={self.building}' 
 
+
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):  
         if created:
