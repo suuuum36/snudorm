@@ -2,14 +2,15 @@
 {% block content %}
 
 <div class="info">
-    나는 민원 게시판이지롱
+    나는 민원 게시판이지롱</br>
     {% if user.is_authenticated %}
     <a href="{% url 'minwon_gong_new' %}" type="button" style="background-color: yellow ;"> 새로 만들기 </a>
     {% for feed in feeds %}
     <div style="background-color: beige; margin-top: 10px;">
-        제품: {{ feed.title }} </br>
-        가격: {{ feed.content }} </br>
-        글쓴이: {{ feed.photo }} </br>
+        제목: {{ feed.title }} </br>
+        내용: {{ feed.content }} </br>
+        그림: {{ feed.photo }} </br>
+        작성자: {{ feed.author }}
         <a href=""></a>
     </div>
     <div style="background-color: antiquewhite;"><a href="{% url 'minwon_gong_show' feed.id %}">자세히
