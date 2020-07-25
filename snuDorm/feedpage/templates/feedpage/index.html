@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div class="contents" style="margin: 5%"> 
+    <div style="margin: 5%"> 
         <!-- 민원 게시판 -->
         <div class="panel panel-primary">
             <div class="panel-body">민원게시판</div>
@@ -22,13 +22,13 @@
                 <div style="display: flex;">
                     <div class="panel panel-warning">
                         <div class="panel-body">
-                            <a href="{% url 'cobuy' %}"> 공구 게시판</a> 
+                            <a href="{% url 'show' 1 %}"> 공구 게시판</a> 
                         </div>
                         <div class="panel-footer">게시글 ~~~</div>
                     </div> 
                     <div class="panel panel-warning">
                         <div class="panel-body">
-                            <a href="{% url 'share' %}">대여 게시판</a>
+                            <a href="{% url 'show' 2 %}">대여 게시판</a>
                         </div>
                         <div class="panel-footer">게시글 ~~ </div>
                     </div>
@@ -36,13 +36,13 @@
                 <div style="display: flex;">
                     <div class="panel panel-danger">
                         <div class="panel-body">
-                            <a href="{% url 'store' %}">보관 게시판</a> 
+                            <a href="{% url 'show' 3 %}">보관 게시판</a> 
                         </div>
                         <div class="panel-footer">게시글 ~~</div>
                     </div>  
                     <div class="panel panel-danger">
                         <div class="panel-body">
-                            <a href="{% url 'deal' %}">거래 게시판</a> 
+                            <a href="{% url 'show' 4 %}">거래 게시판</a> 
                         </div>
                         <div class="panel-footer">게시글 ~~ </div>
                     </div>  
