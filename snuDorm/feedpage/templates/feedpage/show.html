@@ -8,10 +8,34 @@
             <div> 
                 제품: {{ feed.product }} </br>
                 가격: {{ feed.price }} </br>
-                글쓴이: {{ feed.author }} </br> 
-            </div> 
+                글쓴이: {{ feed.author }} </br>
+            </div>
+            {% for c in feed.feedcomment_set.all %}
+                <p>{{c.author.username}}: {{ c.content }}</p>
+                {% if request.user == c.author %}
+                <form action="{% url 'commentdelete' 'life' 'cobuy' feed.id c.id %}" method="POST">
+                    {% csrf_token %}
+                    <button>댓글 삭제</button>
+                </form>
+                {% endif %}
+                {% for d in c.recomment_set.all %}
+                <p>{{d.author.username}}: {{ d.content }}</p>
+                {% endfor %}
+                <form action="{% url 'recomment' 'life' 'cobuy' feed.id c.id %}" method="POST">
+                    {% csrf_token %}
+                    <input type="text" name="content" />
+                    <button type="submit">대댓글 달기</button>
+                </form> 
+            {% endfor %}
+            {% if user.is_authenticated %}
+                <form action="{% url 'newcomment' 'life' 'cobuy' feed.id %}" method="POST">
+                    {% csrf_token %}
+                    <input type="text" name="content" />
+                    <button type="submit">댓글 달기</button>
+                </form> 
+            {% endif %}
         {% endfor %}
-        <a href="{% url 'new' "life" "cobuy" %}" type="button"> 새로 만들기 </a>
+        <a href="{% url 'new' 'life' 'cobuy' %}" type="button"> 새로 만들기 </a>
     {% elif name == "rent" %}
         나는 대여 게시판 ~~~ 
         {% for feed in feeds %} 

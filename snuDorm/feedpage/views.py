@@ -109,6 +109,12 @@ def feedlike(request, board, name, fid):
 def newcomment(request, board, name, fid): 
     # if request.method == 'GET':
     #     return render(request, 'feedpage/newcomment.html')
+    if board == "life":
+        content = request.POST['content']
+        FeedComment.objects.create(feed_id=fid, content=content, author = request.user)
+        return redirect('show', board=board, name=name)
+    else:
+        return redirect('show', board=board, name=name)
     
     return redirect('/feeds')
 
@@ -119,7 +125,15 @@ def commentlike(request, board, name, fid):
     return redirect('/feeds')
 
 def commentdelete(request, board, name, fid, cid):
+    c = FeedComment.objects.get(id=cid)
+    c.delete()
     return redirect('/feeds')
 
 def recomment(request, board, name, fid, cid):
+    if board == "life":
+        content = request.POST['content']
+        ReComment.objects.create(comment_id=cid, content=content, author = request.user)
+        return redirect('show', board=board, name=name)
+    else:
+        return redirect('show', board=board, name=name)
     return redirect('/feeds')
