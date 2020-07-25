@@ -60,4 +60,3 @@ class Profile(models.Model):
 
             Profile.objects.filter(user=user).update(college=college,\
                 major=major, email=email, birthday=birthday, address=address)
- 
