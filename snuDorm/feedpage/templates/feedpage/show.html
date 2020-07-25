@@ -2,7 +2,7 @@
 {% block content %}
 
 <div class="info">
-    {% if board_id == 1 %}
+    {% if name == "cobuy" %}
         나는 공구 게시판~~~ ㅎㅅㅎ
         {% for feed in feeds %} 
             <div> 
@@ -11,8 +11,8 @@
                 글쓴이: {{ feed.author }} </br> 
             </div> 
         {% endfor %}
-        <a href="{% url 'new' 1 %}" type="button"> 새로 만들기 </a>
-    {% elif board_id == 2 %}
+        <a href="{% url 'new' "life" "cobuy" %}" type="button"> 새로 만들기 </a>
+    {% elif name == "rent" %}
         나는 대여 게시판 ~~~ 
         {% for feed in feeds %} 
             <div> 
@@ -21,8 +21,8 @@
                 글쓴이: {{ feed.author }} </br> 
             </div> 
         {% endfor %}
-        <a href="{% url 'new' 2 %}" type="button"> 새로 만들기 </a> 
-    {% elif board_id == 3 %}
+        <a href="{% url 'new' "life" "rent" %}" type="button"> 새로 만들기 </a> 
+    {% elif name == "keep" %}
         나는 보관 게시판 ~~~~
         {% for feed in feeds %} 
             <div> 
@@ -31,8 +31,8 @@
                 글쓴이: {{ feed.author }} </br> 
             </div> 
         {% endfor %}
-        <a href="{% url 'new' 3 %}" type="button"> 새로 만들기 </a> 
-    {% elif board_id == 4 %}
+        <a href="{% url 'new' "life" "keep" %}" type="button"> 새로 만들기 </a> 
+    {% elif name == "resell" %}
         나는 거래 게시판~~~ ㅎㅅㅎ
         {% for feed in feeds %} 
             <div> 
@@ -42,7 +42,7 @@
                 글쓴이: {{ feed.author }} </br>  
             </div> 
         {% endfor %}
-        <a href="{% url 'new' 4 %}" type="button"> 새로 만들기 </a> 
+        <a href="{% url 'new' "life" "resell" %}" type="button"> 새로 만들기 </a> 
     {% endif %}
 </div>
 {% endblock content %}

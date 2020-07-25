@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
-from .models import Feed, Cobuy, Share, Store, Deal, FeedComment, FeedLike, \
-                    FeedUnlike, CommentLike,CommentUnlike, CommentReply
+from .models import Feed, CoBuy, Rent, Keep, Resell, FeedComment, \
+                    FeedLike, CommentLike, Recomment 
 from django.contrib.auth.models import User
 
 # TODO: 
@@ -32,73 +32,94 @@ def freeboard(request):
     elif request.method == 'POST': 
         return redirect('/feeds/freeboard')
 
-def new(request, id):
-    # board_id에 따라서 freeboard, share, cobuy, Deal 등 게시판 종류 달라짐. 
-    """
-        공구(cobuy) - 1번 게시판 
-        대여(share) - 2번 게시판
-        보관(store) - 3번 게시판 
-        거래(Deal) - 4번 게시판 
-        etc
-    """
+def new(request, board, name):
+    # board_id에 따라서 CoBuy, Rent, Keep, Resell 등 게시판 종류 달라짐. 
     if request.method == 'GET':
-        return render(request, 'feedpage/new.html', {'board_id': id})
+        return render(request, 'feedpage/new.html', {'board': board, 'name': name})
     
     elif request.method == 'POST':
-        explanation = request.POST['explanation']
-        product = request.POST['product']
-        price = request.POST['price']
+        if board == "minwon":
 
-        if id == 1: # cobuy 게시판 
-            quantity = request.POST['quantity']
-            pagelink = request.POST['pagelink']
-            duedate = request.POST['duedate']
-            contact = request.POST['contact']
+            return redirect('show', board=board, name=name)
 
-            Cobuy.objects.create(product=product, quantity=quantity, pagelink=pagelink, duedate=duedate,\
-                                contact=contact, price=price, explanation=explanation, author=request.user)
-       
-        elif id == 2:
-            what = 1
+        elif board == "life":
+            title = request.POST['title']
+            content = request.POST['content']
+            product = request.POST['product']
 
-        elif id == 3:
-            what = 1
+            if name == "cobuy": # cobuy 게시판 
+                url = request.POST['url']
+                duedate = request.POST['duedate']
+                contact = request.POST['contact']
+                price = request.POST['price']
 
-        elif id == 4:
-            role = request.POST['role']
-            Deal.objects.create(product=product, price=price, author=request.user, \
-                                explanation=explanation, author_role=role)
+                CoBuy.objects.create(title=title, content=content, product=product, url=url, \
+                                    duedate=duedate, contact=contact, price=price, author=request.user)
         
-        return redirect('show', id=id)
-    return redirect('feeds/')
+            elif name == "rent":
+                what = 1
 
-def show(request, id):
+            elif name == "keep":
+                what = 1
+
+            elif name == "resell":
+                role = request.POST['role']
+                Resell.objects.create(title=title, content=content, product=product, url=url, \
+                                    duedate=duedate, contact=contact, price=price, author=request.user)
+            
+            return redirect('show', board=board, name=name)
+
+        else:
+            return redirect('show', board=board, name=name)
+
+        
+        return redirect('feeds/')
+
+def feed(request, board, name, fid):
+    return redirect('/feeds')
+
+def show(request, board, name):
     if request.method == 'GET':
-        feeds = Cobuy.objects.all() if id == 1 else \
-                (Share.objects.all() if id == 2  else \
-                (Store.objects.all() if id == 3  else \
-                Deal.objects.all() ))
+        feeds = CoBuy.objects.all() if name == "cobuy" else \
+                (Rent.objects.all() if name == "rent"  else \
+                (Keep.objects.all() if name == "keep"  else \
+                Resell.objects.all() ))
 
-        return render(request, 'feedpage/show.html', {'feeds': feeds, 'board_id': id})
+        return render(request, 'feedpage/show.html', {'feeds': feeds, 'board': board, 'name': name})
 
     elif request.method == 'POST': 
-        return redirect('show', id=id)         
+        return redirect('show', board=board, name=name)         
     
-def delete(reuqest, id):
+def delete(reuqest, board, name, fid):
     if request.method == 'GET':
         return render(request, 'feedpage/delete.html')
     
     return redirect('/feeds')
 
-def edit(request, id):
+def edit(request, board, name, fid):
     if request.method == 'GET':
         return render(request, 'feedpage/edit.html')
     
     return redirect('/feeds')
 
-def comment(request, id): 
-    if request.method == 'GET':
-        return render(request, 'feedpage/comment.html')
+def feedlike(request, board, name, fid):
+    return redirect('/feeds')
+
+
+def newcomment(request, board, name, fid): 
+    # if request.method == 'GET':
+    #     return render(request, 'feedpage/newcomment.html')
     
     return redirect('/feeds')
 
+def comments(request, board, name, fid):
+    return redirect('/feeds')
+
+def commentlike(request, board, name, fid):
+    return redirect('/feeds')
+
+def commentdelete(request, board, name, fid, cid):
+    return redirect('/feeds')
+
+def recomment(request, board, name, fid, cid):
+    return redirect('/feeds')
