@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<div> 민원게시판 글 작성하기</div>
+<form method="POST" action="{% url 'minwon_gong_new' %}">
+    {% csrf_token %}
+    <div>
+        제목</br>
+        <input name="title"" type=" text" required>
+    </div></br>
+    <div>
+        내용</br>
+        <input name="content" type="text" required>
+    </div></br>
+    <div>
+        그림</br>
+        <input name="photo" type="text" required>
+    </div></br>
+    <button type="submit">게시글 작성하기 </button>
+</form>
+{% endblock content %}

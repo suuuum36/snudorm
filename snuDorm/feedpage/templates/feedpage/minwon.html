@@ -1,7 +1,20 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div class="info"> 
+<div class="info">
     나는 민원 게시판이지롱
+    {% if user.is_authenticated %}
+    <a href="{% url 'minwon_gong_new' %}" type="button"> 새로 만들기 </a>
+    {% for feed in feeds %}
+    <div>
+        </br>
+        </br>
+        제품: {{ feed.title }} </br>
+        가격: {{ feed.content }} </br>
+        글쓴이: {{ feed.photo }} </br>
+        <a href=""></a>
+    </div>
+    {% endfor %}
+    {% endif %}
 </div>
 {% endblock content %}
