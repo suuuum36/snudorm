@@ -38,6 +38,14 @@ class Feed(models.Model):
     def __str__(self):
         return self.title
 
+class Minwon(Feed):
+    building = models.CharField(max_length=20, blank=False)
+    def __str__(self):
+        return self.title
+
+class FreeBoard(Feed):
+    def __str__(self):
+        return self.title
 
 class CoBuy(Feed):
     product = models.CharField(max_length=256)

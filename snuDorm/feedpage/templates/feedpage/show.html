@@ -39,8 +39,12 @@
     {% endif %}
     {% for d in c.recomment_set.all %}
     <p>{{d.author.username}}: {{ d.content }}</p>
+    <form action="{% url 'recommentdelete' 'life' 'cobuy' feed.id c.id d.id %}" method="POST">
+        {% csrf_token %}
+        <button>대댓글 삭제</button>
+    </form>
     {% endfor %}
-    <form action="{% url 'recomment' 'life' 'cobuy' feed.id c.id %}" method="POST">
+    <form action="{% url 'createrecomment' 'life' 'cobuy' feed.id c.id %}" method="POST">
         {% csrf_token %}
         <input type="text" name="content" />
         <button type="submit">대댓글 달기</button>
