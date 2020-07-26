@@ -14,13 +14,9 @@ from multiselectfield import MultiSelectField
     3) 보관:
     4) 거래: 
 """
-<<<<<<< HEAD
 
 
 class Feed(models.Model):
-=======
-class Feed(models.Model): 
->>>>>>> c657fe35175c45e1abfaac7c809119f0cadf89b0
     title = models.CharField(max_length=256)
     content = models.TextField()
     photo = models.ImageField(blank=True, upload_to='feed_photos')
@@ -31,26 +27,13 @@ class Feed(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(blank=True, null=True)
 
-<<<<<<< HEAD
     def update_date(self):
-=======
-    # market 게시판을 위함 
-    product = models.CharField(max_length=256)
-    explanation = models.TextField(blank=True) 
-    price = models.IntegerField(blank=True)
-
-    class Meta:
-        ordering = ('created_at',)
-
-    def update_date(self): 
->>>>>>> c657fe35175c45e1abfaac7c809119f0cadf89b0
         self.updated_at = timezone.now()
         self.save()
 
     def __str__(self):
         return self.title
 
-<<<<<<< HEAD
 
 class Cobuy(models.Model):
     author = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
@@ -60,16 +43,12 @@ class Cobuy(models.Model):
     price = models.IntegerField(blank=True)
     explanation = models.TextField(blank=True)
 
-=======
-class Cobuy(Feed):
->>>>>>> c657fe35175c45e1abfaac7c809119f0cadf89b0
     duedate = models.DateTimeField(blank=True)
     pagelink = models.CharField(max_length=256)
     contact = models.CharField(max_length=256)
     quantity = models.IntegerField(blank=True)
     state = models.CharField(max_length=256)  # 진행중, 마감, etc
 
-<<<<<<< HEAD
 
 class Share(models.Model):
     author = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
@@ -103,28 +82,17 @@ class Deal(models.Model):
     price = models.IntegerField(blank=True)
     explanation = models.TextField(blank=True)
 
-=======
-class Share(Feed): 
-    quantity = models.IntegerField(blank=True)
-    start_at = models.DateTimeField(default=timezone.now) 
-    end_at = models.DateTimeField(blank=True, null=True)
-
-class Store(Feed):
-    quantity = models.IntegerField(blank=True)
-    start_at = models.DateTimeField(default=timezone.now)
-    end_at = models.DateTimeField(blank=True, null=True)
-
-class Deal(Feed):
->>>>>>> c657fe35175c45e1abfaac7c809119f0cadf89b0
     # 생필품 게시판-(거래 게시판) 게시한 사람 option 선택
     ROLE_OPTION = (('seller', '판매자'), ('buyer', '구매자'))
     author_role = MultiSelectField(choices=ROLE_OPTION, null=True, blank=True)
     """ 
         template에서 커스터마이징 시에는 {{ object.author_role }} 등으로 사용 
     """
+
+
 class Info(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(default=timezone.now) 
+    created_at = models.DateTimeField(default=timezone.now)
 
     class Meta:
         ordering = ('created_at',)
@@ -138,14 +106,13 @@ class FeedComment(models.Model):
     feed = models.ForeignKey(Feed, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)
 
-<<<<<<< HEAD
 
 class FeedLike(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)
     feed = models.ForeignKey(
-        Feed, on_delete=models.CASCADE, related_name='feedlike') # 역참조를 위한 related_name 지정
+        Feed, on_delete=models.CASCADE, related_name='feedlike')  # 역참조를 위한 related_name 지정
 
 
 class FeedUnlike(models.Model):
@@ -169,19 +136,4 @@ class CommentUnlike(models.Model):
 class CommentReply(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)
-=======
-class FeedLike(Info):
-    feed = models.ForeignKey(Feed, on_delete=models.CASCADE)
-
-class FeedUnlike(Info):
-    feed = models.ForeignKey(Feed, on_delete=models.CASCADE)
-
-class CommentLike(Info):
-    comment = models.ForeignKey(FeedComment, on_delete=models.CASCADE)
-
-class CommentUnlike(Info):
-    comment = models.ForeignKey(FeedComment, on_delete=models.CASCADE)
-
-class CommentReply(Info):
->>>>>>> c657fe35175c45e1abfaac7c809119f0cadf89b0
     pre_comment = models.ForeignKey(FeedComment, on_delete=models.CASCADE)

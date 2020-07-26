@@ -13,7 +13,6 @@ urlpatterns = [
     path('<int:id>/show/', views.show, name='show'),
 
     path('minwon/', views.minwon, name='minwon'),
-<<<<<<< HEAD
     path('minwon/gong/new/', views.minwon_gong_new,
          name='minwon_gong_new'),  # 민원게시판 게시글 작성
     path('minwon/gong/<int:fid>/', views.minwon_gong_show,
@@ -28,8 +27,6 @@ urlpatterns = [
     path('share/', views.share, name='share'),
     path('store/', views.store, name='store'),
     path('deal/', views.deal, name='deal'),
-=======
->>>>>>> c657fe35175c45e1abfaac7c809119f0cadf89b0
     path('market/', views.market, name='market'),
     path('freeboard/', views.freeboard, name='freeboard'),
 ]
