@@ -15,7 +15,6 @@ from multiselectfield import MultiSelectField
     4) 거래: 
 """
 
-
 class Feed(models.Model):
     title = models.CharField(max_length=256)
     content = models.TextField()
@@ -50,40 +49,35 @@ class FreeBoard(Feed):
 class CoBuy(Feed):
     product = models.CharField(max_length=256)
     price = models.IntegerField(blank=True)
-    duedate = models.DateTimeField(blank=True)
-    url = models.CharField(max_length=256, null=True)
     contact = models.CharField(max_length=256)
-
     # 진행중, 마감, etc 혹은 multiselect field로 해도 무방
     status = models.CharField(max_length=256)
-
-
+    duedate = models.DateTimeField(blank=True)
+    url = models.CharField(max_length=256, null=True)
+    
 class Rent(Feed):
     product = models.CharField(max_length=256)
-    price = models.IntegerField(blank=True)
-    status = models.CharField(max_length=256)
     contact = models.CharField(max_length=256)
+    status = models.CharField(max_length=256)
     deposit = models.CharField(max_length=256)
-    start_date = models.DateTimeField(default=timezone.now)
+    start_date = models.DateTimeField(blank=True, null=True)
     end_date = models.DateTimeField(blank=True, null=True)
-
 
 class Keep(Feed):
     product = models.CharField(max_length=256)
+    contact = models.CharField(max_length=256)
+    status = models.CharField(max_length=256)
     start_date = models.DateTimeField(default=timezone.now)
     end_date = models.DateTimeField(blank=True, null=True)
-    status = models.CharField(max_length=256)
-    contact = models.CharField(max_length=256)
 
     # template에서 협의 가능 써주기
     reward = models.CharField(max_length=256)
 
-
 class Resell(Feed):
     product = models.CharField(max_length=256)
-    price = models.IntegerField(blank=True)
-    status = models.CharField(max_length=256)
     contact = models.CharField(max_length=256)
+    status = models.CharField(max_length=256)
+    price = models.IntegerField(blank=True)
 
     # 생필품 게시판-(거래 게시판) 게시한 사람 option 선택
     ROLE_OPTION = (('seller', '판매자'), ('buyer', '구매자'))
@@ -91,7 +85,6 @@ class Resell(Feed):
     """ 
         template에서 커스터마이징 시에는 {{ object.author_role }} 등으로 사용 
     """
-
 
 class FeedComment(models.Model):
     content = models.TextField()
@@ -102,23 +95,25 @@ class FeedComment(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     noname = models.BooleanField(default=False)
 
-
 class FeedLike(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)
     feed = models.ForeignKey(
         Feed, on_delete=models.CASCADE, related_name='feedlike')  # 역참조를 위한 related_name 지정
 
-
 class CommentLike(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)
     comment = models.ForeignKey(FeedComment, on_delete=models.CASCADE)
 
-
-class ReComment(models.Model):
+class Recomment(models.Model):
     content = models.TextField()
     author = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
     comment = models.ForeignKey(FeedComment, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)
     noname = models.BooleanField(default=False)
+
+class RecommentLike(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(default=timezone.now)
+    recomment = models.ForeignKey(Recomment, on_delete=models.CASCADE)

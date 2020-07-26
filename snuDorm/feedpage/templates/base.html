@@ -24,9 +24,9 @@
     <header>
         <div class="main_header" style="display: flex; justify-content:space-around;">
             <!-- TODO: logo image needed -->
-            <a href="{% url 'index' %}" style="justify-content: center;"> SNU DORM </a>
+            <a href="{% url 'showmain' %}" style="justify-content: center;"> SNU DORM </a>
             <div class="search" style="text-align: center;">
-                <form action="{% url 'index' %}" method="get">
+                <form action="{% url 'showmain' %}" method="get">
                     <input type="text" id="search_box">
                     <button type="submit" id="search_button">
                         <i class="glyphicon glyphicon-search"></i>
@@ -56,19 +56,19 @@
         <div style="padding: 10px">
             <ul class="nav nav-tabs">
                 <li role="presentation" class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="{% url 'show' "minwon" "gong" %}"
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="{% url 'showboard' "minwon" "gong" %}"
                         type="button" aria-expanded="false"> 민원 게시판 <span class="caret"></span> </a>
                     <ul class="dropdown-menu" role="menu">
                     </ul>
                 </li>
                 <li role="presentation" class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="{% url 'show' "life" "cobuy" %}"
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="{% url 'showboard' "life" "cobuy" %}"
                         type="button" aria-expanded="false"> 생필품 게시판 <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                     </ul>
                 </li>
                 <li role="presentation" class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="{% url 'show' "life" "cobuy" %}"
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="{% url 'showboard' "life" "cobuy" %}"
                         role="button" aria-expanded="false"> 자유 게시판 <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                     </ul>
