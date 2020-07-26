@@ -6,7 +6,7 @@
     <div class="info">
         나는 민원 게시판이지롱</br>
         {% if user.is_authenticated %}
-        <a href="{% url 'new' "minwon" "gong" %}" type="button" style="background-color: yellow ;"> 새로 만들기 </a>
+        <a href="{% url 'newfeed' "minwon" "gong" %}" type="button" style="background-color: yellow ;"> 새로 만들기 </a>
         {% for feed in feeds %}
         <div style="background-color: beige; margin-top: 10px;">
             제목: {{ feed.title }} </br>
@@ -15,13 +15,13 @@
             작성자: {{ feed.author }}
             <a href=""></a>
         </div>
-        <div style="background-color: antiquewhite;"><a href="{% url 'feed' "minwon" "gong" feed.id %}">자세히
+        <div style="background-color: antiquewhite;"><a href="{% url 'showfeed' "minwon" "gong" feed.id %}">자세히
                 보기</a></div>
         {% endfor %}
         {% endif %}
     </div>
     {% elif board == "life" %}
-    {% if name == "cobuy" %}
+    {% if category == "cobuy" %}
     나는 공구 게시판~~~ ㅎㅅㅎ
     {% for feed in feeds %}
     <div>
@@ -32,19 +32,19 @@
     {% for c in feed.feedcomment_set.all %}
     <p>{{c.author.username}}: {{ c.content }}</p>
     {% if request.user == c.author %}
-    <form action="{% url 'commentdelete' 'life' 'cobuy' feed.id c.id %}" method="POST">
+    <form action="{% url 'deletecomment' 'life' 'cobuy' feed.id c.id %}" method="POST">
         {% csrf_token %}
         <button>댓글 삭제</button>
     </form>
     {% endif %}
     {% for d in c.recomment_set.all %}
     <p>{{d.author.username}}: {{ d.content }}</p>
-    <form action="{% url 'recommentdelete' 'life' 'cobuy' feed.id c.id d.id %}" method="POST">
+    <form action="{% url 'deleterecomment' 'life' 'cobuy' feed.id c.id d.id %}" method="POST">
         {% csrf_token %}
         <button>대댓글 삭제</button>
     </form>
     {% endfor %}
-    <form action="{% url 'createrecomment' 'life' 'cobuy' feed.id c.id %}" method="POST">
+    <form action="{% url 'newrecomment' 'life' 'cobuy' feed.id c.id %}" method="POST">
         {% csrf_token %}
         <input type="text" name="content" />
         <button type="submit">대댓글 달기</button>
@@ -58,8 +58,8 @@
     </form>
     {% endif %}
     {% endfor %}
-    <a href="{% url 'new' 'life' 'cobuy' %}" type="button"> 새로 만들기 </a>
-    {% elif name == "rent" %}
+    <a href="{% url 'newfeed' 'life' 'cobuy' %}" type="button"> 새로 만들기 </a>
+    {% elif category == "rent" %}
     나는 대여 게시판 ~~~
     {% for feed in feeds %}
     <div>
@@ -68,8 +68,8 @@
         글쓴이: {{ feed.author }} </br>
     </div>
     {% endfor %}
-    <a href="{% url 'new' "life" "rent" %}" type="button"> 새로 만들기 </a>
-    {% elif name == "keep" %}
+    <a href="{% url 'newfeed' "life" "rent" %}" type="button"> 새로 만들기 </a>
+    {% elif category == "keep" %}
     나는 보관 게시판 ~~~~
     {% for feed in feeds %}
     <div>
@@ -78,8 +78,8 @@
         글쓴이: {{ feed.author }} </br>
     </div>
     {% endfor %}
-    <a href="{% url 'new' "life" "keep" %}" type="button"> 새로 만들기 </a>
-    {% elif name == "resell" %}
+    <a href="{% url 'newfeed' "life" "keep" %}" type="button"> 새로 만들기 </a>
+    {% elif category == "resell" %}
     나는 거래 게시판~~~ ㅎㅅㅎ
     {% for feed in feeds %}
     <div>
@@ -89,7 +89,7 @@
         글쓴이: {{ feed.author }} </br>
     </div>
     {% endfor %}
-    <a href="{% url 'new' "life" "resell" %}" type="button"> 새로 만들기 </a>
+    <a href="{% url 'newfeed' "life" "resell" %}" type="button"> 새로 만들기 </a>
     {% endif %}
     {% endif %}
 </div>
