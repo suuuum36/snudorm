@@ -95,9 +95,8 @@ class CommentLike(models.Model):
     created_at = models.DateTimeField(default=timezone.now) 
     comment = models.ForeignKey(FeedComment, on_delete=models.CASCADE)
 
-class Recomment(models.Model):
+class ReComment(models.Model):
     content = models.TextField()
-    feed = models.ForeignKey(Feed, on_delete=models.CASCADE)
     author = models.ForeignKey(User, null=True, on_delete=models.CASCADE)  
     comment = models.ForeignKey(FeedComment, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)
