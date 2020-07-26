@@ -3,8 +3,7 @@ from feedpage import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    # TODO: url setting for the pages 
-    path('minwon/', views.minwon, name='minwon'),
+    # TODO: url setting for the pages
     path('market/', views.market, name='market'),
     path('freeboard/', views.freeboard, name='freeboard'),
 
@@ -13,14 +12,19 @@ urlpatterns = [
     path('<str:board>/<str:name>/<int:fid>/', views.feed, name='feed'),
     path('<str:board>/<str:name>/<int:fid>/edit/', views.edit, name='edit'),
     path('<str:board>/<str:name>/<int:fid>/delete/', views.delete, name='delete'),
-    path('<str:board>/<str:name>/<int:fid>/feedlike/', views.feedlike, name='feedlike'),
-    path('<str:board>/<str:name>/<int:fid>/newcomment/', views.newcomment, name='newcomment'),
-    path('<str:board>/<str:name>/<int:fid>/<int:cid>/', views.comments, name='comments'),
-    path('<str:board>/<str:name>/<int:fid>/<int:cid>/commentlike/', views.commentlike, name='commentlike'),
-    path('<str:board>/<str:name>/<int:fid>/<int:cid>/commentdelete/', views.commentdelete, name='commentdelete'),
-    path('<str:board>/<str:name>/<int:fid>/<int:cid>/recomment/', views.recomment, name='recomment'),
-    
-    
+    path('<str:board>/<str:name>/<int:fid>/feedlike/',
+         views.feedlike, name='feedlike'),
+    path('<str:board>/<str:name>/<int:fid>/newcomment/',
+         views.newcomment, name='newcomment'),
+    path('<str:board>/<str:name>/<int:fid>/<int:cid>/',
+         views.comments, name='comments'),
+    path('<str:board>/<str:name>/<int:fid>/<int:cid>/commentlike/',
+         views.commentlike, name='commentlike'),
+    path('<str:board>/<str:name>/<int:fid>/<int:cid>/commentdelete/',
+         views.commentdelete, name='commentdelete'),
+    path('<str:board>/<str:name>/<int:fid>/<int:cid>/recomment/',
+         views.recomment, name='recomment'),
+
     # path('minwon/', views.minwon, name='minwon'),
     # path('minwon/gong/', views.minwon_gong, name='minwon_gong'),
     # path('minwon/gong/new/', views.minwon_gong_new, name='minwon_gong_new'),

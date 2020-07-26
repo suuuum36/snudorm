@@ -1,53 +1,53 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div style="margin: 5%"> 
-        <!-- 민원 게시판 -->
-        <div class="panel panel-primary">
-            <div class="panel-body">민원게시판</div>
-            <div class="panel-footer">
-                <div class="panel panel-info">
-                    <div class="panel-body">전체 소리함</div>
+<div style="margin: 5%">
+    <!-- 민원 게시판 -->
+    <div class="panel panel-primary">
+        <div class="panel-body">민원게시판</div>
+        <div class="panel-footer">
+            <div class="panel panel-info">
+                <div class="panel-body">전체 소리함</div>
+                <div class="panel-footer">게시글 ~~~</div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-body">동 게시판</div>
+                <div class="panel-footer">게시글 ~~</div>
+            </div>
+        </div>
+    </div>
+    <!-- 생필품 게시판 -->
+    <div class="panel panel-success">
+        <div class="panel-body">생필품 게시판</div>
+        <div class="panel-footer">
+            <div style="display: flex;">
+                <div class="panel panel-warning">
+                    <div class="panel-body">
+                        <a href="{% url 'show' "life" "cobuy" %}"> 공구 게시판</a>
+                    </div>
                     <div class="panel-footer">게시글 ~~~</div>
                 </div>
-                <div class="panel panel-info">
-                    <div class="panel-body">동 게시판</div>
+                <div class="panel panel-warning">
+                    <div class="panel-body">
+                        <a href="{% url 'show' "life" "rent" %}">대여 게시판</a>
+                    </div>
+                    <div class="panel-footer">게시글 ~~ </div>
+                </div>
+            </div>
+            <div style="display: flex;">
+                <div class="panel panel-danger">
+                    <div class="panel-body">
+                        <a href="{% url 'show' "life" "keep" %}">보관 게시판</a>
+                    </div>
                     <div class="panel-footer">게시글 ~~</div>
                 </div>
-            </div>
-        </div>
-        <!-- 생필품 게시판 -->
-        <div class="panel panel-success">
-            <div class="panel-body">생필품 게시판</div>
-            <div class="panel-footer">
-                <div style="display: flex;">
-                    <div class="panel panel-warning">
-                        <div class="panel-body">
-                            <a href="{% url 'show' "life" "cobuy" %}"> 공구 게시판</a> 
-                        </div>
-                        <div class="panel-footer">게시글 ~~~</div>
-                    </div> 
-                    <div class="panel panel-warning">
-                        <div class="panel-body">
-                            <a href="{% url 'show' "life" "rent" %}">대여 게시판</a>
-                        </div>
-                        <div class="panel-footer">게시글 ~~ </div>
+                <div class="panel panel-danger">
+                    <div class="panel-body">
+                        <a href="{% url 'show' "life" "resell" %}">거래 게시판</a>
                     </div>
-                </div> 
-                <div style="display: flex;">
-                    <div class="panel panel-danger">
-                        <div class="panel-body">
-                            <a href="{% url 'show' "life" "keep" %}">보관 게시판</a> 
-                        </div>
-                        <div class="panel-footer">게시글 ~~</div>
-                    </div>  
-                    <div class="panel panel-danger">
-                        <div class="panel-body">
-                            <a href="{% url 'show' "life" "resell" %}">거래 게시판</a> 
-                        </div>
-                        <div class="panel-footer">게시글 ~~ </div>
-                    </div>  
+                    <div class="panel-footer">게시글 ~~ </div>
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
+</div>
 {% endblock content %}
