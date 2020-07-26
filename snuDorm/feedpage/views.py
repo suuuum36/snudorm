@@ -52,33 +52,49 @@ def new(request, board, name):
 
             return redirect('show', board=board, name=name)
 
+        # 생필품 게시판 
         elif board == "life":
             title = request.POST['title']
             content = request.POST['content']
             product = request.POST['product']
-
-            if name == "cobuy":  # cobuy 게시판
+            status = request.POST['status']
+            contact = request.POST['contact']
+           
+            # cobuy 게시판
+            if name == "cobuy":  
+                price = request.POST['price']
                 url = request.POST['url']
                 duedate = request.POST['duedate']
-                contact = request.POST['contact']
-                price = request.POST['price']
 
-                CoBuy.objects.create(title=title, content=content, product=product, url=url,
-                                     duedate=duedate, contact=contact, price=price, author=request.user)
-
+                CoBuy.objects.create(title=title, content=content, product=product, price=price, \
+                                    contact=contact, status=status, url=url, duedate=duedate, author=request.user)
+            # rent 게시판
             elif name == "rent":
-                what = 1
+                deposit = request.POST['deposit']
+                start_date = request.POST['start_date']
+                end_date = request.POST['end_date']
 
+                Rent.objects.create(title=title, content=content, product=product, contact=contact,\
+                                    status=status, deposit=deposit, author=request.user, \
+                                    start_date=start_date, end_date=end_date)
+            # keep 게시판
             elif name == "keep":
-                what = 1
+                start_date = request.POST['start_date']
+                end_date = request.POST['end_date']
+                reward = request.POST['reward']
 
+                Keep.objects.create(title=title, content=content, product=product, status=status, contact=contact,\
+                                    start_date=start_date, end_date=end_date, reward=reward, author=request.user)
+
+            # resell 게시판
             elif name == "resell":
+                price = request.POST['price']
                 role = request.POST['role']
-                Resell.objects.create(title=title, content=content, product=product, url=url,
-                                      duedate=duedate, contact=contact, price=price, author=request.user)
+
+                Resell.objects.create(title=title, content=content, product=product, price=price, \
+                                    status=status, contact=contact, role=role, author=request.user)
 
             return redirect('show', board=board, name=name)
-
         else:
             return redirect('show', board=board, name=name)
 
