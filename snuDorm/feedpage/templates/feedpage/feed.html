@@ -14,7 +14,11 @@
     그림 : {{ feed.photo }} </br>
 </div>
 <div style="background-color: burlywood; margin: 10px; text-align: center;">
+<<<<<<< HEAD
     {{ feed.like_users.count }} <a href="{% url 'likefeed' board category feed.id %}"> 추천</a>
+=======
+    {{ feed.like_users.count }} <a href="{% url 'likefeed' "minwon" "gong" feed.id %}"> 추천</a>
+>>>>>>> urls, views fullchanged
 </div>
 {% for c in feed.feedcomment_set.all %}
 <div>

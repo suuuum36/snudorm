@@ -4,6 +4,9 @@ from .models import Feed, Minwon, FreeBoard, CoBuy, Rent, Keep, Resell, FeedComm
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 
+# TODO:
+
+
 def showMain(request):
     if request.method == 'GET':
         return render(request, 'feedpage/index.html')
@@ -146,11 +149,32 @@ def showFeed(request, board, category, fid):
 
     return render(request, 'feedpage/feed.html', {'feed': feed, 'board': board, 'category': category})
 
+<<<<<<< HEAD
 # 게시글 수정
 # board별로 띄워주는 글 다르므로, if문으로 나눠야함
 def editFeed(request, board, category, fid):
     feed = Feed.objects.get(id=fid)
 
+=======
+            return redirect('showboard', board=board, category=category)
+        else:
+            return redirect('showboard', board=board, category=category)
+
+        return redirect('feeds/')
+
+# 특정 게시글 자세히 보기
+# board별로 띄워주는 글 다르므로, if문으로 나눠야함
+def showFeed(request, board, category, fid):
+    feed = Feed.objects.get(id=fid)
+
+    return render(request, 'feedpage/feed.html', {'feed': feed, 'board': board, 'category': category})
+
+# 게시글 수정
+# board별로 띄워주는 글 다르므로, if문으로 나눠야함
+def editFeed(request, board, category, fid):
+    feed = Feed.objects.get(id=fid)
+
+>>>>>>> urls, views fullchanged
     if request.method == 'GET':
         return render(request, 'feedpage/edit.html', {'feed': feed, 'board': board, 'category': category})
 
@@ -225,7 +249,11 @@ def editComment(request, board, category, fid, cid):
 # 댓글 좋아요 -- 미완성
 def likeComment(request, board, category, fid, cid):
     return redirect('/feeds')
+<<<<<<< HEAD
 >>>>>>> origin/juju
+=======
+>>>>>>> urls, views fullchanged
+>>>>>>> urls, views fullchanged
 
 # 댓글 삭제
 def deleteComment(request, board, category, fid, cid):
@@ -270,7 +298,11 @@ def newRecomment(request, board, category, fid, cid):
 # 대댓글 수정 -- 미완성
 def editRecomment(request, board, category, fid, cid):
     return redirect('showboard', board=board, category=category)
+<<<<<<< HEAD
 >>>>>>> origin/juju
+=======
+>>>>>>> urls, views fullchanged
+>>>>>>> urls, views fullchanged
 
 # 대댓글 삭제
 def deleteRecomment(request, board, category, fid, cid, rcid):
@@ -299,4 +331,8 @@ def likeRecomment(request, board, category, fid, cid, rcid):
 # 대댓글 좋아요 -- 미완성
 def likeRecomment(request, board, category, fid, cid):
     return redirect('showboard', board=board, category=category)
+<<<<<<< HEAD
 >>>>>>> origin/juju
+=======
+>>>>>>> urls, views fullchanged
+>>>>>>> urls, views fullchanged
