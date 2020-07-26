@@ -5,7 +5,7 @@
     {% if user.is_authenticated %}
     {% if board == "minwon" %}
     <div style="font-weight: bold; margin: 20px; background-color: yellow;"> 민원게시판 글 작성하기</div>
-    <form method="POST" action="{% url 'new' "minwon" "gong" %}">
+    <form method="POST" action="{% url 'newfeed' "minwon" "gong" %}">
         {% csrf_token %}
         <div style="background-color: thistle; margin: 20px;">
             <div style="margin: 0px 0px 20px 20px; padding-top: 20px;">
@@ -23,9 +23,9 @@
         </div>
         <button type="submit">게시글 작성하기 </button>
     </form>
-    {% elif name == "cobuy" %}
+    {% elif category == "cobuy" %}
     <div> 공구게시판 글 작성하기</div>
-    <form method="POST" action="{% url 'new' "life" "cobuy" %}">
+    <form method="POST" action="{% url 'newfeed' "life" "cobuy" %}">
         {% csrf_token %}
         <div>
             제목 </br>
@@ -61,9 +61,9 @@
         </div></br>
         <button type="submit">게시글 작성하기 </button>
     </form>
-    {% elif name == "rent" %}
+    {% elif category == "rent" %}
     <div> 대여게시판 글 작성하기</div>
-    <form method="POST" action="{% url 'new' "life" "rent" %}">
+    <form method="POST" action="{% url 'newfeed' "life" "rent" %}">
         {% csrf_token %}
         <div>
             제목 </br>
@@ -99,9 +99,9 @@
         </div></br>
         <button type="submit">게시글 작성하기 </button>
     </form>
-    {% elif name == "keep" %}
+    {% elif category == "keep" %}
     <div> 보관 게시판 글 작성하기</div>
-    <form method="POST" action="{% url 'new' "life" "keep" %}">
+    <form method="POST" action="{% url 'newfeed' "life" "keep" %}">
         {% csrf_token %}
         <div>
             제목 </br>
@@ -137,9 +137,9 @@
         </div></br>
         <button type="submit">게시글 작성하기 </button>
     </form>
-    {% elif name == "resell" %}
+    {% elif category == "resell" %}
     <div> 거래 게시판 글 작성하기</div>
-    <form method="POST" action="{% url 'new' "life" "resell" %}">
+    <form method="POST" action="{% url 'newfeed' "life" "resell" %}">
         {% csrf_token %}
         <div>
             제목 </br>

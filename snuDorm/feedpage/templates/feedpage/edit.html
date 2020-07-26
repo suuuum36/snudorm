@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <div> 민원게시판 글 수정하기</div>
-<form method="POST" action="{% url 'edit' "minwon" "gong" feed.id %}">
+<form method="POST" action="{% url 'editfeed' "minwon" "gong" feed.id %}">
     {% csrf_token %}
     <div>
         제목</br>
