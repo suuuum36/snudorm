@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
-from .models import Feed, CoBuy, Rent, Keep, Resell, FeedComment, \
+from .models import Feed, Minwon, FreeBoard, CoBuy, Rent, Keep, Resell, FeedComment, \
     FeedLike, CommentLike, ReComment
 from django.contrib.auth.models import User
 
@@ -47,7 +47,7 @@ def new(request, board, name):
             content = request.POST['content']
             photo = request.POST['photo']
 
-            Feed.objects.create(title=title, content=content,
+            Minwon.objects.create(title=title, content=content,
                                 photo=photo, author=request.user)
 
             return redirect('show', board=board, name=name)
@@ -105,7 +105,7 @@ def show(request, board, name):
     if request.method == 'GET':
 
         if board == "minwon":  # 민원 게시판 List page 보여주기
-            feeds = Feed.objects.all()
+            feeds = Minwon.objects.all()
 
         elif board == "life":  # 생필품 게시판 List page 보여주기
             feeds = CoBuy.objects.all() if name == "cobuy" else \
@@ -178,22 +178,10 @@ def delete(request, board, name, fid):
 
 
 def newcomment(request, board, name, fid):
-    # if request.method == 'GET':
-    #     return render(request, 'feedpage/newcomment.html')
-    if board == "life":
-        content = request.POST['content']
-        FeedComment.objects.create(
-            feed_id=fid, content=content, author=request.user)
-        return redirect('show', board=board, name=name)
-    else:
-        return redirect('show', board=board, name=name)
-
-    return redirect('/feeds')
-
-
-def comments(request, board, name, fid):
-    return redirect('/feeds')
-
+    content = request.POST['content']
+    FeedComment.objects.create(
+        feed_id=fid, content=content, author=request.user)
+    return redirect('show', board=board, name=name)
 
 def commentlike(request, board, name, fid):
     return redirect('/feeds')
@@ -202,15 +190,16 @@ def commentlike(request, board, name, fid):
 def commentdelete(request, board, name, fid, cid):
     c = FeedComment.objects.get(id=cid)
     c.delete()
-    return redirect('/feeds')
+    return redirect('show', board=board, name=name)
 
 
-def recomment(request, board, name, fid, cid):
-    if board == "life":
-        content = request.POST['content']
-        ReComment.objects.create(
-            comment_id=cid, content=content, author=request.user)
-        return redirect('show', board=board, name=name)
-    else:
-        return redirect('show', board=board, name=name)
-    return redirect('/feeds')
+def createrecomment(request, board, name, fid, cid):
+    content = request.POST['content']
+    ReComment.objects.create(
+        comment_id=cid, content=content, author=request.user)
+    return redirect('show', board=board, name=name)
+
+def recommentdelete(request, board, name, fid, cid, rcid):
+    c = ReComment.objects.get(id=rcid)
+    c.delete()
+    return redirect('show', board=board, name=name)
