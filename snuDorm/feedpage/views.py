@@ -140,8 +140,10 @@ def newFeed(request, board, category):
         return redirect('showboard', board=board, category=category)
 
 # 특정 게시글 자세히 보기
+# board별로 띄워주는 글 다르므로, if문으로 나눠야함
 def showFeed(request, board, category, fid):
     feed = Feed.objects.get(id=fid)
+
     return render(request, 'feedpage/feed.html', {'feed': feed, 'board': board, 'category': category})
 
 # 게시글 수정
@@ -185,6 +187,7 @@ def likeFeed(request, board, category, fid):
 # 댓글 달기
 def newComment(request, board, category, fid):
     content = request.POST['content']
+<<<<<<< HEAD
     new_comment = FeedComment.objects.create(feed_id=fid, content=content, author = request.user)
     like_count = new_comment.commentlike_set.filter(user_id = request.user.id)
 
@@ -210,11 +213,25 @@ def likeComment(request, board, category, fid, cid):
     else:
         CommentLike.objects.create(user_id = request.user.id, comment_id = feedcomment.id)
     return redirect('showfeed', board=board, category=category, fid=fid)
+=======
+    FeedComment.objects.create(
+        feed_id=fid, content=content, author=request.user)
+    return redirect('showboard', board=board, category=category)
+
+# 댓글 수정 -- 미완성
+def editComment(request, board, category, fid, cid):
+    return redirect('/feeds')
+
+# 댓글 좋아요 -- 미완성
+def likeComment(request, board, category, fid, cid):
+    return redirect('/feeds')
+>>>>>>> origin/juju
 
 # 댓글 삭제
 def deleteComment(request, board, category, fid, cid):
     c = FeedComment.objects.get(id=cid)
     c.delete()
+<<<<<<< HEAD
 
     context ={
         'json': 'working',
@@ -240,11 +257,26 @@ def newRecomment(request, board, category, fid, cid):
 # 대댓글 수정 -- 미완성
 def editRecomment(request, board, category, fid, cid):
     return redirect('showfeed', board=board, category=category, fid=fid)
+=======
+    return redirect('showboard', board=board, category=category)
+
+# 대댓글 추가
+def newRecomment(request, board, category, fid, cid):
+    content = request.POST['content']
+    Recomment.objects.create(
+        comment_id=cid, content=content, author=request.user)
+    return redirect('showboard', board=board, category=category)
+
+# 대댓글 수정 -- 미완성
+def editRecomment(request, board, category, fid, cid):
+    return redirect('showboard', board=board, category=category)
+>>>>>>> origin/juju
 
 # 대댓글 삭제
 def deleteRecomment(request, board, category, fid, cid, rcid):
     c = Recomment.objects.get(id=rcid)
     c.delete()
+<<<<<<< HEAD
     
     context ={
         'json': 'working',
@@ -261,3 +293,10 @@ def likeRecomment(request, board, category, fid, cid, rcid):
     else:
         RecommentLike.objects.create(user_id = request.user.id, recomment_id = recomment.id)
     return redirect('showfeed', board=board, category=category, fid=fid)
+=======
+    return redirect('showboard', board=board, category=category)
+
+# 대댓글 좋아요 -- 미완성
+def likeRecomment(request, board, category, fid, cid):
+    return redirect('showboard', board=board, category=category)
+>>>>>>> origin/juju
