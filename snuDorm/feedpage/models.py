@@ -26,6 +26,7 @@ class Feed(models.Model):
         User, blank=True, related_name='like_feeds', through='FeedLike')
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(blank=True, null=True)
+    views = models.IntegerField(blank=True, default=0)
 
     class Meta:
         ordering = ('created_at',)
@@ -38,45 +39,39 @@ class Feed(models.Model):
         return self.title
 
 class Minwon(Feed):
+    dormitory = models.CharField(max_length=20, blank=False)
     building = models.CharField(max_length=20, blank=False)
+    
     def __str__(self):
         return self.title
 
-class FreeBoard(Feed):
-    def __str__(self):
-        return self.title
-
-class CoBuy(Feed):
+class Life(Feed):
     product = models.CharField(max_length=256)
-    price = models.IntegerField(blank=True)
     contact = models.CharField(max_length=256)
-    # 진행중, 마감, etc 혹은 multiselect field로 해도 무방
     status = models.CharField(max_length=256)
+
+    class Meta:
+        ordering = ('created_at', )
+
+class CoBuy(Life):
+    price = models.IntegerField(blank=True)
+    # # 진행중, 마감, etc 혹은 multiselect field로 해도 무방
     duedate = models.DateTimeField(blank=True)
     url = models.CharField(max_length=256, null=True)
     
-class Rent(Feed):
-    product = models.CharField(max_length=256)
-    contact = models.CharField(max_length=256)
-    status = models.CharField(max_length=256)
+class Rent(Life):
     deposit = models.CharField(max_length=256)
     start_date = models.DateTimeField(blank=True, null=True)
     end_date = models.DateTimeField(blank=True, null=True)
 
-class Keep(Feed):
-    product = models.CharField(max_length=256)
-    contact = models.CharField(max_length=256)
-    status = models.CharField(max_length=256)
+class Keep(Life):
     start_date = models.DateTimeField(default=timezone.now)
     end_date = models.DateTimeField(blank=True, null=True)
 
     # template에서 협의 가능 써주기
     reward = models.CharField(max_length=256)
 
-class Resell(Feed):
-    product = models.CharField(max_length=256)
-    contact = models.CharField(max_length=256)
-    status = models.CharField(max_length=256)
+class Resell(Life):
     price = models.IntegerField(blank=True)
 
     # 생필품 게시판-(거래 게시판) 게시한 사람 option 선택
@@ -85,6 +80,10 @@ class Resell(Feed):
     """ 
         template에서 커스터마이징 시에는 {{ object.author_role }} 등으로 사용 
     """
+
+class FreeBoard(Feed):
+    def __str__(self):
+        return self.title
 
 class FeedComment(models.Model):
     content = models.TextField()

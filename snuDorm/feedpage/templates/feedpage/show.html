@@ -2,95 +2,46 @@
 {% block content %}
 
 <div class="info">
-    {% if board == "minwon" %}
-    <div class="info">
-        나는 민원 게시판이지롱</br>
-        {% if user.is_authenticated %}
-        <a href="{% url 'newfeed' "minwon" "gong" %}" type="button" style="background-color: yellow ;"> 새로 만들기 </a>
-        {% for feed in feeds %}
-        <div style="background-color: beige; margin-top: 10px;">
-            제목: {{ feed.title }} </br>
-            내용: {{ feed.content }} </br>
-            그림: {{ feed.photo }} </br>
-            작성자: {{ feed.author }}
-            <a href=""></a>
+    <div style="display:flex; justify-content: space-around">
+        <div>{{ board_name }} 게시판 </div>
+        <a href="{% url 'showboard' board category %}"><button>전체글</button></a>
+        <a href="{% url 'showboard' board category %}"><button>베스트</button></a> 
+        <div style="justify-content: right"> 
+            <!-- 전체글을 보는 게시판은 글쓰기 불가능하게! -->
+            {% if board != "freeboard" and category != "#" %} 
+                <a href="{% url 'newfeed' board category %}"><button>글쓰기</button></a>
+            {% endif %}
         </div>
-        <div style="background-color: antiquewhite;"><a href="{% url 'showfeed' "minwon" "gong" feed.id %}">자세히
-                보기</a></div>
-        {% endfor %}
-        {% endif %}
-    </div>
-    {% elif board == "life" %}
-    {% if category == "cobuy" %}
-    나는 공구 게시판~~~ ㅎㅅㅎ
+    </div> 
+    <div style="display:flex; justify-content:space-around">
+        <div>제목</div>
+        <div>작성자</div> 
+        <div>날짜</div> 
+        <div>조회수</div> 
+        <div>추천수</div> 
+    </div> 
     {% for feed in feeds %}
-    <div>
-        제품: {{ feed.product }} </br>
-        가격: {{ feed.price }} </br>
-        글쓴이: {{ feed.author }} </br>
-    </div>
-    {% for c in feed.feedcomment_set.all %}
-    <p>{{c.author.username}}: {{ c.content }}</p>
-    {% if request.user == c.author %}
-    <form action="{% url 'deletecomment' 'life' 'cobuy' feed.id c.id %}" method="POST">
-        {% csrf_token %}
-        <button>댓글 삭제</button>
-    </form>
-    {% endif %}
-    {% for d in c.recomment_set.all %}
-    <p>{{d.author.username}}: {{ d.content }}</p>
-    <form action="{% url 'deleterecomment' 'life' 'cobuy' feed.id c.id d.id %}" method="POST">
-        {% csrf_token %}
-        <button>대댓글 삭제</button>
-    </form>
+        <a href="{% url 'showfeed' board category feed.id %}">
+            <div style="display:flex; justify-content: space-around" >
+                <div style="display:flex; flex-direction: column;">
+                    <div>{{ feed.title }}  [{{ feed.feedcomment_set.count }}] </div>
+                    <div style="color:gray">{{ feed.content }}</div> 
+                </div>
+                <div> 
+                    {% if feed.noname %} 익명 
+                    {% else %} {{ feed.author.profile.nickname }}
+                    {% endif %}
+                </div> 
+                <div>
+                   {{ feed.created_at|date:"Y.m.d" }} 
+                </div> 
+                <div> 
+                    {{ feed.views }}
+                </div>
+                <div> 
+                </div>
+            </div>
+        </a>    
     {% endfor %}
-    <form action="{% url 'newrecomment' 'life' 'cobuy' feed.id c.id %}" method="POST">
-        {% csrf_token %}
-        <input type="text" name="content" />
-        <button type="submit">대댓글 달기</button>
-    </form>
-    {% endfor %}
-    {% if user.is_authenticated %}
-    <form action="{% url 'newcomment' 'life' 'cobuy' feed.id %}" method="POST">
-        {% csrf_token %}
-        <input type="text" name="content" />
-        <button type="submit">댓글 달기</button>
-    </form>
-    {% endif %}
-    {% endfor %}
-    <a href="{% url 'newfeed' 'life' 'cobuy' %}" type="button"> 새로 만들기 </a>
-    {% elif category == "rent" %}
-    나는 대여 게시판 ~~~
-    {% for feed in feeds %}
-    <div>
-        제품: {{ feed.product }} </br>
-        가격: {{ feed.price }} </br>
-        글쓴이: {{ feed.author }} </br>
-    </div>
-    {% endfor %}
-    <a href="{% url 'newfeed' "life" "rent" %}" type="button"> 새로 만들기 </a>
-    {% elif category == "keep" %}
-    나는 보관 게시판 ~~~~
-    {% for feed in feeds %}
-    <div>
-        제품: {{ feed.product }} </br>
-        가격: {{ feed.price }} </br>
-        글쓴이: {{ feed.author }} </br>
-    </div>
-    {% endfor %}
-    <a href="{% url 'newfeed' "life" "keep" %}" type="button"> 새로 만들기 </a>
-    {% elif category == "resell" %}
-    나는 거래 게시판~~~ ㅎㅅㅎ
-    {% for feed in feeds %}
-    <div>
-        {{feed.author_role}}
-        제품: {{ feed.product }} </br>
-        가격: {{ feed.price }} </br>
-        글쓴이: {{ feed.author }} </br>
-    </div>
-    {% endfor %}
-    <a href="{% url 'newfeed' "life" "resell" %}" type="button"> 새로 만들기 </a>
-    {% endif %}
-    {% endif %}
 </div>
 {% endblock content %}
