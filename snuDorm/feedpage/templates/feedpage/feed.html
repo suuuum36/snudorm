@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
+{% if board == "minwon" %}
 {% if feed.author == request.user %}
 <div style="background-color: coral; margin: 10px; text-align: right;">
-    <a href="{% url 'editfeed' "minwon" "gong" feed.id %}" style="margin-right: 10px;">수정하기</a>
-    <a href="{% url 'deletefeed' "minwon" "gong" feed.id %}" style="margin-right: 10px">삭제하기</a>
+    <a href="{% url 'editfeed' board category feed.id %}" style="margin-right: 10px;">수정하기</a>
+    <a href="{% url 'deletefeed' board category feed.id %}" style="margin-right: 10px">삭제하기</a>
 </div>
 {% endif %}
-{% if board == "minwon" %}
 <div style="background-color: bisque; margin:10px">
     작성자 : {{ feed.author }} </br>
     제목 : {{ feed.title }} </br>

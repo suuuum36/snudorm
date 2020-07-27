@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
 from .models import Feed, Minwon, FreeBoard, CoBuy, Rent, Keep, Resell, FeedComment, \
-    FeedLike, CommentLike, Recomment, RecommentLike
+    FeedLike, CommentLike, Recomment, RecommentLike, Life
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 
@@ -149,7 +149,6 @@ def newFeed(request, board, category):
         return redirect('showboard', board=board, category=category)
 
 # 특정 게시글 자세히 보기
-# board별로 띄워주는 글 다르므로, if문으로 나눠야함
 
 
 def showFeed(request, board, category, fid):
@@ -162,19 +161,89 @@ def showFeed(request, board, category, fid):
 
 
 def editFeed(request, board, category, fid):
-    feed = Feed.objects.get(id=fid)
-
     if request.method == 'GET':
-        return render(request, 'feedpage/edit.html', {'feed': feed, 'board': board, 'category': category})
+        feed = Feed.objects.get(id=fid)
+
+        return render(request, 'feedpage/edit.html', {'feed': feed, 'board': board, 'category': category, 'fid': fid})
 
     elif request.method == 'POST':
-        new_feed = Feed.objects.get(id=fid)
-        new_feed.title = request.POST['title']
-        new_feed.content = request.POST['content']
-        new_feed.photo = request.POST['photo']
-        new_feed.save()
 
-    return redirect('showboard', board=board, category=category)
+        # 민원 게시판
+        ''' category 
+            전체 게시판: gong
+            동별 게시판: bachelor | master | family | bk_906 etc
+        '''
+
+        if board == "minwon":
+            edit_minwon = Minwon.objects.get(id=fid)
+            edit_minwon.title = request.POST['title']
+            edit_minwon.content = request.POST['content']
+            edit_minwon.photo = request.POST['photo']
+            edit_minwon.noname = request.POST['noname']
+
+            edit_minwon.dormitory = 'gong' if category.find('gong') != -1 else ('bachelor' if category.find('bachelor') != -1 else (
+                'master' if category.find('master') != -1 else ('family' if category.find('family') != -1 else ('bk' if category.find('bk') != -1 else 'all'))))
+
+            edit_minwon.building = category.split(
+                '_')[1] if board.find('_') != -1 else 'none'
+
+            edit_minwon.save()
+
+        # 생필품 게시판
+        elif board == "life":
+
+            # cobuy 게시판
+            if category == "cobuy":
+                edit_cobuy = Cobuy.objects.get(id=fid)
+                edit_cobuy.product = request.POST['product']
+                edit_cobuy.status = request.POST['status']
+                edit_cobuy.contact = request.POST['contact']
+                edit_cobuy.price = request.POST['price']
+                edit_cobuy.url = request.POST['url']
+                edit_cobuy.duedate = request.POST['duedate']
+                edit_cobuy.save()
+
+            # rent 게시판
+            elif category == "rent":
+                edit_rent = Rent.objects.get(id=fid)
+                edit_rent.product = request.POST['product']
+                edit_rent.status = request.POST['status']
+                edit_rent.contact = request.POST['contact']
+                edit_rent.deposit = request.POST['deposit']
+                edit_rent.start_date = request.POST['start_date']
+                edit_rent.end_date = request.POST['end_date']
+                edit_rent.save()
+
+            # keep 게시판
+            elif category == "keep":
+                edit_keep = Keep.objects.get(id=fid)
+                edit_keep.product = request.POST['product']
+                edit_keep.status = request.POST['status']
+                edit_keep.contact = request.POST['contact']
+                edit_keep.start_date = request.POST['start_date']
+                edit_keep.end_date = request.POST['end_date']
+                edit_keep.reward = request.POST['reward']
+                edit_keep.save()
+
+            # resell 게시판
+            elif category == "resell":
+                edit_resell = Resell.objects.get(id=fid)
+                edit_resell.product = request.POST['product']
+                edit_resell.status = request.POST['status']
+                edit_resell.contact = request.POST['contact']
+                edit_resell.price = request.POST['price']
+                edit_resell.role = request.POST['role']
+                edit_resell.save()
+
+        elif board == "freeboard":
+            edit_free = FreeBoard.objects.get(id=fid)
+            edit_free.title = request.POST['title']
+            edit_free.content = request.POST['content']
+            edit_free.photo = request.POST['photo']
+            edit_free.noname = request.POST['noname']
+            edit_free.save()
+
+        return redirect('showfeed', board=board, category=category, fid=fid)
 
 # 게시글 삭제
 
