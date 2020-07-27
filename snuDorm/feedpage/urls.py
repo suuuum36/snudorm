@@ -20,11 +20,11 @@ urlpatterns = [
          views.likeComment, name='likecomment'),              
     path('<str:board>/<str:category>/<int:fid>/<int:cid>/',
          views.newRecomment, name='newrecomment'),
-    path('<str:board>/<str:category>/<int:fid>/<int:cid>/<int:rcid>/editrecomment',
+    path('<str:board>/<str:category>/<int:fid>/<int:cid>/<int:rcid>/editrecomment/',
          views.editRecomment, name='editrecomment'),
     path('<str:board>/<str:category>/<int:fid>/<int:cid>/<int:rcid>/',
          views.deleteRecomment, name='deleterecomment'),
-    path('<str:board>/<str:category>/<int:fid>/<int:cid>/<int:rcid>/likerecomment',
+    path('<str:board>/<str:category>/<int:fid>/<int:cid>/<int:rcid>/likerecomment/',
          views.likeRecomment, name='likerecomment'),         
 
 ]

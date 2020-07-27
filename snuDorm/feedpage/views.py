@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, HttpResponseRedirect
 from .models import Feed, Minwon, FreeBoard, CoBuy, Rent, Keep, Resell, FeedComment, \
     FeedLike, CommentLike, Recomment, RecommentLike
 from django.contrib.auth.models import User
+from django.http import JsonResponse
 
 # TODO:
 
@@ -94,16 +95,15 @@ def newFeed(request, board, category):
                                     status=status, contact=contact, role=role, author=request.user)
 
             return redirect('showboard', board=board, category=category)
+
         else:
             return redirect('showboard', board=board, category=category)
 
         return redirect('feeds/')
 
 # 특정 게시글 자세히 보기
-# board별로 띄워주는 글 다르므로, if문으로 나눠야함
 def showFeed(request, board, category, fid):
     feed = Feed.objects.get(id=fid)
-
     return render(request, 'feedpage/feed.html', {'feed': feed, 'board': board, 'category': category})
 
 # 게시글 수정
@@ -147,41 +147,79 @@ def likeFeed(request, board, category, fid):
 # 댓글 달기
 def newComment(request, board, category, fid):
     content = request.POST['content']
-    FeedComment.objects.create(
-        feed_id=fid, content=content, author=request.user)
-    return redirect('showboard', board=board, category=category)
+    new_comment = FeedComment.objects.create(feed_id=fid, content=content, author = request.user)
+    like_count = new_comment.commentlike_set.filter(user_id = request.user.id)
+
+    context = {
+        'cid': new_comment.id,
+        'username': new_comment.author.username,
+        'content': new_comment.content,
+        'like_count':like_count.count(),
+    }
+    
+    return JsonResponse(context)
 
 # 댓글 수정 -- 미완성
 def editComment(request, board, category, fid, cid):
-    return redirect('/feeds')
+    return redirect('showfeed', board=board, category=category, fid=fid)
 
-# 댓글 좋아요 -- 미완성
+# 댓글 좋아요
 def likeComment(request, board, category, fid, cid):
-    return redirect('/feeds')
+    feedcomment = FeedComment.objects.get(id = cid)
+    like_list = feedcomment.commentlike_set.filter(user_id = request.user.id)
+    if like_list.count() > 0:
+        feedcomment.commentlike_set.get(user_id = request.user.id).delete()
+    else:
+        CommentLike.objects.create(user_id = request.user.id, comment_id = feedcomment.id)
+    return redirect('showfeed', board=board, category=category, fid=fid)
 
 # 댓글 삭제
 def deleteComment(request, board, category, fid, cid):
     c = FeedComment.objects.get(id=cid)
     c.delete()
-    return redirect('showboard', board=board, category=category)
 
-# 대댓글 추가
+    context ={
+        'json': 'working',
+    }
+    
+    return JsonResponse(context)
+
+# 대댓글 달기
 def newRecomment(request, board, category, fid, cid):
     content = request.POST['content']
-    Recomment.objects.create(
-        comment_id=cid, content=content, author=request.user)
-    return redirect('showboard', board=board, category=category)
+    new_recomment = Recomment.objects.create(comment_id=cid, content=content, author = request.user)
+    like_count = new_recomment.recommentlike_set.filter(user_id = request.user.id)
+
+    context = {
+        'did': new_recomment.id,
+        'username': new_recomment.author.username,
+        'content': new_recomment.content,
+        'like_count':like_count.count(),
+    }
+    
+    return JsonResponse(context)
 
 # 대댓글 수정 -- 미완성
 def editRecomment(request, board, category, fid, cid):
-    return redirect('showboard', board=board, category=category)
+    return redirect('showfeed', board=board, category=category, fid=fid)
 
 # 대댓글 삭제
 def deleteRecomment(request, board, category, fid, cid, rcid):
     c = Recomment.objects.get(id=rcid)
     c.delete()
-    return redirect('showboard', board=board, category=category)
+    
+    context ={
+        'json': 'working',
+    }
+    
+    return JsonResponse(context)
 
-# 대댓글 좋아요 -- 미완성
-def likeRecomment(request, board, category, fid, cid):
-    return redirect('showboard', board=board, category=category)
+# 대댓글 좋아요 
+def likeRecomment(request, board, category, fid, cid, rcid):
+    recomment = Recomment.objects.get(id = rcid)
+    like_list = recomment.recommentlike_set.filter(user_id = request.user.id)
+    if like_list.count() > 0:
+        recomment.recommentlike_set.get(user_id = request.user.id).delete()
+    else:
+        RecommentLike.objects.create(user_id = request.user.id, recomment_id = recomment.id)
+    return redirect('showfeed', board=board, category=category, fid=fid)
