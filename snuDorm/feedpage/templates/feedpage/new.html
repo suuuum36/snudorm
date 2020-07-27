@@ -3,37 +3,37 @@
 <div class="info">
     {{ error }}<br>
     {% if user.is_authenticated %}
-        <!-- Minwon 게시판 new Feed 생성 -->
+    <<<<<<< HEAD <!-- Minwon 게시판 new Feed 생성 -->
         {% if board == 'minwon' or board == 'freeboard' %}
-            {% if category == 'gong' %}
-                <div style="font-weight: bold; margin: 20px; background-color: yellow;"> 민원게시판 공통 글 작성하기</div>
-            {% elif category == 'dong' %}
-                <div style="font-weight: bold; margin: 20px; background-color: yellow;"> 민원게시판 {{ category }} 글 작성하기</div>
-            {% else %}
-                <div style="font-weight: bold; margin: 20px; background-color: yellow;"> 자유게시판 글 작성하기</div>
-            {% endif %}
-            <form method="POST" action="{% url 'newfeed' board category %}">
-                {% csrf_token %}
-                <div style="background-color: thistle; margin: 20px;">
-                    <div style="margin: 0px 0px 20px 20px; padding-top: 20px;">
-                        제목</br>
-                        <input name="title" type=" text" required>
-                    </div></br>
-                    <div style="margin: 0px 0px 20px 20px;">
-                        내용</br>
-                        <input name="content" type="text" required>
-                    </div></br>
-                    <div style="margin: 0px 0px 20px 20px;">
-                        사진</br>
-                        <input name="photo" type="text" required>
-                    </div></br>
-                    <div style="margin: 0px 0px 20px 20px;">
-                        익명</br>
-                        <input name="noname" type="text" required>
-                    </div></br>
-                </div>
-                <button type="submit">게시글 작성하기 </button>
-            </form>
+        {% if category == 'gong' %}
+        <div style="font-weight: bold; margin: 20px; background-color: yellow;"> 민원게시판 공통 글 작성하기</div>
+        {% elif category == 'dong' %}
+        <div style="font-weight: bold; margin: 20px; background-color: yellow;"> 민원게시판 {{ category }} 글 작성하기</div>
+        {% else %}
+        <div style="font-weight: bold; margin: 20px; background-color: yellow;"> 자유게시판 글 작성하기</div>
+        {% endif %}
+        <form method="POST" action="{% url 'newfeed' board category %}">
+            {% csrf_token %}
+            <div style="background-color: thistle; margin: 20px;">
+                <div style="margin: 0px 0px 20px 20px; padding-top: 20px;">
+                    제목</br>
+                    <input name="title" type=" text" required>
+                </div></br>
+                <div style="margin: 0px 0px 20px 20px;">
+                    내용</br>
+                    <input name="content" type="text" required>
+                </div></br>
+                <div style="margin: 0px 0px 20px 20px;">
+                    사진</br>
+                    <input name="photo" type="text" required>
+                </div></br>
+                <div style="margin: 0px 0px 20px 20px;">
+                    익명</br>
+                    <input name="noname" type="text" required>
+                </div></br>
+            </div>
+            <button type="submit">게시글 작성하기 </button>
+        </form>
         {% elif category == 'cobuy' %}
         <div> 공구게시판 글 작성하기</div>
         <form method="POST" action="{% url 'newfeed' 'life' 'cobuy' %}">
@@ -41,179 +41,194 @@
             <div>
                 제목 </br>
                 <input name="title" type="text" required>
-            </div></br>
-            <div style="margin: 0px 0px 20px 20px;">
-                익명</br>
-                <input name="noname" type="text" required>
-            </div></br>
-            <div>
-                품목 </br>
-                <input name="product" type="text" required>
-            </div></br>
-            <div style="margin: 0px 0px 20px 20px;">
-                사진</br>
-                <input name="photo" type="text" required>
-            </div></br>
-                가격</br>
-                <input name="price" type="text" required>
-            </div></br>
-            <div>
-                제품링크</br>
-                <input name="url" type="text" required>
-            </div></br>
-            <div>
-                마감기한</br>
-                <input name="duedate" type="text" placeholder="YYYY-MM-DD" pattern="\d{4}-\d{1,2}-\d{1,2}" required>
-            </div></br>
-            <div>
-                연락처</br>
-                <input name="contact" type="text" required>
-            </div></br>
-            <div>
-                상태 </br>
-                <input name="status" type="text" required>
-            </div></br>
-            <div>
-                기타</br>
-                <input name="content" type="text" required>
-            </div></br>
-            <button type="submit">게시글 작성하기 </button>
-        </form>
-        {% elif category == 'rent' %}
-        <div> 대여게시판 글 작성하기</div>
-        <form method="POST" action="{% url 'newfeed' 'life' 'rent' %}">
-            {% csrf_token %}
-            <div>
-                제목 </br>
-                <input name="title" type="text" required>
-            </div></br>
-            <div style="margin: 0px 0px 20px 20px;">
-                익명</br>
-                <input name="noname" type="text" required>
-            </div></br>
-            <div>
-                품목 </br>
-                <input name="product" type="text" required>
-            </div></br>
-            <div style="margin: 0px 0px 20px 20px;">
-                사진</br>
-                <input name="photo" type="text" required>
-            </div></br>
-            <div>
-                보증금</br>
-                <input name="deposit" type="text" required>
-            </div></br>
-            <div>
-                시작기간</br>
-                <input name="start_date" type="text" placeholder="YYYY-MM-DD" pattern="\d{4}-\d{1,2}-\d{1,2}" required>
-            </div></br>
-            <div>
-                마감기한</br>
-                <input name="end_date" type="text" placeholder="YYYY-MM-DD" pattern="\d{4}-\d{1,2}-\d{1,2}" required>
-            </div></br>
-            <div>
-                연락처</br>
-                <input name="contact" type="text" required>
-            </div></br>
-            <div>
-                상태 </br>
-                <input name="status" type="text" required>
-            </div></br>
-            <div>
-                기타</br>
-                <input name="content" type="text" required>
-            </div></br>
-            <button type="submit">게시글 작성하기 </button>
-        </form>
-        {% elif category == "keep" %}
-        <div> 보관 게시판 글 작성하기</div>
-        <form method="POST" action="{% url 'newfeed' 'life' 'keep' %}">
-            {% csrf_token %}
-            <div>
-                제목 </br>
-                <input name="title" type="text" required>
-            </div></br>
-            <div style="margin: 0px 0px 20px 20px;">
-                익명</br>
-                <input name="noname" type="text" required>
-            </div></br>
-            <div>
-                품목 </br>
-                <input name="product" type="text" required>
-            </div></br>
-            <div style="margin: 0px 0px 20px 20px;">
-                사진</br>
-                <input name="photo" type="text" required>
-            </div></br>
-            <div>
-                시작기간</br>
-                <input name="start_date" type="text" placeholder="YYYY-MM-DD" pattern="\d{4}-\d{1,2}-\d{1,2}" required>
-            </div></br>
-            <div>
-                마감기한</br>
-                <input name="end_date" type="text" placeholder="YYYY-MM-DD" pattern="\d{4}-\d{1,2}-\d{1,2}" required>
-            </div></br>
-            <div>
-                사례금 </br>
-                <input name="reward" type="text" required>
-            </div></br>
-            <div>
-                연락처</br>
-                <input name="contact" type="text" required>
-            </div></br>
-            <div>
-                상태 </br>
-                <input name="status" type="text" required>
-            </div></br>
-            <div>
-                기타</br>
-                <input name="content" type="text" required>
-            </div></br>
-            <button type="submit">게시글 작성하기 </button>
-        </form>
-        {% elif category == "resell" %}
-        <div> 거래 게시판 글 작성하기</div>
-        <form method="POST" action="{% url 'newfeed' 'life' 'resell' %}">
-            {% csrf_token %}
-            <div>
-                제목 </br>
-                <input name="title" type="text" required>
-            </div></br>
-            <div style="margin: 0px 0px 20px 20px;">
-                익명</br>
-                <input name="noname" type="text" required>
-            </div></br>
-            <div>
-                품목 </br>
-                <input name="product" type="text" required>
-            </div></br>
-            <div style="margin: 0px 0px 20px 20px;">
-                사진</br>
-                <input name="photo" type="text" required>
-            </div></br>
-            <div>
-                가격</br>
-                <input name="price" type="text" required>
-            </div></br>
-            <div>
-                역할</br>
-                <input name="role" type="text" required>
-            </div></br>
-            <div>
-                연락처</br>
-                <input name="contact" type="text" required>
-            </div></br>
-            <div>
-                상태 </br>
-                <input name="status" type="text" required>
-            </div></br>
-            <div>
-                기타</br>
-                <input name="content" type="text" required>
-            </div></br>
-            <button type="submit">게시글 작성하기 </button>
-        </form>
-        {% endif %}
-    {% endif %}
-</div>
-{% endblock content %}
+                =======
+                {% if board == "minwon" %}
+                <div style="font-weight: bold; margin: 20px; background-color: yellow;"> 민원게시판 글 작성하기</div>
+                <form method="POST" action="{% url 'newfeed' "minwon" "gong" %}">
+                    {% csrf_token %}
+                    <div style="background-color: thistle; margin: 20px;">
+                        <div style="margin: 0px 0px 20px 20px; padding-top: 20px;">
+                            제목</br>
+                            <input name="title" type=" text" required>
+                            >>>>>>> 3045ae9daf6d0e98283a4944f8bced02d9c60e16
+                        </div></br>
+                        <div style="margin: 0px 0px 20px 20px;">
+                            익명</br>
+                            <input name="noname" type="text" required>
+                        </div></br>
+                        <div>
+                            품목 </br>
+                            <input name="product" type="text" required>
+                        </div></br>
+                        <div style="margin: 0px 0px 20px 20px;">
+                            사진</br>
+                            <input name="photo" type="text" required>
+                        </div></br>
+                        가격</br>
+                        <input name="price" type="text" required>
+                    </div></br>
+                    <div>
+                        제품링크</br>
+                        <input name="url" type="text" required>
+                    </div></br>
+                    <div>
+                        마감기한</br>
+                        <input name="duedate" type="text" placeholder="YYYY-MM-DD" pattern="\d{4}-\d{1,2}-\d{1,2}"
+                            required>
+                    </div></br>
+                    <div>
+                        연락처</br>
+                        <input name="contact" type="text" required>
+                    </div></br>
+                    <div>
+                        상태 </br>
+                        <input name="status" type="text" required>
+                    </div></br>
+                    <div>
+                        기타</br>
+                        <input name="content" type="text" required>
+                    </div></br>
+                    <button type="submit">게시글 작성하기 </button>
+                </form>
+                {% elif category == 'rent' %}
+                <div> 대여게시판 글 작성하기</div>
+                <form method="POST" action="{% url 'newfeed' 'life' 'rent' %}">
+                    {% csrf_token %}
+                    <div>
+                        제목 </br>
+                        <input name="title" type="text" required>
+                    </div></br>
+                    <div style="margin: 0px 0px 20px 20px;">
+                        익명</br>
+                        <input name="noname" type="text" required>
+                    </div></br>
+                    <div>
+                        품목 </br>
+                        <input name="product" type="text" required>
+                    </div></br>
+                    <div style="margin: 0px 0px 20px 20px;">
+                        사진</br>
+                        <input name="photo" type="text" required>
+                    </div></br>
+                    <div>
+                        보증금</br>
+                        <input name="deposit" type="text" required>
+                    </div></br>
+                    <div>
+                        시작기간</br>
+                        <input name="start_date" type="text" placeholder="YYYY-MM-DD" pattern="\d{4}-\d{1,2}-\d{1,2}"
+                            required>
+                    </div></br>
+                    <div>
+                        마감기한</br>
+                        <input name="end_date" type="text" placeholder="YYYY-MM-DD" pattern="\d{4}-\d{1,2}-\d{1,2}"
+                            required>
+                    </div></br>
+                    <div>
+                        연락처</br>
+                        <input name="contact" type="text" required>
+                    </div></br>
+                    <div>
+                        상태 </br>
+                        <input name="status" type="text" required>
+                    </div></br>
+                    <div>
+                        기타</br>
+                        <input name="content" type="text" required>
+                    </div></br>
+                    <button type="submit">게시글 작성하기 </button>
+                </form>
+                {% elif category == "keep" %}
+                <div> 보관 게시판 글 작성하기</div>
+                <form method="POST" action="{% url 'newfeed' 'life' 'keep' %}">
+                    {% csrf_token %}
+                    <div>
+                        제목 </br>
+                        <input name="title" type="text" required>
+                    </div></br>
+                    <div style="margin: 0px 0px 20px 20px;">
+                        익명</br>
+                        <input name="noname" type="text" required>
+                    </div></br>
+                    <div>
+                        품목 </br>
+                        <input name="product" type="text" required>
+                    </div></br>
+                    <div style="margin: 0px 0px 20px 20px;">
+                        사진</br>
+                        <input name="photo" type="text" required>
+                    </div></br>
+                    <div>
+                        시작기간</br>
+                        <input name="start_date" type="text" placeholder="YYYY-MM-DD" pattern="\d{4}-\d{1,2}-\d{1,2}"
+                            required>
+                    </div></br>
+                    <div>
+                        마감기한</br>
+                        <input name="end_date" type="text" placeholder="YYYY-MM-DD" pattern="\d{4}-\d{1,2}-\d{1,2}"
+                            required>
+                    </div></br>
+                    <div>
+                        사례금 </br>
+                        <input name="reward" type="text" required>
+                    </div></br>
+                    <div>
+                        연락처</br>
+                        <input name="contact" type="text" required>
+                    </div></br>
+                    <div>
+                        상태 </br>
+                        <input name="status" type="text" required>
+                    </div></br>
+                    <div>
+                        기타</br>
+                        <input name="content" type="text" required>
+                    </div></br>
+                    <button type="submit">게시글 작성하기 </button>
+                </form>
+                {% elif category == "resell" %}
+                <div> 거래 게시판 글 작성하기</div>
+                <form method="POST" action="{% url 'newfeed' 'life' 'resell' %}">
+                    {% csrf_token %}
+                    <div>
+                        제목 </br>
+                        <input name="title" type="text" required>
+                    </div></br>
+                    <div style="margin: 0px 0px 20px 20px;">
+                        익명</br>
+                        <input name="noname" type="text" required>
+                    </div></br>
+                    <div>
+                        품목 </br>
+                        <input name="product" type="text" required>
+                    </div></br>
+                    <div style="margin: 0px 0px 20px 20px;">
+                        사진</br>
+                        <input name="photo" type="text" required>
+                    </div></br>
+                    <div>
+                        가격</br>
+                        <input name="price" type="text" required>
+                    </div></br>
+                    <div>
+                        역할</br>
+                        <input name="role" type="text" required>
+                    </div></br>
+                    <div>
+                        연락처</br>
+                        <input name="contact" type="text" required>
+                    </div></br>
+                    <div>
+                        상태 </br>
+                        <input name="status" type="text" required>
+                    </div></br>
+                    <div>
+                        기타</br>
+                        <input name="content" type="text" required>
+                    </div></br>
+                    <button type="submit">게시글 작성하기 </button>
+                </form>
+                {% endif %}
+                {% endif %}
+            </div>
+            {% endblock content %}
