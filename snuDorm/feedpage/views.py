@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
-from .models import Feed, Minwon, FreeBoard, CoBuy, Rent, Keep, Resell, FeedComment, \
+from .models import Feed, Minwon, Life, FreeBoard, CoBuy, Rent, Keep, Resell, FeedComment, \
                     FeedLike, CommentLike, Recomment, RecommentLike
 from django.contrib.auth.models import User
 from django.http import JsonResponse
@@ -80,7 +80,7 @@ def newFeed(request, board, category):
         title = request.POST['title']
         content = request.POST['content']
         photo = request.POST['photo']
-        noname = request.POST['noname']
+        noname = True if "check" in request.POST else False
     
         # 민원 게시판 
         ''' category 
@@ -97,6 +97,8 @@ def newFeed(request, board, category):
             building = category.split('_')[1] if board.find('_') != -1 else 'none'
             Minwon.objects.create(title=title, content=content, noname=noname, dormitory=dormitory, \
                                   building=building, photo=photo, author=request.user)
+
+            return redirect('showboard', board=board, category=category)
                                   
         # 생필품 게시판 
         elif board == "life":
@@ -133,16 +135,19 @@ def newFeed(request, board, category):
                 role = request.POST['role']
                 Resell.objects.create(title=title, content=content, product=product, price=price, noname=noname, \
                                     status=status, contact=contact, role=role, author=request.user)
-            else:
-                FreeBoard.objects.create(title=title, content=content, photo=photo, noname = noname, author=request.user)
+        else:
+            FreeBoard.objects.create(title=title, content=content, photo=photo, noname=noname, author=request.user)
             
-        
         return redirect('showboard', board=board, category=category)
 
 # 특정 게시글 자세히 보기
 # board별로 띄워주는 글 다르므로, if문으로 나눠야함
 def showFeed(request, board, category, fid):
     feed = Feed.objects.get(id=fid)
+    # 조회수 count 본인 게시글 조회 제외!
+    if request.user.id != feed.author.id:
+        feed.views += 1     
+        feed.save()
 
     return render(request, 'feedpage/feed.html', {'feed': feed, 'board': board, 'category': category})
 
