@@ -4,8 +4,6 @@ from .models import Feed, Minwon, FreeBoard, CoBuy, Rent, Keep, Resell, FeedComm
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 
-# TODO:
-
 
 def showMain(request):
     if request.method == 'GET':
@@ -151,7 +149,7 @@ def newFeed(request, board, category):
 
 # 특정 게시글 자세히 보기
 def showFeed(request, board, category, fid):
-
+    feed = Feed.objects.get(id=id)
     if board == "minwon":
         feed = Minwon.objects.get(id=fid)
 
