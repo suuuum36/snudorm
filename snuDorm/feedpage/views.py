@@ -79,7 +79,7 @@ def newFeed(request, board, category):
     elif request.method == 'POST':
         title = request.POST['title']
         content = request.POST['content']
-        photo = request.POST['photo']
+        photo = request.FILES.get('photo', False)
         noname = True if "check" in request.POST else False
     
         # 민원 게시판 

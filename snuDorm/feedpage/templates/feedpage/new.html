@@ -23,9 +23,9 @@
                         내용</br>
                         <input name="content" type="text" required>
                     </div></br>
-                    <div>
+                    <div >
                         사진</br>
-                        <input name="photo" type="text">
+                        <input name="photo" type="file">
                     </div></br>
                     <div >
                         <input name="noname" type="checkbox" id="noname">
@@ -52,7 +52,7 @@
             </div></br>
             <div >
                 사진</br>
-                <input name="photo" type="text" required>
+                <input name="photo" type="file">
             </div></br>
             <div>
                 가격</br>
@@ -98,7 +98,7 @@
             </div></br>
             <div >
                 사진</br>
-                <input name="photo" type="text" required>
+                <input name="photo" type="file">
             </div></br>
             <div>
                 보증금</br>
@@ -144,7 +144,7 @@
             </div></br>
             <div >
                 사진</br>
-                <input name="photo" type="text" required>
+                <input name="photo" type="file">
             </div></br>
             <div>
                 시작기간</br>
@@ -183,6 +183,10 @@
             <div >
                 <input name="noname" type="checkbox" id="noname">
                 <label for="noname">익명</label>
+                <select name="role">
+                    <option value='판매자' selected>판매자</option>
+                    <option value='구매자'>구매자</option>
+                </select></br>
             </div></br>
             <div>
                 품목 </br>
@@ -190,15 +194,11 @@
             </div></br>
             <div >
                 사진</br>
-                <input name="photo" type="text" required>
+                <input name="photo" type="file">
             </div></br>
             <div>
                 가격</br>
                 <input name="price" type="text" required>
-            </div></br>
-            <div>
-                역할</br>
-                <input name="role" type="text" required>
             </div></br>
             <div>
                 연락처</br>
