@@ -118,14 +118,14 @@ def newFeed(request, board, category):
                 price = request.POST['price']
                 url = request.POST['url']
                 duedate = request.POST['duedate']
-                CoBuy.objects.create(title=title, content=content, product=product, price=price, noname=noname,
+                CoBuy.objects.create(title=title, content=content, photo=photo, product=product, price=price, noname=noname,
                                      contact=contact, status=status, url=url, duedate=duedate, author=request.user)
             # rent 게시판
             elif category == "rent":
                 deposit = request.POST['deposit']
                 start_date = request.POST['start_date']
                 end_date = request.POST['end_date']
-                Rent.objects.create(title=title, content=content, product=product, contact=contact,
+                Rent.objects.create(title=title, content=content, photo=photo, product=product, contact=contact,
                                     noname=noname, status=status, deposit=deposit, author=request.user,
                                     start_date=start_date, end_date=end_date)
             # keep 게시판
@@ -133,14 +133,14 @@ def newFeed(request, board, category):
                 start_date = request.POST['start_date']
                 end_date = request.POST['end_date']
                 reward = request.POST['reward']
-                Keep.objects.create(title=title, content=content, product=product, status=status, contact=contact,
+                Keep.objects.create(title=title, content=content, photo=photo, product=product, status=status, contact=contact,
                                     noname=noname, start_date=start_date, end_date=end_date, reward=reward, author=request.user)
 
             # resell 게시판
             elif category == "resell":
                 price = request.POST['price']
                 role = request.POST['role']
-                Resell.objects.create(title=title, content=content, product=product, price=price, noname=noname,
+                Resell.objects.create(title=title, content=content, photo=photo, product=product, price=price, noname=noname,
                                       status=status, contact=contact, role=role, author=request.user)
             else:
                 FreeBoard.objects.create(
@@ -148,26 +148,39 @@ def newFeed(request, board, category):
 
         return redirect('showboard', board=board, category=category)
 
+
 # 특정 게시글 자세히 보기
-
-
 def showFeed(request, board, category, fid):
-    feed = Feed.objects.get(id=fid)
+
+    if board == "minwon":
+        feed = Minwon.objects.get(id=fid)
+
+    elif board == "life":
+        feed = CoBuy.objects.get(id=fid) if category == "cobuy" else (Rent.objects.get(id=fid) if category == "rent" else (
+            Keep.objects.get(id=fid) if category == "keep" else (Resell.objects.get(id=fid) if category == "resell" else "all")))
+
+    elif board == "freeboard":
+        feed = FreeBoard.objects.get(id=fid)
 
     return render(request, 'feedpage/feed.html', {'feed': feed, 'board': board, 'category': category})
 
+
 # 게시글 수정
-# board별로 띄워주는 글 다르므로, if문으로 나눠야함
-
-
 def editFeed(request, board, category, fid):
     if request.method == 'GET':
-        feed = Feed.objects.get(id=fid)
+        if board == "minwon":
+            feed = Minwon.objects.get(id=fid)
+
+        elif board == "life":
+            feed = CoBuy.objects.get(id=fid) if category == "cobuy" else (Rent.objects.get(id=fid) if category == "rent" else (
+                Keep.objects.get(id=fid) if category == "keep" else (Resell.objects.get(id=fid) if category == "resell" else "all")))
+
+        elif board == "freeboard":
+            feed = FreeBoard.objects.get(id=fid)
 
         return render(request, 'feedpage/edit.html', {'feed': feed, 'board': board, 'category': category, 'fid': fid})
 
     elif request.method == 'POST':
-
         # 민원 게시판
         ''' category 
             전체 게시판: gong
@@ -181,8 +194,11 @@ def editFeed(request, board, category, fid):
             edit_minwon.photo = request.POST['photo']
             edit_minwon.noname = request.POST['noname']
 
-            edit_minwon.dormitory = 'gong' if category.find('gong') != -1 else ('bachelor' if category.find('bachelor') != -1 else (
-                'master' if category.find('master') != -1 else ('family' if category.find('family') != -1 else ('bk' if category.find('bk') != -1 else 'all'))))
+            edit_minwon.dormitory = 'gong' if category.find('gong') != -1 else \
+                ('bachelor' if category.find('bachelor') != -1 else
+                 ('master' if category.find('master') != -1 else
+                  ('family' if category.find('family') != -1 else
+                   ('bk' if category.find('bk') != -1 else 'all'))))
 
             edit_minwon.building = category.split(
                 '_')[1] if board.find('_') != -1 else 'none'
@@ -194,7 +210,11 @@ def editFeed(request, board, category, fid):
 
             # cobuy 게시판
             if category == "cobuy":
-                edit_cobuy = Cobuy.objects.get(id=fid)
+                edit_cobuy = CoBuy.objects.get(id=fid)
+                edit_cobuy.title = request.POST['title']
+                edit_cobuy.content = request.POST['content']
+                edit_cobuy.photo = request.POST['photo']
+                edit_cobuy.noname = request.POST['noname']
                 edit_cobuy.product = request.POST['product']
                 edit_cobuy.status = request.POST['status']
                 edit_cobuy.contact = request.POST['contact']
@@ -206,6 +226,10 @@ def editFeed(request, board, category, fid):
             # rent 게시판
             elif category == "rent":
                 edit_rent = Rent.objects.get(id=fid)
+                edit_rent.title = request.POST['title']
+                edit_rent.content = request.POST['content']
+                edit_rent.photo = request.POST['photo']
+                edit_rent.noname = request.POST['noname']
                 edit_rent.product = request.POST['product']
                 edit_rent.status = request.POST['status']
                 edit_rent.contact = request.POST['contact']
@@ -217,6 +241,10 @@ def editFeed(request, board, category, fid):
             # keep 게시판
             elif category == "keep":
                 edit_keep = Keep.objects.get(id=fid)
+                edit_keep.title = request.POST['title']
+                edit_keep.content = request.POST['content']
+                edit_keep.photo = request.POST['photo']
+                edit_keep.noname = request.POST['noname']
                 edit_keep.product = request.POST['product']
                 edit_keep.status = request.POST['status']
                 edit_keep.contact = request.POST['contact']
@@ -228,6 +256,10 @@ def editFeed(request, board, category, fid):
             # resell 게시판
             elif category == "resell":
                 edit_resell = Resell.objects.get(id=fid)
+                edit_resell.title = request.POST['title']
+                edit_resell.content = request.POST['content']
+                edit_resell.photo = request.POST['photo']
+                edit_resell.noname = request.POST['noname']
                 edit_resell.product = request.POST['product']
                 edit_resell.status = request.POST['status']
                 edit_resell.contact = request.POST['contact']
@@ -257,15 +289,25 @@ def deleteFeed(request, board, category, fid):
 
 # 민원게시판 게시글 좋아요
 def likeFeed(request, board, category, fid):
-    feed = Feed.objects.get(id=fid)
-    user_like = feed.feedlike.filter(user_id=request.user.id)
+    if request.method == 'GET':
+        if board == "minwon":
+            feed = Minwon.objects.get(id=fid)
 
-    if user_like.count() > 0:
-        feed.feedlike.get(user_id=request.user.id).delete()
-    else:
-        FeedLike.objects.create(user_id=request.user.id, feed_id=feed.id)
+        elif board == "life":
+            feed = CoBuy.objects.get(id=fid) if category == "cobuy" else (Rent.objects.get(id=fid) if category == "rent" else (
+                Keep.objects.get(id=fid) if category == "keep" else (Resell.objects.get(id=fid) if category == "resell" else "all")))
 
-    return render(request, 'feedpage/feed.html', {'feed': feed, 'board': board, 'category': category})
+        elif board == "freeboard":
+            feed = FreeBoard.objects.get(id=fid)
+
+        user_like = feed.feedlike.filter(user_id=request.user.id)
+
+        if user_like.count() > 0:
+            feed.feedlike.get(user_id=request.user.id).delete()
+        else:
+            FeedLike.objects.create(user_id=request.user.id, feed_id=feed.id)
+
+        return render(request, 'feedpage/feed.html', {'feed': feed, 'board': board, 'category': category, 'fid': fid})
 
 
 # 댓글 달기
