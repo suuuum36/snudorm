@@ -1,9 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
     <div class="info">
-        나는야 user info page~~~~
-        이 페이지는 info를 보여주는 페이지 인건강 ㅎㅅㅎ</br>
-        <a href="{%url 'user_edit' user.id %}" style="margin-right: 10px;"><button>내 정보 수정하기</button></a>
+        나는야 user info page~~~~</br>
+        {{ user.username }}</br>
+        {{ user.email }}</br>
+        {{ user.profile.nickname }}</br>
+        {{ user.profile.building }}</br>
+        <a href="{%url 'useredit' user.id %}" style="margin-right: 10px;">
+            <button>내 정보 수정하기</button>
+        </a>
     </div> 
     
     

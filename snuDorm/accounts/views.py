@@ -48,14 +48,14 @@ def login(request):
 
 
 def logout(request):
+    auth.logout(request)
     return render(request, 'accounts/logout.html')
 
 
 def userEdit(request, id):
     if request.method == 'POST':
-        user = User.objects.get(id = id)
-        Profile.objects.filter(user = user).update( email = request.POST['email'], \
-           nickname = request.POST['nickname'], building = request.POST['building'])
+        user = User.objects.get(id=id)
+        Profile.objects.filter(user=user).update(nickname=request.POST['nickname'], building=request.POST['building'])
         return redirect('/feeds')
 
     elif request.method == 'GET':
@@ -64,7 +64,7 @@ def userEdit(request, id):
 
 def userInfo(request, id):
 
-    return render(request, 'accounts/user_info.html')
+    return render(request, 'accounts/user_info.html', {'id': id})
 
 
 def userMessage(request, id):
