@@ -14,17 +14,15 @@
     그림 : {{ feed.photo }} </br>
 </div>
 <div style="background-color: burlywood; margin: 10px; text-align: center;">
-<<<<<<< HEAD
     {{ feed.like_users.count }} <a href="{% url 'likefeed' board category feed.id %}"> 추천</a>
-=======
-    {{ feed.like_users.count }} <a href="{% url 'likefeed' "minwon" "gong" feed.id %}"> 추천</a>
->>>>>>> urls, views fullchanged
 </div>
 {% for c in feed.feedcomment_set.all %}
 <div>
 <p>{{c.author.username}}: {{ c.content }}</p>
 {% if user.is_authenticated %}
-<a href="{% url 'likecomment' board category feed.id c.id %}">댓글 좋아요</a>
+<div>
+<a href="{% url 'likecomment' board category feed.id c.id %}" class='comment-like' data-board="{{ board }}" data-category="{{ category }}" data-fid='{{ feed.id }}' data-cid='{{ c.id }}' data-count='{{ c.commentlike_set.count }}' data-csrfmiddlewaretoken="{{ csrf_token }}">댓글 좋아요: {{ c.commentlike_set.count }}</a>
+</div>
 {% endif %}
 {% if request.user == c.author %}
 <form action="{% url 'deletecomment' board category feed.id c.id %}" method="POST" class='deletecomment' data-board="{{ board }}" data-category="{{ category }}" data-fid='{{ feed.id }}' data-cid='{{ c.id }}' data-csrfmiddlewaretoken="{{ csrf_token }}">
@@ -36,7 +34,9 @@
 <div>
 <p>{{d.author.username}}: {{ d.content }}</p>
 {% if user.is_authenticated %}
-<a href="{% url 'likecomment' board category feed.id c.id %}">대댓글 좋아요</a>
+<div>
+<a href="{% url 'likecomment' board category feed.id c.id %}" class='recomment-like' data-board="{{ board }}" data-category="{{ category }}" data-fid='{{ feed.id }}' data-cid='{{ c.id }}' data-did='{{ d.id }}' data-count='{{ d.recommentlike_set.count }}' data-csrfmiddlewaretoken="{{ csrf_token }}">대댓글 좋아요: {{ d.recommentlike_set.count }}</a>
+</div>
 {% endif %}
 {% if request.user == d.author %}
 <form action="{% url 'deleterecomment' board category feed.id c.id d.id %}" method="POST" class='deleterecomment' data-board="{{ board }}" data-category="{{ category }}" data-fid='{{ feed.id }}' data-cid='{{ c.id }}' data-did='{{ d.id }}' data-csrfmiddlewaretoken="{{ csrf_token }}">
