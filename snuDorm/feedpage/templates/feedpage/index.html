@@ -7,11 +7,45 @@
         <div class="panel-footer">
             <div class="panel panel-info">
                 <div class="panel-body">전체 소리함</div>
-                <div class="panel-footer">게시글 ~~~</div>
+                <div class="panel-footer">
+                <div id="show_normal_lists" style="display:''">  
+                {% for feed in feeds %} 
+                <a href="{% url 'showfeed' board category feed.id %}">
+                <div style="display:flex; justify-content: space-around" >
+                <div style="display:flex; flex-direction: column;">
+                <div>{{ feed.title }}  <div color:blue> {{ feed.feedcomment_set.count }} </div> </div>
+                <div style="color:gray">{{ feed.content }}</div> 
+                </div>
+                <div>
+                {{ feed.created_at|date:"y.m.d" }} 
+                </div> 
+                <div> 
+                    {{ feed.views }}
+                </div>
+                <div>
+                    {{ feed.like_users.count }} 
+                </div>
+                </div>
+                </div>
+                </div>
+                </div>
+            </div>
+            
+                </a> 
+        {% endfor %} 
+    </div>
+                  
+                </div>
             </div>
             <div class="panel panel-info">
                 <div class="panel-body">동 게시판</div>
-                <div class="panel-footer">게시글 ~~</div>
+                <div class="panel-footer">
+                    {% for feed in feeds %} 
+                        <div style="border: 1px solid grey;">
+                        <li><a href="/feeds/{{ feed.id }}">{{ feed.title}}</a></li>
+                        </div>
+                    {% endfor %} 
+                </div>
             </div>
         </div>
     </div>
@@ -48,6 +82,12 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-body">자유게시판</div>
+        <div class="panel-footer">
+        </div>
+    
     </div>
 </div>
 {% endblock content %}
