@@ -150,6 +150,7 @@ def newFeed(request, board, category):
 # 특정 게시글 자세히 보기
 def showFeed(request, board, category, fid):
     feed = Feed.objects.get(id=fid)
+    board_name = "민원" if board == "minwon" else ("공구 게시판" if category == "cobuy" else (""))
     # 조회수 count 본인 게시글 조회 제외!
     if request.user.id != feed.author.id:
         feed.views += 1     

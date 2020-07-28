@@ -55,7 +55,7 @@ def userEdit(request, id):
     if request.method == 'POST':
         user = User.objects.get(id=id)
         Profile.objects.filter(user=user).update(email=request.POST['email'],
-                                                 nickname=requet.POST['nickname'], building=request.POST['building'])
+                                                 nickname=request.POST['nickname'], building=request.POST['building'])
         return redirect('/feeds')
 
     elif request.method == 'GET':
