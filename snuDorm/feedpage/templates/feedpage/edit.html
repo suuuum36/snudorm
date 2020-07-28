@@ -1,20 +1,218 @@
 {% extends 'base.html' %}
 {% block content %}
-<div> 민원게시판 글 수정하기</div>
-<form method="POST" action="{% url 'editfeed' "minwon" "gong" feed.id %}">
-    {% csrf_token %}
-    <div>
-        제목</br>
-        <input name="title"" type=" text" value="{{ feed.title }}" required>
-    </div></br>
-    <div>
-        내용</br>
-        <input name="content" type="text" value="{{ feed.content }}" required>
-    </div></br>
-    <div>
-        그림</br>
-        <input name="photo" type="text" value="{{ feed.photo }}" required>
-    </div></br>
-    <button type="submit">게시글 수정하기 </button>
-</form>
+<div class="info">
+    {{ error }}<br>
+    {% if user.is_authenticated %}
+        {% if board == 'minwon' or board == 'freeboard' %}
+            {% if category == 'gong' %}
+                <div style="font-weight: bold; margin: 20px; background-color: yellow;"> 민원게시판 공통 글 수정하기</div>
+            {% elif category == 'dong' %}
+                <div style="font-weight: bold; margin: 20px; background-color: yellow;"> 민원게시판 {{ category }} 글 수정하기</div>
+            {% else %}
+                <div style="font-weight: bold; margin: 20px; background-color: yellow;"> 자유게시판 글 수정하기</div>
+            {% endif %}
+            <form method="POST" action="{% url 'editfeed' board category feed.id %}">
+                {% csrf_token %}
+                <div style="background-color: thistle; margin: 20px;">
+                    <div style="margin: 0px 0px 20px 20px; padding-top: 20px;">
+                        제목</br>
+                        <input name="title" type=" text" value="{{ feed.title }}" required>
+                    </div></br>
+                    <div style="margin: 0px 0px 20px 20px;">
+                        내용</br>
+                        <input name="content" type="text" value="{{ feed.content }}" required>
+                    </div></br>
+                    <div style="margin: 0px 0px 20px 20px;">
+                        사진</br>
+                        <input name="photo" type="text" value="{{ feed.photo }}" required>
+                    </div></br>
+                    <div style="margin: 0px 0px 20px 20px;">
+                        익명</br>
+                        <input name="noname" type="text" value="{{ feed.noname }}" required>
+                    </div></br>
+                </div>
+                <button type="submit">게시글 수정하기 </button>
+            </form>
+        {% elif category == 'cobuy' %}
+        <div> 공구게시판 글 수정하기</div>
+        <form method="POST" action="{% url 'editfeed' board category feed.id %}">
+            {% csrf_token %}
+            <div>
+                제목 </br>
+                <input name="title" type="text" value="{{ cobuy.title }}" required>
+            </div></br>
+            <div style="margin: 0px 0px 20px 20px;">
+                익명</br>
+                <input name="noname" type="text" value="{{ cobuy.noname }}" required>
+            </div></br>
+            <div>
+                품목 </br>
+                <input name="product" type="text" value="{{ cobuy.product }}" required>
+            </div></br>
+            <div style="margin: 0px 0px 20px 20px;">
+                사진</br>
+                <input name="photo" type="text" value="{{ cobuy.photo }}" required>
+            </div></br>
+                가격</br>
+                <input name="price" type="text" value="{{ cobuy.price }}" required>
+            </div></br>
+            <div>
+                제품링크</br>
+                <input name="url" type="text" value="{{ cobuy.url }}" required>
+            </div></br>
+            <div>
+                마감기한</br>
+                <input name="duedate" type="text" placeholder="YYYY-MM-DD" pattern="\d{4}-\d{1,2}-\d{1,2}" value="{{ cobuy.duedate }}" required>
+            </div></br>
+            <div>
+                연락처</br>
+                <input name="contact" type="text" value="{{ cobuy.contact }}" required>
+            </div></br>
+            <div>
+                상태 </br>
+                <input name="status" type="text" value="{{ cobuy.status }}" required>
+            </div></br>
+            <div>
+                기타</br>
+                <input name="content" type="text" value="{{ cobuy.content }}" required>
+            </div></br>
+            <button type="submit">게시글 수정하기 </button>
+        </form>
+        {% elif category == 'rent' %}
+        <div> 대여게시판 글 수정하기</div>
+        <form method="POST" action="{% url 'editfeed' board category feed.id %}">
+            {% csrf_token %}
+            <div>
+                제목 </br>
+                <input name="title" type="text" value="{{ rent.title }}" required>
+            </div></br>
+            <div style="margin: 0px 0px 20px 20px;">
+                익명</br>
+                <input name="noname" type="text" value="{{ rent.noname }}" required>
+            </div></br>
+            <div>
+                품목 </br>
+                <input name="product" type="text" value="{{ rent.product }}" required>
+            </div></br>
+            <div style="margin: 0px 0px 20px 20px;">
+                사진</br>
+                <input name="photo" type="text" value="{{ rent.photo }}" required>
+            </div></br>
+            <div>
+                보증금</br>
+                <input name="deposit" type="text" value="{{ rent.deposit }}" required>
+            </div></br>
+            <div>
+                시작기간</br>
+                <input name="start_date" type="text" placeholder="YYYY-MM-DD" pattern="\d{4}-\d{1,2}-\d{1,2}" value="{{ rent.start_date }}" required>
+            </div></br>
+            <div>
+                마감기한</br>
+                <input name="end_date" type="text" placeholder="YYYY-MM-DD" pattern="\d{4}-\d{1,2}-\d{1,2}" value="{{ rent.end_date }}" required>
+            </div></br>
+            <div>
+                연락처</br>
+                <input name="contact" type="text" value="{{ rent.contact }}" required>
+            </div></br>
+            <div>
+                상태 </br>
+                <input name="status" type="text" value="{{ rent.status }}" required>
+            </div></br>
+            <div>
+                기타</br>
+                <input name="content" type="text" value="{{ rent.content }}" required>
+            </div></br>
+            <button type="submit">게시글 수정하기 </button>
+        </form>
+        {% elif category == "keep" %}
+        <div> 보관 게시판 글 수정하기</div>
+        <form method="POST" action="{% url 'editfeed' board category feed.id %}">
+            {% csrf_token %}
+            <div>
+                제목 </br>
+                <input name="title" type="text" value="{{ keep.title }}" required>
+            </div></br>
+            <div style="margin: 0px 0px 20px 20px;">
+                익명</br>
+                <input name="noname" type="text" value="{{ keep.noname }}" required>
+            </div></br>
+            <div>
+                품목 </br>
+                <input name="product" type="text" value="{{ keep.product }}" required>
+            </div></br>
+            <div style="margin: 0px 0px 20px 20px;">
+                사진</br>
+                <input name="photo" type="text" value="{{ keep.photo }}" required>
+            </div></br>
+            <div>
+                시작기간</br>
+                <input name="start_date" type="text" placeholder="YYYY-MM-DD" pattern="\d{4}-\d{1,2}-\d{1,2}" value="{{ keep.start_date }}" required>
+            </div></br>
+            <div>
+                마감기한</br>
+                <input name="end_date" type="text" placeholder="YYYY-MM-DD" pattern="\d{4}-\d{1,2}-\d{1,2}" value="{{ keep.end_date }}" required>
+            </div></br>
+            <div>
+                사례금 </br>
+                <input name="reward" type="text" value="{{ keep.reward }}" required>
+            </div></br>
+            <div>
+                연락처</br>
+                <input name="contact" type="text" value="{{ keep.contact }}" required>
+            </div></br>
+            <div>
+                상태 </br>
+                <input name="status" type="text" value="{{ keep.status }}" required>
+            </div></br>
+            <div>
+                기타</br>
+                <input name="content" type="text" value="{{ keep.content }}" required>
+            </div></br>
+            <button type="submit">게시글 수정하기 </button>
+        </form>
+        {% elif category == "resell" %}
+        <div> 거래 게시판 글 수정하기</div>
+        <form method="POST" action="{% url 'editfeed' board category feed.id %}">
+            {% csrf_token %}
+            <div>
+                제목 </br>
+                <input name="title" type="text" value="{{ resell.title }}" required>
+            </div></br>
+            <div style="margin: 0px 0px 20px 20px;">
+                익명</br>
+                <input name="noname" type="text" value="{{ resell.noname }}" required>
+            </div></br>
+            <div>
+                품목 </br>
+                <input name="product" type="text" value="{{ resell.product }}" required>
+            </div></br>
+            <div style="margin: 0px 0px 20px 20px;">
+                사진</br>
+                <input name="photo" type="text" value="{{ resell.photo }}" required>
+            </div></br>
+            <div>
+                가격</br>
+                <input name="price" type="text" value="{{ resell.price }}" required>
+            </div></br>
+            <div>
+                역할</br>
+                <input name="role" type="text" value="{{ resell.role }}" required>
+            </div></br>
+            <div>
+                연락처</br>
+                <input name="contact" type="text" value="{{ resell.contact }}" required>
+            </div></br>
+            <div>
+                상태 </br>
+                <input name="status" type="text" value="{{ resell.status }}" required>
+            </div></br>
+            <div>
+                기타</br>
+                <input name="content" type="text" value="{{ resell.content }}" required>
+            </div></br>
+            <button type="submit">게시글 수정하기 </button>
+        </form>
+        {% endif %}
+    {% endif %}
+</div>
 {% endblock content %}

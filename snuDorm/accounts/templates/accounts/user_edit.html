@@ -2,7 +2,7 @@
 {% block content %}
     <div class="info">
         <span>USER: {{ user.username }}</span>
-        <form method="POST" action="{%url 'user_edit' user.id %}">
+        <form method="POST" action="{%url 'useredit' user.id %}">
             {% csrf_token %}
             <div>
                 닉네임</br> 
