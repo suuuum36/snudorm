@@ -36,11 +36,11 @@
             <!-- TODO: user info icon (accounts app) -->
             {% if user.is_authenticated %}
             <div>
-                <a href="{% url 'user_message' user.id %}" style="padding: 0 5px"><i
+                <a href="{% url 'usermessage' user.id %}" style="padding: 0 5px"><i
                         class="glyphicon glyphicon-envelope"></i></a>
-                <a href="{% url 'user_edit' user.id %}" style="padding: 0 5px"><i
+                <a href="{% url 'useredit' user.id %}" style="padding: 0 5px"><i
                         class="glyphicon glyphicon-user"></i></a>
-                <a href="{% url 'user_info' user.id %}" style="padding: 0 5px">{{ user.get_username }}</a>
+                <a href="{% url 'userinfo' user.id %}" style="padding: 0 5px">{{ user.get_username }}</a>
             </div>
             <!-- TODO: login/sinup (accounts app) -->
             {% else %}
@@ -68,7 +68,7 @@
                     </ul>
                 </li>
                 <li role="presentation" class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="{% url 'showboard' "life" "cobuy" %}"
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="{% url 'showboard' "freeboard" "#" %}"
                         role="button" aria-expanded="false"> 자유 게시판 <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                     </ul>

@@ -9,11 +9,11 @@
         <a href="{% url 'showboard' board category %}"><button id="best" onclick="showBestList()" >베스트</button></a> 
         <div style="justify-content: right"> 
             <!-- 전체글을 보는 게시판은 글쓰기 불가능하게! -->
-            {% if board != "freeboard" and category != "#" %} 
-                <a href="{% url 'newfeed' board category %}"><button>글쓰기</button></a>
+            {% if board != "freeboard" and category != "#" %}
+            <a href="{% url 'newfeed' board category %}"><button>글쓰기</button></a>
             {% endif %}
         </div>
-    </div> 
+    </div>
     <div style="display:flex; justify-content:space-around">
         <div>제목</div>
         <div>작성자</div> 

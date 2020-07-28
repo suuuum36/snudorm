@@ -1,83 +1,157 @@
 {% extends 'base.html' %}
 {% block content %}
 {% if feed.author == request.user %}
-<div style="background-color: coral; margin: 10px; text-align: right;">
-    <a href="{% url 'editfeed' "minwon" "gong" feed.id %}" style="margin-right: 10px;">수정하기</a>
-    <a href="{% url 'deletefeed' "minwon" "gong" feed.id %}" style="margin-right: 10px">삭제하기</a>
-</div>
+    <div style="background-color: coral; margin: 10px; text-align: right;">
+        <a href="{% url 'editfeed' board category feed.id %}" style="margin-right: 10px;">수정하기</a>
+        <a href="{% url 'deletefeed' board category feed.id %}" style="margin-right: 10px">삭제하기</a>
+    </div>
 {% endif %}
 {% if board == "minwon" %}
-<div style="background-color: bisque; margin:10px">
-    작성자 : {{ feed.author }} </br>
-    제목 : {{ feed.title }} </br>
-    내용 : {{ feed.content }} </br>
-    그림 : {{ feed.photo }} </br>
-</div>
+    <div style="background-color: bisque; margin:10px">
+        카테고리 : {{ feed.dormitory }} </br>
+        동 : {{ feed.building }} </br>    
+        작성자 : {% if feed.noname %} 익명
+        {% else %}
+        {{ feed.author.profile.nickname }}
+        {% endif %}
+        </br>
+        제목 : {{ feed.title }} </br>
+        내용 : {{ feed.content }} </br>
+        사진 : {{ feed.photo }} </br>
+    </div>
+{% elif board == "life" %}
+    {% if category == "cobuy" %}
+        <div style="background-color: bisque; margin:10px">
+            작성자 : {% if feed.noname %} 익명
+            {% else %}
+            {{ feed.author.profile.nickname }}
+            {% endif %}
+            </br>
+            제목 : {{ feed.title }} </br>
+            내용 : {{ feed.content }} </br>
+            사진 : {{ feed.photo }} </br>
+            품목 : {{ feed.product }} </br>
+            제품링크 : <a href="#"> {{ feed.url }}</a> </br>
+            상태 : {{ feed.status }} </br>
+            연락처 : {{ feed.contact }} </br>
+            가격 : {{ feed.price }} </br>
+            마감일 : {{ feed.duedate }} </br>
+        </div>
+    {% elif category == "rent" %}
+        <div style="background-color: bisque; margin:10px">
+            작성자 : {% if feed.noname %} 익명
+            {% else %}
+            {{ feed.author.profile.nickname }}
+            {% endif %}
+            </br>
+            제목 : {{ feed.title }} </br>
+            내용 : {{ feed.content }} </br>
+            사진 : {{ feed.photo }} </br>
+            품목 : {{ feed.product }} </br>
+            상태 : {{ feed.status }} </br>
+            연락처 : {{ feed.contact }} </br>
+            보증금 : {{ feed.deposit }} </br>
+            대여시작일 : {{ feed.start_date }} </br>
+            대여마감일 : {{ feed.end_date }} </br>
+        </div>
+    {% elif category == "keep" %}
+        <div style="background-color: bisque; margin:10px">
+            작성자 : {% if feed.noname %} 익명
+            {% else %}
+            {{ feed.author.profile.nickname }}
+            {% endif %}
+            </br>
+            제목 : {{ feed.title }} </br>
+            내용 : {{ feed.content }} </br>
+            사진 : {{ feed.photo }} </br>
+            품목 : {{ feed.product }} </br>
+            상태 : {{ feed.status }} </br>
+            연락처 : {{ feed.contact }} </br>
+            보관시작일 : {{ feed.start_date }} </br>
+            보관마감일 : {{ feed.end_date }} </br>
+            사례금 : {{ feed.reward }} </br>
+        </div>  
+    {% elif category == "resell" %}
+        <div style="background-color: bisque; margin:10px">
+            작성자 : {% if feed.noname %} 익명
+            {% else %}
+            {{ feed.author.profile.nickname }}
+            {% endif %}
+            </br>
+            제목 : {{ feed.title }} </br>
+            내용 : {{ feed.content }} </br>
+            사진 : {{ feed.photo }} </br>
+            품목 : {{ feed.product }} </br>
+            상태 : {{ feed.status }} </br>
+            연락처 : {{ feed.contact }} </br>
+            가격 : {{ feed.price }} </br>
+            판매 or 구매 : {{ feed.role }} </br>
+        </div>
+    {% endif %}
+{% elif board == "freeboard" %}
+    <div style="background-color: bisque; margin:10px">
+        작성자 : {% if feed.noname %} 익명
+            {% else %}
+            {{ feed.author.profile.nickname }}
+            {% endif %}
+            </br>
+        제목 : {{ feed.title }} </br>
+        내용 : {{ feed.content }} </br>
+        사진 : {{ feed.photo }} </br>
+    </div>
+{% endif %}
 <div style="background-color: burlywood; margin: 10px; text-align: center;">
-<<<<<<< HEAD
     {{ feed.like_users.count }} <a href="{% url 'likefeed' board category feed.id %}"> 추천</a>
-=======
-    {{ feed.like_users.count }} <a href="{% url 'likefeed' "minwon" "gong" feed.id %}"> 추천</a>
->>>>>>> urls, views fullchanged
 </div>
 {% for c in feed.feedcomment_set.all %}
-<div>
-<p>{{c.author.username}}: {{ c.content }}</p>
-{% if user.is_authenticated %}
-<a href="{% url 'likecomment' board category feed.id c.id %}">댓글 좋아요</a>
-{% endif %}
-{% if request.user == c.author %}
-<form action="{% url 'deletecomment' board category feed.id c.id %}" method="POST" class='deletecomment' data-board="{{ board }}" data-category="{{ category }}" data-fid='{{ feed.id }}' data-cid='{{ c.id }}' data-csrfmiddlewaretoken="{{ csrf_token }}">
-    {% csrf_token %}
-    <button>댓글 삭제</button>
-</form>
-{% endif %}
-{% for d in c.recomment_set.all %}
-<div>
-<p>{{d.author.username}}: {{ d.content }}</p>
-{% if user.is_authenticated %}
-<a href="{% url 'likecomment' board category feed.id c.id %}">대댓글 좋아요</a>
-{% endif %}
-{% if request.user == d.author %}
-<form action="{% url 'deleterecomment' board category feed.id c.id d.id %}" method="POST" class='deleterecomment' data-board="{{ board }}" data-category="{{ category }}" data-fid='{{ feed.id }}' data-cid='{{ c.id }}' data-did='{{ d.id }}' data-csrfmiddlewaretoken="{{ csrf_token }}">
-    {% csrf_token %}
-    <button>대댓글 삭제</button>
-</form>
-{% endif %}
-</div>
+    <div>
+        <p>{{c.author.username}}: {{ c.content }}</p>
+        {% if user.is_authenticated %}
+            <a href="{% url 'likecomment' board category feed.id c.id %}">댓글 좋아요</a>
+        {% endif %}
+        {% if request.user == c.author %}
+            <form action="{% url 'deletecomment' board category feed.id c.id %}" method="POST" class='deletecomment'
+                data-board="{{ board }}" data-category="{{ category }}" data-fid='{{ feed.id }}' data-cid='{{ c.id }}'
+                data-csrfmiddlewaretoken="{{ csrf_token }}">
+                {% csrf_token %}
+                <button>댓글 삭제</button>
+            </form>
+        {% endif %}
+        {% for d in c.recomment_set.all %}
+            <div>
+                <p>{{d.author.username}}: {{ d.content }}</p>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'likecomment' board category feed.id c.id %}">대댓글 좋아요</a>
+                {% endif %}
+                {% if request.user == d.author %}
+                    <form action="{% url 'deleterecomment' board category feed.id c.id d.id %}" method="POST"
+                        class='deleterecomment' data-board="{{ board }}" data-category="{{ category }}" data-fid='{{ feed.id }}'
+                        data-cid='{{ c.id }}' data-did='{{ d.id }}' data-csrfmiddlewaretoken="{{ csrf_token }}">
+                        {% csrf_token %}
+                        <button>대댓글 삭제</button>
+                    </form>
+                {% endif %}
+            </div>
+        {% endfor %}
+        {% if user.is_authenticated %}
+            <form action="{% url 'newrecomment' board category feed.id c.id %}" method="POST" class="recomment-submit"
+                data-board="{{ board }}" data-category="{{ category }}" data-fid="{{ feed.id }}" data-cid="{{ c.id }}"
+                data-csrfmiddlewaretoken="{{ csrf_token }}">
+                {% csrf_token %}
+                <input id="{{ c.id }}" type="text" name="content" />
+                <button type="submit">대댓글 달기</button>
+            </form>
+        {% endif %}
+    </div>
 {% endfor %}
 {% if user.is_authenticated %}
-<form action="{% url 'newrecomment' board category feed.id c.id %}" method="POST" class="recomment-submit" data-board="{{ board }}" data-category="{{ category }}" data-fid="{{ feed.id }}" data-cid="{{ c.id }}"data-csrfmiddlewaretoken="{{ csrf_token }}">
-    {% csrf_token %}
-    <input id ="{{ c.id }}" type="text" name="content" />
-    <button type="submit">대댓글 달기</button>
-</form>
+    <form action="{% url 'newcomment' board category feed.id %}" method="POST" class="comment-submit"
+        data-board="{{ board }}" data-category="{{ category }}" data-fid="{{ feed.id }}"
+        data-csrfmiddlewaretoken="{{ csrf_token }}">
+        {% csrf_token %}
+        <input id="{{ feed.id }}" type="text" name="content" />
+        <button type="submit">댓글 달기</button>
+    </form>
 {% endif %}
-</div>
-{% endfor %}
-{% if user.is_authenticated %}
-<form action="{% url 'newcomment' board category feed.id %}" method="POST" class="comment-submit" data-board="{{ board }}" data-category="{{ category }}" data-fid="{{ feed.id }}" data-csrfmiddlewaretoken="{{ csrf_token }}">
-    {% csrf_token %}
-    <input id="{{ feed.id }}" type="text" name="content" />
-    <button type="submit">댓글 달기</button>
-</form>
-{% endif %}
-{% endif %}
-
-{% if category == "cobuy" %}
-{% endif %}
-
-{% if category == "cobuy" %}
-{% endif %}
-
-{% if category == "cobuy" %}
-{% endif %}
-
-{% if category == "cobuy" %}
-{% endif %}
-
-{% if board == "freeboard" %}
-{% endif %}
-
 
 {% endblock content %}

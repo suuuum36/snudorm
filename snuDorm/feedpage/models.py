@@ -15,6 +15,7 @@ from multiselectfield import MultiSelectField
     4) 거래: 
 """
 
+
 class Feed(models.Model):
     title = models.CharField(max_length=256)
     content = models.TextField()
@@ -38,12 +39,14 @@ class Feed(models.Model):
     def __str__(self):
         return self.title
 
+
 class Minwon(Feed):
     dormitory = models.CharField(max_length=20, blank=False)
     building = models.CharField(max_length=20, blank=False)
-    
+
     def __str__(self):
         return self.title
+
 
 class Life(Feed):
     product = models.CharField(max_length=256)
@@ -53,16 +56,19 @@ class Life(Feed):
     class Meta:
         ordering = ('created_at', )
 
+
 class CoBuy(Life):
     price = models.IntegerField(blank=True)
     # # 진행중, 마감, etc 혹은 multiselect field로 해도 무방
     duedate = models.DateTimeField(blank=True)
     url = models.CharField(max_length=256, null=True)
-    
+
+
 class Rent(Life):
     deposit = models.CharField(max_length=256)
     start_date = models.DateTimeField(blank=True, null=True)
     end_date = models.DateTimeField(blank=True, null=True)
+
 
 class Keep(Life):
     start_date = models.DateTimeField(default=timezone.now)
@@ -70,6 +76,7 @@ class Keep(Life):
 
     # template에서 협의 가능 써주기
     reward = models.CharField(max_length=256)
+
 
 class Resell(Life):
     price = models.IntegerField(blank=True)
@@ -81,9 +88,11 @@ class Resell(Life):
         template에서 커스터마이징 시에는 {{ object.author_role }} 등으로 사용 
     """
 
+
 class FreeBoard(Feed):
     def __str__(self):
         return self.title
+
 
 class FeedComment(models.Model):
     content = models.TextField()
@@ -94,16 +103,19 @@ class FeedComment(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     noname = models.BooleanField(default=False)
 
+
 class FeedLike(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)
     feed = models.ForeignKey(
         Feed, on_delete=models.CASCADE, related_name='feedlike')  # 역참조를 위한 related_name 지정
 
+
 class CommentLike(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)
     comment = models.ForeignKey(FeedComment, on_delete=models.CASCADE)
+
 
 class Recomment(models.Model):
     content = models.TextField()
@@ -111,6 +123,7 @@ class Recomment(models.Model):
     comment = models.ForeignKey(FeedComment, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)
     noname = models.BooleanField(default=False)
+
 
 class RecommentLike(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
