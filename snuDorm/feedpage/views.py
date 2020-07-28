@@ -216,19 +216,18 @@ def likeComment(request, board, category, fid, cid):
         feedcomment.commentlike_set.get(user_id = request.user.id).delete()
     else:
         CommentLike.objects.create(user_id = request.user.id, comment_id = feedcomment.id)
-    return redirect('showfeed', board=board, category=category, fid=fid)
+    context = {
+        'likecount': like_list.count()
+    }
+    return JsonResponse(context)
+    # return redirect('showfeed', board=board, category=category, fid=fid)
 
 
 # 댓글 삭제
 def deleteComment(request, board, category, fid, cid):
     c = FeedComment.objects.get(id=cid)
     c.delete()
-
-    context ={
-        'json': 'working',
-    }
-    
-    return JsonResponse(context)
+    return JsonResponse({})
 
 # 대댓글 달기
 def newRecomment(request, board, category, fid, cid):
@@ -254,12 +253,7 @@ def editRecomment(request, board, category, fid, cid):
 def deleteRecomment(request, board, category, fid, cid, rcid):
     c = Recomment.objects.get(id=rcid)
     c.delete()
-    
-    context ={
-        'json': 'working',
-    }
-    
-    return JsonResponse(context)
+    return JsonResponse({})
 
 # 대댓글 좋아요 
 def likeRecomment(request, board, category, fid, cid, rcid):
@@ -269,5 +263,8 @@ def likeRecomment(request, board, category, fid, cid, rcid):
         recomment.recommentlike_set.get(user_id = request.user.id).delete()
     else:
         RecommentLike.objects.create(user_id = request.user.id, recomment_id = recomment.id)
-    return redirect('showfeed', board=board, category=category, fid=fid)
-
+    
+    context = {
+        'likecount': like_list.count()
+    }
+    return JsonResponse(context)

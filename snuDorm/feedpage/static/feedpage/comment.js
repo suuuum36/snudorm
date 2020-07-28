@@ -21,7 +21,9 @@ $(document).on('submit', '.comment-submit', function(e) {
             const str = `
             <div>
             <p>${response.username}: ${response.content }</p>
-            <a href="/feeds/${board}/${category}/${fid}/${response.cid}/likecomment/">댓글 좋아요</a>
+            <div>
+            <a href="/feeds/${board}/${category}/${fid}/${response.cid}/likecomment/" class='comment-like' data-board="${board}" data-category="${category}" data-fid='${fid}' data-cid='${response.cid}' data-csrfmiddlewaretoken="${csrfmiddlewaretoken}" data-count="0">댓글 좋아요: 0</a>
+            </div>
             <form action="/feeds/${board}/${category}/${fid}/${response.cid}/deletecomment/" method="POST" class='deletecomment' data-board="${board}" data-category="${category}" data-fid="${fid}" data-cid="${response.cid}" data-csrfmiddlewaretoken="${csrfmiddlewaretoken}">
             <input type="hidden" name="csrfmiddlewaretoken" value=${csrfmiddlewaretoken}>
                 <button>댓글 삭제</button>
@@ -74,7 +76,9 @@ $(document).on('submit', '.recomment-submit', function(e) {
             const str = `
             <div>
             <p>${response.username}: ${response.content }</p>
-            <a href="/feeds/${board}/${category}/${fid}/${cid}/${response.did}/likerecomment/">대댓글 좋아요</a>
+            <div>
+            <a href="/feeds/${board}/${category}/${fid}/${cid}/${response.did}/likerecomment/" class='recomment-like' data-board="${board}" data-category="${category}" data-fid='${fid}' data-cid='${cid}' data-did='${response.did}' data-csrfmiddlewaretoken="${csrfmiddlewaretoken}" data-count="0">대댓글 좋아요: 0</a>
+            </div>
             <form action="/feeds/${board}/${category}/${fid}/${cid}/${response.did}/" method="POST" class='deleterecomment' data-board="${board}" data-category="${category}" data-fid='${fid}' data-cid='${cid}' data-did='${response.did}' data-csrfmiddlewaretoken="${csrfmiddlewaretoken}">
             <input type="hidden" name="csrfmiddlewaretoken" value=${csrfmiddlewaretoken}>
                 <button>대댓글 삭제</button>
@@ -110,8 +114,6 @@ $(document).on('submit', '.deletecomment', (e) => {
         url: `/feeds/${board}/${category}/${fid}/${cid}/deletecomment/`,
         type: 'POST',
         data: {
-            fid: fid,
-            cid: cid,
             csrfmiddlewaretoken: csrfmiddlewaretoken,
         },
         dataType: 'json',
@@ -149,9 +151,6 @@ $(document).on('submit', '.deleterecomment', (e) => {
         url: `/feeds/${board}/${category}/${fid}/${cid}/${did}/`,
         type: 'POST',
         data: {
-            fid: fid,
-            cid: cid,
-            did: did,
             csrfmiddlewaretoken: csrfmiddlewaretoken,
         },
         dataType: 'json',
@@ -172,3 +171,106 @@ $(document).on('submit', '.deleterecomment', (e) => {
         
     })
 })
+
+
+$(document).on('click', '.comment-like', (e) => {
+    e.preventDefault();
+    const $this = $(e.currentTarget);
+    const board = $this.data('board');
+    const category = $this.data('category');
+    const fid = $this.data('fid');
+    const cid = $this.data('cid');
+    const count = $this.data('count');
+    const csrfmiddlewaretoken = $this.data('csrfmiddlewaretoken');
+
+    $.ajax({
+        url: `/feeds/${board}/${category}/${fid}/${cid}/likecomment/`,
+        type: 'POST',
+        data: {
+            fid: fid,
+            cid: cid,
+            csrfmiddlewaretoken: csrfmiddlewaretoken,
+        },
+        dataType: 'json',
+
+        success: function (response) {
+            console.log(response);
+
+            if(response.like_count > 0) {
+                count + 1;
+            } else {
+                count - 1;
+            }  
+
+            const str = `
+            <div>
+            <a href="/feeds/${board}/${category}/${fid}/${cid}/likecomment/" class='comment-like' data-board="${board}" data-category="${category}" data-fid='${fid}' data-cid='${cid}' data-csrfmiddlewaretoken="${csrfmiddlewaretoken}" data-count="${count}">댓글 좋아요: ${response.likecount}</a>
+            </div>
+            `
+            $(str).insertBefore($this);
+            $this.remove();
+            
+        },
+
+        error: function (response, status, error) {
+            console.log(response, status, error);
+        },
+
+        complete: function (response) {
+            console.log(response)
+        }
+
+    });
+});
+
+
+$(document).on('click', '.recomment-like', (e) => {
+    e.preventDefault();
+    const $this = $(e.currentTarget);
+    const board = $this.data('board');
+    const category = $this.data('category');
+    const fid = $this.data('fid');
+    const cid = $this.data('cid');
+    const did = $this.data('did');
+    const count = $this.data('count');
+    const csrfmiddlewaretoken = $this.data('csrfmiddlewaretoken');
+
+    $.ajax({
+        url: `/feeds/${board}/${category}/${fid}/${cid}/${did}/likerecomment/`,
+        type: 'POST',
+        data: {
+            fid: fid,
+            cid: cid,
+            csrfmiddlewaretoken: csrfmiddlewaretoken,
+        },
+        dataType: 'json',
+
+        success: function (response) {
+            console.log(response);
+
+            if(response.like_count > 0) {
+                count + 1;
+            } else {
+                count - 1;
+            }  
+
+            const str = `
+            <div>
+            <a href="/feeds/${board}/${category}/${fid}/${cid}/${did}/likerecomment/" class='recomment-like' data-board="${board}" data-category="${category}" data-fid='${fid}' data-cid='${cid}' data-did='${did}' data-csrfmiddlewaretoken="${csrfmiddlewaretoken}" data-count="${count}">대댓글 좋아요: ${response.likecount}</a>
+            </div>
+            `
+            $(str).insertBefore($this);
+            $this.remove();
+            
+        },
+
+        error: function (response, status, error) {
+            console.log(response, status, error);
+        },
+
+        complete: function (response) {
+            console.log(response)
+        }
+
+    });
+});
