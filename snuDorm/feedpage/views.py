@@ -1,9 +1,8 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
-from .models import Feed, Minwon, FreeBoard, CoBuy, Rent, Keep, Resell, FeedComment, \
-    FeedLike, CommentLike, Recomment, RecommentLike, Life
+from .models import Feed, Minwon, Life, FreeBoard, CoBuy, Rent, Keep, Resell, FeedComment, \
+                    FeedLike, CommentLike, Recomment, RecommentLike
 from django.contrib.auth.models import User
 from django.http import JsonResponse
-
 
 def showMain(request):
     if request.method == 'GET':
@@ -86,9 +85,9 @@ def newFeed(request, board, category):
         title = request.POST['title']
         content = request.POST['content']
         photo = request.POST['photo']
-        noname = request.POST['noname']
-
-        # 민원 게시판
+        noname = True if "check" in request.POST else False
+    
+        # 민원 게시판 
         ''' category 
             전체 게시판: gong
             동별 게시판: bachelor | master | family | bk_906 etc
@@ -105,7 +104,9 @@ def newFeed(request, board, category):
             Minwon.objects.create(title=title, content=content, noname=noname, dormitory=dormitory,
                                   building=building, photo=photo, author=request.user)
 
-        # 생필품 게시판
+            return redirect('showboard', board=board, category=category)
+                                  
+        # 생필품 게시판 
         elif board == "life":
             product = request.POST['product']
             status = request.POST['status']
@@ -138,27 +139,21 @@ def newFeed(request, board, category):
             elif category == "resell":
                 price = request.POST['price']
                 role = request.POST['role']
-                Resell.objects.create(title=title, content=content, photo=photo, product=product, price=price, noname=noname,
-                                      status=status, contact=contact, role=role, author=request.user)
-            else:
-                FreeBoard.objects.create(
-                    title=title, content=content, photo=photo, noname=noname, author=request.user)
-
+                Resell.objects.create(title=title, content=content, product=product, price=price, noname=noname, \
+                                    status=status, contact=contact, role=role, author=request.user)
+        else:
+            FreeBoard.objects.create(title=title, content=content, photo=photo, noname=noname, author=request.user)
+            
         return redirect('showboard', board=board, category=category)
 
 
 # 특정 게시글 자세히 보기
 def showFeed(request, board, category, fid):
-    feed = Feed.objects.get(id=id)
-    if board == "minwon":
-        feed = Minwon.objects.get(id=fid)
-
-    elif board == "life":
-        feed = CoBuy.objects.get(id=fid) if category == "cobuy" else (Rent.objects.get(id=fid) if category == "rent" else (
-            Keep.objects.get(id=fid) if category == "keep" else (Resell.objects.get(id=fid) if category == "resell" else "all")))
-
-    elif board == "freeboard":
-        feed = FreeBoard.objects.get(id=fid)
+    feed = Feed.objects.get(id=fid)
+    # 조회수 count 본인 게시글 조회 제외!
+    if request.user.id != feed.author.id:
+        feed.views += 1     
+        feed.save()
 
     return render(request, 'feedpage/feed.html', {'feed': feed, 'board': board, 'category': category})
 
@@ -311,9 +306,8 @@ def likeFeed(request, board, category, fid):
 # 댓글 달기
 def newComment(request, board, category, fid):
     content = request.POST['content']
-    new_comment = FeedComment.objects.create(
-        feed_id=fid, content=content, author=request.user)
-    like_count = new_comment.commentlike_set.filter(user_id=request.user.id)
+    new_comment = FeedComment.objects.create(feed_id=fid, content=content, author = request.user)
+    like_count = new_comment.commentlike_set.filter(user_id = request.user.id)
 
     context = {
         'cid': new_comment.id,
@@ -387,8 +381,8 @@ def editRecomment(request, board, category, fid, cid):
 def deleteRecomment(request, board, category, fid, cid, rcid):
     c = Recomment.objects.get(id=rcid)
     c.delete()
-
-    context = {
+    
+    context ={
         'json': 'working',
     }
 

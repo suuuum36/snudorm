@@ -6,30 +6,30 @@
         <!-- Minwon 게시판 new Feed 생성 -->
         {% if board == 'minwon' or board == 'freeboard' %}
             {% if category == 'gong' %}
-                <div style="font-weight: bold; margin: 20px; background-color: yellow;"> 민원게시판 공통 글 작성하기</div>
-            {% elif category == 'dong' %}
-                <div style="font-weight: bold; margin: 20px; background-color: yellow;"> 민원게시판 {{ category }} 글 작성하기</div>
+                <div> 민원게시판 공통 글 작성하기</div>
+            {% elif category == '#' %}
+                <div> 자유게시판 글 작성하기</div>
             {% else %}
-                <div style="font-weight: bold; margin: 20px; background-color: yellow;"> 자유게시판 글 작성하기</div>
+                <div> 민원 동게시판 글 작성하기</div>
             {% endif %}
             <form method="POST" action="{% url 'newfeed' board category %}">
                 {% csrf_token %}
-                <div style="background-color: thistle; margin: 20px;">
-                    <div style="margin: 0px 0px 20px 20px; padding-top: 20px;">
+                <div>
+                    <div>
                         제목</br>
                         <input name="title" type=" text" required>
                     </div></br>
-                    <div style="margin: 0px 0px 20px 20px;">
+                    <div>
                         내용</br>
                         <input name="content" type="text" required>
                     </div></br>
-                    <div style="margin: 0px 0px 20px 20px;">
+                    <div>
                         사진</br>
-                        <input name="photo" type="text" required>
+                        <input name="photo" type="text">
                     </div></br>
-                    <div style="margin: 0px 0px 20px 20px;">
-                        익명</br>
-                        <input name="noname" type="text" required>
+                    <div >
+                        <input name="noname" type="checkbox" id="noname">
+                        <label for="noname">익명</label>
                     </div></br>
                 </div>
                 <button type="submit">게시글 작성하기 </button>
@@ -42,18 +42,19 @@
                 제목 </br>
                 <input name="title" type="text" required>
             </div></br>
-            <div style="margin: 0px 0px 20px 20px;">
-                익명</br>
-                <input name="noname" type="text" required>
+            <div >
+                <input name="noname" type="checkbox" id="noname">
+                <label for="noname">익명</label>
             </div></br>
             <div>
                 품목 </br>
                 <input name="product" type="text" required>
             </div></br>
-            <div style="margin: 0px 0px 20px 20px;">
+            <div >
                 사진</br>
                 <input name="photo" type="text" required>
             </div></br>
+            <div>
                 가격</br>
                 <input name="price" type="text" required>
             </div></br>
@@ -63,7 +64,7 @@
             </div></br>
             <div>
                 마감기한</br>
-                <input name="duedate" type="text" placeholder="YYYY-MM-DD" pattern="\d{4}-\d{1,2}-\d{1,2}" required>
+                <input name="duedate" type="date" required>
             </div></br>
             <div>
                 연락처</br>
@@ -87,15 +88,15 @@
                 제목 </br>
                 <input name="title" type="text" required>
             </div></br>
-            <div style="margin: 0px 0px 20px 20px;">
-                익명</br>
-                <input name="noname" type="text" required>
+            <div >
+                <input name="noname" type="checkbox" id="noname">
+                <label for="noname">익명</label>
             </div></br>
             <div>
                 품목 </br>
                 <input name="product" type="text" required>
             </div></br>
-            <div style="margin: 0px 0px 20px 20px;">
+            <div >
                 사진</br>
                 <input name="photo" type="text" required>
             </div></br>
@@ -105,11 +106,11 @@
             </div></br>
             <div>
                 시작기간</br>
-                <input name="start_date" type="text" placeholder="YYYY-MM-DD" pattern="\d{4}-\d{1,2}-\d{1,2}" required>
+                <input name="start_date" type="date" required>
             </div></br>
             <div>
                 마감기한</br>
-                <input name="end_date" type="text" placeholder="YYYY-MM-DD" pattern="\d{4}-\d{1,2}-\d{1,2}" required>
+                <input name="end_date" type="date" required>
             </div></br>
             <div>
                 연락처</br>
@@ -133,25 +134,25 @@
                 제목 </br>
                 <input name="title" type="text" required>
             </div></br>
-            <div style="margin: 0px 0px 20px 20px;">
-                익명</br>
-                <input name="noname" type="text" required>
+           <div >
+                <input name="noname" type="checkbox" id="noname">
+                <label for="noname">익명</label>
             </div></br>
             <div>
                 품목 </br>
                 <input name="product" type="text" required>
             </div></br>
-            <div style="margin: 0px 0px 20px 20px;">
+            <div >
                 사진</br>
                 <input name="photo" type="text" required>
             </div></br>
             <div>
                 시작기간</br>
-                <input name="start_date" type="text" placeholder="YYYY-MM-DD" pattern="\d{4}-\d{1,2}-\d{1,2}" required>
+                <input name="start_date" type="date" required>
             </div></br>
             <div>
                 마감기한</br>
-                <input name="end_date" type="text" placeholder="YYYY-MM-DD" pattern="\d{4}-\d{1,2}-\d{1,2}" required>
+                <input name="end_date" type="date" required>
             </div></br>
             <div>
                 사례금 </br>
@@ -179,15 +180,15 @@
                 제목 </br>
                 <input name="title" type="text" required>
             </div></br>
-            <div style="margin: 0px 0px 20px 20px;">
-                익명</br>
-                <input name="noname" type="text" required>
+            <div >
+                <input name="noname" type="checkbox" id="noname">
+                <label for="noname">익명</label>
             </div></br>
             <div>
                 품목 </br>
                 <input name="product" type="text" required>
             </div></br>
-            <div style="margin: 0px 0px 20px 20px;">
+            <div >
                 사진</br>
                 <input name="photo" type="text" required>
             </div></br>
