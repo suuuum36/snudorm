@@ -1,11 +1,19 @@
 {% extends 'base.html' %}
 {% block content %}
+    <div>
+        <a href="{% url 'userinfo' user.id %}">내 정보</a>
+        <a href="{% url 'useredit' user.id %}">개인정보 변경</a>
+        <a href="{% url 'usernotice' user.id %}">게시글 알림</a>
+        <a href="{% url 'messagebox' user.id %}">쪽지함</a>
+    </div>
+
     <div class="info">
-        나는야 user info page~~~~</br>
-        {{ user.username }}</br>
-        {{ user.email }}</br>
-        {{ user.profile.nickname }}</br>
-        {{ user.profile.building }}</br>
+        내 정보</br>
+        이름 : {{ user.profile.name }}</br>
+        아이디 : {{ user.username }}</br>
+        닉네임 : {{ user.profile.nickname }}</br>
+        이메일 : {{ user.email }} @ snu.ac.kr</br>
+        기숙사 동 : {{ user.profile.building_category }} {{ user.profile.building_dong}}동</br>
         <a href="{%url 'useredit' user.id %}" style="margin-right: 10px;">
             <button>내 정보 수정하기</button>
         </a>

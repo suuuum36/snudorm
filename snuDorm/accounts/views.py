@@ -5,25 +5,36 @@ from .models import Profile
 from django.contrib.auth import login as django_login
 from django.contrib.auth import authenticate as django_authenticate
 from django.http import JsonResponse
-
+from django.contrib.auth.decorators import login_required
+from .forms import UserForm, ProfileForm
+from django.contrib import messages
 
 def signup(request):
     if request.method == "POST":
-        username = request.POST["username"]
-        nickname = request.POST["nickname"]
-        email = request.POST["email"]
-        password = request.POST["password1"]
-        building = request.POST["building"]
+        user_id = request.POST["username"] # 아이디
+        password1 = request.POST['password1'] # 비밀번호 1차 확인
+        password2 = request.POST['password2'] # 비밀번호 2차 확인
+        name = request.POST['name'] # 이름
+        nickname = request.POST['nickname'] # 닉네임
+        email = request.POST['email'] # 이메일
+        building_category = request.POST['building_category'] # 생활관
+        building_dong = request.POST['building_dong'] # 동
 
-        user = User.objects.create_user(
-            username=username, email=email, password=password)
+        if password1 == password2:
+            user = User.objects.create_user(
+                username=user_id,
+                email=email,
+                password=password1,
+            )
+            user.profile.name = name
+            user.profile.nickname = nickname
+            user.profile.building_category = building_category
+            user.profile.building_dong = building_dong
+            user.save()
 
-        user.profile.building = building
-        user.profile.nickname = nickname
-        user.save()
-
-        login_user = django_authenticate(username=username, password=password)
+        login_user = django_authenticate(username=user_id, password=password1)
         django_login(request, login_user)
+        
         return redirect('/feeds')
 
     return render(request, 'accounts/signup.html')
@@ -51,22 +62,56 @@ def logout(request):
     auth.logout(request)
     return render(request, 'accounts/logout.html')
 
-
+@login_required
 def userEdit(request, id):
+
     if request.method == 'POST':
+        user_form = UserForm(request.POST, instance=request.user)
+        profile_form = ProfileForm(request.POST, instance=request.user.profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, ('Your profile was successfully updated!'))
+            
+        else:
+            messages.error(request, ('Please correct the error below.'))
+        
+        return redirect('useredit', id=id)
+        '''
         user = User.objects.get(id=id)
-        Profile.objects.filter(user=user).update(nickname=request.POST['nickname'], building=request.POST['building'])
-        return redirect('/feeds')
+        User.objects.filter(id=id).update(
+            username=request.POST['username'],
+            email=request.POST['email'],
+            password=request.POST['password'],
+        )
+        
+        Profile.objects.filter(id=id).update(
+            name=request.POST['name'],
+            nickname=request.POST['nickname'],
+            building_category=request.POST['building_category'],
+            building_dong=request.POST['building_dong'],
+        )
+        
+        user.profile.name=request.POST['name']
+        user.profile.nickname=request.POST['nickname']
+        user.profile.building_category=request.POST['building_category']
+        user.profile.building_dong=request.POST['building_dong']
+        user.profile.save()
+        return redirect('useredit', id=id)
+        '''
 
     elif request.method == 'GET':
-        return render(request, 'accounts/user_edit.html')
+        return render(request, 'accounts/user_edit.html', {'id': id})
 
 
 def userInfo(request, id):
 
     return render(request, 'accounts/user_info.html', {'id': id})
 
+def userNotice(request, id):
 
-def userMessage(request, id):
+    return render(request, 'accounts/user_notice', {'id': id})
 
-    return render(request, 'accounts/user_message.html')
+def messageBox(request, id):
+
+    return render(request, 'accounts/messagebox.html', {'id': id})
