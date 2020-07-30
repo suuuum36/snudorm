@@ -7,7 +7,6 @@
 input:focus {outline:none;}
 select:focus {outline:none;}
 a {text-decoration-line:none}
-a:hover {color: black}
 
 
 .first-header {
@@ -42,12 +41,14 @@ a:hover {color: black}
 
 .first-header-text > a {
     font-size: 17px;
-    color: #7f7f7f !important;
+    color: #7f7f7f;
 }
+
+.first-header-text a:hover {color: black !important;}
 
 .search {
     width: 430px;
-    border: 1px solid #999999;
+    border: 1px solid #b9b9b9;
     border-radius: 7px;
     display: flex;
     justify-content: space-between;
@@ -91,7 +92,7 @@ a:hover {color: black}
 }
 
 .first-header-user > a {
-    color: #ffca00 !important;
+    color: #ffca00 ;
     font-size: 15px;
     margin-top: auto;
     margin-bottom: auto;
@@ -110,4 +111,10 @@ a:hover {color: black}
     color: white;
     margin-top: auto;
     margin-bottom: auto;
+}
+
+/* 옵션바 */
+
+.category-bar {
+    visibility: hidden;
 }
