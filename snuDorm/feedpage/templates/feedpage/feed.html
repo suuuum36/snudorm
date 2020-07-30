@@ -1,108 +1,114 @@
 {% extends 'base.html' %}
 {% block content %}
-{% if feed.author == request.user %}
-    <div style="background-color: coral; margin: 10px; text-align: right;">
-        <a href="{% url 'editfeed' board category feed.id %}" style="margin-right: 10px;">수정하기</a>
-        <a href="{% url 'deletefeed' board category feed.id %}" style="margin-right: 10px">삭제하기</a>
+
+<div class="info">
+    <div>{{ board_name }} 게시판 </div>
+    {% if feed.author == request.user %}
+    <div style="margin: 10px; text-align: right;">
+        <a href="{% url 'editfeed' board category feed.id %}">수정</a>
+        <a href="{% url 'deletefeed' board category feed.id %}">삭제</a>
     </div>
-{% endif %}
-{% if board == "minwon" %}
-    <div style="background-color: bisque; margin:10px">
-        카테고리 : {{ feed.dormitory }} </br>
-        동 : {{ feed.building }} </br>    
-        작성자 : {% if feed.noname %} 익명
-        {% else %}
-        {{ feed.author.profile.nickname }}
-        {% endif %}
-        </br>
-        제목 : {{ feed.title }} </br>
-        내용 : {{ feed.content }} </br>
-        사진 : {{ feed.photo }} </br>
-    </div>
-{% elif board == "life" %}
-    {% if category == "cobuy" %}
-        <div style="background-color: bisque; margin:10px">
-            작성자 : {% if feed.noname %} 익명
-            {% else %}
-            {{ feed.author.profile.nickname }}
-            {% endif %}
-            </br>
-            제목 : {{ feed.title }} </br>
-            내용 : {{ feed.content }} </br>
-            사진 : {{ feed.photo }} </br>
-            품목 : {{ feed.product }} </br>
-            제품링크 : <a href="#"> {{ feed.url }}</a> </br>
-            상태 : {{ feed.status }} </br>
-            연락처 : {{ feed.contact }} </br>
-            가격 : {{ feed.price }} </br>
-            마감일 : {{ feed.duedate }} </br>
-        </div>
-    {% elif category == "rent" %}
-        <div style="background-color: bisque; margin:10px">
-            작성자 : {% if feed.noname %} 익명
-            {% else %}
-            {{ feed.author.profile.nickname }}
-            {% endif %}
-            </br>
-            제목 : {{ feed.title }} </br>
-            내용 : {{ feed.content }} </br>
-            사진 : {{ feed.photo }} </br>
-            품목 : {{ feed.product }} </br>
-            상태 : {{ feed.status }} </br>
-            연락처 : {{ feed.contact }} </br>
-            보증금 : {{ feed.deposit }} </br>
-            대여시작일 : {{ feed.start_date }} </br>
-            대여마감일 : {{ feed.end_date }} </br>
-        </div>
-    {% elif category == "keep" %}
-        <div style="background-color: bisque; margin:10px">
-            작성자 : {% if feed.noname %} 익명
-            {% else %}
-            {{ feed.author.profile.nickname }}
-            {% endif %}
-            </br>
-            제목 : {{ feed.title }} </br>
-            내용 : {{ feed.content }} </br>
-            사진 : {{ feed.photo }} </br>
-            품목 : {{ feed.product }} </br>
-            상태 : {{ feed.status }} </br>
-            연락처 : {{ feed.contact }} </br>
-            보관시작일 : {{ feed.start_date }} </br>
-            보관마감일 : {{ feed.end_date }} </br>
-            사례금 : {{ feed.reward }} </br>
-        </div>  
-    {% elif category == "resell" %}
-        <div style="background-color: bisque; margin:10px">
-            작성자 : {% if feed.noname %} 익명
-            {% else %}
-            {{ feed.author.profile.nickname }}
-            {% endif %}
-            </br>
-            제목 : {{ feed.title }} </br>
-            내용 : {{ feed.content }} </br>
-            사진 : {{ feed.photo }} </br>
-            품목 : {{ feed.product }} </br>
-            상태 : {{ feed.status }} </br>
-            연락처 : {{ feed.contact }} </br>
-            가격 : {{ feed.price }} </br>
-            판매 or 구매 : {{ feed.role }} </br>
-        </div>
     {% endif %}
-{% elif board == "freeboard" %}
-    <div style="background-color: bisque; margin:10px">
-        작성자 : {% if feed.noname %} 익명
-            {% else %}
-            {{ feed.author.profile.nickname }}
+{% if user.is_authenticated %}
+    <div style="display:flex; justify-content:space-around;">
+        <div style="display:flex"> 
+            <div>작성자</div>
+            <div class="feed_author_name">
+                {% if feed.noname %} 
+                    <div>익명</div>
+                {% else %}
+                    {{ feed.author.profile.nickname }}
+                {% endif %}
+            </div> 
+        </div> 
+        <div style="display:flex; align-items: right;">
+            <div> {{ feed.status }} </div>
+            <div>
+                {{ feed.like_users.count }} <a href="{% url 'likefeed' board category fid %}">좋아요</a>
+            </div>
+            <div class="feed_comment_count">
+                {{ feed.feedcomment_set.count }} 댓글 수 
+            </div> 
+            <div class="feed_created_date">
+                {{ feed.created_at|date:"y.m.d"}}
+            </div>
+        </div> 
+    </div> 
+    {% if board == "minwon" or board == 'freeboard' %}
+        <div>
+            {{ feed.title }} </br>
+            {{ feed.content }} </br>
+            {% if feed.photo %}
+                {{ feed.photo }} </br>
             {% endif %}
-            </br>
-        제목 : {{ feed.title }} </br>
-        내용 : {{ feed.content }} </br>
-        사진 : {{ feed.photo }} </br>
-    </div>
-{% endif %}
-<div style="background-color: burlywood; margin: 10px; text-align: center;">
-    {{ feed.like_users.count }} <a href="{% url 'likefeed' board category feed.id %}"> 추천</a>
-</div>
+        </div>
+    {% elif board == "life" %}
+        {% if category == "cobuy" %}
+            <div>
+                {{ feed.title }} </br>
+                링크  <a href="{{feed.url}}"> {{ feed.url }}</a> </br>
+                {% if not feed.duedate %}
+                    미정
+                {% else %}
+                    마감일 {{ feed.duedate|date:"Y.m.d" }} </br>
+                {% endif %}
+                {{ feed.content }} </br>
+                {% if feed.photo %}
+                    {{ feed.photo }} </br>
+                {% endif %}
+            </div>
+        {% elif category == "rent" %}
+            <div>
+                {{ feed.title }} </br>
+                대여료 {{ feed.deposit }} </br>
+                 {% if not feed.start_date %}
+                    미정
+                {% else %}
+                    시작일 {{ feed.start_date|date:"Y.m.d" }} </br>
+                {% endif %}
+                {% if not feed.end_date %}
+                    미정
+                {% else %}
+                    마감일 {{ feed.end_date|date:"Y.m.d" }} </br>
+                {% endif %}
+                {{ feed.content }} </br>
+                {% if feed.photo %}
+                    {{ feed.photo }} </br>
+                {% endif %}            
+            </div>
+        {% elif category == "keep" %}
+            <div>
+                {{ feed.title }} </br>
+                보관료 {{ feed.reward }} </br>
+                {% if not feed.stat_date %}
+                    미정
+                {% else %}
+                    시작일 {{ feed.start_date|date:"Y.m.d" }} </br>
+                {% endif %}
+                {% if not feed.end_date %}
+                    미정
+                {% else %}
+                    마감일 {{ feed.end_date|date:"Y.m.d" }} </br>
+                {% endif %}
+                {{ endif }}
+                {{ feed.content }} </br>
+                {% if feed.photo %}
+                    {{ feed.photo }} </br>
+                {% endif %}  
+            </div>  
+        {% elif category == "resell" %}
+            <div>
+                {{ feed.title }} </br>
+                목적 {{ feed.purpose }} </br>
+                가격 {{ feed.price }} </br>
+                {{ feed.content }} </br>
+                {% if feed.photo %}
+                    {{ feed.photo }} </br>
+                {% endif %} 
+            </div>
+        {% endif %}
+    {% endif %}
+
 {% for c in feed.feedcomment_set.all %}
 <div>
 <p>{{c.author.username}}: {{ c.content }}</p>
@@ -152,5 +158,11 @@
         <button type="submit">댓글 달기</button>
     </form>
 {% endif %}
+
+{% if category == "cobuy" %}
+{% endif %}
+
+</div>
+
 
 {% endblock content %}
