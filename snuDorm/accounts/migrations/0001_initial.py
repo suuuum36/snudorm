@@ -20,6 +20,10 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(blank=True, max_length=15)),
                 ('nickname', models.CharField(blank=True, max_length=15)),
+<<<<<<< HEAD
+=======
+                ('email', models.CharField(blank=True, max_length=50)),
+>>>>>>> 57edd15b21497fe8164339d89431f729f8ffa262
                 ('building_category', models.CharField(blank=True, max_length=20)),
                 ('building_dong', models.CharField(blank=True, max_length=20)),
                 ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='profile', to=settings.AUTH_USER_MODEL)),
