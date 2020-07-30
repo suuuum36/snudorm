@@ -40,7 +40,6 @@
                         class="glyphicon glyphicon-envelope"></i></a>
                 <a href="{% url 'useredit' user.id %}" style="padding: 0 5px"><i
                         class="glyphicon glyphicon-user"></i></a>
-                <a href="{% url 'user_info' user.id %}" style="padding: 0 5px">{{ user.get_username }}</a>
                 <!-- 수정사항: logout 버튼 추가 -->
                 <a href="{% url 'logout' %}">
                     <button>로그아웃</button></a>

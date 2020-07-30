@@ -183,12 +183,11 @@ def showFeed(request, board, category, fid): # board, category 필요없음.
     elif board == "freeboard":
         feed = FreeBoard.objects.get(id=fid)
 
-    if request.user.id != feed.author.id:
-        feed.views += 1     
-        feed.save()
+    # if request.user.id != feed.author.id:
+    #     feed.views += 1     
+    #     feed.save()
 
-    return render(request, 'feedpage/feed.html', {'feed': feed, 'board': board, 'fid':fid,
-                             'category': category, 'board_name': board_info[2]})
+    return render(request, 'feedpage/feed.html', {'feed': feed, 'board': board, 'fid':fid, 'category': category, 'board_name': board_info[2]})
 
 
 # 게시글 수정
@@ -298,21 +297,20 @@ def likeFeed(request, board, category, fid):
 
         user_like = feed.feedlike.filter(user_id=request.user.id)
 
-        elif board == "life":
-            feed = CoBuy.objects.get(id=fid) if category == "cobuy" else (Rent.objects.get(id=fid) if category == "rent" else (
-                Keep.objects.get(id=fid) if category == "keep" else (Resell.objects.get(id=fid) if category == "resell" else "all")))
+        # elif board == "life":
+        #     feed = CoBuy.objects.get(id=fid) if category == "cobuy" else (Rent.objects.get(id=fid) if category == "rent" else (
+        #         Keep.objects.get(id=fid) if category == "keep" else (Resell.objects.get(id=fid) if category == "resell" else "all")))
 
-        elif board == "freeboard":
-            feed = FreeBoard.objects.get(id=fid)
+        # elif board == "freeboard":
+        #     feed = FreeBoard.objects.get(id=fid)
 
-        user_like = feed.feedlike.filter(user_id=request.user.id)
-
+        # user_like = feed.feedlike.filter(user_id=request.user.id)
         if user_like.count() > 0:
             feed.feedlike.get(user_id=request.user.id).delete()
         else:
             FeedLike.objects.create(user_id=request.user.id, feed_id=feed.id)
 
-        return render(request, 'feedpage/feed.html', {'feed': feed, 'board': board, 'category': category, 'fid': fid})
+    return render(request, 'feedpage/feed.html', {'feed': feed, 'board': board, 'category': category, 'fid': fid})
 
 
 # 댓글 달기

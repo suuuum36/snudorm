@@ -108,6 +108,7 @@
             </div>
         {% endif %}
     {% endif %}
+{% endif %}
 </div>
 
 
@@ -164,10 +165,17 @@
     </form>
     {% endif %}
     </div>
-
-
-
 </div>
+{% endfor %}
 
+{% if user.is_authenticated %}
+    <form method="POST" class="comment-submit"
+        data-board="{{ board }}" data-category="{{ category }}" data-fid="{{ feed.id }}"
+        data-csrfmiddlewaretoken="{{ csrf_token }}">
+        {% csrf_token %}
+        <input id="{{ feed.id }}" type="text" name="content" />
+        <button type="submit">댓글 달기</button>
+    </form>
+{% endif %}
 
 {% endblock content %}
