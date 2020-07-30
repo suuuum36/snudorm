@@ -3,217 +3,224 @@
 <div class="info">
     {{ error }}<br>
     {% if user.is_authenticated %}
-        <!-- Minwon 게시판 new Feed 생성 -->
+        <!-- 게시판 이름 -->
+        <div class="board_name" > 
+            {{ board_name }} 게시판 
+        </div>
         {% if board == 'minwon' or board == 'freeboard' %}
-            {% if category == 'gong' %}
-                <div> 민원게시판 공통 글 작성하기</div>
-            {% elif category == '#' %}
-                <div> 자유게시판 글 작성하기</div>
-            {% else %}
-                <div> 민원 동게시판 글 작성하기</div>
-            {% endif %}
+        <!-- Minwon, freeboard 게시판 -->
+        <div class="minwon_or_free_new">
             <form method="POST" action="{% url 'newfeed' board category %}">
                 {% csrf_token %}
                 <div>
-                    <div>
-                        제목</br>
-                        <input name="title" type=" text" required>
-                    </div></br>
-                    <div>
-                        내용</br>
-                        <input name="content" type="text" required>
-                    </div></br>
-                    <div>
-                        사진</br>
-                        <input name="photo" type="text">
-                    </div></br>
-                    <div >
-                        <input name="noname" type="checkbox" id="noname">
-                        <label for="noname">익명</label>
-                    </div></br>
-                </div>
-                <button type="submit">게시글 작성하기 </button>
+                    제목</br>
+                    <input name="title" type=" text" style="width:400px; height:50px;" 
+                            placeholder="제목" required>
+                </div></br>
+                <div>
+                    내용</br>
+                    <input name="content" type="text"  style="width:400px; height:50px;" 
+                            placeholder="글 내용을 입력해주세요..." required>
+                </div></br>
+                <div>
+                    사진</br>
+                    <input name="photo" type="file">
+                </div></br>
+                <div>
+                    <input name="noname" type="checkbox" id="noname">
+                    <label for="noname">익명</label>
+                </div></br>
+                <button type="submit">글쓰기</button>
             </form>
+        </div>
         {% elif category == 'cobuy' %}
-        <div> 공구게시판 글 작성하기</div>
-        <form method="POST" action="{% url 'newfeed' 'life' 'cobuy' %}">
-            {% csrf_token %}
-            <div>
-                제목 </br>
-                <input name="title" type="text" required>
-            </div></br>
-            <div >
-                <input name="noname" type="checkbox" id="noname">
-                <label for="noname">익명</label>
-            </div></br>
-            <div>
-                품목 </br>
-                <input name="product" type="text" required>
-            </div></br>
-            <div >
-                사진</br>
-                <input name="photo" type="text" required>
-            </div></br>
-            <div>
-                가격</br>
-                <input name="price" type="text" required>
-            </div></br>
-            <div>
-                제품링크</br>
-                <input name="url" type="text" required>
-            </div></br>
-            <div>
-                마감기한</br>
-                <input name="duedate" type="date" required>
-            </div></br>
-            <div>
-                연락처</br>
-                <input name="contact" type="text" required>
-            </div></br>
-            <div>
-                상태 </br>
-                <input name="status" type="text" required>
-            </div></br>
-            <div>
-                기타</br>
-                <input name="content" type="text" required>
-            </div></br>
-            <button type="submit">게시글 작성하기 </button>
-        </form>
+        <!-- Cobuy 공구 게시판 -->
+        <div class="cobuy_board_new">
+            <form method="POST" action="{% url 'newfeed' 'life' 'cobuy' %}">
+                {% csrf_token %}
+                <div>
+                    제목 </br>
+                    <input name="title" type="text"  style="width:400px; height:50px;" 
+                            placeholder="글 제목을 입력하세요." required>
+                </div></br>
+                <div>
+                    가격</br>
+                    <input name="price" type="text"  style="width:400px; height:50px;" 
+                            placeholder="공구 품목의 가격을 입력하세요. ex) 425600" required>
+                </div></br>
+                <div>
+                    링크</br>
+                    <input name="url" type="text"  style="width:400px; height:50px;" 
+                            placeholder="공구 품목의 링크를 넣어주세요." required>
+                </div></br>
+                <div>
+                    마감일</br>
+                    <input name="duedate" placeholder="{{now_date|date:"Y.m.d"}}" 
+                        onfocus="(this.type='date')" onblur="(this.type='text')" type="date" required>
+                    <div>
+                        <input name="uncertain" type="checkbox" id="uncertain" onclick="duedateCheck(this);">
+                        <label for="uncertain">미정</label>
+                    </div></br>
+                </div></br>
+                <div>
+                    설명</br>
+                    <input name="content" type="text"  style="width:400px; height:50px;" 
+                            placeholder="공구 내용과 연락수단을 적어주세요." required>
+                </div></br>
+                <div>
+                    사진</br>
+                    <input name="photo" type="file">
+                </div></br>
+                <div>
+                    <input name="noname" type="checkbox" id="noname">
+                    <label for="noname">익명</label>
+                </div></br>
+                <button type="submit">글쓰기</button>
+            </form>
+        </div>
         {% elif category == 'rent' %}
-        <div> 대여게시판 글 작성하기</div>
-        <form method="POST" action="{% url 'newfeed' 'life' 'rent' %}">
-            {% csrf_token %}
-            <div>
-                제목 </br>
-                <input name="title" type="text" required>
-            </div></br>
-            <div >
-                <input name="noname" type="checkbox" id="noname">
-                <label for="noname">익명</label>
-            </div></br>
-            <div>
-                품목 </br>
-                <input name="product" type="text" required>
-            </div></br>
-            <div >
-                사진</br>
-                <input name="photo" type="text" required>
-            </div></br>
-            <div>
-                보증금</br>
-                <input name="deposit" type="text" required>
-            </div></br>
-            <div>
-                시작기간</br>
-                <input name="start_date" type="date" required>
-            </div></br>
-            <div>
-                마감기한</br>
-                <input name="end_date" type="date" required>
-            </div></br>
-            <div>
-                연락처</br>
-                <input name="contact" type="text" required>
-            </div></br>
-            <div>
-                상태 </br>
-                <input name="status" type="text" required>
-            </div></br>
-            <div>
-                기타</br>
-                <input name="content" type="text" required>
-            </div></br>
-            <button type="submit">게시글 작성하기 </button>
-        </form>
+        <!-- Rent 게시판 -->
+        <div class="rent_board_new"> 
+            <form method="POST" action="{% url 'newfeed' 'life' 'rent' %}">
+                {% csrf_token %}
+                <div>
+                    제목 </br>
+                    <input name="title" type="text"  style="width:400px; height:50px;" 
+                            placeholder="글 제목을 입력하세요." required>
+                </div></br>
+                <div style="display:flex;">
+                    목적 </br>
+                    <input name="purpose" type="checkbox" id="purpose" value="borrow" onclick="doOpenCheck(this);" required>
+                    <label for="purpose">빌려줄게요</label>
+                    <input name="purpose" type="checkbox" id="purpose" value="lend" onclick="doOpenCheck(this);">
+                    <label for="purpose">빌려주세요</label>
+                </div></br>
+                <div>
+                    대여료</br>
+                    <input name="deposit" type="text" style="width:400px; height:50px;" 
+                    placeholder="빌려줄/빌릴 대여품목의 사용료를 입력해주세요." required>
+                </div></br>
+                <div style="display:flex;">
+                    시작일</br>
+                    <input name="start_date" type="date" required>
+                    <div >
+                        <input name="uncertain" type="checkbox" id="uncertain" onclick="startCheck(this);">
+                        <label for="uncertain">미정</label>
+                    </div></br>
+                </div></br>
+                <div style="display:flex;">
+                    마감일</br>
+                    <input name="duedate" type="date" required>
+                    <div>
+                        <input name="uncertain" type="checkbox" id="uncertain" onclick="duedateCheck(this);">
+                        <label for="uncertain">미정</label>
+                    </div></br>
+                </div></br>
+                <div>
+                    설명</br>
+                    <input name="content" type="text"  style="width:400px; height:50px;" 
+                            placeholder="대여 내용을 입력해 주세요." required>
+                </div></br>
+                <div>
+                    사진</br>
+                    <input name="photo" type="file">
+                </div></br>
+                <div >
+                    <input name="noname" type="checkbox" id="noname">
+                    <label for="noname">익명</label>
+                </div></br>
+                <button type="submit">글쓰기</button>
+            </form>
+        </div> 
         {% elif category == "keep" %}
-        <div> 보관 게시판 글 작성하기</div>
-        <form method="POST" action="{% url 'newfeed' 'life' 'keep' %}">
-            {% csrf_token %}
-            <div>
-                제목 </br>
-                <input name="title" type="text" required>
-            </div></br>
-           <div >
-                <input name="noname" type="checkbox" id="noname">
-                <label for="noname">익명</label>
-            </div></br>
-            <div>
-                품목 </br>
-                <input name="product" type="text" required>
-            </div></br>
-            <div >
-                사진</br>
-                <input name="photo" type="text" required>
-            </div></br>
-            <div>
-                시작기간</br>
-                <input name="start_date" type="date" required>
-            </div></br>
-            <div>
-                마감기한</br>
-                <input name="end_date" type="date" required>
-            </div></br>
-            <div>
-                사례금 </br>
-                <input name="reward" type="text" required>
-            </div></br>
-            <div>
-                연락처</br>
-                <input name="contact" type="text" required>
-            </div></br>
-            <div>
-                상태 </br>
-                <input name="status" type="text" required>
-            </div></br>
-            <div>
-                기타</br>
-                <input name="content" type="text" required>
-            </div></br>
-            <button type="submit">게시글 작성하기 </button>
-        </form>
+        <!-- Keep 게시판 -->
+        <div class="keep_board_new">
+            <form method="POST" action="{% url 'newfeed' 'life' 'keep' %}">
+                {% csrf_token %}
+                <div>
+                    제목 </br>
+                    <input name="title" type="text" style="width:400px; height:50px;"
+                         placeholder="글 제목을 입력하세요." required>
+                </div></br>
+                <div>
+                    목적 </br>
+                    <input type="checkbox" name="purpose" value="keep" id="purpose" onclick="doOpenCheck(this);" required>                    
+                    <label for="purpose">보관할게요</label>
+                    <input type="checkbox" name="purpose" value="request" id="purpose" onclick="doOpenCheck(this);">
+                    <label for="purpose">보관해줄래요</label>
+                </div> 
+                <div >
+                    보관료</br>
+                    <input name="reward" type="text" style="width:400px; height:50px;"
+                    placeholder="보관할 품목 혹은 보관 해줄시의 사용료를 입력해주세요." required="required">
+                </div></br>
+                 <div style="display:flex;">
+                    시작일</br>
+                    <input name="start_date" type="date" required>
+                    <div >
+                        <input name="uncertain" type="checkbox" id="uncertain" onclick="startCheck(this);">
+                        <label for="uncertain">미정</label>
+                    </div></br>
+                </div></br>
+                <div style="display:flex;">
+                    마감일</br>
+                    <input name="duedate" type="date" required>
+                    <div>
+                        <input name="uncertain" type="checkbox" id="uncertain" onclick="duedateCheck(this);">
+                        <label for="uncertain">미정</label>
+                    </div></br>
+                </div></br>
+                <div>
+                    설명</br>
+                    <input name="content" type="text"  style="width:400px; height:50px;" 
+                             placeholder="보관 내용을 입력해 주세요." required>
+                </div></br>
+                <div>
+                    사진</br>
+                    <input name="photo" type="file">
+                </div></br>
+                <div>
+                    <input name="noname" type="checkbox" id="noname">
+                    <label for="noname">익명</label>
+                </div></br>
+                <button type="submit">글쓰기</button>
+            </form>
         {% elif category == "resell" %}
-        <div> 거래 게시판 글 작성하기</div>
-        <form method="POST" action="{% url 'newfeed' 'life' 'resell' %}">
-            {% csrf_token %}
-            <div>
-                제목 </br>
-                <input name="title" type="text" required>
-            </div></br>
-            <div >
-                <input name="noname" type="checkbox" id="noname">
-                <label for="noname">익명</label>
-            </div></br>
-            <div>
-                품목 </br>
-                <input name="product" type="text" required>
-            </div></br>
-            <div >
-                사진</br>
-                <input name="photo" type="text" required>
-            </div></br>
-            <div>
-                가격</br>
-                <input name="price" type="text" required>
-            </div></br>
-            <div>
-                역할</br>
-                <input name="role" type="text" required>
-            </div></br>
-            <div>
-                연락처</br>
-                <input name="contact" type="text" required>
-            </div></br>
-            <div>
-                상태 </br>
-                <input name="status" type="text" required>
-            </div></br>
-            <div>
-                기타</br>
-                <input name="content" type="text" required>
-            </div></br>
-            <button type="submit">게시글 작성하기 </button>
-        </form>
+        <!-- Resell 게시판 -->
+        <div class="resell_board_new">
+            <form method="POST" action="{% url 'newfeed' 'life' 'resell' %}">
+                {% csrf_token %}
+                <div>
+                    제목 </br>
+                    <input name="title" type="text" style="width:400px; height:50px;" 
+                        placeholder="글 제목을 입력하세요." required>
+                </div></br>
+                    목적 </br>
+                    <input type="checkbox" name="purpose" value="sell" onclick="doOpenCheck(this);" id="purpose" required>
+                    <label for="purpose">판매</label>
+                    <input type="checkbox" name="purpose" value="buy" onclick="doOpenCheck(this);" id ="purpose">
+                    <label for="purpose">구매</label></br>
+                </div>
+                <div>
+                    가격</br>
+                    <input name="price" type="text" style="width:400px; height:50px;" 
+                    placeholder="중고거래 제품의 가격을 입력하세요. ex) 425600" required>
+                </div></br>
+                <div>
+                    설명</br>
+                    <input name="content" type="text" style="width:400px; height:50px;" 
+                             placeholder="중고거래 내용을 입력해 주세요." required>
+                </div></br>
+                <div>
+                    사진</br>
+                    <input name="photo" type="file">
+                </div></br>
+                <div>
+                    <input name="noname" type="checkbox" id="noname">
+                    <label for="noname">익명</label>
+                </div></br>
+                <button type="submit">글쓰기</button>
+            </form>
         {% endif %}
     {% endif %}
 </div>
