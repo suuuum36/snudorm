@@ -102,7 +102,7 @@
             </li>
             <!--생필품 게시판(네비게이션 아이템들은 현재 무시, class 명 추후 변경요망)-->
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="{% url 'showboard' "life" "#" %}" role="button" aria-haspopup="true" aria-expanded="false">생필품게시판</a>
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="{% url 'showboard' "life" "tori" %}" role="button" aria-haspopup="true" aria-expanded="false">생필품게시판</a>
                 <ul>
                     <a class="dropdown-item" href="{% url 'showboard' 'life' 'cobuy' %}">공동구매</a>
                     <a class="dropdown-item" href="{% url 'showboard' 'life' 'rent' %}">대여</a>
@@ -111,7 +111,7 @@
                 </ul>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="{% url 'showboard' "freeboard" "#" %}">자유게시판</a>
+                <a class="nav-link active" href="{% url 'showboard' "freeboard" "tori" %}">자유게시판</a>
             </li>
             </ul>
     </header>
