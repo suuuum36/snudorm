@@ -1,4 +1,4 @@
-{% load static %}
+{% load staticfiles%}
 {% comment %}
 1) TODO: part 수정 후 맡은 부분 comment 적절히 달기
 2) Bootstrap icon: 임시 icon 추후 통일필요
@@ -15,55 +15,73 @@
     <!-- Main Page -->
     <link rel="stylesheet" href="{% static 'feedpage/main.css' %}">
     <!-- TODO: Bootstrap Icon -->
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    {% comment %} <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> {% endcomment %}
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"
         integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 </head>
 
 <body>
     <header>
-        <div class="main_header" style="display: flex; justify-content:space-around;">
-            <!-- TODO: logo image needed -->
-            <a href="{% url 'showmain' %}" style="justify-content: center;"> 도미토리 @ SNU </a>
-            <div class="search" style="text-align: center;">
-                <form action="{% url 'showmain' %}" method="get">
-                    <input type="text" id="search_box">
-                    <button type="submit" id="search_button">
-                        <i class="glyphicon glyphicon-search"></i>
-                    </button>
-                </form>
+        <!--1번째 상단바-->
+        <div class="first-header">
+            <div class = "first-header-inner">
+                <div class = "logo">
+                    <a href="{% url 'showmain' %}"><img src="{% static 'img/main-logo.png' %}"></a>
+                </div>
+
+
+                <div class = "first-header-text">
+                    <a href="/">Home</a>
+                    <a href="{% url 'showboard' "minwon" "gong" %}">민원게시판</a>
+                    <a href="{% url 'showboard' "life" "tori" %}">생필품게시판</a>
+                    <a href="{% url 'showboard' "freeboard" "tori" %}">자유게시판</a>
+                </div>
+
+                <div class="search">
+                    <div class = "search-content">
+                        <form action="{% url 'showmain' %}" method="get">
+                            <select class="search-option" name="select-option" style = "color: #7f7f7f;">
+                                <option value="default">선택</option>
+                                <option value="title">제목</option>
+                                <option value="content">내용</option>
+                                <option value="title-and-content">재목+내용</option>
+                            </select>
+                            <input type="text" class = "search-text" size ="30" placeholder = "검색어를 입력하세요.">
+                            {% comment %} <img src="{% static 'img/search.png' %}" class = "search-img"> {% endcomment %}
+                        </form>
+                    </div>
+                </div>
+
+                <div class = "first-header-user">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'usermessage' user.id %}">
+                            알람
+                        </a>
+                        <a href="{% url 'useredit' user.id %}">
+                            마이페이지
+                        </a>
+                        <a href="{% url 'logout' %}">
+                            <button>로그아웃</button>
+                        </a>
+                    </div>
+                    {% else %}
+                        <a href="{% url 'login' %}" class = "login">로그인</a>
+                        <div class = "signup"> <a href="{% url 'signup' %}" >회원가입</a></div>
+                    {% endif %}
+                </div>
             </div>
-            <!-- TODO: user info icon (accounts app) -->
-            {% if user.is_authenticated %}
-            <div>
-                <a href="{% url 'usermessage' user.id %}" style="padding: 0 5px"><i
-                        class="glyphicon glyphicon-envelope"></i></a>
-                <a href="{% url 'useredit' user.id %}" style="padding: 0 5px"><i
-                        class="glyphicon glyphicon-user"></i></a>
-                <!-- 수정사항: logout 버튼 추가 -->
-                <a href="{% url 'logout' %}">
-                    <button>로그아웃</button></a>
-            </div>
-            <!-- TODO: login/sinup (accounts app) -->
-            {% else %}
-            <div>
-                <a href="{% url 'signup' %}">
-                    <button>회원가입</button></a>
-                <a href="{% url 'login' %}">
-                    <button>로그인</button></a>
-            </div>
-            {% endif %}
         </div>
+
+        <!--2번째 상단바 -->
         <ul style="padding: 10px">
-            <!--전체 게시판(네비게이션 아이템들은 현재 무시, class 명 추후 변경요망)-->
-            <li class="nav-item" >
-                <a href="/">Home</a>
-            </li>
-            <!--민원 게시판(네비게이션 아이템들은 현재 무시, class 명 추후 변경요망)-->
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="{% url 'showboard' "minwon" "gong" %}" role="button" aria-haspopup="true" aria-expanded="false">민원게시판</a>
+                <!--3번째 상단바-->
+                <div class = "thrid-bar">
+            
+                </div>
+                <!--4번째 상단바-->
                 <ul>
-                 <a class="dropdown-item" href="{% url 'showboard' 'minwon' 'bachelor_906' %}">906</a>
+                <a class="dropdown-item" href="{% url 'showboard' 'minwon' 'bachelor_906' %}">906</a>
                 <a class="dropdown-item" href="{% url 'showboard' 'minwon' 'bachelor_915' %}">915</a>
                 <a class="dropdown-item" href="{% url 'showboard' 'minwon' 'bachelor_919A' %}">919A</a>
                 <a class="dropdown-item" href="{% url 'showboard' 'minwon' 'bachelor_919B' %}">919B</a>
@@ -98,19 +116,16 @@
                 <a class="dropdown-item" href="{% url 'showboard' 'minwon' 'bk_946A' %}">946A</a>
                 <a class="dropdown-item" href="{% url 'showboard' 'minwon' 'bk_946B' %}">946B</a>
                 </ul>
+
             </li>
             <!--생필품 게시판(네비게이션 아이템들은 현재 무시, class 명 추후 변경요망)-->
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="{% url 'showboard' "life" "tori" %}" role="button" aria-haspopup="true" aria-expanded="false">생필품게시판</a>
                 <ul>
                     <a class="dropdown-item" href="{% url 'showboard' 'life' 'cobuy' %}">공동구매</a>
                     <a class="dropdown-item" href="{% url 'showboard' 'life' 'rent' %}">대여</a>
                     <a class="dropdown-item" href="{% url 'showboard' 'life' 'keep' %}">보관</a>
                     <a class="dropdown-item" href="{% url 'showboard' 'life' 'resell' %}">중고거래</a>
                 </ul>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active" href="{% url 'showboard' "freeboard" "tori" %}">자유게시판</a>
             </li>
             </ul>
     </header>

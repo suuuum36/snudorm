@@ -166,8 +166,8 @@
     {% endif %}
     </div>
 </div>
-{% endfor %}
 
+{% endfor %}
 {% if user.is_authenticated %}
     <form method="POST" class="comment-submit"
         data-board="{{ board }}" data-category="{{ category }}" data-fid="{{ feed.id }}"

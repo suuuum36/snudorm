@@ -190,6 +190,7 @@ def showFeed(request, board, category, fid): # board, category 필요없음.
     return render(request, 'feedpage/feed.html', {'feed': feed, 'board': board, 'fid':fid, 'category': category, 'board_name': board_info[2]})
 
 
+
 # 게시글 수정
 def editFeed(request, board, category, fid):
     board_info = get_board(board, category)
@@ -290,21 +291,20 @@ def likeFeed(request, board, category, fid):
 
         elif board == "life":
             feed = CoBuy.objects.get(id=fid) if category == "cobuy" else (Rent.objects.get(id=fid) if category == "rent" else (
-                Keep.objects.get(id=fid) if category == "keep" else (Resell.objects.get(id=fid) if category == "resell" else "tori")))
+            Keep.objects.get(id=fid) if category == "keep" else (Resell.objects.get(id=fid) if category == "resell" else "tori")))
 
         elif board == "freeboard":
             feed = FreeBoard.objects.get(id=fid)
 
-        user_like = feed.feedlike.filter(user_id=request.user.id)
+            user_like = feed.feedlike.filter(user_id=request.user.id)
+        
+        elif board == "life":
+            feed = CoBuy.objects.get(id=fid) if category == "cobuy" else (Rent.objects.get(id=fid) if category == "rent" else (
+            Keep.objects.get(id=fid) if category == "keep" else (Resell.objects.get(id=fid) if category == "resell" else "all")))
+            
+        elif board == "freeboard":
+            feed = FreeBoard.objects.get(id=fid)
 
-        # elif board == "life":
-        #     feed = CoBuy.objects.get(id=fid) if category == "cobuy" else (Rent.objects.get(id=fid) if category == "rent" else (
-        #         Keep.objects.get(id=fid) if category == "keep" else (Resell.objects.get(id=fid) if category == "resell" else "all")))
-
-        # elif board == "freeboard":
-        #     feed = FreeBoard.objects.get(id=fid)
-
-        # user_like = feed.feedlike.filter(user_id=request.user.id)
         if user_like.count() > 0:
             feed.feedlike.get(user_id=request.user.id).delete()
         else:
@@ -328,7 +328,6 @@ def newComment(request, board, category, fid):
     }
 
     return JsonResponse(context)
-
 
 
 def editComment(request, board, category, fid, cid):
@@ -408,9 +407,6 @@ def deleteRecomment(request, board, category, fid, cid, rcid):
     c = Recomment.objects.get(id=rcid)
     c.delete()
     return JsonResponse({})
-
-
-# 대댓글 좋아요
 
 
 def likeRecomment(request, board, category, fid, cid, rcid):
