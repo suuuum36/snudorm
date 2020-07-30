@@ -13,6 +13,7 @@
     <div class="info">
         <form method="POST" action="{% url 'useredit' user.id %}">
             {% csrf_token %}
+            {{ context.error }}
             <div>
                 이름 <input name="name" type="text" value="{{ user.profile.name }}" required>
             </div></br>
@@ -30,7 +31,13 @@
                 <input name="building_dong" type="text" value="{{ user.profile.building_dong }}" required>
             </div></br>
             <div>
-                비밀번호 <input name="password" type="text" required>
+                기존_비밀번호 <input name="origin_password" type="text" required>
+            </div></br>
+            <div>
+                새로운 비밀번호 <input name="new_password" type="text" required>
+            </div></br>
+            <div>
+                새로운 비밀번호 확인 <input name="password_confirm" type="text" required>
             </div></br>
             <button type="submit">개인정보 변경</button>
         </form>

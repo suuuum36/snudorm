@@ -46,6 +46,9 @@ INSTALLED_APPS = [
      'allauth.account',
      'allauth.socialaccount',
 
+    #provider
+    'allauth.socialaccount.providers.google',
+
     #multiselectfield
     'multiselectfield',
 ]
