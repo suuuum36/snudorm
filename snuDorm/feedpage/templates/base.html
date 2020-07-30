@@ -11,7 +11,7 @@
 <head>
     <meta charset="utf-8">
     <!-- TODO: Web Page Name -->
-    <title>모두의 기숙사</title>
+    <title>도미토리</title>
     <!-- Main Page -->
     <link rel="stylesheet" href="{% static 'feedpage/main.css' %}">
     <!-- TODO: Bootstrap Icon -->
@@ -24,7 +24,7 @@
     <header>
         <div class="main_header" style="display: flex; justify-content:space-around;">
             <!-- TODO: logo image needed -->
-            <a href="{% url 'showmain' %}" style="justify-content: center;"> SNU DORM </a>
+            <a href="{% url 'showmain' %}" style="justify-content: center;"> 도미토리 @ SNU </a>
             <div class="search" style="text-align: center;">
                 <form action="{% url 'showmain' %}" method="get">
                     <input type="text" id="search_box">
@@ -41,6 +41,9 @@
                 <a href="{% url 'user_edit' user.id %}" style="padding: 0 5px"><i
                         class="glyphicon glyphicon-user"></i></a>
                 <a href="{% url 'user_info' user.id %}" style="padding: 0 5px">{{ user.get_username }}</a>
+                <!-- 수정사항: logout 버튼 추가 -->
+                <a href="{% url 'logout' %}">
+                    <button>로그아웃</button></a>
             </div>
             <!-- TODO: login/sinup (accounts app) -->
             {% else %}
@@ -52,29 +55,41 @@
             </div>
             {% endif %}
         </div>
-        <!-- TODO: temp banner css 수정 필요 -->
-        <div style="padding: 10px">
-            <ul class="nav nav-tabs">
-                <li role="presentation" class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="{% url 'showboard' "minwon" "gong" %}"
-                        type="button" aria-expanded="false"> 민원 게시판 <span class="caret"></span> </a>
-                    <ul class="dropdown-menu" role="menu">
-                    </ul>
-                </li>
-                <li role="presentation" class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="{% url 'showboard' "life" "cobuy" %}"
-                        type="button" aria-expanded="false"> 생필품 게시판 <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                    </ul>
-                </li>
-                <li role="presentation" class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="{% url 'showboard' "life" "cobuy" %}"
-                        role="button" aria-expanded="false"> 자유 게시판 <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                    </ul>
-                </li>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a href="/">Home</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="{% url 'showboard' "minwon" "gong" %}" role="button" aria-haspopup="true" aria-expanded="false">민원게시판</a>
+                <div class="dropdown-menu">
+                <!-- List for 학부생활관: for 문 이용법 알아내기-->
+                <a class="dropdown-item" href="{% url 'showboard' 'minwon' 'bachelor_906' %}">906</a>
+                <!-- List for 대학원생활관: for 문 이용법 알아내기-->
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{% url 'showboard' 'minwon' 'graduate_906' %}">906</a>
+                <!-- List for 가족생활관: for 문 이용법 알아내기-->
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{% url 'showboard' 'minwon' 'graduate_906' %}">906</a>
+                <!-- List for BK 생활관: for 문 이용법 알아내기-->
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{% url 'showboard' 'minwon' 'graduate_906' %}">906</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="{% url 'showboard' "life" "#" %}" role="button" aria-haspopup="true" aria-expanded="false">생필품게시판</a>
+                <div class="dropdown-menu">
+                <a class="dropdown-item" href="{% url 'showboard' 'life' 'cobuy' %}">공동구매</a>
+                <a class="dropdown-item" href="{% url 'showboard' 'life' 'rent' %}">대여</a>
+                <a class="dropdown-item" href="{% url 'showboard' 'life' 'keep' %}">보관</a>
+                <a class="dropdown-item" href="{% url 'showboard' 'life' 'resell' %}">중고거래</a>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link active" href="{% url 'showboard' "freeboard" "#" %}">자유게시판</a>
+            </li>
             </ul>
-        </div>
+        
     </header>
     <main style="padding-top: 100px">
         <div class="page-content">
