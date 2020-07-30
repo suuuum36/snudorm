@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import User
 from django.conf import settings
+from django.contrib.auth.models import User
 
 # TODO: pip install django-multiselectfield 를 해주세요 ㅎㅅㅎ
 from multiselectfield import MultiSelectField
@@ -9,11 +9,16 @@ from multiselectfield import MultiSelectField
 # 게시판
 """ 
     생필품 게시판(공구, 대여, 보관, 거래) -> Feed class 상속 
-    1) 공구: 품목, 개수, 제품링크, 마감기한, 연락처
-    2) 대여: 품목, 기한, 사례금, 연락처, 기타
+    1) 공구: 개수, 제품링크, 마감기한, 연락처
+    2) 대여: 기한, 사례금, 연락처, 기타
     3) 보관:
     4) 거래: 
 """
+STAT_OPTION = (('ongoing', '진행중'), ('onsale', '판매중'), ('complete', '완료'))   
+
+def get_image_filename(instanece, filename):
+    id = instance.post.id
+    return "post_imgages/%s" % (id)
 
 class Feed(models.Model):
     title = models.CharField(max_length=256)
@@ -22,11 +27,21 @@ class Feed(models.Model):
     noname = models.BooleanField(default=False)
 
     author = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
-    like_users = models.ManyToManyField(
-        User, blank=True, related_name='like_feeds', through='FeedLike')
+    like_users = models.ManyToManyField(User, blank=True, related_name='like_feeds', through='FeedLike')
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(blank=True, null=True)
     views = models.IntegerField(blank=True, default=0)
+    
+    # 공지사항인지 check하는 값
+    notice = models.BooleanField(default=False)
+
+    # 검색시 Feed object에서 찾고, feedpage 넘길 때 필요 
+    board = models.CharField(max_length=256)
+    category = models.CharField(max_length=256)
+
+    # 게시판 항목 이름 위해서 필요 
+    board_info1 = models.CharField(max_length=20, blank=False)
+    board_info2 = models.CharField(max_length=20, blank=False)
 
     class Meta:
         ordering = ('created_at',)
@@ -38,52 +53,49 @@ class Feed(models.Model):
     def __str__(self):
         return self.title
 
+# class Photo(models.Model):
+#     feed = models.ForeinKey(Feed, default=None)
+#     photo = models.ImageField(upload_to=get_image_filename, verbose_name="Image")
+
 class Minwon(Feed):
-    dormitory = models.CharField(max_length=20, blank=False)
-    building = models.CharField(max_length=20, blank=False)
-    
     def __str__(self):
         return self.title
-
-class Life(Feed):
-    product = models.CharField(max_length=256)
-    contact = models.CharField(max_length=256)
-    status = models.CharField(max_length=256)
-
-    class Meta:
-        ordering = ('created_at', )
-
-class CoBuy(Life):
-    price = models.IntegerField(blank=True)
-    # # 진행중, 마감, etc 혹은 multiselect field로 해도 무방
-    duedate = models.DateTimeField(blank=True)
-    url = models.CharField(max_length=256, null=True)
-    
-class Rent(Life):
-    deposit = models.CharField(max_length=256)
-    start_date = models.DateTimeField(blank=True, null=True)
-    end_date = models.DateTimeField(blank=True, null=True)
-
-class Keep(Life):
-    start_date = models.DateTimeField(default=timezone.now)
-    end_date = models.DateTimeField(blank=True, null=True)
-
-    # template에서 협의 가능 써주기
-    reward = models.CharField(max_length=256)
-
-class Resell(Life):
-    price = models.IntegerField(blank=True)
-
-    # 생필품 게시판-(거래 게시판) 게시한 사람 option 선택
-    ROLE_OPTION = (('seller', '판매자'), ('buyer', '구매자'))
-    role = MultiSelectField(choices=ROLE_OPTION, null=True, blank=True)
-    """ 
-        template에서 커스터마이징 시에는 {{ object.author_role }} 등으로 사용 
-    """
 
 class FreeBoard(Feed):
     def __str__(self):
         return self.title
+
+class Life(Feed):
+    class Meta:
+        ordering = ('created_at', )
+
+class CoBuy(Life):
+    price = models.CharField(max_length=256)
+    url = models.CharField(max_length=256, null=True)
+    duedate = models.DateTimeField(blank=False, default=timezone.now)
+    status = MultiSelectField(choices=STAT_OPTION, default='ongoing')    
+
+class Rent(Life):
+    OPTION = (('lender', '빌려줄게요'), ('user', '빌려주세요'))   
+    purpose = MultiSelectField(choices=OPTION, default='lender')      
+    deposit = models.CharField(max_length=256)
+    start_date = models.DateTimeField(blank=False, default=timezone.now)
+    end_date = models.DateTimeField(blank=False, default=timezone.now)
+    status = MultiSelectField(choices=STAT_OPTION, default='ongoing')    
+
+class Keep(Life):
+    OPTION = (('lender', '보관할래요'), ('user', '보관해줄게요'))   
+    purpose = MultiSelectField(choices=OPTION, default='lender')   
+    reward = models.CharField(max_length=256)
+    start_date = models.DateTimeField(blank=False, default=timezone.now)
+    end_date = models.DateTimeField(blank=False, default=timezone.now)
+    status = MultiSelectField(choices=STAT_OPTION, default='ongoing')    
+
+class Resell(Life):
+    OPTION = (('seller', '판매'), ('buyer', '구매'))
+    purpose = MultiSelectField(choices=OPTION, default='seller')   
+    price = models.CharField(max_length=256)
+    status = MultiSelectField(choices=STAT_OPTION, default='onsale')    
 
 class FeedComment(models.Model):
     content = models.TextField()
