@@ -1,16 +1,110 @@
 /* 전체 적용 css */
 * {
-   
+   margin:0;
+   padding: 0;
 }
 
-header {
-    position: fixed;
-    margin: 0 auto;
-    padding: 10px;
-    height: 10%;
+input:focus {outline:none;}
+select:focus {outline:none;}
+a {text-decoration-line:none}
+
+
+.first-header {
+    height: 40px;
     width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 50px;
+}
+.first-header-inner {
+    width: 85%;
+    display: flex;
+    justify-content: space-around;
 }
 
-.info {
-    margin: 100px;
+.logo {
+    height: 100%;
+}
+
+.logo img {
+    height: 100%;
+    width: auto;
+}
+
+.first-header-text {
+    width: 500px;
+    display: flex;
+    justify-content: space-around;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.first-header-text > a {
+    font-size: 17px;
+    color: #7f7f7f !important;
+}
+
+.search {
+    width: 400px;
+    border: 1px solid #7f7f7f;
+    border-radius: 7px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 17px;
+    color: #7f7f7f;
+}
+
+.search-content {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.search-content > select, input {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.search-option {
+    border: 0px solid;
+    margin-right: 22px;
+    margin-left: 12px;
+}
+
+.search-text {
+    border: 0px solid;
+    color: black;
+    margin-right: 5px;
+}
+
+.search-img {
+    height: 20px;
+    width: auto;
+}
+.first-header-user {
+    width: 200px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.first-header-user > a {
+    color: #ffca00 !important;
+    font-size: 15px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.signup {
+    width: 80px;
+    background-color: #ffca00;
+    border-radius: 7px;
+    display: flex;
+    justify-content: center;
+}
+
+.signup > a {
+    font-size: 15px;
+    color: white;
+    margin-top: auto;
+    margin-bottom: auto;
+}
 }

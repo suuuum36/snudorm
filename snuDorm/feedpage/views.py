@@ -291,21 +291,21 @@ def likeFeed(request, board, category, fid):
 
         elif board == "life":
             feed = CoBuy.objects.get(id=fid) if category == "cobuy" else (Rent.objects.get(id=fid) if category == "rent" else (
-                Keep.objects.get(id=fid) if category == "keep" else (Resell.objects.get(id=fid) if category == "resell" else "tori")))
+            Keep.objects.get(id=fid) if category == "keep" else (Resell.objects.get(id=fid) if category == "resell" else "tori")))
 
         elif board == "freeboard":
             feed = FreeBoard.objects.get(id=fid)
 
-        user_like = feed.feedlike.filter(user_id=request.user.id)
-
+            user_like = feed.feedlike.filter(user_id=request.user.id)
+        
         elif board == "life":
             feed = CoBuy.objects.get(id=fid) if category == "cobuy" else (Rent.objects.get(id=fid) if category == "rent" else (
-                Keep.objects.get(id=fid) if category == "keep" else (Resell.objects.get(id=fid) if category == "resell" else "all")))
-
+            Keep.objects.get(id=fid) if category == "keep" else (Resell.objects.get(id=fid) if category == "resell" else "all")))
+            
         elif board == "freeboard":
             feed = FreeBoard.objects.get(id=fid)
 
-        user_like = feed.feedlike.filter(user_id=request.user.id)
+            user_like = feed.feedlike.filter(user_id=request.user.id)
 
         if user_like.count() > 0:
             feed.feedlike.get(user_id=request.user.id).delete()

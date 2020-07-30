@@ -48,7 +48,8 @@ def login(request):
 
 
 def logout(request):
-    return render(request, 'accounts/logout.html')
+    auth.logout(request)
+    return redirect('showmain')
 
 
 def userEdit(request, id):
