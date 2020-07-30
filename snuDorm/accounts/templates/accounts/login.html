@@ -1,5 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load socialaccount %}
+{% providers_media_js %}
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
     <div class="info" style="margin:50px">
         <div>
             <span>로그인</span>
@@ -7,14 +14,23 @@
         <form method="post" action="{% url 'login' %}">
             {% csrf_token %}
             <div>
-                 <label for="username">사용자 이름</label>
-                <input name="username" type="text" id="username" required>
+                <input name="user_id" type="text" id="user_id" placeholder="아이디" required>
             </div></br>
             <div>
-                <label for="password">비밀번호</label>
-                <input name="password" type="password" id="password" required>
+                <input name="password" type="password" id="password" placeholder="비밀번호" required>
             </div></br>
             <button type="submit">로그인</button>
         </form>
+    </div>
+    <div>
+        <!-- 소셜 로그인 부분. db 날리면 에러 생겨서 주석처리합니다.
+        <a href="{% provider_login_url 'naver' %}">네이버로 로그인/회원가입</a>
+        <a href="{% provider_login_url 'google'%}">구글로 로그인/회원가입</a>
+        -->
+        
+    </div>
+    <div>
+        <a href="">아이디/비밀번호 찾기</a>
+        <a href="{% url 'signup' %}">회원가입</a>
     </div>
 {% endblock content %}

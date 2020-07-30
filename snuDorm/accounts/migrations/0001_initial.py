@@ -19,10 +19,11 @@ class Migration(migrations.Migration):
             name='Profile',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('nickname', models.CharField(blank=True, max_length=15)),
-                ('building', models.CharField(blank=True, max_length=20)),
-                ('email', models.CharField(blank=True, max_length=50)),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('name', models.CharField(max_length=15, verbose_name='이름')),
+                ('nickname', models.CharField(max_length=15, verbose_name='닉네임')),
+                ('building_category', models.CharField(choices=[('BK', 'BK생활관'), ('bachelor', '학부생활관'), ('family', '가족생활관'), ('master', '대학원생활관')], max_length=20, verbose_name='생활관')),
+                ('building_dong', models.CharField(choices=[('902', '902동'), ('904', '904동'), ('905', '905동'), ('900', '900동'), ('901', '901동'), ('903', '903동'), ('906', '906동')], max_length=20, verbose_name='동')),
+                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='profile', to=settings.AUTH_USER_MODEL)),
             ],
         ),
     ]

@@ -1,22 +1,40 @@
 {% extends 'base.html' %}
 {% block content %}
+    <div>
+        <a href="{% url 'userinfo' user.id %}">내 정보</a>
+        <a href="{% url 'useredit' user.id %}">개인정보 변경</a>
+        <a href="{% url 'usernotice' user.id %}">게시글 알림</a>
+        <a href="{% url 'messagebox' user.id %}">쪽지함</a>
+    </div>
+    </br>
+    </br>
+    </br>
+    </br>
     <div class="info">
-        <span>USER: {{ user.username }}</span>
-        <form method="POST" action="{%url 'useredit' user.id %}">
+        <form method="POST" action="{% url 'useredit' user.id %}">
             {% csrf_token %}
+            {{ context.error }}
             <div>
-                닉네임</br> 
-                <input name="nickname" type="text" value="{{ user.profile.nickname }}" required>
+                이름 <input name="name" type="text" value="{{ user.profile.name }}" required>
             </div></br>
             <div>
-                이메일</br> 
-                <input name="email" type="text" value="{{ user.profile.email }}" required>
+                아이디 <input name="user_id" type="text" value="{{ user.username }}" required>
             </div></br>
             <div>
-                기숙사 동</br>
-                <input name="building" type="text" value="{{ user.profile.building }}" required>
+                닉네임 <input name="nickname" type="text" value="{{ user.profile.nickname }}" required>
             </div></br>
-            <button type="submit">수정하기</button>
+            <div>
+                이메일 <input name="email" type="text" value="{{ user.email }}" required> @ snu.ac.kr
+            </div></br>
+            <div>
+                기숙사 동 <input name="building_category" type="text" value="{{ user.profile.building_category }}" required>
+                <input name="building_dong" type="text" value="{{ user.profile.building_dong }}" required>
+            </div></br>
+            <div>
+                기존_비밀번호 <input name="origin_password" type="password" required>
+            </div></br>
+            <button type="submit">개인정보 변경</button>
         </form>
+        <a href="{% url 'passwordedit' user.id %}">비밀번호 변경하기</a>
     </div>
 {% endblock content %}
