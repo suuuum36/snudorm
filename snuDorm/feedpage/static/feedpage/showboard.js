@@ -1,15 +1,11 @@
-// 다시 해보자... 작동 약 1초 ㅎㅅㅎ 도대체 왜?
-function showBestList() {
-    document.getElementById("show_normal_lists").style.display = "none";
-    document.getElementById("show_best_lists").style.display = "";
-}
-
 function showNormalList() {
-    document.getElementById("show_normal_lists").style.display = "";
-    document.getElementById("show_best_lists").style.display = "none";
+    console.log('전체글 submitted');
+    $('#show_normal_lists').removeAttr('style');
+    $('#show_best_lists').attr("style", "display:none;");
 }
 
-
-
-
-
+function showBestList() {
+    console.log('베스트 submitted');
+    $('#show_normal_lists').attr("style", "display:none;");
+    $('#show_best_lists').removeAttr('style');
+}
