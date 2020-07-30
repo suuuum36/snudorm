@@ -7,6 +7,7 @@
 input:focus {outline:none;}
 select:focus {outline:none;}
 a {text-decoration-line:none}
+a:hover {color: black}
 
 
 .first-header {
@@ -17,7 +18,7 @@ a {text-decoration-line:none}
     margin-top: 50px;
 }
 .first-header-inner {
-    width: 85%;
+    width: 95%;
     display: flex;
     justify-content: space-around;
 }
@@ -32,7 +33,7 @@ a {text-decoration-line:none}
 }
 
 .first-header-text {
-    width: 500px;
+    width: 450px;
     display: flex;
     justify-content: space-around;
     margin-top: auto;
@@ -45,12 +46,12 @@ a {text-decoration-line:none}
 }
 
 .search {
-    width: 400px;
-    border: 1px solid #7f7f7f;
+    width: 430px;
+    border: 1px solid #999999;
     border-radius: 7px;
     display: flex;
     justify-content: space-between;
-    font-size: 17px;
+    font-size: 19px;
     color: #7f7f7f;
 }
 
@@ -62,15 +63,18 @@ a {text-decoration-line:none}
 .search-content > select, input {
     margin-top: auto;
     margin-bottom: auto;
+
 }
 
 .search-option {
+    font-size: 15px;
     border: 0px solid;
     margin-right: 22px;
     margin-left: 12px;
 }
 
 .search-text {
+    font-size: 15px;
     border: 0px solid;
     color: black;
     margin-right: 5px;
@@ -106,5 +110,4 @@ a {text-decoration-line:none}
     color: white;
     margin-top: auto;
     margin-bottom: auto;
-}
 }
