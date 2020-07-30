@@ -47,6 +47,7 @@ INSTALLED_APPS = [
      'allauth.socialaccount',
 
     #provider
+    'allauth.socialaccount.providers.naver',    
     'allauth.socialaccount.providers.google',
 
     #multiselectfield
