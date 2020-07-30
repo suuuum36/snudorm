@@ -3,215 +3,313 @@
 <div class="info">
     {{ error }}<br>
     {% if user.is_authenticated %}
+        <!-- 게시판 이름 -->
+        <div class="board_name" > 
+            {{ board_name }} 게시판 
+        </div>
         {% if board == 'minwon' or board == 'freeboard' %}
-            {% if category == 'gong' %}
-                <div style="font-weight: bold; margin: 20px; background-color: yellow;"> 민원게시판 공통 글 수정하기</div>
-            {% elif category == 'dong' %}
-                <div style="font-weight: bold; margin: 20px; background-color: yellow;"> 민원게시판 {{ category }} 글 수정하기</div>
-            {% else %}
-                <div style="font-weight: bold; margin: 20px; background-color: yellow;"> 자유게시판 글 수정하기</div>
-            {% endif %}
-            <form method="POST" action="{% url 'editfeed' board category feed.id %}">
+        <!-- Minwon, freeboard 게시판 -->
+        <div class="minwon_or_free_new">
+            <form method="POST" action="{% url 'editfeed' board category fid %}">
                 {% csrf_token %}
-                <div style="background-color: thistle; margin: 20px;">
-                    <div style="margin: 0px 0px 20px 20px; padding-top: 20px;">
-                        제목</br>
-                        <input name="title" type=" text" value="{{ feed.title }}" required>
-                    </div></br>
-                    <div style="margin: 0px 0px 20px 20px;">
-                        내용</br>
-                        <input name="content" type="text" value="{{ feed.content }}" required>
-                    </div></br>
-                    <div style="margin: 0px 0px 20px 20px;">
-                        사진</br>
-                        <input name="photo" type="text" value="{{ feed.photo }}" required>
-                    </div></br>
-                    <div style="margin: 0px 0px 20px 20px;">
-                        익명</br>
-                        <input name="noname" type="text" value="{{ feed.noname }}" required>
-                    </div></br>
-                </div>
-                <button type="submit">게시글 수정하기 </button>
+                <div>
+                    제목</br>
+                    <input name="title" type=" text" style="width:400px; height:50px;" 
+                        value={{feed.title}} required>
+                </div></br>
+                <div>
+                    내용</br>
+                    <input name="content" type="text"  style="width:400px; height:50px;" 
+                            value={{feed.content}} required>
+                </div></br>
+                <div>
+                    사진</br>
+                    <input name="photo" value="{{feed.photo}}" type="file">
+                </div></br>
+                <div class="option_noname">
+                    {% if feed.noname %}
+                        <input name="noname" type="checkbox" id="noname" checked>
+                        <label for="noname">익명</label>
+                    {% else %}
+                        <input name="noname" type="checkbox" id="noname">
+                        <label for="noname">익명</label>
+                    {% endif %}
+                </div></br>
+                <button type="submit">글쓰기</button>
             </form>
+        </div>
         {% elif category == 'cobuy' %}
-        <div> 공구게시판 글 수정하기</div>
-        <form method="POST" action="{% url 'editfeed' board category feed.id %}">
-            {% csrf_token %}
-            <div>
-                제목 </br>
-                <input name="title" type="text" value="{{ cobuy.title }}" required>
-            </div></br>
-            <div style="margin: 0px 0px 20px 20px;">
-                익명</br>
-                <input name="noname" type="text" value="{{ cobuy.noname }}" required>
-            </div></br>
-            <div>
-                품목 </br>
-                <input name="product" type="text" value="{{ cobuy.product }}" required>
-            </div></br>
-            <div style="margin: 0px 0px 20px 20px;">
-                사진</br>
-                <input name="photo" type="text" value="{{ cobuy.photo }}" required>
-            </div></br>
-                가격</br>
-                <input name="price" type="text" value="{{ cobuy.price }}" required>
-            </div></br>
-            <div>
-                제품링크</br>
-                <input name="url" type="text" value="{{ cobuy.url }}" required>
-            </div></br>
-            <div>
-                마감기한</br>
-                <input name="duedate" type="text" placeholder="YYYY-MM-DD" pattern="\d{4}-\d{1,2}-\d{1,2}" value="{{ cobuy.duedate }}" required>
-            </div></br>
-            <div>
-                연락처</br>
-                <input name="contact" type="text" value="{{ cobuy.contact }}" required>
-            </div></br>
-            <div>
-                상태 </br>
-                <input name="status" type="text" value="{{ cobuy.status }}" required>
-            </div></br>
-            <div>
-                기타</br>
-                <input name="content" type="text" value="{{ cobuy.content }}" required>
-            </div></br>
-            <button type="submit">게시글 수정하기 </button>
-        </form>
+        <!-- Cobuy 공구 게시판 -->
+        <div class="cobuy_board_new">
+            <form method="POST" action="{% url 'editfeed' 'life' 'cobuy' fid %}">
+                {% csrf_token %}
+                <div>
+                    제목 </br>
+                    <input name="title" type="text"  style="width:400px; height:50px;" 
+                            value={{feed.title}} required>
+                </div></br>
+                <div>
+                    가격</br>
+                    <input name="price" type="text"  style="width:400px; height:50px;" 
+                            value={{feed.price}} required>
+                </div></br>
+                <div>
+                    링크</br>
+                    <input name="url" type="text"  style="width:400px; height:50px;" 
+                            value={{feed.url}} required>
+                </div></br>
+                <div>
+                    마감일</br>
+                    <input name="duedate" value="{{now_date|date:"Y.m.d"}}" 
+                        onfocus="(this.type='date')" onblur="(this.type='text')" type="date" required>
+                    <div>
+                        <input name="uncertain" type="checkbox" id="uncertain"  onclick="duedateCheck(this);">
+                        <label for="uncertain">미정</label>
+                    </div></br>
+                </div></br>
+                <div>
+                    설명</br>
+                    <input name="content" type="text"  style="width:400px; height:50px;" 
+                            value={{feed.content}} required>
+                </div></br>
+                <div>
+                    사진</br>
+                    <input name="photo" type="file">
+                </div></br>
+                 {% if complete %}
+                    <div>
+                        <input name="status" onclick="doStatCheck(this);" type="checkbox" value="진행중" id="status">
+                        <label for="status">진행중</label>
+                        <input name="status" onclick="doStatCheck(this);" type="checkbox" value="완료" id="status" checked>
+                        <label for="status">완료</label>
+                    </div></br>
+                {% else %}
+                    <div>
+                        <input name="status" onclick="doStatCheck(this);" type="checkbox" value="진행중" id="status" checked>
+                        <label for="status">진행중</label>
+                        <input name="status" onclick="doStatCheck(this);" type="checkbox" value="완료" id="status">
+                        <label for="status">완료</label>
+                    </div></br>
+                {% endif %}
+                <div class="option_noname">
+                    {% if feed.noname %}
+                        <input name="noname" type="checkbox" id="noname" checked>
+                        <label for="noname">익명</label>
+                    {% else %}
+                        <input name="noname" type="checkbox" id="noname">
+                        <label for="noname">익명</label>
+                    {% endif %}
+                </div></br>
+                <button type="submit">글쓰기</button>
+            </form>
+        </div>
         {% elif category == 'rent' %}
-        <div> 대여게시판 글 수정하기</div>
-        <form method="POST" action="{% url 'editfeed' board category feed.id %}">
-            {% csrf_token %}
-            <div>
-                제목 </br>
-                <input name="title" type="text" value="{{ rent.title }}" required>
-            </div></br>
-            <div style="margin: 0px 0px 20px 20px;">
-                익명</br>
-                <input name="noname" type="text" value="{{ rent.noname }}" required>
-            </div></br>
-            <div>
-                품목 </br>
-                <input name="product" type="text" value="{{ rent.product }}" required>
-            </div></br>
-            <div style="margin: 0px 0px 20px 20px;">
-                사진</br>
-                <input name="photo" type="text" value="{{ rent.photo }}" required>
-            </div></br>
-            <div>
-                보증금</br>
-                <input name="deposit" type="text" value="{{ rent.deposit }}" required>
-            </div></br>
-            <div>
-                시작기간</br>
-                <input name="start_date" type="text" placeholder="YYYY-MM-DD" pattern="\d{4}-\d{1,2}-\d{1,2}" value="{{ rent.start_date }}" required>
-            </div></br>
-            <div>
-                마감기한</br>
-                <input name="end_date" type="text" placeholder="YYYY-MM-DD" pattern="\d{4}-\d{1,2}-\d{1,2}" value="{{ rent.end_date }}" required>
-            </div></br>
-            <div>
-                연락처</br>
-                <input name="contact" type="text" value="{{ rent.contact }}" required>
-            </div></br>
-            <div>
-                상태 </br>
-                <input name="status" type="text" value="{{ rent.status }}" required>
-            </div></br>
-            <div>
-                기타</br>
-                <input name="content" type="text" value="{{ rent.content }}" required>
-            </div></br>
-            <button type="submit">게시글 수정하기 </button>
-        </form>
+        <!-- Rent 게시판 -->
+        <div class="rent_board_new"> 
+            <form method="POST" action="{% url 'editfeed' 'life' 'rent' fid %}">
+                {% csrf_token %}
+                <div>
+                    제목 </br>
+                    <input name="title" type="text"  style="width:400px; height:50px;" 
+                            value={{feed.title}} required>
+                </div></br>
+                <div style="display:flex;">
+                    목적 </br>
+                    <!-- TODO: PURPOSE알고리즘 다시 짜깅 >_<-->                    
+                    <input name="purpose" type="checkbox" value="borrow" id="purpose" onclick="doOpenCheck(this);" checked>
+                    <label for="purpose">빌려줄게요</label>
+                    <input name="purpose" type="checkbox" value="lend" id="purpose" onclick="doOpenCheck(this);">
+                    <label for="purpose">빌려주세요</label>
+                </div></br>
+                <div>
+                    대여료</br>
+                    <input name="deposit" type="text" style="width:400px; height:50px;" 
+                    value={{feed.deposit}} required>
+                </div></br>
+                <div style="display:flex;">
+                    시작일</br>
+                    <input name="start_date" type="date" required>
+                    <div >
+                        <input name="uncertain" type="checkbox" id="uncertain"  onclick="startCheck(this);">
+                        <label for="uncertain">미정</label>
+                    </div></br>
+                </div></br>
+                <div style="display:flex;">
+                    마감일</br>
+                    <input name="duedate" type="date" required>
+                    <div>
+                        <input name="uncertain" type="checkbox" id="uncertain"  onclick="duedateCheck(this);">
+                        <label for="uncertain">미정</label>
+                    </div></br>
+                </div></br>
+                <div>
+                    설명</br>
+                    <input name="content" type="text"  style="width:400px; height:50px;" 
+                            value={{feed.content}} required>
+                </div></br>
+                <div>
+                    사진</br>
+                    <input name="photo" type="file">
+                </div></br>
+                {% if complete %}
+                    <div>
+                        <input name="status" onclick="doStatCheck(this);" type="checkbox" value="진행중" id="status">
+                        <label for="status">진행중</label>
+                        <input name="status" onclick="doStatCheck(this);" type="checkbox" value="완료" id="status" checked>
+                        <label for="status">완료</label>
+                    </div></br>
+                {% else %}
+                    <div>
+                        <input name="status" onclick="doStatCheck(this);" type="checkbox" value="진행중" id="status" checked>
+                        <label for="status">진행중</label>
+                        <input name="status" onclick="doStatCheck(this);" type="checkbox" value="완료" id="status">
+                        <label for="status">완료</label>
+                    </div></br>
+                {% endif %}
+               <div class="option_noname">
+                    {% if feed.noname %}
+                        <input name="noname" type="checkbox" id="noname" checked>
+                        <label for="noname">익명</label>
+                    {% else %}
+                        <input name="noname" type="checkbox" id="noname">
+                        <label for="noname">익명</label>
+                    {% endif %}
+                </div></br>
+                <button type="submit">글쓰기</button>
+            </form>
+        </div> 
         {% elif category == "keep" %}
-        <div> 보관 게시판 글 수정하기</div>
-        <form method="POST" action="{% url 'editfeed' board category feed.id %}">
-            {% csrf_token %}
-            <div>
-                제목 </br>
-                <input name="title" type="text" value="{{ keep.title }}" required>
-            </div></br>
-            <div style="margin: 0px 0px 20px 20px;">
-                익명</br>
-                <input name="noname" type="text" value="{{ keep.noname }}" required>
-            </div></br>
-            <div>
-                품목 </br>
-                <input name="product" type="text" value="{{ keep.product }}" required>
-            </div></br>
-            <div style="margin: 0px 0px 20px 20px;">
-                사진</br>
-                <input name="photo" type="text" value="{{ keep.photo }}" required>
-            </div></br>
-            <div>
-                시작기간</br>
-                <input name="start_date" type="text" placeholder="YYYY-MM-DD" pattern="\d{4}-\d{1,2}-\d{1,2}" value="{{ keep.start_date }}" required>
-            </div></br>
-            <div>
-                마감기한</br>
-                <input name="end_date" type="text" placeholder="YYYY-MM-DD" pattern="\d{4}-\d{1,2}-\d{1,2}" value="{{ keep.end_date }}" required>
-            </div></br>
-            <div>
-                사례금 </br>
-                <input name="reward" type="text" value="{{ keep.reward }}" required>
-            </div></br>
-            <div>
-                연락처</br>
-                <input name="contact" type="text" value="{{ keep.contact }}" required>
-            </div></br>
-            <div>
-                상태 </br>
-                <input name="status" type="text" value="{{ keep.status }}" required>
-            </div></br>
-            <div>
-                기타</br>
-                <input name="content" type="text" value="{{ keep.content }}" required>
-            </div></br>
-            <button type="submit">게시글 수정하기 </button>
-        </form>
+        <!-- Keep 게시판 -->
+        <div class="keep_board_new">
+            <form method="POST" action="{% url 'editfeed' 'life' 'keep' fid %}">
+                {% csrf_token %}
+                <div>
+                    제목 </br>
+                    <input name="title" type="text" style="width:400px; height:50px;"
+                         value={{feed.content}} required>
+                </div></br>
+                <div>
+                    <!-- TODO: PURPOSE알고리즘 다시 짜깅 >_<-->                    
+                    목적 </br>
+                    <input type="checkbox" name="purpose" onclick="doOpenCheck(this);" id="purpose" value="keep" checked="checked">
+                    <label for="purpose">보관할래요</label>
+                    <input type="checkbox" name="purpose" onclick="doOpenCheck(this);" id="purpose" value="request">    
+                    <label for="purpose">보관할래요</label><br> 
+                </div> 
+                <div >
+                    보관료</br>
+                    <input name="reward" type="text" style="width:400px; height:50px;"
+                    value={{feed.reward}} required>
+                </div></br>
+                <div style="display:flex;">
+                    시작일
+                    <input name="start_date" type="date" required>
+                    <div >
+                        <input name="uncertain" type="checkbox" id="uncertain"  onclick="startCheck(this);">
+                        <label for="uncertain">미정</label>
+                    </div></br>
+                </div></br>
+                <div style="display:flex;">
+                    마감일</br>
+                    <input name="duedate" type="date" required>
+                    <div>
+                        <input name="uncertain" type="checkbox" id="uncertain"  onclick="duedateCheck(this);">
+                        <label for="uncertain">미정</label>
+                    </div></br>
+                </div></br>
+                <div>
+                    설명</br>
+                    <input name="content" type="text"  style="width:400px; height:50px;" 
+                             value="{{feed.content}}" required>
+                </div></br>
+                <div>
+                    사진</br>
+                    <input name="photo" type="file">
+                </div></br>
+                 {% if complete %}
+                    <div>
+                        <input name="status" onclick="doStatCheck(this);" type="checkbox" value="진행중" id="status">
+                        <label for="status">진행중</label>
+                        <input name="status" onclick="doStatCheck(this);" type="checkbox" value="완료" id="status" checked>
+                        <label for="status">완료</label>
+                    </div></br>
+                {% else %}
+                    <div>
+                        <input name="status" onclick="doStatCheck(this);" type="checkbox" value="진행중" id="status" checked>
+                        <label for="status">진행중</label>
+                        <input name="status" onclick="doStatCheck(this);" type="checkbox" value="완료" id="status">
+                        <label for="status">완료</label>
+                    </div></br>
+                {% endif %}
+                <div class="option_noname">
+                    {% if feed.noname %}
+                        <input name="noname" type="checkbox" id="noname" checked>
+                        <label for="noname">익명</label>
+                    {% else %}
+                        <input name="noname" type="checkbox" id="noname">
+                        <label for="noname">익명</label>
+                    {% endif %}
+                </div></br>
+                <button type="submit">글쓰기</button>
+            </form>
         {% elif category == "resell" %}
-        <div> 거래 게시판 글 수정하기</div>
-        <form method="POST" action="{% url 'editfeed' board category feed.id %}">
-            {% csrf_token %}
-            <div>
-                제목 </br>
-                <input name="title" type="text" value="{{ resell.title }}" required>
-            </div></br>
-            <div style="margin: 0px 0px 20px 20px;">
-                익명</br>
-                <input name="noname" type="text" value="{{ resell.noname }}" required>
-            </div></br>
-            <div>
-                품목 </br>
-                <input name="product" type="text" value="{{ resell.product }}" required>
-            </div></br>
-            <div style="margin: 0px 0px 20px 20px;">
-                사진</br>
-                <input name="photo" type="text" value="{{ resell.photo }}" required>
-            </div></br>
-            <div>
-                가격</br>
-                <input name="price" type="text" value="{{ resell.price }}" required>
-            </div></br>
-            <div>
-                역할</br>
-                <input name="role" type="text" value="{{ resell.role }}" required>
-            </div></br>
-            <div>
-                연락처</br>
-                <input name="contact" type="text" value="{{ resell.contact }}" required>
-            </div></br>
-            <div>
-                상태 </br>
-                <input name="status" type="text" value="{{ resell.status }}" required>
-            </div></br>
-            <div>
-                기타</br>
-                <input name="content" type="text" value="{{ resell.content }}" required>
-            </div></br>
-            <button type="submit">게시글 수정하기 </button>
-        </form>
+        <!-- Resell 게시판 -->
+        <div class="resell_board_new">
+            <form method="POST" action="{% url 'editfeed' 'life' 'resell' fid %}">
+                {% csrf_token %}
+                <div>
+                    제목 </br>
+                    <input name="title" type="text" style="width:400px; height:50px;" 
+                        value={{feed.title}} required>
+                </div></br>
+                <div>
+                <!-- TODO: PURPOSE알고리즘 다시 짜깅 >_<--> 
+                    목적 </br>
+                    <input type="checkbox" name="purpose" onclick="doOpenCheck(this);" value="sell" id="purpose" checked>
+                    <label for="purpose">판매</label>
+                    <input type="checkbox" name="purpose" onclick="doOpenCheck(this);" value="buy" id="purpose">
+                    <label for="purpose">구매</label><br> 
+                </div>
+                <div>
+                    가격</br>
+                    <input name="price" type="text" style="width:400px; height:50px;" 
+                    value={{feed.price}} required>
+                </div></br>
+                <div>
+                    설명</br>
+                    <input name="content" type="text" style="width:400px; height:50px;" 
+                             value={{feed.content}} required>
+                </div></br>
+                <div>
+                    사진</br>
+                    <input name="photo" type="file">
+                </div></br>
+                 {% if complete %}
+                    <div>
+                        <input name="status" onclick="doStatCheck(this);" type="checkbox" value="판매중" id="status">
+                        <label for="status">판매중</label>
+                        <input name="status" onclick="doStatCheck(this);" type="checkbox" value="완료" id="status" checked>
+                        <label for="status">완료</label>
+                    </div></br>
+                {% else %}
+                    <div>
+                        <input name="status" onclick="doStatCheck(this);" type="checkbox" value="판매중" id="status" checked>
+                        <label for="status">판매중</label>
+                        <input name="status" onclick="doStatCheck(this);" type="checkbox" value="완료" id="status">
+                        <label for="status">완료</label>
+                    </div></br>
+                {% endif %}
+                <div class="option_noname">
+                    {% if feed.noname %}
+                        <input name="noname" type="checkbox" id="noname" checked>
+                        <label for="noname">익명</label>
+                    {% else %}
+                        <input name="noname" type="checkbox" id="noname">
+                        <label for="noname">익명</label>
+                    {% endif %}
+                </div></br>
+                <button type="submit">글쓰기</button>
+            </form>
         {% endif %}
     {% endif %}
 </div>
