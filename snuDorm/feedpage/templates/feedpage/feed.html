@@ -108,49 +108,68 @@
             </div>
         {% endif %}
     {% endif %}
+{% endif %}
+</div>
+
 
 {% for c in feed.feedcomment_set.all %}
 <div>
-<p>{{c.author.username}}: {{ c.content }}</p>
-{% if user.is_authenticated %}
-<div>
-<a href="{% url 'likecomment' board category feed.id c.id %}" class='comment-like' data-board="{{ board }}" data-category="{{ category }}" data-fid='{{ feed.id }}' data-cid='{{ c.id }}' data-count='{{ c.commentlike_set.count }}' data-csrfmiddlewaretoken="{{ csrf_token }}">댓글 좋아요: {{ c.commentlike_set.count }}</a>
-</div>
-{% endif %}
-{% if request.user == c.author %}
-<form action="{% url 'deletecomment' board category feed.id c.id %}" method="POST" class='deletecomment' data-board="{{ board }}" data-category="{{ category }}" data-fid='{{ feed.id }}' data-cid='{{ c.id }}' data-csrfmiddlewaretoken="{{ csrf_token }}">
-    {% csrf_token %}
-    <button>댓글 삭제</button>
-</form>
-{% endif %}
-{% for d in c.recomment_set.all %}
-<div>
-<p>{{d.author.username}}: {{ d.content }}</p>
-{% if user.is_authenticated %}
-<div>
-<a href="{% url 'likecomment' board category feed.id c.id %}" class='recomment-like' data-board="{{ board }}" data-category="{{ category }}" data-fid='{{ feed.id }}' data-cid='{{ c.id }}' data-did='{{ d.id }}' data-count='{{ d.recommentlike_set.count }}' data-csrfmiddlewaretoken="{{ csrf_token }}">대댓글 좋아요: {{ d.recommentlike_set.count }}</a>
-</div>
-{% endif %}
-{% if request.user == d.author %}
-<form action="{% url 'deleterecomment' board category feed.id c.id d.id %}" method="POST" class='deleterecomment' data-board="{{ board }}" data-category="{{ category }}" data-fid='{{ feed.id }}' data-cid='{{ c.id }}' data-did='{{ d.id }}' data-csrfmiddlewaretoken="{{ csrf_token }}">
-    {% csrf_token %}
-    <button>대댓글 삭제</button>
-</form>
-{% endif %}
-</div>
-{% endfor %}
-{% if user.is_authenticated %}
-<form action="{% url 'newrecomment' board category feed.id c.id %}" method="POST" class="recomment-submit" data-board="{{ board }}" data-category="{{ category }}" data-fid="{{ feed.id }}" data-cid="{{ c.id }}"data-csrfmiddlewaretoken="{{ csrf_token }}">
-    {% csrf_token %}
-    <input id ="{{ c.id }}" type="text" name="content" />
-    <button type="submit">대댓글 달기</button>
-</form>
-{% endif %}
+    <div>
+        <p>{{c.author.username}}: {{ c.content }}</p>
+        {% if request.user == c.author %}
+        <a class='editcommentform'>
+            <button>수정</button>
+        </a>
+        <form method="POST" class='deletecomment' data-board="{{ board }}" data-category="{{ category }}" data-fid='{{ feed.id }}' data-cid='{{ c.id }}' data-csrfmiddlewaretoken="{{ csrf_token }}">
+            {% csrf_token %}
+            <button>삭제</button>
+        </form>
+        {% endif %}
+        {% if user.is_authenticated %}
+        <div>
+            <a class='comment-like' data-board="{{ board }}" data-category="{{ category }}" data-fid='{{ feed.id }}' data-cid='{{ c.id }}' data-count='{{ c.commentlike_set.count }}' data-csrfmiddlewaretoken="{{ csrf_token }}">[{{ c.commentlike_set.count }}]</a>
+        </div>
+        {% endif %}
+    </div>
+    <div id='editcommentsubmit' style="display: none">
+        <form method="POST" class="comment-edit"
+        data-board="{{ board }}" data-category="{{ category }}" data-fid="{{ feed.id }}" data-cid="{{c.id}}" data-count = "{{ c.commentlike_set.count }}"
+        data-csrfmiddlewaretoken="{{ csrf_token }}">
+        {% csrf_token %}
+        <input id="{{ feed.id }}_{{ c.id }}" type="text" name="content" value="{{ c.content }}"/>
+        <button type="submit">댓글 수정</button>
+        </form>
+    </div>
+    {% for d in c.recomment_set.all %}
+    <div>
+        <p>{{d.author.username}}: {{ d.content }}</p>
+        {% if user.is_authenticated %}
+        <div>
+            <a class='recomment-like' data-board="{{ board }}" data-category="{{ category }}" data-fid='{{ feed.id }}' data-cid='{{ c.id }}' data-did='{{ d.id }}' data-count='{{ d.recommentlike_set.count }}' data-csrfmiddlewaretoken="{{ csrf_token }}">대댓글 좋아요: {{ d.recommentlike_set.count }}</a>
+        </div>
+        {% endif %}
+        {% if request.user == d.author %}
+        <form method="POST" class='deleterecomment' data-board="{{ board }}" data-category="{{ category }}" data-fid='{{ feed.id }}' data-cid='{{ c.id }}' data-did='{{ d.id }}' data-csrfmiddlewaretoken="{{ csrf_token }}">
+            {% csrf_token %}
+            <button>대댓글 삭제</button>
+        </form>
+        {% endif %}
+    </div>
+    {% endfor %}
+    <div>
+    {% if user.is_authenticated %}
+    <form method="POST" class="recomment-submit" data-board="{{ board }}" data-category="{{ category }}" data-fid="{{ feed.id }}" data-cid="{{ c.id }}"data-csrfmiddlewaretoken="{{ csrf_token }}">
+        {% csrf_token %}
+        <input id ="{{ c.id }}" type="text" name="content" />
+        <button type="submit">대댓글 달기</button>
+    </form>
+    {% endif %}
+    </div>
 </div>
 
 {% endfor %}
 {% if user.is_authenticated %}
-    <form action="{% url 'newcomment' board category feed.id %}" method="POST" class="comment-submit"
+    <form method="POST" class="comment-submit"
         data-board="{{ board }}" data-category="{{ category }}" data-fid="{{ feed.id }}"
         data-csrfmiddlewaretoken="{{ csrf_token }}">
         {% csrf_token %}
@@ -158,11 +177,5 @@
         <button type="submit">댓글 달기</button>
     </form>
 {% endif %}
-
-{% if category == "cobuy" %}
-{% endif %}
-
-</div>
-
 
 {% endblock content %}

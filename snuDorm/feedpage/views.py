@@ -183,12 +183,12 @@ def showFeed(request, board, category, fid): # board, category 필요없음.
     elif board == "freeboard":
         feed = FreeBoard.objects.get(id=fid)
 
-    if request.user.id != feed.author.id:
-        feed.views += 1     
-        feed.save()
+    # if request.user.id != feed.author.id:
+    #     feed.views += 1     
+    #     feed.save()
 
-    return render(request, 'feedpage/feed.html', {'feed': feed, 'board': board, 'fid':fid,
-                             'category': category, 'board_name': board_info[2]})
+    return render(request, 'feedpage/feed.html', {'feed': feed, 'board': board, 'fid':fid, 'category': category, 'board_name': board_info[2]})
+
 
 
 # 게시글 수정
@@ -305,14 +305,12 @@ def likeFeed(request, board, category, fid):
         elif board == "freeboard":
             feed = FreeBoard.objects.get(id=fid)
 
-            user_like = feed.feedlike.filter(user_id=request.user.id)
-
         if user_like.count() > 0:
             feed.feedlike.get(user_id=request.user.id).delete()
         else:
             FeedLike.objects.create(user_id=request.user.id, feed_id=feed.id)
 
-        return render(request, 'feedpage/feed.html', {'feed': feed, 'board': board, 'category': category, 'fid': fid})
+    return render(request, 'feedpage/feed.html', {'feed': feed, 'board': board, 'category': category, 'fid': fid})
 
 
 # 댓글 달기
@@ -320,6 +318,7 @@ def newComment(request, board, category, fid):
     content = request.POST['content']
     new_comment = FeedComment.objects.create(feed_id=fid, content=content, author = request.user)
     like_count = new_comment.commentlike_set.filter(user_id = request.user.id)
+    noname = True if "noname" in request.POST else False
 
     context = {
         'cid': new_comment.id,
@@ -330,11 +329,24 @@ def newComment(request, board, category, fid):
 
     return JsonResponse(context)
 
-# 댓글 수정 -- 미완성
-
 
 def editComment(request, board, category, fid, cid):
-    return redirect('showfeed', board=board, category=category, fid=fid)
+    if request.method == 'POST':
+        content = request.POST['content']
+        FeedComment.objects.filter(id =cid).update(content = content)
+        edit_comment = FeedComment.objects.get(id = cid)
+        like_count = edit_comment.commentlike_set.filter(user_id = request.user.id)
+
+        context = {
+            'cid': edit_comment.id,
+            'username': edit_comment.author.username,
+            'content' : content,
+        }
+
+        return JsonResponse(context)
+
+
+
 
 # 댓글 좋아요
 
@@ -371,6 +383,7 @@ def newRecomment(request, board, category, fid, cid):
         comment_id=cid, content=content, author=request.user)
     like_count = new_recomment.recommentlike_set.filter(
         user_id=request.user.id)
+    noname = True if "noname" in request.POST else False
 
     context = {
         'did': new_recomment.id,
@@ -395,6 +408,7 @@ def deleteRecomment(request, board, category, fid, cid, rcid):
     c.delete()
     return JsonResponse({})
 
+
 def likeRecomment(request, board, category, fid, cid, rcid):
     recomment = Recomment.objects.get(id=rcid)
     like_list = recomment.recommentlike_set.filter(user_id=request.user.id)
@@ -409,13 +423,48 @@ def likeRecomment(request, board, category, fid, cid, rcid):
     return JsonResponse(context)
 
 def search(request):
-    query = request.GET.get("query" )
-    feeds = Feed.objects.order_by('-created_at')
-    results = []
+    searchtype = request.GET
+    query = request.GET['query']
+    searchtype = request.GET['searchtype']
+    feeds = Feed.objects.all()
+    results = set()
 
     for feed in feeds:
-        if feed.title.find(query) != -1:
-            results.append(feed)
+        if searchtype == 'title':
+            if feed.title.find(query) != -1:
+                results.add(feed)
+        elif searchtype == 'content':
+            if feed.content.find(query) != -1:
+                results.add(feed)
+        elif searchtype == 'both':
+            if feed.title.find(query) != -1:
+                results.add(feed)
+            elif feed.content.find(query) != -1:
+                results.add(feed)
+            
             
 
-    return render(request, 'feedpage/search.html', {'results': results, 'len': len(results)})
+    return render(request, 'feedpage/search.html', {'results': results})
+
+def searchmore(request, board, category):
+    searchtype = request.GET
+    query = request.GET['query']
+    searchtype = request.GET['searchtype']
+    feeds = Feed.objects.all()
+    results = set()
+
+
+    for feed in feeds:
+        if searchtype == 'title':
+            if feed.title.find(query) != -1:
+                results.add(feed)
+        elif searchtype == 'content':
+            if feed.content.find(query) != -1:
+                results.add(feed)
+        elif searchtype == 'both':
+            if feed.title.find(query) != -1:
+                results.add(feed)
+            elif feed.content.find(query) != -1:
+                results.add(feed)
+
+    return render(request, 'feedpage/search.html', {'results': results})
