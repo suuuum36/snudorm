@@ -6,7 +6,10 @@
         <a href="{% url 'usernotice' user.id %}">게시글 알림</a>
         <a href="{% url 'messagebox' user.id %}">쪽지함</a>
     </div>
-
+    </br>
+    </br>
+    </br>
+    </br>
     <div class="info">
         <form method="POST" action="{% url 'useredit' user.id %}">
             {% csrf_token %}
