@@ -1,4 +1,4 @@
-{% load staticfiles%}
+{% load static %}
 {% comment %}
 1) TODO: part 수정 후 맡은 부분 comment 적절히 달기
 2) Bootstrap icon: 임시 icon 추후 통일필요
@@ -54,7 +54,7 @@
 
                 <div class = "first-header-user">
                     {% if user.is_authenticated %}
-                        <a href="{% url 'usermessage' user.id %}">
+                        <a href="{% url 'messagebox' user.id %}">
                             알람
                         </a>
                         <a href="{% url 'useredit' user.id %}">
