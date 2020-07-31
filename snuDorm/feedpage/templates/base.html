@@ -1,4 +1,4 @@
-{% load staticfiles%}
+{% load static%}
 {% comment %}
 1) TODO: part 수정 후 맡은 부분 comment 적절히 달기
 2) Bootstrap icon: 임시 icon 추후 통일필요
@@ -22,7 +22,6 @@
 
 <body>
     <header>
-        <!--1번째 상단바-->
         <div class="first-header">
             <div class = "first-header-inner">
                 <div class = "logo">
@@ -31,10 +30,10 @@
 
 
                 <div class = "first-header-text">
-                    <a href="/">Home</a>
-                    <a href="{% url 'showboard' "minwon" "gong" %}">민원게시판</a>
-                    <a href="{% url 'showboard' "life" "tori" %}">생필품게시판</a>
-                    <a href="{% url 'showboard' "freeboard" "tori" %}">자유게시판</a>
+                    <a href="/" class="home-text">홈</a>
+                    <a href="{% url 'showboard' "minwon" "tori" %}" class="minwon-text"> 민원게시판</a>
+                    <a href="{% url 'showboard' "life" "cobuy" %}" class="life-text">생활게시판</a>
+                    <a href="{% url 'showboard' "freeboard" "tori" %}" class="free-text">자유게시판</a>
                 </div>
 
                 <div class="search">
@@ -63,7 +62,6 @@
                         <a href="{% url 'logout' %}">
                             <button>로그아웃</button>
                         </a>
-                    </div>
                     {% else %}
                         <a href="{% url 'login' %}" class = "login">로그인</a>
                         <div class = "signup"> <a href="{% url 'signup' %}" >회원가입</a></div>
@@ -72,63 +70,69 @@
             </div>
         </div>
 
-        <!--2번째 상단바 -->
-        <ul style="padding: 10px">
-            <li class="nav-item dropdown">
-                <!--3번째 상단바-->
-                <div class = "thrid-bar">
-            
-                </div>
-                <!--4번째 상단바-->
-                <ul>
-                <a class="dropdown-item" href="{% url 'showboard' 'minwon' 'bachelor_906' %}">906</a>
-                <a class="dropdown-item" href="{% url 'showboard' 'minwon' 'bachelor_915' %}">915</a>
-                <a class="dropdown-item" href="{% url 'showboard' 'minwon' 'bachelor_919A' %}">919A</a>
-                <a class="dropdown-item" href="{% url 'showboard' 'minwon' 'bachelor_919B' %}">919B</a>
-                <a class="dropdown-item" href="{% url 'showboard' 'minwon' 'bachelor_919C' %}">919C</a>
-                <a class="dropdown-item" href="{% url 'showboard' 'minwon' 'bachelor_919D' %}">919D</a>
-                <a class="dropdown-item" href="{% url 'showboard' 'minwon' 'bachelor_921' %}">921</a>
-                <a class="dropdown-item" href="{% url 'showboard' 'minwon' 'bachelor_922' %}">922</a>
-                <a class="dropdown-item" href="{% url 'showboard' 'minwon' 'bachelor_923' %}">923</a>
-                <a class="dropdown-item" href="{% url 'showboard' 'minwon' 'bachelor_924' %}">924</a>
-                <a class="dropdown-item" href="{% url 'showboard' 'minwon' 'bachelor_925' %}">925</a>
-                <a class="dropdown-item" href="{% url 'showboard' 'minwon' 'bachelor_926' %}">926</a>
-            
-                <!-- List for 대학원생활관: for 문 이용법 알아내기-->
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{% url 'showboard' 'minwon' 'graduate_900' %}">900</a>
-                <a class="dropdown-item" href="{% url 'showboard' 'minwon' 'graduate_901' %}">901</a>
-                <a class="dropdown-item" href="{% url 'showboard' 'minwon' 'graduate_902' %}">902</a>
-                <a class="dropdown-item" href="{% url 'showboard' 'minwon' 'graduate_903' %}">903</a>
-                <a class="dropdown-item" href="{% url 'showboard' 'minwon' 'graduate_904' %}">904</a>
-                <a class="dropdown-item" href="{% url 'showboard' 'minwon' 'graduate_905' %}">905</a>
-                <a class="dropdown-item" href="{% url 'showboard' 'minwon' 'graduate_917' %}">905</a>
-                <a class="dropdown-item" href="{% url 'showboard' 'minwon' 'graduate_918' %}">905</a>
-                <!-- List for 가족생활관: for 문 이용법 알아내기-->
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{% url 'showboard' 'minwon' 'family_931' %}">931</a>
-                <a class="dropdown-item" href="{% url 'showboard' 'minwon' 'family_932' %}">932</a>
-                <a class="dropdown-item" href="{% url 'showboard' 'minwon' 'family_933' %}">933</a>
-                <a class="dropdown-item" href="{% url 'showboard' 'minwon' 'family_933' %}">934</a>
-                <a class="dropdown-item" href="{% url 'showboard' 'minwon' 'family_933' %}">935</a>
-                <!-- List for BK 생활관: for 문 이용법 알아내기-->
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{% url 'showboard' 'minwon' 'bk_946A' %}">946A</a>
-                <a class="dropdown-item" href="{% url 'showboard' 'minwon' 'bk_946B' %}">946B</a>
-                </ul>
+            <div class = "category-bar">
+                <div class = "category">
+                    <div class = "minwon-category">
+                        <a class = "minwon-all-text" href="{% url 'showboard' 'minwon' 'tori'%}"> 전체글 </a>
+                        <a class = "gong-text" href="{% url 'showboard' 'minwon' 'gong' %}"> 생활관공통 </a>
+                        <a class = "bachelor-text" href="{% url 'showboard' 'minwon' 'bachelor_906' %}"> 학부생활관 </a>
+                        <a class = "graduate-text" href="{% url 'showboard' 'minwon' 'graduate_900' %}"> 대학원생활관 </a>
+                        <a class = "family-text" href="{% url 'showboard' 'minwon' 'family_931' %}"> 가족생활관 </a>
+                        <a class = "bk-text" href="{% url 'showboard' 'minwon' 'bk_946A' %}"> BK생활관 </a>
+                    </div>
 
-            </li>
-            <!--생필품 게시판(네비게이션 아이템들은 현재 무시, class 명 추후 변경요망)-->
-            <li class="nav-item dropdown">
-                <ul>
-                    <a class="dropdown-item" href="{% url 'showboard' 'life' 'cobuy' %}">공동구매</a>
-                    <a class="dropdown-item" href="{% url 'showboard' 'life' 'rent' %}">대여</a>
-                    <a class="dropdown-item" href="{% url 'showboard' 'life' 'keep' %}">보관</a>
-                    <a class="dropdown-item" href="{% url 'showboard' 'life' 'resell' %}">중고거래</a>
-                </ul>
-            </li>
-            </ul>
+                    <div class="life-category">
+                        <a class="l1" href="{% url 'showboard' 'life' 'cobuy' %}">공동구매</a>
+                        <a class="l2" href="{% url 'showboard' 'life' 'rent' %}">대여</a>
+                        <a class="l3" href="{% url 'showboard' 'life' 'keep' %}">보관</a>
+                        <a class="l4" href="{% url 'showboard' 'life' 'resell' %}">중고거래</a>
+                    </div>
+                </div>
+                
+                <div class = "building">
+                    <div class = "building-1">
+                        <a class="b1" href="{% url 'showboard' 'minwon' 'bachelor_906' %}">906</a>
+                        <a class="b2" href="{% url 'showboard' 'minwon' 'bachelor_915' %}">915</a>
+                        <a class="b3" href="{% url 'showboard' 'minwon' 'bachelor_919A' %}">919A</a>
+                        <a class="b4" href="{% url 'showboard' 'minwon' 'bachelor_919B' %}">919B</a>
+                        <a class="b5" href="{% url 'showboard' 'minwon' 'bachelor_919C' %}">919C</a>
+                        <a class="b6" href="{% url 'showboard' 'minwon' 'bachelor_919D' %}">919D</a>
+                        <a class="b7" href="{% url 'showboard' 'minwon' 'bachelor_921' %}">921</a>
+                        <a class="b8" href="{% url 'showboard' 'minwon' 'bachelor_922' %}">922</a>
+                        <a class="b9" href="{% url 'showboard' 'minwon' 'bachelor_923' %}">923</a>
+                        <a class="b10" href="{% url 'showboard' 'minwon' 'bachelor_924' %}">924</a>
+                        <a class="b11" href="{% url 'showboard' 'minwon' 'bachelor_925' %}">925</a>
+                        <a class="b12" href="{% url 'showboard' 'minwon' 'bachelor_926' %}">926</a>
+                    </div>
+                
+                    <div class="building-2">
+                        <a class="g1" href="{% url 'showboard' 'minwon' 'graduate_900' %}">900</a>
+                        <a class="g2" href="{% url 'showboard' 'minwon' 'graduate_901' %}">901</a>
+                        <a class="g3" href="{% url 'showboard' 'minwon' 'graduate_902' %}">902</a>
+                        <a class="g4" href="{% url 'showboard' 'minwon' 'graduate_903' %}">903</a>
+                        <a class="g5" href="{% url 'showboard' 'minwon' 'graduate_904' %}">904</a>
+                        <a class="g6" href="{% url 'showboard' 'minwon' 'graduate_905' %}">905</a>
+                        <a class="g7" href="{% url 'showboard' 'minwon' 'graduate_917' %}">917</a>
+                        <a class="g8" href="{% url 'showboard' 'minwon' 'graduate_918' %}">918</a>
+                    </div>
+
+                    <div class="building-3">
+                        <a class="f1" href="{% url 'showboard' 'minwon' 'family_931' %}">931</a>
+                        <a class="f2" href="{% url 'showboard' 'minwon' 'family_932' %}">932</a>
+                        <a class="f3" href="{% url 'showboard' 'minwon' 'family_933' %}">933</a>
+                        <a class="f4" href="{% url 'showboard' 'minwon' 'family_934' %}">934</a>
+                        <a class="f5" href="{% url 'showboard' 'minwon' 'family_935' %}">935</a>
+                    </div>
+
+                    <div class="building-4">
+                        <a class="bk1" href="{% url 'showboard' 'minwon' 'bk_946A' %}">946A</a>
+                        <a class="bk2" href="{% url 'showboard' 'minwon' 'bk_946B' %}">946B</a>
+                    </div>
+                </div>
+            </div>
+
     </header>
+
     <main style="padding-top: 100px">
         <div class="page-content">
             {% block content %}
@@ -138,6 +142,8 @@
     <script src="{% static 'feedpage/comment.js' %}"></script>
     <script src="{% static 'feedpage/new.js' %}"></script>
     <script src="{% static 'feedpage/edit.js' %}"></script>
+    <script src="{% static 'feedpage/main.js' %}"></script>
+    <script src="{% static 'feedpage/index.js' %}"></script>
 </body>
 
 </html>
