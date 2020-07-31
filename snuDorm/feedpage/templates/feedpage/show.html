@@ -9,9 +9,11 @@
 <div class="info">
     <div class = "title-div">
         <div class = "title-text" >{{ board_name }} 게시판 </div>
-        <a href="{% url 'showboard' board category %}">
-        <div id="not_best">전체글</div></a>
-        <div id="best">베스트</div>
+        <div>
+            <a id="not_best" href="{% url 'showboard' board category %}"> 전체글
+        </div>
+        </a>
+        <div id="best" style="color:#7f7f7f;">베스트</div>
 
         <div class = "write"> 
             <!-- 전체글을 보는 게시판은 글쓰기 불가능하게! -->

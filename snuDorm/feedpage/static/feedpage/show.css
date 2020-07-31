@@ -1,12 +1,30 @@
+/* 게시판 이름 */
 
 .title-div {
     display: flex;
-    justify-content: start;
+    height: 65px;
 }
 
+.title-div > div {
+    margin-top: auto;
+    margin-bottom: auto;
+    color: black;
+}
+
+.title-text {
+    font-weight: 600;
+    font-size: 22px;
+}
+
+#not_best {
+    color:black;
+    font-weight: 600;
+}
+
+/* 내용 인덱스 */
 .index-div {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 

@@ -139,3 +139,13 @@ for(idx = 0; idx < 12; idx++) {
 	} 
 }
 
+
+//레이아웃 변화
+var headerWhole = document.querySelector('.category-bar')
+var header3 = document.querySelector('.building')
+
+if (urlPath2 == "freeboard") {
+        headerWhole.style.height ='0';
+} else if (urlPath == "tori" || urlPath == "gong" || urlPath2 == "life") {
+        header3.style.height = '0';
+} 
