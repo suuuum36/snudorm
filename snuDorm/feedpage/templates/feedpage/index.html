@@ -134,32 +134,6 @@
             {% endfor %} 
         </div>
     </div>
-    <!-- 보관 게시판 -->
-    <div id = "keep_lists" style="display:none;">
-        <div style="display:flex">
-            {% for list in life_feeds.1 %} 
-                <div> <!-- feed 5개 -->
-                    {% for feed in list%}
-                        <a href="{% url 'showfeed' 'life' 'keep' feed.id %}">
-                            <div>{{ feed.title }}  </div>
-                            <div style="color:gray">{{ feed.content }}</div> 
-                            <div style="display:flex; word-spacing: 5px;">
-                                <div>
-                                    {{ feed.created_at|date:"y/m/d" }} 
-                                </div>
-                                <div style="color:blue"> 
-                                    {{ feed.like_users.count }} 
-                                </div>
-                                <div style="color:orange"> 
-                                    {{ feed.feedcomment_set.count }} 
-                                </div>
-                            </div>
-                        </a>
-                    {% endfor %}
-                </div>
-            {% endfor %} 
-        </div>
-    </div>
     <!-- 대여 게시판 -->
     <div id = "rent_lists" style="display:none;">
         <div style="display:flex">
@@ -186,12 +160,38 @@
             {% endfor %} 
         </div>
     </div>
+    <!-- 보관 게시판 -->
+    <div id = "keep_lists" style="display:none;">
+        <div style="display:flex">
+            {% for list in life_feeds.1 %} 
+                <div> <!-- feed 5개 -->
+                    {% for feed in list%}
+                        <a href="{% url 'showfeed' 'life' 'keep' feed.id %}">
+                            <div>{{ feed.title }}  </div>
+                            <div style="color:gray">{{ feed.content }}</div> 
+                            <div style="display:flex; word-spacing: 5px;">
+                                <div>
+                                    {{ feed.created_at|date:"y/m/d" }} 
+                                </div>
+                                <div style="color:blue"> 
+                                    {{ feed.like_users.count }} 
+                                </div>
+                                <div style="color:orange"> 
+                                    {{ feed.feedcomment_set.count }} 
+                                </div>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+            {% endfor %} 
+        </div>
+    </div>
     <!-- 중고 게시판 -->
     <div id = "resell_lists" style="display:none;">
         <div style="display:flex">
             {% for list in life_feeds.3 %} 
-                {% for feed in list %}
-                    <div> <!-- feed 5개 -->
+                <div> <!-- feed 5개 -->
+                    {% for feed in list %}
                         <a href="{% url 'showfeed' 'life' 'resell' feed.id %}">
                             <div>{{ feed.title }}</div>
                             <div style="color:gray">{{ feed.content }}</div> 
@@ -207,8 +207,8 @@
                                 </div>
                             </div>
                         </a>
-                    </div> 
-                {% endfor %}
+                    {% endfor %}
+                </div> 
             {% endfor %} 
         </div>
     </div>
