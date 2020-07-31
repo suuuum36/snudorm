@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.core.paginator import Paginator 
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 from collections import OrderedDict
 
 # 페이지 노출 시에 보여지는 게시판 이름들 정리
@@ -35,29 +35,34 @@ def get_board(board, category):
 def showMain(request):
     if request.method == 'GET':
         today = datetime.now()
-        yesterday = today - timedelta(days=1)
-        week_before = today - timedelta(days=7)
+        today.strftime('%Y-%m-%d')
+        tomorrow = datetime.now()-timedelta(days=1)
+        tomorrow.strftime('%Y-%m-%d')
+        week_ago = datetime.now()-timedelta(weeks=1)
+        week_ago.strftime('%Y-%m-%d') 
 
         # 기숙사 각 동별 게시판 
-        dong = Minwon.objects.filter(category=request.user.profile.building_category, board=request.user.profile.building_dong) \
-                if request.user.is_authenticated else Minwon.objects.filter(board_info1="학부", board_info2="906")
+        # dong = Minwon.objects.filter(category=request.user.profile.building_category, board=request.user.profile.building_dong) \
+        #         if request.user.is_authenticated else Minwon.objects.filter(board_info1="학부", board_info2="906")
+    
+        dong = Minwon.objects.filter(board_info1="학부", board_info2="906동")
 
         # 전체게시판 = [ 주간게시글, 일간게시글 ] - 좋아요 기준 정렬
-        gong_feeds = [ Minwon.objects.filter(category='gong', created_at__range=(week_before, today)).order_by('-like_users')[:5],
-                        Minwon.objects.filter(category='gong', created_at__range=(yesterday, today)).order_by('-like_users')[:5] ]
+        gong_feeds = [ Minwon.objects.filter(category='gong', created_at__range=(week_ago, today)).order_by('-like_users')[:5],
+                        Minwon.objects.filter(category='gong', created_at=today).order_by('-like_users')[:5] ]
         # 동별게시판 = [ 주간게시글, 일간게시글 ] - 좋아요 기준 정렬
-        dong_feeds = [ dong.filter(created_at__range=(week_before, today)).order_by('-like_users')[:5],
-                        dong.filter(created_at__range=(yesterday, today)).order_by('-like_users')[:5] ]
+        dong_feeds = [ dong.filter(created_at__range=(week_ago, today)).order_by('-like_users')[:5],
+                        dong.filter(created_at=today).order_by('-like_users')[:5] ]
         # 생활게시판 - 시간 정렬
-        life_feeds = [ CoBuy.objects.all().order_by('-created_at')[:10],
-                        Keep.objects.all().order_by('-created_at')[:10],
-                        Rent.objects.all().order_by('-created_at')[:10],
-                        Resell.objects.all().order_by('-created_at')[:10]]
+        life_feeds = [ [CoBuy.objects.all().order_by('-created_at')[:5], CoBuy.objects.all().order_by('-created_at')[5:10]],
+                        [Keep.objects.all().order_by('-created_at')[:5], Keep.objects.all().order_by('-created_at')[5:10]],
+                        [Rent.objects.all().order_by('-created_at')[:5], Rent.objects.all().order_by('-created_at')[5:10]],
+                        [Resell.objects.all().order_by('-created_at')[:5], Resell.objects.all().order_by('-created_at')[5:10]]]
         # 자유게시판 - 좋아요 정렬
         free_feeds = FreeBoard.objects.all().order_by('-like_users')[:17]
 
         return render(request, 'feedpage/index.html', {'gong_feeds': gong_feeds, 'dong_feeds': dong_feeds,
-                                'life_feeds': life_feeds,'free_freeds': free_feeds})
+                                'life_feeds': life_feeds,'free_feeds': free_feeds})
 
     elif request.method == 'POST':
         return redirect('/feeds')
