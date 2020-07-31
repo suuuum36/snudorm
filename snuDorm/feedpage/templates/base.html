@@ -53,18 +53,20 @@
 
                 <div class = "first-header-user">
                     {% if user.is_authenticated %}
-                        <a href="{% url 'usermessage' user.id %}">
-                            알람
+                        <a class = "alarm-div" href="{% url 'messagebox' user.id %}"> 알람
+                            {% comment %} <img class = "alarm" src="{% static 'img/alarm.png' %}">  {% endcomment %}
                         </a>
-                        <a href="{% url 'useredit' user.id %}">
-                            마이페이지
+                        <a class = "profile-div" href="{% url 'useredit' user.id %}"> 마이페이지
+                            {% comment %} <img class = "profile" src="{% static 'img/profile.png' %}">    {% endcomment %}
                         </a>
-                        <a href="{% url 'logout' %}">
-                            <button>로그아웃</button>
+                        <a class = 'logout' href="{% url 'logout' %}">
+                            로그아웃
                         </a>
                     {% else %}
-                        <a href="{% url 'login' %}" class = "login">로그인</a>
-                        <div class = "signup"> <a href="{% url 'signup' %}" >회원가입</a></div>
+                        <div class = "login-signup">
+                            <a class = "login" href="{% url 'login' %}" class = "login">로그인</a>
+                            <div class = "signup"> <a href="{% url 'signup' %}" >회원가입</a> </div>
+                        </div>
                     {% endif %}
                 </div>
             </div>
@@ -133,7 +135,7 @@
 
     </header>
 
-    <main style="padding-top: 100px">
+    <main>
         <div class="page-content">
             {% block content %}
             {% endblock %}

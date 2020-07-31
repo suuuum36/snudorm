@@ -1,19 +1,27 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load static%}
+
+<head> 
+    <link rel="stylesheet" href="{% static 'feedpage/show.css' %}">
+</head>
 
 <div class="info">
-    <div style="display:flex;">
-        <div>{{ board_name }} 게시판 </div>
-        <a href="{% url 'showboard' board category %}"><button id="not_best" onclick="showNormalList()">전체글</button></a>
-        <a href="{% url 'showboard' board category %}"><button id="best" onclick="showBestList()" >베스트</button></a> 
-        <div style="justify-content: right"> 
+    <div class = "title-div">
+        <div class = "title-text" >{{ board_name }} 게시판 </div>
+        <a href="{% url 'showboard' board category %}">
+        <div id="not_best">전체글</div></a>
+        <div id="best">베스트</div>
+
+        <div class = "write"> 
             <!-- 전체글을 보는 게시판은 글쓰기 불가능하게! -->
             {% if board == "freeboard" or board_name != "전체" %}
-                <a href="{% url 'newfeed' board category %}"><button>글쓰기</button></a>
+                <a class = "write-button" href="{% url 'newfeed' board category %}">글쓰기</a>
             {% endif %}
         </div>
     </div>
-    <div style="display:flex; justify-content:space-around">
+
+    <div class = "index-div">
         {% if board_name == "전체" and board != "freeboard"%}
             <div>게시판</div>
         {% elif board == 'life' %}
@@ -26,214 +34,230 @@
         <div>추천수</div> 
     </div> 
 
-    <!-- 원래 게시판 글 리스트: 전체글 버튼 -->
-    <div id="show_normal_lists" style="display:"" ">  
-        <!-- 공지사항 list 먼저 -->
-        {% for feed in posts %}
-            {% if feed.notice %}
-                <a href="{% url 'showfeed' board category feed.id %}">
-                    <div style="display:flex; justify-content: space-around" >
-                        <!-- 게시판 항목 이름 -->
-                         {% if board_name == "전체" and board != "freeboard"%}
-                            <div class="board_name" style="display:flex; flex-direction:column;"> 
-                                {% if board == "minwon" %}
-                                    <div>{{ feed.board_info1 }}</div> <!-- 공통|학부|대학원|가족|BK -->
-                                    <div>{{ feed.board_info2 }}</div>  <!-- 906동 -->
-                                {% elif board == 'life' %}  
-                                    <div>{{ feed.board_info2 }}</div>  <!-- 공구|대여|보관|중고 -->
-                                {% endif %}
-                            </div>
-                        {% endif %}
-                        <div style="display:flex; flex-direction: column;">
-                            <div style="display:flex;">
-                                <div maxlength="20" text-overflow:ellipsis;> {{ feed.title }} </div> 
-                                <div style="color:blue"> 공지 </div>
-                            </div>
-                            <div style="color:gray" maxlength="30" text-overflow:ellipsis;>
-                                {{ feed.content|truncatewords:30 }}
-                            </div> 
-                        </div>
-                    </div>
-                </a> 
-            {% endif %}
-        {% endfor %}
-        <!-- 공지사항 아닌 Feed List -->
-        {% for feed in posts %} 
-            {% if not feed.notice  %}
-                <a href="{% url 'showfeed' board category feed.id %}">
-                    <div style="display:flex; justify-content: space-around" >
-                        <!-- 게시판 항목 이름 -->
-                        {% if board_name == "전체" and board != "freeboard"%}
-                            <div class="board_name" style="display:flex; flex-direction:column;"> 
-                                {% if board == "minwon" %}
-                                    <div>{{ feed.board_info1 }}</div> <!-- 공통|학부|대학원|가족|BK -->
-                                    <div>{{ feed.board_info2 }}</div>  <!-- 906동 -->
-                                {% elif board == 'life' %}  
-                                    <div>{{ feed.board_info2 }}</div>  <!-- 공구|대여|보관|중고 -->
-                                    <div>{{ feed.status }}</div>      <!-- 진행중|판매중|마감 -->   
-                                {% endif %}
-                            </div>
-                        {% elif board == "life" %}
-                            <div>{{ feed.status }}</div>      <!-- 진행중|판매중|마감 -->   
-                        {% endif %}
-                        <div style="display:flex; flex-direction: column;">
-                            <div style="display:flex;">
-                                <div maxlength="20" text-overflow:ellipsis;> {{ feed.title }} </div> 
-                                <div style="color:blue"> {{ feed.feedcomment_set.count }} </div>
-                            </div>
-                            <div style="color:gray" text-overflow:ellipsis;>
-                                {{ feed.content|truncatewords:30 }}
-                            </div> 
-                        </div>
-                        <div> 
-                            {% if feed.noname %} 익명 
-                            {% else %} {{ feed.author.profile.nickname }}
+    <div class = "just-content">
+    <!-- All 리스트 -->
+        <div id="show_normal_lists" >
+            {% for feed in posts %}
+                <!-- 공지사항 list  -->
+                {% if feed.notice %}
+                    <a href="{% url 'showfeed' board category feed.id %}">
+                        <div class = "whole-feed">
+                            {% if board_name == "전체" and board != "freeboard"%}
+                                <div class="board_name" style="display:flex; flex-direction:column;"> 
+                                    {% if board == "minwon" %}
+                                        <div>{{ feed.board_info1 }}</div> <!-- 공통|학부|대학원|가족|BK -->
+                                        <div>{{ feed.board_info2 }}</div>  <!-- 906동 -->
+                                    {% elif board == 'life' %}  
+                                        <div>{{ feed.board_info2 }}</div>  <!-- 공구|대여|보관|중고 -->
+                                    {% endif %}
+                                </div>
                             {% endif %}
-                        </div> 
-                        <div>{{ feed.created_at|date:"y.m.d" }} </div> 
-                        <div>{{ feed.views }}</div>
-                        <div>{{ feed.like_users.count }}</div>
-                    </div>
-                </a>
-            {% endif %}</br>
-        {% endfor %} 
-        <div style="display:flex">
-            <div class="search" style="text-align: center;">
-                <form action="{% url 'showmain' %}" method="get">
-                    <input type="text" id="search_box" placeholder="게시글 검색하기">
-                    <button type="submit" id="search_button">
-                        <i class="glyphicon glyphicon-search"></i>
-                    </button>
-                </form>
-            </div>  
-            <div style="justify-content: right"> 
-                <!-- 전체글을 보는 게시판은 글쓰기 불가능하게! -->
-                {% if board == "freeboard" or board_name != "전체" %}
-                    <a href="{% url 'newfeed' board category %}"><button>글쓰기</button></a>
-                {% endif %}
-            </div>
-        </div>
-        <div class="page_numbers" style="display:flex">
-            {% if posts.has_previous %}
-                <a href="?page={{posts.previous_page_number}}">이전</a> 
-            {% endif %}
-            {% for num in posts.paginator.page_range %} 
-                {% comment %} {% if num - 5 > posts.number and num - 5 < posts.number  %} {% endcomment %}
-                    {% if posts.number == num %}
-                        <div style="color:blue;">{{ num }}</div> 
-                    {% else %}
-                        <div>{{ num }}</div>
-                    {% endif %}
-                {% comment %} {% endif %} {% endcomment %}
-            {% endfor %}
-            {% comment %} <span>{{posts.paginator.num_pages}}</span>  {% endcomment %}
-            {% if posts.has_next %}
-                <a href="?page={{posts.next_page_number}}">다음</a>
-            {% endif %}
-        </div> 
-    </div>
 
-    <!-- 베스트 게시판 글 리스트: 베스트 버튼 -->
-    <div id="show_best_lists" style="display:none"> 
-        {% for feed in best_posts %}  
-        <!-- 공지사항 list 먼저 -->
-            {% if feed.notice %}
-                <a href="{% url 'showfeed' board category feed.id %}">
-                    <div style="display:flex; justify-content: space-around" >
-                        <!-- 게시판 항목 이름 -->
-                         {% if board_name == "전체" and board != "freeboard"%}
-                            <div class="board_name" style="display:flex; flex-direction:column;"> 
-                                {% if board == "minwon" %}
-                                    <div>{{ feed.board_info1 }}</div> <!-- 공통|학부|대학원|가족|BK -->
-                                    <div>{{ feed.board_info2 }}</div>  <!-- 906동 -->
-                                {% elif board == 'life' %}  
-                                    <div>{{ feed.board_info2 }}</div>  <!-- 공구|대여|보관|중고 -->
-                                {% endif %}
+                            <div class="feed-p">
+                                <div class = "title-comment">
+                                    <div maxlength="20" text-overflow:ellipsis;> {{ feed.title }} </div> 
+                                    <div style="color:blue"> 공지 </div>
+                                </div>
+                                <div class = "content" style="color:gray" maxlength="30" text-overflow:ellipsis;>
+                                    {{ feed.content|truncatewords:30 }}
+                                </div> 
                             </div>
-                        {% endif %}
-                        <div style="display:flex; flex-direction: column;">
-                            <div style="display:flex;">
-                                <div maxlength="20" text-overflow:ellipsis;> {{ feed.title }} </div> 
-                                <div style="color:blue"> 공지 </div>
-                            </div>
-                            <div style="color:gray" maxlength="30" text-overflow:ellipsis;>
-                                {{ feed.content|truncatewords:30 }}
-                            </div> 
                         </div>
-                    </div>
-                </a> 
-            {% endif %}
-        {% endfor %}
-        <!-- 공지사항 아닌 Feed List -->
-        {% for feed in best_posts %} 
-            {% if feed.notice == False %}
-                <a href="{% url 'showfeed' board category feed.id %}">
-                    <div style="display:flex; justify-content: space-around" >
-                        <!-- 게시판 항목 이름 -->
-                        {% if board_name == "전체" and board != "freeboard"%}
-                            <div class="board_name" style="display:flex; flex-direction:column;"> 
-                                {% if board == "minwon" %}
-                                    <div>{{ feed.board_info1 }}</div> <!-- 공통|학부|대학원|가족|BK -->
-                                    <div>{{ feed.board_info2 }}</div>  <!-- 906동 -->
-                                {% elif board == 'life' %}  
-                                    <div>{{ feed.board_info2 }}</div>  <!-- 공구|대여|보관|중고 -->
-                                    <div>{{ feed.status }}</div>      <!-- 진행중|판매중|마감 -->   
-                                {% endif %}
-                            </div>
-                        {% endif %}
-                        <div style="display:flex; flex-direction: column;">
-                            <div style="display:flex;">
-                                <div maxlength="20" text-overflow:ellipsis;> {{ feed.title }} </div> 
-                                <div style="color:blue"> {{ feed.feedcomment_set.count }} </div>
-                            </div>
-                            <div style="color:gray" text-overflow:ellipsis;>
-                                {{ feed.content|truncatewords:30 }}
-                            </div> 
-                        </div>
-                        <div> 
-                            {% if feed.noname %} 익명 
-                            {% else %} {{ feed.author.profile.nickname }}
-                            {% endif %}
-                        </div> 
-                        <div>{{ feed.created_at|date:"y.m.d" }} </div> 
-                        <div>{{ feed.views }}</div>
-                        <div>{{ feed.like_users.count }}</div>
-                    </div>
-                </a>
-            {% endif %}</br>
-        {% endfor %}
-        <div style="display:flex">
-            <div class="search" style="text-align: center;">
-                <form action="{% url 'showmain' %}" method="get">
-                    <input type="text" id="search_box" placeholder="게시글 검색하기">
-                    <button type="submit" id="search_button">
-                        <i class="glyphicon glyphicon-search"></i>
-                    </button>
-                </form>
-            </div>  
-            <div style="justify-content: right"> 
-                <!-- 전체글을 보는 게시판은 글쓰기 불가능하게! -->
-                {% if board == "freeboard" or board_name != "전체" %}
-                    <a href="{% url 'newfeed' board category %}"><button>글쓰기</button></a>
+                    </a> 
                 {% endif %}
-            </div>
-        </div>
-        <div class="page_numbers" style="display:flex">
-            {% if best_posts.has_previous %}
-                <a href="?best_page={{best_posts.previous_page_number}}">이전</a> 
-            {% endif %}
-            {% for num in best_posts.paginator.page_range %} 
-                    {% if best_posts.number == num %}
-                        <div style="color:blue;">{{ num }}</div> 
-                    {% else %}
-                        <div>{{ num }}</div>
-                    {% endif %}
             {% endfor %}
-            {% comment %} <span>{{posts.paginator.num_pages}}</span>  {% endcomment %}
-            {% if best_posts.has_next %}
-                <a href="?best_page={{best_posts.next_page_number}}">다음</a>
-            {% endif %}
-        </div> 
-    </div> 
+
+            <!-- 공지사항 아닌 Feed List -->
+            {% for feed in posts %} 
+                {% if not feed.notice  %}
+                    <div class = "one-feed">
+                        <a href="{% url 'showfeed' board category feed.id %}">
+                            <div class = "whole-feed">
+                                {% if board_name == "전체" and board != "freeboard"%}
+                                    <div class="board_name"> 
+                                        {% if board == "minwon" %}
+                                            <div>{{ feed.board_info1 }}</div> <!-- 공통|학부|대학원|가족|BK -->
+                                            <div>{{ feed.board_info2 }}</div>  <!-- 906동 -->
+                                        {% elif board == 'life' %}  
+                                            <div>{{ feed.board_info2 }}</div>  <!-- 공구|대여|보관|중고 -->
+                                            <div>{{ feed.status }}</div>      <!-- 진행중|판매중|마감 -->   
+                                        {% endif %}
+                                    </div>
+                                {% elif board == "life" %} 
+                                    <div class = "life-status">
+                                        {{ feed.status }}   
+                                    </div>       
+                                {% endif %}
+
+                                <div class = "feed-p">
+                                    <div class = "title-comment">
+                                        <div class = "title" maxlength="20" text-overflow:ellipsis;> {{ feed.title }} </div> 
+                                        <div class = "comment" > {{ feed.feedcomment_set.count }} </div>
+                                    </div>
+                                    <div class = "content" text-overflow:ellipsis;>
+                                        {{ feed.content|truncatewords:30 }}
+                                    </div> 
+                                </div>
+
+                                <div class = "feed-a"> 
+                                    {% if feed.noname %} 익명 
+                                    {% else %} {{ feed.author.profile.nickname }}
+                                    {% endif %}
+                                </div> 
+
+                                <div class = "date">{{ feed.created_at|date:"y.m.d" }}</div> 
+                                <div class = "views">{{ feed.views }}</div>
+                                <div class = "likes">{{ feed.like_users.count }}</div>
+                            </div>
+                        </a>
+                    </div>
+                {% endif %}
+            {% endfor %} 
+
+            <div class = "below">
+                <div class="search">
+                    <form action="{% url 'showmain' %}" method="get">
+                        <input type="text" id="search_box" class = "search-text" size ="30" placeholder = "검색어를 입력하세요.">
+                    </form>
+                </div>
+
+                <div class = "write"> 
+                    <!-- 전체글을 보는 게시판은 글쓰기 불가능하게! -->
+                    {% if board == "freeboard" or board_name != "전체" %}
+                        <a class = "write-button" href="{% url 'newfeed' board category %}">글쓰기</a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="page_numbers" >
+                {% if posts.has_previous %}
+                    <a href="?page={{posts.previous_page_number}}">이전</a> 
+                {% endif %}
+                {% for num in posts.paginator.page_range %} 
+                    {% comment %} {% if num - 5 > posts.number and num - 5 < posts.number  %} {% endcomment %}
+                        {% if posts.number == num %}
+                            <div style="color:blue;">{{ num }}</div> 
+                        {% else %}
+                            <div>{{ num }}</div>
+                        {% endif %}
+                    {% comment %} {% endif %} {% endcomment %}
+                {% endfor %}
+                {% comment %} <span>{{posts.paginator.num_pages}}</span>  {% endcomment %}
+                {% if posts.has_next %}
+                    <a href="?page={{posts.next_page_number}}">다음</a>
+                {% endif %}
+            </div> 
+        </div>
+
+        <!-- 베스트 게시판 글 리스트: 베스트 버튼 -->
+        <div id="show_best_lists"> 
+            {% for feed in best_posts %}  
+            <!-- 공지사항 list  -->
+                {% if feed.notice %}
+                    <a href="{% url 'showfeed' board category feed.id %}">
+                        <div class = "whole-feed">
+                            {% if board_name == "전체" and board != "freeboard"%}
+                                <div class="board_name" style="display:flex; flex-direction:column;"> 
+                                    {% if board == "minwon" %}
+                                        <div>{{ feed.board_info1 }}</div> <!-- 공통|학부|대학원|가족|BK -->
+                                        <div>{{ feed.board_info2 }}</div>  <!-- 906동 -->
+                                    {% elif board == 'life' %}  
+                                        <div>{{ feed.board_info2 }}</div>  <!-- 공구|대여|보관|중고 -->
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+
+                            <div class="feed-p">
+                                <div class = "title-comment">
+                                    <div maxlength="20" text-overflow:ellipsis;> {{ feed.title }} </div> 
+                                    <div style="color:blue"> 공지 </div>
+                                </div>
+                                <div class = "content" style="color:gray" maxlength="30" text-overflow:ellipsis;>
+                                    {{ feed.content|truncatewords:30 }}
+                                </div> 
+                            </div>
+                        </div>
+                    </a> 
+                {% endif %}
+            {% endfor %}
+
+            <!-- 공지사항 아닌 Feed List -->
+            {% for feed in best_posts %} 
+                {% if feed.notice == False %}
+                    <div class = "one-feed">
+                        <a href="{% url 'showfeed' board category feed.id %}">
+                            <div class = "whole-feed" >
+                                <!-- 게시판 항목 이름 -->
+                                {% if board_name == "전체" and board != "freeboard"%}
+                                    <div class="board_name" style="display:flex; flex-direction:column;"> 
+                                        {% if board == "minwon" %}
+                                            <div>{{ feed.board_info1 }}</div> <!-- 공통|학부|대학원|가족|BK -->
+                                            <div>{{ feed.board_info2 }}</div>  <!-- 906동 -->
+                                        {% elif board == 'life' %}  
+                                            <div>{{ feed.board_info2 }}</div>  <!-- 공구|대여|보관|중고 -->
+                                            <div>{{ feed.status }}</div>      <!-- 진행중|판매중|마감 -->   
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+
+                                <div class = "feed-p">
+                                    <div class = "title-comment">
+                                        <div maxlength="20" text-overflow:ellipsis;> {{ feed.title }} </div> 
+                                        <div style="color:blue"> {{ feed.feedcomment_set.count }} </div>
+                                    </div>
+                                    <div class = "content" text-overflow:ellipsis;>
+                                        {{ feed.content|truncatewords:30 }}
+                                    </div> 
+                                </div>
+
+                                <div class = "feed-a"> 
+                                    {% if feed.noname %} 익명 
+                                    {% else %} {{ feed.author.profile.nickname }}
+                                    {% endif %}
+                                </div> 
+
+                                <div class = "date">{{ feed.created_at|date:"y.m.d" }}</div> 
+                                <div class = "views">{{ feed.views }}</div>
+                                <div class = "likes">{{ feed.like_users.count }}</div>
+                            </div>
+                        </a>
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+            <div class = "below">
+                <div class="search">
+                    <form action="{% url 'showmain' %}" method="get">
+                        <input type="text" id="search_box" class = "search-text" size ="30" placeholder = "검색어를 입력하세요.">
+                    </form>
+                </div>
+
+                <div class = "write"> 
+                    <!-- 전체글을 보는 게시판은 글쓰기 불가능하게! -->
+                    {% if board == "freeboard" or board_name != "전체" %}
+                        <a class = "write-button" href="{% url 'newfeed' board category %}">글쓰기</a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="page_numbers">
+                {% if best_posts.has_previous %}
+                    <a href="?best_page={{best_posts.previous_page_number}}">이전</a> 
+                {% endif %}
+                {% for num in best_posts.paginator.page_range %} 
+                        {% if best_posts.number == num %}
+                            <div style="color:blue;">{{ num }}</div> 
+                        {% else %}
+                            <div>{{ num }}</div>
+                        {% endif %}
+                {% endfor %}
+                {% comment %} <span>{{posts.paginator.num_pages}}</span>  {% endcomment %}
+                {% if best_posts.has_next %}
+                    <a href="?best_page={{best_posts.next_page_number}}">다음</a>
+                {% endif %}
+            </div> 
+        </div>
+    </div>
 </div>
+<script src="{% static 'feedpage/showboard.js' %}"></script>
 {% endblock content %}

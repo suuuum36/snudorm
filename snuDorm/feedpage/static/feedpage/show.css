@@ -1,0 +1,50 @@
+
+.title-div {
+    display: flex;
+    justify-content: start;
+}
+
+.index-div {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.whole-feed {
+    display: flex;
+    justify-content: space-around;
+}
+.board_name {
+    display:flex;
+    flex-direction:column;
+}
+
+.feed-p {
+    display:flex;
+    flex-direction: column;
+}
+
+.title-comment {
+    display: flex;
+}
+
+.below {
+    display: flex;
+}
+
+.page_numbers {
+    display: flex;
+}
+
+
+/*베스트 글*/
+.just-content {
+    position: relative;
+}
+
+#show_best_lists {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    visibility: hidden;
+}

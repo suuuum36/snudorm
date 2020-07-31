@@ -68,9 +68,9 @@ var categoryText = [mAll, mGong, mB, mG, mF, mBK, l1, l2, l3, l4]
 
 for (idx=0; idx < 10; idx++) {
     if(urlPath == category2[idx]) {
-        categoryText[idx].style.color = 'black';
+        categoryText[idx].style.color = '#016aff';
     } else if (urlPath.indexOf(category2[idx])!= -1) {
-        categoryText[idx].style.color = 'black';
+        categoryText[idx].style.color = '#016aff';
     }
 }
 
