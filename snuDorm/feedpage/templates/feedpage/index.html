@@ -2,269 +2,226 @@
 {% block content %}
 {% load static %}
 
-<div style="margin: 5%">
-    <!-- 민원 게시판 -->
-    <div class="panel panel-primary">
-        <div>민원게시판 TOP 5</div>
-        <div class="panel-footer">
-            <div class="panel panel-info">
-                <!-- 공통 게시판 부분 -->
-                <div style="display:flex">
-                    <div class="panel-body">공통게시판</div>
-                    <button id="week_gong" onclick="gongWeek()">주간</button>
-                    <button id="day_gong" onclick="gongDay()">일간</button>
-                </div> 
-                <!-- 공통 게시판-->
-                <div class="panel-footer">
-                    <!-- 공통 게시판: 주간 리스트 (default) -->
-                    <div id="gong_week_lists" style="display:''">  
-                        {% for feed in gong_feeds.0 %} 
-                            <a href="{% url 'showfeed' 'minwon' 'gong' feed.id %}">
-                                <div style="display:flex; justify-content: space-around" >
-                                    <div style="display:flex; flex-direction: column;">
-                                        <div>{{ feed.title }}  </div>
-                                        <div style="color:gray">{{ feed.content }}</div> 
-                                        <div style="display:flex">
-                                            <div>
-                                                {{ feed.created_at|date:"y.m.d" }} 
-                                            </div>
-                                            <div style="color:blue"> 
-                                                {{ feed.feedcomment_set.count }} 
-                                            </div>
-                                            <div>
-                                                {{ feed.like_users.count }} 
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        {% endfor %} 
-                    </div>
-                    <!-- 공통 게시판: 일간 리스트 (숨겨짐) -->
-                    <div id="gong_day_lists" style="display:none;">
-                         {% for feed in gong_feeds.1 %} 
-                            <a href="{% url 'showfeed' 'minwon' 'gong' feed.id %}">
-                                <div style="display:flex; justify-content: space-around" >
-                                    <div style="display:flex; flex-direction: column;">
-                                        <div>{{ feed.title }}  </div>
-                                        <div style="color:gray">{{ feed.content }}</div> 
-                                        <div style="display:flex">
-                                            <div>
-                                                {{ feed.created_at|date:"y.m.d" }} 
-                                            </div>
-                                            <div style="color:blue"> 
-                                                {{ feed.feedcomment_set.count }} 
-                                            </div>
-                                            <div>
-                                                {{ feed.like_users.count }} 
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        {% endfor %} 
-                    </div> 
-                </div>
-            </div>
-        </div>     
-            <div class="panel panel-info">
-               <!-- User's 게시판 부분 -->
-                <div style="display:flex">
-                    <div class="panel-body">
-                        <!-- User's 게시판 이름 -->
-                        {% if user.building_ding %}
-                            {{ user.building_ding }}게시판
-                        {% else %}
-                            906동 게시판 
-                        {% endif %}
-                    </div>
-                    <button id="week_gong" onclick="dongWeek()">주간</button>
-                    <button id="day_gong" onclick="dongDay()">일간</button>
-                </div> 
-                <!-- User가 사는 동 게시판 5개 리스트 or default 906 -->
-                <div class="panel-footer">
-                    <!-- 동 게시판: 주간 리스트 (default) -->
-                    <div id="dong_week_lists" style="display:'';">  
-                        {% for feed in dong_feeds.0 %} 
-                            <a href="{% url 'showfeed' 'minwon' 'gong' feed.id %}">
-                                <div style="display:flex; justify-content: space-around" >
-                                    <div style="display:flex; flex-direction: column;">
-                                        <div>{{ feed.title }}  </div>
-                                        <div style="color:gray">{{ feed.content }}</div> 
-                                        <div style="display:flex">
-                                            <div>
-                                                {{ feed.created_at|date:"y.m.d" }} 
-                                            </div>
-                                            <div style="color:blue"> 
-                                                {{ feed.feedcomment_set.count }} 
-                                            </div>
-                                            <div>
-                                                {{ feed.like_users.count }} 
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        {% endfor %} 
-                    </div>
-                    <!-- 동 게시판: 일간 리스트 (default) -->
-                    <div id="dong_day_lists" style="display:none;">
-                         {% for feed in dong_feeds.1 %} 
-                            <a href="{% url 'showfeed' 'minwon' 'gong' feed.id %}">
-                                <div style="display:flex; justify-content: space-around" >
-                                    <div style="display:flex; flex-direction: column;">
-                                        <div>{{ feed.title }}  </div>
-                                        <div style="color:gray">{{ feed.content }}</div> 
-                                        <div style="display:flex">
-                                            <div>
-                                                {{ feed.created_at|date:"y.m.d" }} 
-                                            </div>
-                                            <div style="color:blue"> 
-                                                {{ feed.feedcomment_set.count }} 
-                                            </div>
-                                            <div>
-                                                {{ feed.like_users.count }} 
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        {% endfor %} 
-                    </div> 
-                </div>
-            </div>
-        </div>
+    <div>민원게시판 TOP 5</div>
+
+    <div style="display: flex">
+        <div class="panel-body">공통게시판</div>
+        <button id="week_gong" onclick="gongWeek()">주간</button>
+        <button id="day_gong" onclick="gongDay()">일간</button>
     </div>
-    <!-- 생필품 게시판 -->
-    <div class="panel panel-success">
-        <button class="panel-body">생활게시판 실시간</button>
+    <!-- 공통 게시판: 주간 리스트 (default) -->
+    <div id="gong_week_lists" style="display:''">  
+    	{% for feed in gong_feeds.0 %} 
+	    <a href="{% url 'showfeed' 'minwon' 'gong' feed.id %}">
+			<div>{{ feed.title }}</div>
+			<div style="color:gray">{{ feed.content }}</div>
+            <div style="display:flex; word-spacing: 5px;">
+                <div>
+                    {{ feed.created_at|date:"y/m/d" }} 
+                </div>
+                 <div style="color:blue"> 
+                    {{ feed.like_users.count }} 
+                </div>
+                <div style="color:orange"> 
+                    {{ feed.feedcomment_set.count }} 
+                </div>
+            </div>
+	    </a>
+	    {% endfor %}
+	</div>
+	<!-- 공통 게시판: 일간 리스트 (숨겨짐) -->
+    <div id="gong_day_lists" style="display:none;">  
+    	{% for feed in gong_feeds.1 %} 
+	    <a href="{% url 'showfeed' 'minwon' 'gong' feed.id %}">
+			<div>{{ feed.title }}</div>
+			<div style="color:gray">{{ feed.content }}</div>
+            <div style="display:flex; word-spacing: 5px;">
+                <div>
+                    {{ feed.created_at|date:"y/m/d" }} 
+                </div>
+                <div style="color:blue"> 
+                    {{ feed.like_users.count }} 
+                </div>
+                <div style="color:orange"> 
+                    {{ feed.feedcomment_set.count }} 
+                </div>
+            </div>
+	    </a>
+	    {% endfor %}
+	</div>
+
+
+   <!-- User's 게시판 부분 -->
+    <div style="display:flex">
+        <!-- User's 게시판 이름 -->
+        {% if user.building_dong %}
+            {{ user.building_dong }}게시판
+        {% else %}
+            906동 게시판 
+        {% endif %}
+        <button id="week_gong" onclick="dongWeek()">주간</button>
+        <button id="day_gong" onclick="dongDay()">일간</button>
+    </div>
+    <div id="dong_week_lists" style="display:'';">  
+        {% for feed in dong_feeds.0 %} 
+            <a href="{% url 'showfeed' 'minwon' feed.category feed.id %}">
+                <div>{{ feed.title }}  </div>
+                <div style="color:gray">{{ feed.content }}</div> 
+                <div style="display:flex; word-spacing: 5px;">
+                    <div>
+                        {{ feed.created_at|date:"y/m/d" }} 
+                    </div>
+                    <div style="color:blue"> 
+                        {{ feed.like_users.count }} 
+                    </div>
+                    <div style="color:orange"> 
+                        {{ feed.feedcomment_set.count }} 
+                    </div>
+                </div>
+            </a>
+        {% endfor %} 
+    </div>
+    <div id="dong_day_lists" style="display:none;">  
+        {% for feed in dong_feeds.0 %} 
+            <a href="{% url 'showfeed' 'minwon' feed.category feed.id %}">
+                <div>{{ feed.title }}  </div>
+                <div style="color:gray">{{ feed.content }}</div> 
+                <div style="display:flex; word-spacing: 5px;">
+                    <div>
+                        {{ feed.created_at|date:"y/m/d" }} 
+                    </div>
+                    <div style="color:blue"> 
+                        {{ feed.like_users.count }} 
+                    </div>
+                    <div style="color:orange"> 
+                        {{ feed.feedcomment_set.count }} 
+                    </div>
+                </div>
+            </a>
+        {% endfor %} 
+    </div>
+    <div style="display:flex">
+        <div>생활게시판 실시간</div>
         <button id="cobuy" onclick="cobuy()">공구</button>
         <button id="keep" onclick="keep()">보관</button>
         <button id="rent" onclick="rent()">대여</button>
         <button id="resell" onclick="resell()">거래</button>
-
-        <div class="panel-footer">
-            <div style="display: flex;">
-                <div class="panel panel-warning">
-                    <div class="panel-body">
-                        <!-- default -> 공구 게시판 -->
-                        <div id = "cobuy_lists" style="display:'';">
-                            {% for feed in life_feeds.0 %} 
-                                <a href="{% url 'showfeed' 'minwon' 'gong' feed.id %}">
-                                    <div style="display:flex; justify-content: space-around" >
-                                        <div style="display:flex; flex-direction: column;">
-                                            <div>{{ feed.title }}  </div>
-                                            <div style="color:gray">{{ feed.content }}</div> 
-                                            <div style="display:flex">
-                                                <div>
-                                                    {{ feed.created_at|date:"y.m.d" }} 
-                                                </div>
-                                                <div style="color:blue"> 
-                                                    {{ feed.feedcomment_set.count }} 
-                                                </div>
-                                                <div>
-                                                    {{ feed.like_users.count }} 
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            {% endfor %} 
-                        </div>
-                        <!-- 보관 게시판 -->
-                        <div id = "keep_lists" style="display:none;">
-                            {% for feed in life_feeds.1 %} 
-                                <a href="{% url 'showfeed' 'minwon' 'gong' feed.id %}">
-                                    <div style="display:flex; justify-content: space-around" >
-                                        <div style="display:flex; flex-direction: column;">
-                                            <div>{{ feed.title }}  </div>
-                                            <div style="color:gray">{{ feed.content }}</div> 
-                                            <div style="display:flex">
-                                                <div>
-                                                    {{ feed.created_at|date:"y.m.d" }} 
-                                                </div>
-                                                <div style="color:blue"> 
-                                                    {{ feed.feedcomment_set.count }} 
-                                                </div>
-                                                <div>
-                                                    {{ feed.like_users.count }} 
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            {% endfor %} 
-                        </div>
-                        <!-- 대여 게시판 -->
-                        <div id = "rent_lists" style="display:none;">
-                            {% for feed in life_feeds.2 %} 
-                                <a href="{% url 'showfeed' 'minwon' 'gong' feed.id %}">
-                                    <div style="display:flex; justify-content: space-around" >
-                                        <div style="display:flex; flex-direction: column;">
-                                            <div>{{ feed.title }}  </div>
-                                            <div style="color:gray">{{ feed.content }}</div> 
-                                            <div style="display:flex">
-                                                <div>
-                                                    {{ feed.created_at|date:"y.m.d" }} 
-                                                </div>
-                                                <div style="color:blue"> 
-                                                    {{ feed.feedcomment_set.count }} 
-                                                </div>
-                                                <div>
-                                                    {{ feed.like_users.count }} 
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            {% endfor %} 
-                        </div>
-                        <!-- 중고 게시판 -->
-                        <div id = "resell_lists" style="display:none;">
-                            {% for feed in life_feeds.3 %} 
-                                <a href="{% url 'showfeed' 'minwon' 'gong' feed.id %}">
-                                    <div style="display:flex; justify-content: space-around" >
-                                        <div style="display:flex; flex-direction: column;">
-                                            <div>{{ feed.title }}  </div>
-                                            <div style="color:gray">{{ feed.content }}</div> 
-                                            <div style="display:flex">
-                                                <div>
-                                                    {{ feed.created_at|date:"y.m.d" }} 
-                                                </div>
-                                                <div style="color:blue"> 
-                                                    {{ feed.feedcomment_set.count }} 
-                                                </div>
-                                                <div>
-                                                    {{ feed.like_users.count }} 
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            {% endfor %} 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
-    <!-- 자유게시판 -->
-    <div class="panel panel-primary">
-        <div class="panel-body">자유게시판 실시간 인기 글</div>
-        <div class="panel-footer">
-            {% for feed in free_feeds %} 
-                <a href="{% url 'showfeed' 'minwon' 'gong' feed.id %}">
-                    <div style="display:flex; justify-content: space-around" >
-                        <div style="display:flex; flex-direction: column;">
+
+    <!-- default -> 공구 게시판 -->
+    <div id = "cobuy_lists" style="display:'';">
+        <div style="display:flex">
+            {% for list in life_feeds.0 %} 
+                <div> <!-- feed 5개 -->
+                    {% for feed in list %}
+                        <a href="{% url 'showfeed' 'life' 'cobuy' feed.id %}">
                             <div>{{ feed.title }}  </div>
-                            <div>
-                                {{ feed.created_at|date:"y.m.d" }} 
-                            </div>
-                        </div>
-                    </div>
-                </a>
+                            <div style="color:gray">{{ feed.content }}</div> 
+                            <div style="display:flex; word-spacing: 5px;">
+                                <div>
+                                    {{ feed.created_at|date:"y/m/d" }} 
+                                </div>
+                                <div style="color:blue"> 
+                                    {{ feed.like_users.count }} 
+                                </div>
+                                <div style="color:orange"> 
+                                    {{ feed.feedcomment_set.count }} 
+                                </div>
+                            </div>      
+                        </a>
+                    {% endfor %}
+                </div>
             {% endfor %} 
         </div>
     </div>
-</div>
+    <!-- 보관 게시판 -->
+    <div id = "keep_lists" style="display:none;">
+        <div style="display:flex">
+            {% for list in life_feeds.1 %} 
+                <div> <!-- feed 5개 -->
+                    {% for feed in list%}
+                        <a href="{% url 'showfeed' 'life' 'keep' feed.id %}">
+                            <div>{{ feed.title }}  </div>
+                            <div style="color:gray">{{ feed.content }}</div> 
+                            <div style="display:flex; word-spacing: 5px;">
+                                <div>
+                                    {{ feed.created_at|date:"y/m/d" }} 
+                                </div>
+                                <div style="color:blue"> 
+                                    {{ feed.like_users.count }} 
+                                </div>
+                                <div style="color:orange"> 
+                                    {{ feed.feedcomment_set.count }} 
+                                </div>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+            {% endfor %} 
+        </div>
+    </div>
+    <!-- 대여 게시판 -->
+    <div id = "rent_lists" style="display:none;">
+        <div style="display:flex">
+            {% for list in life_feeds.2 %} <!-- 2개 list -->
+                <div> <!-- feed 5개 -->
+                    {% for feed in list %}
+                        <a href="{% url 'showfeed' 'life' 'rent' feed.id %}">
+                            <div>{{ feed.title }}  </div>
+                            <div style="color:gray">{{ feed.content }}</div> 
+                            <div style="display:flex; word-spacing: 5px;">
+                                <div>
+                                    {{ feed.created_at|date:"y/m/d" }} 
+                                </div>
+                                <div style="color:blue"> 
+                                    {{ feed.like_users.count }} 
+                                </div>
+                                <div style="color:orange"> 
+                                    {{ feed.feedcomment_set.count }} 
+                                </div>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+            {% endfor %} 
+        </div>
+    </div>
+    <!-- 중고 게시판 -->
+    <div id = "resell_lists" style="display:none;">
+        <div style="display:flex">
+            {% for list in life_feeds.3 %} 
+                {% for feed in list %}
+                    <div> <!-- feed 5개 -->
+                        <a href="{% url 'showfeed' 'life' 'resell' feed.id %}">
+                            <div>{{ feed.title }}</div>
+                            <div style="color:gray">{{ feed.content }}</div> 
+                            <div style="display:flex; word-spacing: 5px;">
+                                <div>
+                                    {{ feed.created_at|date:"y/m/d" }} 
+                                </div>
+                                <div style="color:blue"> 
+                                    {{ feed.like_users.count }} 
+                                </div>
+                                <div style="color:orange"> 
+                                    {{ feed.feedcomment_set.count }} 
+                                </div>
+                            </div>
+                        </a>
+                    </div> 
+                {% endfor %}
+            {% endfor %} 
+        </div>
+    </div>
+	<div> 자유게시판 실시간 인기 글</div>
+        {% for feed in free_feeds %} <!-- backend에서 17개로 설정됨 -->
+            <a href="{% url 'showfeed' 'freeboard' 'tori' feed.id %}">
+            <div style="display:flex">
+                <div>{{ feed.title }}</div>
+                <div>
+                    {{ feed.created_at|date:"y/m/d" }} 
+                </div>
+            </div>
+            </a>
+        {% endfor %}     
+	</div>
 {% endblock content %}
