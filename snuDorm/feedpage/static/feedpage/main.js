@@ -8,17 +8,16 @@ var minwonText = document.querySelector('.minwon-text');
 var lifeText = document.querySelector('.life-text');
 var freeText = document.querySelector('.free-text');
 
-if (urlPath == "") {
-    homeText.style.color = 'black';
-} else if (urlPath == "feeds") {
-    homeText.style.color = 'black';
-} else if (urlPath2 == "minwon") {
-    minwonText.style.color = 'black';
-} else if (urlPath2 == "life") {
-    lifeText.style.color = 'black';
-} else if (urlPath2 == "freeboard") {
-    freeText.style.color = 'black';
-} else {
+var board = ["", "feeds", "minwon", "life", "freeboard"]
+var boardText = [homeText, homeText, minwonText, lifeText, freeText]
+var idx;
+
+for(idx = 0; idx < 5; idx++) {
+	if(urlPath == board[idx]) {
+        boardText[idx].style.color = 'black';
+	} else if (urlPath2 == board[idx]) {
+        boardText[idx].style.color = 'black';
+	} 
 }
 
 //2단계 layer show
@@ -39,20 +38,14 @@ var building2 = document.querySelector('.building-2');
 var building3 = document.querySelector('.building-3');
 var building4 = document.querySelector('.building-4');
 
-if (urlPath.indexOf("bachelor")!= -1) {
-    building1.style.visibility = 'visible';
-}
-else if (urlPath.indexOf("graduate")!= -1) {
-    building2.style.visibility = 'visible';
-}
-else if (urlPath.indexOf("family")!= -1) {
-    building3.style.visibility = 'visible';
-}
-else if (urlPath.indexOf("bk")!= -1) {
-    building4.style.visibility = 'visible';
-}
-else {
+var category = ["bachelor", "graduate", "family", "bk"]
+var building = [building1, building2, building3, building4]
+var idx;
 
+for(idx = 0; idx < 12; idx++) {
+	if(urlPath.indexOf(category[idx])!= -1) {
+        building[idx].style.visibility = 'visible';
+	} 
 }
 
 //2단계 글자 효과
@@ -64,36 +57,21 @@ var mG = document.querySelector('.graduate-text');
 var mF = document.querySelector('.family-text');
 var mBK = document.querySelector('.bk-text');
 
-if (urlPath == "tori") {
-    mAll.style.color = 'black';
-} else if (urlPath == "gong") {
-    mGong.style.color = 'black';
-} else if (urlPath.indexOf("bachelor")!= -1) {
-    mB.style.color = 'black';
-} else if (urlPath.indexOf("graduate")!= -1) {
-    mG.style.color = 'black';
-} else if (urlPath.indexOf("family")!= -1) {
-    mF.style.color = 'black';
-} else if (urlPath.indexOf("bk")!= -1) {
-    mBK.style.color = 'black';
-} else {
-}
-
 //생활
 var l1 = document.querySelector('.l1');
 var l2 = document.querySelector('.l2');
 var l3 = document.querySelector('.l3');
 var l4 = document.querySelector('.l4');
 
-if (urlPath == "cobuy") {
-    l1.style.color = 'black';
-} else if (urlPath == "rent") {
-    l2.style.color = 'black';
-} else if (urlPath == 'keep') {
-    l3.style.color = 'black';
-} else if (urlPath == 'resell') {
-    l4.style.color = 'black';
-} else {
+var category2 = ["tori", "gong", "bachelor", "graduate", "family", "bk", "cobuy", "rent", "keep", "resell"]
+var categoryText = [mAll, mGong, mB, mG, mF, mBK, l1, l2, l3, l4]
+
+for (idx=0; idx < 10; idx++) {
+    if(urlPath == category2[idx]) {
+        categoryText[idx].style.color = 'black';
+    } else if (urlPath.indexOf(category2[idx])!= -1) {
+        categoryText[idx].style.color = 'black';
+    }
 }
 
 //3단계 글자 효과
@@ -128,67 +106,36 @@ var f5 = document.querySelector('.f5');
 var bk1 = document.querySelector('.bk1');
 var bk2 = document.querySelector('.bk2');
 
-if (urlPath == "bachelor_906") {
-    b1.style.color = 'black';
-} else if (urlPath == "bachelor_915") {
-    b2.style.color = 'black';
-} else if (urlPath == "bachelor_919A") {
-    b3.style.color = 'black';
-} else if (urlPath == "bachelor_919B") {
-    b4.style.color = 'black';
-} else if (urlPath == "bachelor_919C") {
-    b5.style.color = 'black';
-} else if (urlPath == "bachelor_919D") {
-    b6.style.color = 'black';
-} else if (urlPath == "bachelor_921") {
-    b7.style.color = 'black';
-} else if (urlPath == "bachelor_922") {
-    b8.style.color = 'black';
-} else if (urlPath == "bachelor_923") {
-    b9.style.color = 'black';
-} else if (urlPath == "bachelor_924") {
-    b10.style.color = 'black';
-} else if (urlPath == "bachelor_925") {
-    b11.style.color = 'black';
-} else if (urlPath == "bachelor_926") {
-    b12.style.color = 'black';
-} else {
+//학부
+var Dong = ["906", "915", "919A", "919B", "919C", "919D", "921", "922", "923", "924", "925", "926" ]
+var b_num = [b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12]
+var idx;
+
+for(idx = 0; idx < 12; idx++) {
+	if(urlPath.indexOf(Dong[idx])!= -1) {
+        b_num[idx].style.color = 'black';
+	} 
 }
 
-if (urlPath == "graduate_900") {
-    g1.style.color = 'black';
-} else if (urlPath == "graduate_901") {
-    g2.style.color = 'black';
-} else if (urlPath == "graduate_902") {
-    g3.style.color = 'black';
-} else if (urlPath == "graduate_903") {
-    g4.style.color = 'black';
-} else if (urlPath == "graduate_904") {
-    g5.style.color = 'black';
-} else if (urlPath == "graduate_905") {
-    g6.style.color = 'black';
-} else if (urlPath == "graduate_917") {
-    g7.style.color = 'black';
-} else if (urlPath == "graduate_918") {
-    g8.style.color = 'black';
-} else {
+//대학원
+var Dong = ["900", "901", "902", "903", "904", "905", "917", "918"]
+var g_num = [g1, g2, g3, g4, g5, g6, g7, g8]
+var idx;
+
+for(idx = 0; idx < 12; idx++) {
+	if(urlPath.indexOf(Dong[idx])!= -1) {
+        g_num[idx].style.color = 'black';
+	} 
 }
 
-if (urlPath == "family_931") {
-    f1.style.color = 'black';
-} else if (urlPath == "family_932") {
-    f2.style.color = 'black';
-} else if (urlPath == "family_933") {
-    f3.style.color = 'black';
-} else if (urlPath == "family_934") {
-    f4.style.color = 'black';
-} else if (urlPath == "family_935") {
-    f5.style.color = 'black';
-} else {
+//가족+BK
+var Dong = ["931", "932", "933", "934", "935", "946A", "946B"]
+var fbk_num = [f1, f2, f3, f4, f5, bk1, bk2]
+var idx;
+
+for(idx = 0; idx < 12; idx++) {
+	if(urlPath.indexOf(Dong[idx])!= -1) {
+        fbk_num[idx].style.color = 'black';
+	} 
 }
 
-if (urlPath == "bk_946A") {
-    bk1.style.color = 'black';
-} else if (urlPath == "bk_946B") {
-    bk2.style.color = 'black';
-}
