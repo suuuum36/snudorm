@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
+
+{% comment %} social login/signup {% endcomment %}
 {% load socialaccount %}
 {% providers_media_js %}
     </br>
@@ -20,16 +22,17 @@
                 <input name="password" type="password" id="password" placeholder="비밀번호" required>
             </div></br>
             <button type="submit">로그인</button>
+            {% comment %} 로그인 후 이전 페이지로 이동하기 {% endcomment %}
+            <input type="hidden" name="next" value="{{ next }}"> 
         </form>
     </div>
     <div>
-        <!-- 소셜 로그인 부분. db 날리면 에러 생겨서 주석처리합니다.
+        {% comment %} social login/signup tag. db 지울 때마다 error 발생. 수정 필요
         <a href="{% provider_login_url 'naver' %}">네이버로 로그인/회원가입</a>
-        <a href="{% provider_login_url 'google'%}">구글로 로그인/회원가입</a>
-        -->
-        
+        <a href="{% provider_login_url 'google'%}">구글로 로그인/회원가입</a> {% endcomment %}        
     </div>
     <div>
+        {% comment %} 아이디/비밀번호 찾기 구현 필요 {% endcomment %}
         <a href="">아이디/비밀번호 찾기</a>
         <a href="{% url 'signup' %}">회원가입</a>
     </div>

@@ -26,8 +26,8 @@
                 <input name="nickname" type="text" required>
             </div></br>
             <div>
-                이메일</br>
-                <input name="email" type="text" required>
+                이메일</br> 
+                <input name="email" type="text" required> @snu.ac.kr
             </div></br>
             <div>
                 생활관</br>
@@ -40,4 +40,7 @@
             <button type="submit">Sign Up</button>
         </form>
     </div>
+    <input type="text" class="username_input" name="username" check_result="fail" required />
+    <button type="button" class="id_overlap_button" onclick="id_overlap_check()">아이디 중복검사</button>
+    <img id="id_check_sucess" style="display: none;">
 {% endblock content %}
