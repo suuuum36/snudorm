@@ -1,0 +1,44 @@
+@charset "utf-8";
+
+// 로그인 전체 폼
+.form {
+    box-sizing: border-box;
+    margin: 100px auto;
+    width: 500px;
+    height: 1000px;
+
+
+    // 로고
+    .logo {
+        width: 300px;
+        height: 150px;
+        margin: 0 auto;
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    }
+
+    // 아이디, 비밀번호 input & 로그인 버튼
+    .input {
+
+        // 아이디/비밀번호 input
+        .id-pw {
+            .id {}
+            .pw {}            
+        }
+
+        // 로그인 버튼
+        button {
+            background-color: #7f7f7f;
+        }
+    }
+
+    // 소셜 로그인
+    .social {}
+
+    // 아이디, 비밀번호 찾기 & 회원가입
+    .search-signup {}
+}
+
