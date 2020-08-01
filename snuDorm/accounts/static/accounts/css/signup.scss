@@ -1,0 +1,158 @@
+@charset "utf-8";
+@import "variable.scss";
+
+// TODO:
+// 1) 중복확인 버튼과 input 높이 조정
+// 2) 여백 조정
+// 3) 글씨체
+// 4) 셀렉트박스 화살표 이미지 변경 및 수정
+
+// input 태그 focus 시 글자 사라지도록
+input:focus::-webkit-input-placeholder, 
+textarea:focus::-webkit-input-placeholder {
+    color:transparent;
+}
+
+// 전체 구조
+.form {
+    width: 500px;
+    margin: 100px auto;
+
+    // 로고 및 headline
+    .headline {
+        font-weight: bold;
+        img {
+            width: 40px;
+        }
+        span {
+            color: $yellow_main;
+        }
+    }
+
+    // 이름 입력
+    .name-input {}
+
+    // 아이디 입력 및 중복확인
+    .id-input {}
+
+    // 패스워드 입력
+    .pw-input {}
+
+    // 패스워드 확인
+    .pw2-input {}
+
+    // 닉네임 입력 및 중복확인
+    .nickname-input {}
+
+    // 이메일 입력
+    .email-input {
+        span {
+            font-weight: bold;
+        }
+    }
+
+    // 생활관 및 동 선택. select box로 구현. 생활관에 따라 유동적으로 변화.
+    .dorm-input {
+        display: flex;
+        justify-content: space-between;
+
+        .category-input {}
+    
+        // javascript로 구현
+        .dong-input {}
+
+        select {
+            width: 240px;
+            height: 50px;
+            border: 2px solid $gray_border;
+            border-radius: 7px;
+            padding-left: 20px;
+            font-weight: bold;
+            color: $gray_border;
+
+            option {
+                color: black;
+            }
+            option:hover {
+                color: $blue_text;
+            }
+        }
+
+        select:hover, select:focus {
+            box-shadow: $gray_shadow;
+        }
+    }
+    
+    // 회원가입 버튼
+    .signup {
+        width: 500px;
+        height: 70px;
+        text-align: center;
+        background-color: $yellow_main;
+        color: #ffffff;
+        font-weight: bold;
+        border-radius: 7px;
+        margin-top: 15px;
+        cursor: pointer;
+    }
+}
+
+// 공통 항목
+// 항목별 head
+.head {
+    display: inline-block;
+    line-height: 50px;
+    width: 500px;
+    height: 50px;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+// 항목별 description
+.description {
+    display: inline-block;
+    width: 500px;
+    height: 30px;
+    font-size: 12px;
+    color: $gray_text;
+    font-weight: bold;
+}
+
+// 항목별 input
+.input-value {
+    height: 50px;
+    border: 2px solid $gray_border;
+    border-radius: 7px;
+    padding-left: 20px;
+    font-weight: bold;
+}
+
+.input-value:hover, .input-value:focus {
+    box-shadow: $gray_shadow;
+}
+
+.input-value::placeholder {
+    color: $gray_border;
+    font-weight: bold;
+}
+
+// 이메일 input
+.short {
+    width: 240px;
+}
+
+// 이메일을 제외한 input
+.long {
+    width: 400px;
+}
+
+// 중복확인 버튼
+.db-check {
+    width: 90px;
+    height: 50px;
+    border-radius: 30px;
+    background-color: $gray_border;
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: bold;
+}
