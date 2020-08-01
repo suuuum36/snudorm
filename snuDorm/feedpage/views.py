@@ -313,6 +313,7 @@ def deleteFeed(request, board, category, fid):
 
 # 민원게시판 게시글 좋아요
 def likeFeed(request, board, category, fid):
+    board_info = get_board(board, category)
     if request.method == 'GET':
         if board == "minwon":
             feed = Minwon.objects.get(id=fid)
@@ -330,7 +331,8 @@ def likeFeed(request, board, category, fid):
         else:
             FeedLike.objects.create(user_id=request.user.id, feed_id=feed.id)
 
-    return render(request, 'feedpage/feed.html', {'feed': feed, 'board': board, 'category': category, 'fid': fid})
+    return render(request, 'feedpage/feed.html', {'feed': feed, 'board': board, 
+                            'category': category, 'fid': fid, 'board_name': board_info[2]})
 
 
 # 댓글 달기
