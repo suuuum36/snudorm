@@ -137,7 +137,7 @@ def newFeed(request, board, category):
     elif request.method == 'POST':
         title = request.POST['title']
         content = request.POST['content']
-        photo = request.POST['photo']
+        photo = request.FILES.get('photo', False)
         noname = True if "noname" in request.POST else False
     
         # 민원 게시판 
@@ -254,7 +254,8 @@ def editFeed(request, board, category, fid):
         feed.title = request.POST['title']
         feed.content = request.POST['content']
         feed.photo = feed.photo if request.FILES.get('photo') is None else \
-                     request.FILES.get('photo', False)
+                    request.FILES.get('photo', False)
+
         feed.noname = True if "noname" in request.POST else False
         
         if board == 'life':
@@ -285,7 +286,7 @@ def editFeed(request, board, category, fid):
             elif category == "resell":
                 feed.purpose = Resell.OPTION[0] if request.POST['purpose'] == 'sell' else Resell.OPTION[1]
                 feed.price = request.POST['price']
-                
+
         feed.save()
         return redirect('showfeed', board=board, category=category, fid=fid)
 
