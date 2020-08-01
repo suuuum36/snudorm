@@ -1,13 +1,17 @@
 @charset "utf-8";
+@import "variable.scss";
+
+// TODO:
+// 1) 색상 수정
+// 2) 반응형 구현
+// 3) 여백 수정
 
 // 로그인 전체 폼
 .form {
-    box-sizing: border-box;
     margin: 100px auto;
-    width: 500px;
+    width: 400px;
     height: 1000px;
-
-
+    
     // 로고
     .logo {
         width: 300px;
@@ -22,23 +26,103 @@
 
     // 아이디, 비밀번호 input & 로그인 버튼
     .input {
+        margin-top: 20px;
 
         // 아이디/비밀번호 input
         .id-pw {
-            .id {}
-            .pw {}            
+            display: flex;
+            flex-direction: column;
+            color: $gray_text;
+
+            .id {
+                width: 400px;
+                height: 50px;
+                padding-left: 20px;
+                border: 1px solid $gray_border;
+                border-radius: 7px 7px 0 0;
+                font-weight: bold;
+            }
+
+            .pw {
+                width: 400px;
+                height: 50px;
+                padding-left: 20px;
+                margin-top: -1px; // 아이디 입력칸과 외곽선 겹치도록 설정
+                border: 1px solid $gray_border;
+                border-radius: 0 0 7px 7px;
+                font-weight: bold;
+            }            
+        }
+
+        .id-pw:hover, .id-pw:focus {
+            box-shadow: $gray_shadow;
+            border-radius: 7px;
         }
 
         // 로그인 버튼
         button {
-            background-color: #7f7f7f;
+            margin-top: 20px;
+            color: $gray_text;
+            background-color: #dfdfdf; // 색상 수정
+            border-radius: 5px;
+            width: 400px;
+            height: 50px;
+            cursor: pointer;
+            font-weight: bold;
         }
     }
 
     // 소셜 로그인
-    .social {}
+    .social {
+        margin-top: 60px;
+        width: 400px;
+        .naver {
+            position: relative;
+            img {
+                max-width: 400px;
+            }
+            span {
+                position: absolute;
+                color: #ffffff;
+                font-weight: bold;
+                top: 40%;
+                left: 33%;
+            }
+        }
+        .google {
+            position: relative;
+            margin-top: 5px;
+
+            img {
+                max-width: 400px;
+            }
+            span {
+                position: absolute;
+                color: #ffffff;
+                font-weight: bold;
+                top: 40%;
+                left: 33%;
+            }
+        }
+    }
 
     // 아이디, 비밀번호 찾기 & 회원가입
-    .search-signup {}
+    .find-signup {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+        font-weight: bold;
+
+        // 아이디, 비밀번호 찾기
+        .find {
+            margin-right: 20px;
+            
+        }
+
+        // 회원가입
+        .signup {
+            color: $blue_text;
+        }
+    }
 }
 

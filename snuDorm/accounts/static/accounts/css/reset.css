@@ -40,7 +40,27 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
+* {
+  box-sizing: border-box; }
+
 a {
   text-decoration: none; }
+
+a:link, a:visited, a:hover, a:active {
+  color: black; }
+
+button {
+  padding: 0;
+  margin: 0;
+  border: none;
+  outline-style: none; }
+
+input {
+  padding: 0;
+  margin: 0;
+  outline-style: none; }
+
+select {
+  outline-style: none; }
 
 /*# sourceMappingURL=reset.css.map */
