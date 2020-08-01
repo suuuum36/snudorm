@@ -125,6 +125,7 @@ textarea:focus::-webkit-input-placeholder {
     border-radius: 7px;
     padding-left: 20px;
     font-weight: bold;
+    color: $gray_border;
 }
 
 .input-value:hover, .input-value:focus {
