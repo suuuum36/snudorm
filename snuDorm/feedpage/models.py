@@ -24,7 +24,7 @@ def get_image_filename(instanece, filename):
 class Feed(models.Model):
     title = models.CharField(max_length=256)
     content = models.TextField()
-    photo = models.ImageField(blank=True, upload_to='feed_photos')
+    photo = models.ImageField(blank=True, null=True, upload_to='feed_photos')
     noname = models.BooleanField(default=False)
 
     author = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
