@@ -7,7 +7,6 @@
 input:focus {outline:none;}
 select:focus {outline:none;}
 a {text-decoration-line:none}
-a:hover {color: black}
 
 
 .first-header {
@@ -42,12 +41,14 @@ a:hover {color: black}
 
 .first-header-text > a {
     font-size: 17px;
-    color: #7f7f7f !important;
+    color: #7f7f7f;
 }
+
+.first-header-text a:hover {color: black !important;}
 
 .search {
     width: 430px;
-    border: 1px solid #999999;
+    border: 1px solid #b9b9b9;
     border-radius: 7px;
     display: flex;
     justify-content: space-between;
@@ -80,6 +81,13 @@ a:hover {color: black}
     margin-right: 5px;
 }
 
+/* 웹이 1180이하일때 */
+@media (max-width: 1180px) {
+    .search-text {
+      display: none;               
+    }
+}
+
 .search-img {
     height: 20px;
     width: auto;
@@ -91,7 +99,7 @@ a:hover {color: black}
 }
 
 .first-header-user > a {
-    color: #ffca00 !important;
+    color: #ffca00 ;
     font-size: 15px;
     margin-top: auto;
     margin-bottom: auto;
@@ -108,6 +116,65 @@ a:hover {color: black}
 .signup > a {
     font-size: 15px;
     color: white;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+/* 카테고리 */
+
+.category-bar {
+    visibility: hidden;
+}
+
+.category {
+    position: relative;
+    width: 100%;
+    margin-top: 18px;
+}
+
+.minwon-category {
+    height: 65px;
+    background-color: #f2f2f2;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.life-category {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 65px;
+    background-color: #f2f2f2;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.minwon-category > a, .life-category > a {
+    color: #7f7f7f;
+    font-size: 16px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+/* 동 카테고리 */
+.building {
+    position: relative;
+    width: 100%;
+}
+
+.building-1, .building-2, .building-3, .building-4 {
+    width: 100%;
+    height: 60px;
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: space-evenly;
+    border-bottom : 1px solid #b9b9b9;
+}
+
+.building-1>a, .building-2>a, .building-3>a, .building-4>a {
+    color: #7f7f7f;
+    font-size: 15px;
     margin-top: auto;
     margin-bottom: auto;
 }
