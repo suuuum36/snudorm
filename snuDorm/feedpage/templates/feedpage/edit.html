@@ -24,7 +24,10 @@
                 </div></br>
                 <div>
                     사진</br>
-                    <input name="photo" value="{{feed.photo}}" type="file">
+                    <input name="photo" type="file"/> 
+                    {% if feed.photo %} 
+                        <img src="{{ feed.photo.url }}">
+                    {% endif %}
                 </div></br>
                 <div class="option_noname">
                     {% if feed.noname %}
@@ -74,7 +77,10 @@
                 </div></br>
                 <div>
                     사진</br>
-                    <input name="photo" type="file">
+                    <input name="photo" type="file"/> 
+                    {% if feed.photo %} 
+                        <img src="{{ feed.photo.url }}">
+                    {% endif %}
                 </div></br>
                  {% if complete %}
                     <div>
@@ -149,7 +155,10 @@
                 </div></br>
                 <div>
                     사진</br>
-                    <input name="photo" type="file">
+                    <input name="photo" type="file"/> 
+                    {% if feed.photo %} 
+                        <img src="{{ feed.photo.url }}">
+                    {% endif %}
                 </div></br>
                 {% if complete %}
                     <div>
@@ -224,7 +233,10 @@
                 </div></br>
                 <div>
                     사진</br>
-                    <input name="photo" type="file">
+                    <input name="photo" type="file"/> 
+                    {% if feed.photo %} 
+                        <img src="{{ feed.photo.url }}">
+                    {% endif %}
                 </div></br>
                  {% if complete %}
                     <div>
@@ -282,7 +294,10 @@
                 </div></br>
                 <div>
                     사진</br>
-                    <input name="photo" type="file">
+                    <input name="photo" type="file"/> 
+                    {% if feed.photo %} 
+                        <img src="{{ feed.photo.url }}">
+                    {% endif %}
                 </div></br>
                  {% if complete %}
                     <div>
