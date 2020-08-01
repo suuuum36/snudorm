@@ -244,18 +244,17 @@ def editFeed(request, board, category, fid):
                         'category': category, 'fid': fid, 'board_name': board_info[2] })
 
     elif request.method == 'POST':
-        feed = Minwon.objects.filter(id=fid) if board == 'minwon' else \
-            (FreeBoard.objects.filter(id=fid) if board == 'freeboard' else 
-            (CoBuy.objects.filter(id=fid) if category == 'cobuy' else 
-            (Rent.objects.filter(id=fid) if category == 'rent' else 
-            (Keep.objects.filter(id=fid) if category == 'keep' else 
-            (Resell.objects.filter(id=fid))))))
+        feed = Minwon.objects.get(id=fid) if board == 'minwon' else \
+            (FreeBoard.objects.get(id=fid) if board == 'freeboard' else 
+            (CoBuy.objects.get(id=fid) if category == 'cobuy' else 
+            (Rent.objects.get(id=fid) if category == 'rent' else 
+            (Keep.objects.get(id=fid) if category == 'keep' else 
+            (Resell.objects.get(id=fid))))))
 
         feed.title = request.POST['title']
         feed.content = request.POST['content']
-        feed.photo = feed.photo if request.FILES.get('photo') is None else \
-                    request.FILES.get('photo', False)
-
+        feed.photo = feed.photo if request.FILES.get('photo') is None else\
+                    request.FILES.get('photo', False)        
         feed.noname = True if "noname" in request.POST else False
         
         if board == 'life':
