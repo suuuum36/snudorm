@@ -8,21 +8,21 @@ function id_overlap_check() {
 
 
     if ($('.username_input').val() == '') {
-      alert('이메일을 입력해주세요.')
+      alert('아이디를 입력해주세요.')
       return;
     }
 
     id_overlap_input = document.querySelector('input[name="username"]');
 
     $.ajax({
-      url: "{% url 'lawyerAccount:id_overlap_check' %}",
+      url: "{% url 'signup' %}",
       data: {
         'username': id_overlap_input.value
       },
       datatype: 'json',
       success: function (data) {
-        console.log(data['overlap']);
-        if (data['overlap'] == "fail") {
+        console.log(data['overlap_check']);
+        if (data['overlap_check'] == "fail") {
           alert("이미 존재하는 아이디 입니다.");
           id_overlap_input.focus();
           return;
@@ -33,7 +33,13 @@ function id_overlap_check() {
           $('.id_overlap_button').hide();
           return;
         }
-      }
+      },
+      error: function(response, status, error) {
+        console.log(response, status, error);
+      },
+      complete: function(response) {
+        console.log(response);
+      },
     });
   }
   

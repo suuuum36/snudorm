@@ -68,7 +68,6 @@ def login(request):
             auth.login(request, user)
             return redirect('/feeds')
         else:
-            context = "로그인 실패"
             return redirect('error') # alert로 구현 필요
 
     elif request.method == 'GET':
@@ -155,3 +154,18 @@ def userNotice(request, id):
 def messageBox(request, id):
 
     return render(request, 'accounts/messagebox.html', {'id': id})
+
+def id_overlap_check(request):
+    username = request.GET['username']
+    try:
+        # 중복 검사 실패
+        user = User.objects.get(username=username)
+    except:
+        # 중복 검사 성공
+        user = None
+    if user is None:
+        overlap_check = "pass"
+    else:
+        overlap_check = "fail"
+    context = {'overlap_check': overlap_check}
+    return JsonResponse(context)
