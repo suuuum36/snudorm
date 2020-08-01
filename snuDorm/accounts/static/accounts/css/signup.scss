@@ -109,7 +109,7 @@ textarea:focus::-webkit-input-placeholder {
 }
 
 // 항목별 description
-.description {
+.description { 
     display: inline-block;
     width: 500px;
     height: 30px;
@@ -125,6 +125,7 @@ textarea:focus::-webkit-input-placeholder {
     border-radius: 7px;
     padding-left: 20px;
     font-weight: bold;
+    color: $gray_border;
 }
 
 .input-value:hover, .input-value:focus {
@@ -155,4 +156,24 @@ textarea:focus::-webkit-input-placeholder {
     color: #ffffff;
     cursor: pointer;
     font-weight: bold;
+}
+
+// 사용가능 div
+.check-confirm {
+    display: none;
+    position: relative;
+    width: 90px;
+    height: 50px;
+    border-radius: 30px;
+    background-color: $blue_text;
+    color: #ffffff;
+    font-weight: bold;
+    
+    span {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        white-space: nowrap;
+    }
 }

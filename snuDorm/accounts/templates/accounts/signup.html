@@ -1,3 +1,5 @@
+<!-- TODO: 중복확인 버튼 작동 구현 -->
+
 {% load static%}
 {% load sass_tags %}
 <!DOCTYPE html>
@@ -21,13 +23,16 @@
             {% csrf_token %}
             <div class="name-input">   
                 <span class="head">이름</span>
-                <input class="input-value long" name="name" type="text" placeholder="이름" minlength="5" required>
+                <input class="input-value long" name="name" type="text" placeholder="이름" required>
             </div>
             <div class="id-input">
                 <span class="head">아이디</span>
                 <span class="description">5자 이상의 아이디를 입력해 주세요.</span>
-                <input class="input-value long" name="user_id" type="text" placeholder="아이디 (5자 이상)" required>
+                <input class="input-value long" name="user_id" type="text" placeholder="아이디 (5자 이상)" minlength="5" required>
                 <button class="db-check" type="button">중복확인</button>
+                <div class="available-1 check-confirm">
+                    <span>사용가능</span>
+                </div>
             </div>
             <div class="pw-input">
                 <span class="head">비밀번호</span>
@@ -43,6 +48,9 @@
                 <span class="description">다른 유저와 겹치지 않는 닉네임을 입력해 주세요. (2-8자)</span>
                 <input class="input-value long" name="nickname" type="text" placeholder="닉네임 (2-8자)" minlength="2" maxlength="8" required>
                 <button class="db-check" type="button">중복확인</button>
+                <div class="available-2 check-confirm">
+                    <span>사용가능</span>
+                </div>
             </div>
             <div class="email-input">
                 <span class="head">이메일</span> 
@@ -52,7 +60,7 @@
                 <span class="head">기숙사 동</span>
                 <div class="dorm-input">
                     <div class="category-input">                    
-                        <select class="category-option" name="category_option" onchange="categoryChange(this)">
+                        <select class="category-option" name="building_category" onchange="categoryChange(this)">
                             <option value="default" disabled selected hidden>생활관</option>
                             <option value="bachelor">학부생활관</option>
                             <option value="master">대학원생활관</option>
@@ -61,7 +69,7 @@
                         </select>
                     </div>
                     <div class="dong-input">
-                        <select id="dong-option" name="dong_option">
+                        <select id="dong-option" name="building_dong">
                             <option value="default" disabled selected hidden>동</option>
                             <option value="fail" disabled>생활관을 선택해주세요</option>
                         </select>

@@ -51,7 +51,9 @@ def signup(request):
         
         return redirect('/feeds')
 
-    return render(request, 'accounts/signup.html')
+    elif request.method == "GET":
+        
+        return render(request, 'accounts/signup.html')
 
 
 def error(request): # alert로 구현 필요
