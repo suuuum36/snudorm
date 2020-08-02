@@ -108,7 +108,7 @@ def showBoard(request, board, category):
                 
         # 전체글 버튼
         feeds = feeds.order_by('-created_at')
-        paginator = Paginator(feeds, 3)
+        paginator = Paginator(feeds, 11)
         page = request.GET.get('page')
         posts = paginator.get_page(page)
 

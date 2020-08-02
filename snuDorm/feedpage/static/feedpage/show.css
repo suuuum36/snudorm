@@ -1,0 +1,199 @@
+/* 전체 설정 */
+.info {
+    min-width: 820px;
+    width: min-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 게시판 이름 */
+.title-div {
+    display: flex;
+    height: 80px;
+    position: relative;
+}
+
+.title-div > div {
+    margin-top: auto;
+    margin-bottom: auto;
+    color: black;
+}
+
+.title-text {
+    font-weight: 500;
+    font-size: 22px;
+    margin-right: 30px;
+}
+
+#not_best {
+    color:black;
+    font-weight: 500;
+    margin-right: 5px;
+}
+
+#best {
+    cursor: pointer;
+}
+
+.write,.write2 {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform:translate(0,-50%);
+    height: 37px;
+    color: white; 
+    width: 70px;
+    background-color: #016aff;
+    border-radius: 7px;
+    display: flex;
+    justify-content: center;
+}
+
+.write-button {
+    font-size: 15px;
+    margin-top: auto;
+    margin-bottom: auto;
+    color: white;
+}
+
+
+/* 내용 인덱스 */
+.index-div {
+    height: 43px;
+    display: flex;
+    justify-content: space-evenly;
+    border-bottom: 1px solid #aaaaaa;
+    border-top: 1px solid #aaaaaa;
+    font-size: 14px;
+    color: #7f7f7f;
+}
+
+.index-div > div {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.i-board {
+    width: 50px;
+    text-align: center;
+}
+.i-title {
+    min-width: 360px;
+    text-align: center;
+}
+.i-author{
+    min-width: 120px;
+    text-align: center;
+}
+.i-date {
+    min-width: 70px;
+    text-align: center;
+}
+.i-views, .i-likes {
+    min-width: 40px;
+    text-align: center;
+}
+
+/*본문*/
+
+.one-feed {
+    height: 78px;
+    border-bottom: 1px solid #aaaaaa;
+}
+
+.whole-feed {
+    font-size: 14px;
+    color: black;
+    height: 78px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.whole-feed > div {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.board_name {
+    display:flex;
+    flex-direction:column;
+    text-align: center;
+    min-width: 50px;
+}
+
+.feed-p {
+    display:flex;
+    flex-direction: column;
+    min-width: 360px;
+}
+
+.title-comment {
+    display: flex;
+}
+
+.comment {
+    color: #016aff;
+    margin-left: 10px;
+}
+
+.content {
+    color: #7f7f7f;
+    font-size: 13px;
+}
+
+.feed-a {
+    min-width: 120px;
+    text-align: center;
+}
+
+.date {
+    min-width: 70px;
+    text-align: center;
+}
+.views, .likes {
+    min-width: 40px;
+    text-align: center;
+}
+
+.life-status {
+    background-color: #016aff;
+    color: white;
+    border-radius: 3px;
+    min-width: 50px;
+    min-height: 25px;
+    display: flex;
+    font-weight: 300;
+}
+
+.life-text {
+    margin: auto;
+}
+
+/*베스트 글*/
+.just-content {
+    position: relative;
+}
+
+#show_best_lists {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    visibility: hidden;
+}
+
+
+/* 검색창 + 페이지 넘버 */
+.below {
+    position: relative;
+    height: 40px;
+    display: flex;
+    margin-top: 25px;
+}
+
+.page_numbers {
+    display: flex;
+    width: fit-content;
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+}
