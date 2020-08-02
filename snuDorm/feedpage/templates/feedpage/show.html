@@ -148,16 +148,16 @@
                         <a href="?page={{posts.previous_page_number}}"> 이전 </a>
                     </div> 
                 {% endif %}
-                {% for num in posts.paginator.page_range %} 
-                    {% comment %} {% if num - 5 > posts.number and num - 5 < posts.number  %} {% endcomment %}
-                        {% if posts.number == num %}
-                            <div class = "num1" >{{ num }}</div> 
-                        {% else %}
+                {% for num in paginator_range %} 
+                    {% if posts.number == num %}
+                        <div class = "num1" >{{ num }}</div> 
+                    {% else %}
+                        <!-- 수민님 a href를 빼면 css 잘 작동합니다. -->
+                        <a href="?best_page={{num}}">
                             <div class = "num2" >{{ num }}</div>
-                        {% endif %}
-                    {% comment %} {% endif %} {% endcomment %}
+                        </a>
+                    {% endif %}
                 {% endfor %}
-                {% comment %} <span>{{posts.paginator.num_pages}}</span>  {% endcomment %}
                 {% if posts.has_next %}
                     <div class = "next">
                         <a href="?page={{posts.next_page_number}}"> 다음</a> 
@@ -276,14 +276,16 @@
                         <a href="?best_page={{best_posts.previous_page_number}}">이전</a> 
                     </div>
                 {% endif %}
-                {% for num in best_posts.paginator.page_range %} 
-                        {% if best_posts.number == num %}
-                            <div class = "num3">{{ num }}</div> 
-                        {% else %}
+                {% for num in paginator_range %} 
+                    {% if best_posts.number == num %}
+                        <div class = "num3">{{ num }}</div> 
+                    {% else %}
+                        <!-- 수민님 a href를 빼면 css 잘 작동합니다. -->
+                        <a href="?best_page={{num}}">
                             <div class = "num4">{{ num }}</div>
-                        {% endif %}
+                        </a>
+                    {% endif %}
                 {% endfor %}
-                {% comment %} <span>{{posts.paginator.num_pages}}</span>  {% endcomment %}
                 {% if best_posts.has_next %}
                     <div class ="next">
                         <a href="?best_page={{best_posts.next_page_number}}"> 다음</a>

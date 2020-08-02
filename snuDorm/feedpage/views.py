@@ -111,18 +111,30 @@ def showBoard(request, board, category):
                 
         # 전체글 버튼
         feeds = feeds.order_by('-created_at')
-        paginator = Paginator(feeds, 5)
+        paginator = Paginator(feeds, 1)
         page = request.GET.get('page')
         posts = paginator.get_page(page)
 
         # 베스트 버튼 
         best_feeds = feeds.order_by('-like_users')
-        paginator2 = Paginator(best_feeds, 5)
-        best_page = request.GET.get('best_page')
+        paginator2 = Paginator(best_feeds, 1)
+        best_page = request.GET.get('best_page', 1)
         best_posts = paginator2.get_page(best_page)
+        
+        page_numbers_range = 10
+
+        max_index = len(paginator.page_range)
+        current_page = int(page) if page else 1
+        start_index = int((current_page - 1) / page_numbers_range) * page_numbers_range
+        end_index = start_index + page_numbers_range
+        
+        if end_index >= max_index:
+            end_index = max_index
+        paginator_range = paginator.page_range[start_index:end_index]
 
         return render(request, 'feedpage/show.html', {'posts':posts, 'best_posts': best_posts, 
-                            'board': board, 'category': category, 'board_name': board_info[2]})
+                            'board': board, 'category': category, 'board_name': board_info[2], 
+                            'paginator_range':paginator_range })
 
     elif request.method == 'POST':
         return redirect('showboard', board=board, category=category)
