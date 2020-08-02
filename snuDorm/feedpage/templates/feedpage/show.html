@@ -152,7 +152,7 @@
                 {% for num in posts.paginator.page_range %} 
                     {% comment %} {% if num - 5 > posts.number and num - 5 < posts.number  %} {% endcomment %}
                         {% if posts.number == num %}
-                            <div>{{ num }}</div> 
+                            <div class = "num1" >{{ num }}</div> 
                         {% else %}
                             <div class = "num2" >{{ num }}</div>
                         {% endif %}
@@ -275,7 +275,7 @@
                 {% endif %}
                 {% for num in best_posts.paginator.page_range %} 
                         {% if best_posts.number == num %}
-                            <div>{{ num }}</div> 
+                            <div class = "num3">{{ num }}</div> 
                         {% else %}
                             <div class = "num4">{{ num }}</div>
                         {% endif %}
