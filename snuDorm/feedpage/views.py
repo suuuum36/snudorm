@@ -112,7 +112,7 @@ def showBoard(request, board, category):
 
         # 베스트 버튼 
         best_feeds = feeds.order_by('-like_users')
-        paginator2 = Paginator(best_feeds, 11)
+        paginator2 = Paginator(best_feeds, 1)
         best_page = request.GET.get('best_page')
         best_posts = paginator2.get_page(best_page)
 
