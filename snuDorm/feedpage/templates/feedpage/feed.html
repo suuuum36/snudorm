@@ -60,6 +60,7 @@
         {% elif category == "rent" %}
             <div>
                 {{ feed.title }} </br>
+                목적 {{ feed.purpose.1 }} </br>
                 대여료 {{ feed.deposit }} </br>
                  {% if feed.start_date|date:"Y.m.d" == '2020.01.01' %}
                     시작일 미정 </br>
@@ -79,6 +80,7 @@
         {% elif category == "keep" %}
             <div>
                 {{ feed.title }} </br>
+                목적 {{ feed.purpose.1 }} </br>
                 보관료 {{ feed.reward }} </br>
                 {% if feed.start_date|date:"Y.m.d" == '2020.01.01' %}
                     시작일 미정 </br>
