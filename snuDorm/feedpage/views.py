@@ -102,7 +102,7 @@ def newFeed(request, board, category):
     now_date = datetime.now()
 
     if request.method == 'GET':
-        return render(request, 'feedpage/new.html', {'board': board, 'now_date': now_date,
+        return render(request, 'feedpage/new.html', {'board': board,
                     'category': category, 'board_name': board_info[2] })
 
     elif request.method == 'POST':

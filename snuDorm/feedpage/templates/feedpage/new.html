@@ -55,10 +55,9 @@
                 </div></br>
                 <div>
                     마감일</br>
-                    <input name="duedate" placeholder="{{now_date|date:"Y.m.d"}}" 
-                        onfocus="(this.type='date')" onblur="(this.type='text')" type="date" required>
+                    <input name="duedate" id="currentDate" type="date" required>
                     <div>
-                        <input name="uncertain" type="checkbox" id="uncertain" onclick="duedateCheck(this);">
+                        <input name="uncertain" type="checkbox" id="uncertain">
                         <label for="uncertain">미정</label>
                     </div></br>
                 </div></br>

@@ -22,13 +22,17 @@ function startCheck(stat) {
     }
 }
 
-function duedateCheck(stat) {
-    var duedate = document.getElementByName("duedate");
+document.getElementById('currentDate').value = new Date().toISOString().substring(0, 10);;
 
-    if(stat.checked) {
-        duedate.required = false;
-        duedate.value = null;
-    } else {
-        duedate.required = true;
-    }    
-}
+$('#uncertain').click(function() {
+    console.log('hello')
+    // .prop .attr 이용하여 수정 해보기
+    // if ($('#currentDate').hasAttr("required")) {
+    //     $("#currentDate").removeAttr('disabled');
+    //     $("#currentDate").attr('required', true);        
+    // }
+    // else
+        $("#currentDate").removeAttr('required');
+        $("#currentDate").attr('disabled', true);
+        
+})

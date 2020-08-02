@@ -7,5 +7,4 @@ function showNormalList() {
 function showBestList() {
     console.log('베스트 submitted');
     $('#show_normal_lists').attr("style", "display:none;");
-    $('#show_best_lists').removeAttr('style');
 }
