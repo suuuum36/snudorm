@@ -2,6 +2,7 @@
 * {
    margin:0;
    padding: 0;
+   font-family: 'Noto Sans KR', sans-serif;
 }
 
 input:focus {outline:none;}
@@ -46,6 +47,7 @@ a {text-decoration-line:none}
 
 .first-header-text a:hover {color: black !important;}
 
+/* 검색 */
 .search {
     width: 430px;
     border: 1px solid #b9b9b9;
@@ -61,10 +63,14 @@ a {text-decoration-line:none}
     margin-bottom: auto;
 }
 
-.search-content > select, input {
+.search-form {
     margin-top: auto;
     margin-bottom: auto;
+}
 
+.search-text {
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .search-option {
@@ -82,18 +88,25 @@ a {text-decoration-line:none}
 }
 
 /* 웹이 1180이하일때 */
-@media (max-width: 1180px) {
+/* @media (max-width: 1180px) {
     .search-text {
       display: none;               
     }
-}
+} */
 
 .search-img {
     height: 20px;
     width: auto;
 }
+
+.logout {
+    color: #7f7f7f !important;
+}
+
+.logout:hover {color: black !important;}
+
 .first-header-user {
-    width: 200px;
+    width: 220px;
     display: flex;
     justify-content: space-evenly;
 }
@@ -103,6 +116,13 @@ a {text-decoration-line:none}
     font-size: 15px;
     margin-top: auto;
     margin-bottom: auto;
+}
+
+/* 회원가입 */
+.login-signup {
+    width: 200px;
+    display: flex;
+    justify-content: space-evenly;
 }
 
 .signup {
@@ -120,8 +140,14 @@ a {text-decoration-line:none}
     margin-bottom: auto;
 }
 
-/* 카테고리 */
+.login {
+    color: #ffca00 ;
+    font-size: 15px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
 
+/* 카테고리 */
 .category-bar {
     visibility: hidden;
 }
@@ -129,7 +155,7 @@ a {text-decoration-line:none}
 .category {
     position: relative;
     width: 100%;
-    margin-top: 18px;
+    margin-top: 25px;
 }
 
 .minwon-category {
@@ -158,6 +184,7 @@ a {text-decoration-line:none}
 
 /* 동 카테고리 */
 .building {
+    height: 60px;
     position: relative;
     width: 100%;
 }
@@ -174,7 +201,32 @@ a {text-decoration-line:none}
 
 .building-1>a, .building-2>a, .building-3>a, .building-4>a {
     color: #7f7f7f;
-    font-size: 15px;
+    font-size: 16px;
     margin-top: auto;
     margin-bottom: auto;
 }
+
+
+/*상단바 아이콘 이미지로 넣을때 - 남겨놓기 */
+
+/* .profile-div {
+    height: 25px !important;
+}
+
+.profile {
+    height: 25px;
+    width: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.alarm-div {
+    height: 27px !important;
+}
+
+.alarm {
+    height: 27px;
+    width: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+} */
