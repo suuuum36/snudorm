@@ -1,0 +1,79 @@
+.form {
+  margin: 100px auto;
+  width: 400px;
+  height: 1000px; }
+  .form .logo {
+    width: 300px;
+    height: 150px;
+    margin: 0 auto; }
+    .form .logo img {
+      max-width: 100%;
+      height: auto; }
+  .form .input {
+    margin-top: 20px; }
+    .form .input .id-pw {
+      display: flex;
+      flex-direction: column;
+      color: #7f7f7f; }
+      .form .input .id-pw .id {
+        width: 400px;
+        height: 50px;
+        padding-left: 20px;
+        border: 1px solid #b9b9b9;
+        border-radius: 7px 7px 0 0;
+        font-weight: bold; }
+      .form .input .id-pw .pw {
+        width: 400px;
+        height: 50px;
+        padding-left: 20px;
+        margin-top: -1px;
+        border: 1px solid #b9b9b9;
+        border-radius: 0 0 7px 7px;
+        font-weight: bold; }
+    .form .input .id-pw:hover, .form .input .id-pw:focus {
+      box-shadow: 0 0 7px 0 #bfbfbf;
+      border-radius: 7px; }
+    .form .input button {
+      margin-top: 20px;
+      color: #7f7f7f;
+      background-color: #dfdfdf;
+      border-radius: 5px;
+      width: 400px;
+      height: 50px;
+      cursor: pointer;
+      font-weight: bold; }
+  .form .social {
+    margin-top: 60px;
+    width: 400px; }
+    .form .social .naver {
+      position: relative; }
+      .form .social .naver img {
+        max-width: 400px; }
+      .form .social .naver span {
+        position: absolute;
+        color: #ffffff;
+        font-weight: bold;
+        top: 40%;
+        left: 33%; }
+    .form .social .google {
+      position: relative;
+      margin-top: 5px; }
+      .form .social .google img {
+        max-width: 400px; }
+      .form .social .google span {
+        position: absolute;
+        color: #ffffff;
+        font-weight: bold;
+        top: 40%;
+        left: 33%; }
+  .form .find-signup {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    font-weight: bold; }
+    .form .find-signup .find {
+      margin-right: 20px; }
+    .form .find-signup .signup {
+      color: #3e3eff; }
+
+/*# sourceMappingURL=login.css.map */
