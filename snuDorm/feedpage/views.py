@@ -99,27 +99,23 @@ def showBoard(request, board, category):
 
         # 생활 게시판 보여주기
         elif board == "life":
-            life_category = category
-            if category == 'tori':
-                feeds = Life.objects.get(id=fid)
-                life_category = feeds.category 
-
-            feeds = CoBuy.objects.all() if life_category == "cobuy" else \
-                    (Rent.objects.all() if life_category == "rent" else
-                    (Keep.objects.all() if life_category == "keep" else
-                    Resell.objects.all()))
+            feeds = CoBuy.objects.all() if category == "cobuy" else \
+                    (Rent.objects.all() if category == "rent" else
+                    (Keep.objects.all() if category == "keep" else
+                    (Resell.objects.all() if category == "resell" else 
+                    (Life.objecst.all()))))
         else:
             feeds = Feed.objects.all()
                 
         # 전체글 버튼
         feeds = feeds.order_by('-created_at')
-        paginator = Paginator(feeds, 1)
+        paginator = Paginator(feeds, 5)
         page = request.GET.get('page')
         posts = paginator.get_page(page)
 
         # 베스트 버튼 
         best_feeds = feeds.order_by('-like_users')
-        paginator2 = Paginator(best_feeds, 1)
+        paginator2 = Paginator(best_feeds, 5)
         best_page = request.GET.get('best_page')
         best_posts = paginator2.get_page(best_page)
 
@@ -193,8 +189,9 @@ def newFeed(request, board, category):
             elif category == "resell":
                 purpose = Resell.OPTION[0][0] if request.POST['purpose'] == "sell" else Resell.OPTION[1][0]
                 price = request.POST['price']
+                status = STAT_OPTION[1][0]    
                 Resell.objects.create(title=title, content=content, photo=photo, noname=noname, purpose=purpose, 
-                                price=price, author=request.user, board=board, category=category,
+                                price=price, status=status, author=request.user, board=board, category=category,
                                 board_info1=board_info[0], board_info2=board_info[1])
 
     return redirect('showboard', board=board, category=category)
