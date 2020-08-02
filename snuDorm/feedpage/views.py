@@ -53,13 +53,17 @@ def showMain(request):
         # 동별게시판 = [ 주간게시글, 일간게시글 ] - 좋아요 기준 정렬
         dong_feeds = [ dong.filter(created_at__gte=week_ago).order_by('-like_users')[:5],
                         dong.filter(created_at__gte=yesterday).order_by('-like_users')[:5] ]
+
+        cobuy_feeds = CoBuy.objects.filter(created_at__gte=yesterday).order_by('-created_at')
+        keep_feeds = Keep.objects.filter(created_at__gte=yesterday).order_by('-created_at')
+        rent_feeds = Rent.objects.filter(created_at__gte=yesterday).order_by('-created_at')
+        resell_feeds = Resell.objects.filter(created_at__gte=yesterday).order_by('-created_at')
+
         # 생활게시판 - 시간 정렬
-        life_feeds = [ [CoBuy.objects.all().order_by('-created_at')[:5], CoBuy.objects.all().order_by('-created_at')[5:10]],
-                        [Keep.objects.all().order_by('-created_at')[:5], Keep.objects.all().order_by('-created_at')[5:10]],
-                        [Rent.objects.all().order_by('-created_at')[:5], Rent.objects.all().order_by('-created_at')[5:10]],
-                        [Resell.objects.all().order_by('-created_at')[:5], Resell.objects.all().order_by('-created_at')[5:10]]]
+        life_feeds = [ [cobuy_feeds[:5], cobuy_feeds[5:10]], [keep_feeds[:5], keep_feeds[5:10]],
+                        [rent_feeds[:5], rent_feeds[5:10]], [resell_feeds[:5], resell_feeds[5:10]] ]
         # 자유게시판 - 좋아요 정렬
-        free_feeds = FreeBoard.objects.all().order_by('-like_users')[:17]
+        free_feeds = FreeBoard.objects.filter(created_at__gte=yesterday).order_by('-like_users')[:17]
 
         return render(request, 'feedpage/index.html', {'gong_feeds': gong_feeds, 'dong_feeds': dong_feeds,
                                 'life_feeds': life_feeds,'free_feeds': free_feeds})
