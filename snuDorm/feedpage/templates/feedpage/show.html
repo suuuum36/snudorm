@@ -83,13 +83,13 @@
                                         {% elif board == "life" %}  
                                             <div>{{ feed.board_info2 }}</div>  <!-- 공구|대여|보관|중고 -->
                                             <div class = "life-status">
-                                                <div class = "status-text"> {{ feed.status }} </div> <!-- 진행중|판매중|마감 -->   
+                                                <div class = "status-text"> {{ feed.status.1 }} </div> <!-- 진행중|판매중|마감 -->   
                                             </div>      
                                         {% endif %}
                                     </div>
                                 {% elif board == "life" %} 
                                     <div class = "life-status">
-                                        <div class = "status-text"> {{ feed.status }} </div>
+                                        <div class = "status-text"> {{ feed.status.1 }} </div>
                                     </div>       
                                 {% endif %}
 
@@ -214,7 +214,7 @@
                                         {% elif board == 'life' %}  
                                             <div>{{ feed.board_info2 }}</div>  <!-- 공구|대여|보관|중고 -->
                                             <div class = "life-status">
-                                                <div class = "status-text"> {{ feed.status }} </div> <!-- 진행중|판매중|마감 -->   
+                                                <div class = "status-text"> {{ feed.status.1 }} </div> <!-- 진행중|판매중|마감 -->   
                                             </div>        
                                         {% endif %}
                                     </div>
