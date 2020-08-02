@@ -163,7 +163,7 @@ def newFeed(request, board, category):
 
             # rent 게시판 - (제목, 설명, 사진, 익명) + 목적, 대여료, 시작일(+ 미정), 마감일(+ 미정)
             elif category == "rent":
-                purpose = Rent.OPTION[0][0] if request.POST['purpose'] == 'borrow' else Rent.OPTION[1][0]
+                purpose = Rent.OPTION[0] if request.POST['purpose'] == 'borrow' else Rent.OPTION[1][0]
                 deposit = request.POST['deposit']
                 start_date = request.POST.get('start_date', '2020-01-01')
                 end_date = request.POST.get('duedate', '2020-01-01')
@@ -174,7 +174,7 @@ def newFeed(request, board, category):
 
             # keep 게시판 - (제목, 설명, 사진, 익명) + 목적, 보관료, 시작일(+ 미정), 마감일(+ 미정)
             elif category == "keep":
-                purpose = Keep.OPTION[0][0] if request.POST['purpose'] == 'keep' else Keep.OPTION[1][0]
+                purpose = Keep.OPTION[0] if request.POST['purpose'] == 'keep' else Keep.OPTION[1][0]
                 reward = request.POST['reward']
                 start_date = request.POST.get('start_date', '2020-01-01')
                 end_date = request.POST.get('duedate', '2020-01-01')
@@ -185,9 +185,9 @@ def newFeed(request, board, category):
 
             # resell 게시판 - (제목, 설명, 사진, 익명) + 목적, 가격
             elif category == "resell":
-                purpose = Resell.OPTION[0][0] if request.POST['purpose'] == "sell" else Resell.OPTION[1][0]
+                purpose = Resell.OPTION[0] if request.POST['purpose'] == "sell" else Resell.OPTION[1][0]
                 price = request.POST['price']
-                status = STAT_OPTION[1][0]    
+                status = STAT_OPTION[1]   
                 Resell.objects.create(title=title, content=content, photo=photo, noname=noname, purpose=purpose, 
                                 price=price, status=status, author=request.user, board=board, category=category,
                                 board_info1=board_info[0], board_info2=board_info[1])
@@ -264,8 +264,8 @@ def editFeed(request, board, category, fid):
         feed.noname = True if "noname" in request.POST else False
         
         if board == 'life':
-            feed.status = STAT_OPTION[0][0] if request.POST['status'] == '진행중' else \
-                    (STAT_OPTION[1][0] if request.POST['status'] == '판매중' else (STAT_OPTION[2][0]))
+            feed.status = STAT_OPTION[0] if request.POST['status'] == '진행중' else \
+                    (STAT_OPTION[1] if request.POST['status'] == '판매중' else (STAT_OPTION[2]))
 
             # cobuy 게시판 - (제목, 설명, 사진, 익명) + 가격, 링크, 마감일(+ 미정)
             if category == "cobuy":

@@ -22,7 +22,7 @@
             </div> 
         </div> 
         <div style="display:flex; align-items: right;">
-            <div> {{ feed.status }} </div>
+            <div> {{ feed.status.1 }} </div>
             <div>
                 {{ feed.like_users.count }} <a href="{% url 'likefeed' board category fid %}">좋아요</a>
             </div>
@@ -99,7 +99,7 @@
         {% elif category == "resell" %}
             <div>
                 {{ feed.title }} </br>
-                목적 {{ feed.purpose }} </br>
+                목적 {{ feed.purpose.1 }} </br>
                 가격 {{ feed.price }} </br>
                 {{ feed.content }} </br>
                 {% if feed.photo %} 
