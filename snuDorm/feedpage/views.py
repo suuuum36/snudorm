@@ -156,8 +156,9 @@ def newFeed(request, board, category):
                 price = request.POST['price']
                 url = request.POST['url']
                 duedate = request.POST.get('duedate', '2020-01-01')
+                status = STAT_OPTION[0]
                 CoBuy.objects.create(title=title, content=content, photo=photo, noname=noname,
-                                    price=price, url=url, duedate=duedate, 
+                                    price=price, url=url, duedate=duedate, status=status,
                                     author=request.user, board=board, category=category,
                                     board_info1=board_info[0], board_info2=board_info[1])
 
@@ -167,8 +168,9 @@ def newFeed(request, board, category):
                 deposit = request.POST['deposit']
                 start_date = request.POST.get('start_date', '2020-01-01')
                 end_date = request.POST.get('duedate', '2020-01-01')
+                status = STAT_OPTION[0]
                 Rent.objects.create(title=title, content=content, photo=photo, noname=noname, deposit=deposit, 
-                                    purpose=purpose, start_date=start_date, end_date=end_date, 
+                                    purpose=purpose, start_date=start_date, end_date=end_date, status=status,
                                     author=request.user, board=board, category=category,
                                     board_info1=board_info[0], board_info2=board_info[1])
 
@@ -178,8 +180,9 @@ def newFeed(request, board, category):
                 reward = request.POST['reward']
                 start_date = request.POST.get('start_date', '2020-01-01')
                 end_date = request.POST.get('duedate', '2020-01-01')
+                status = STAT_OPTION[0]
                 Keep.objects.create(title=title, content=content, photo=photo, noname=noname, purpose=purpose, 
-                                    reward=reward, start_date=start_date, end_date=end_date,
+                                    reward=reward, start_date=start_date, end_date=end_date, status=status,
                                     author=request.user, board=board, category=category, 
                                     board_info1=board_info[0], board_info2=board_info[1])
 
@@ -218,9 +221,9 @@ def showFeed(request, board, category, fid): # board, category 필요없음.
     elif board == "freeboard":
         feed = FreeBoard.objects.get(id=fid)
 
-    # if request.user.id != feed.author.id:
-    #     feed.views += 1     
-    #     feed.save()
+    if request.user.id != feed.author.id:
+        feed.views += 1     
+        feed.save()
 
     return render(request, 'feedpage/feed.html', {'feed': feed, 'board': board, 'fid':fid, 
                                         'category': category, 'board_name': board_info[2]})
