@@ -62,7 +62,8 @@ textarea:focus::-webkit-input-placeholder {
   border: 2px solid #b9b9b9;
   border-radius: 7px;
   padding-left: 20px;
-  font-weight: bold; }
+  font-weight: bold;
+  color: #b9b9b9; }
 
 .input-value:hover, .input-value:focus {
   box-shadow: 0 0 7px 0 #bfbfbf; }

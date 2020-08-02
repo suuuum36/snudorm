@@ -47,8 +47,8 @@
             <div>
                 {{ feed.title }} </br>
                 링크  <a href="{{feed.url}}"> {{ feed.url }}</a> </br>
-                {% if not feed.duedate %}
-                    미정
+                {% if feed.duedate|date:"Y.m.d" == '2020.01.01' %}
+                    마감일 미정</br>
                 {% else %}
                     마감일 {{ feed.duedate|date:"Y.m.d" }} </br>
                 {% endif %}
@@ -61,13 +61,13 @@
             <div>
                 {{ feed.title }} </br>
                 대여료 {{ feed.deposit }} </br>
-                 {% if not feed.start_date %}
-                    미정
+                 {% if feed.start_date|date:"Y.m.d" == '2020.01.01' %}
+                    시작일 미정 </br>
                 {% else %}
                     시작일 {{ feed.start_date|date:"Y.m.d" }} </br>
                 {% endif %}
-                {% if not feed.end_date %}
-                    미정
+                {% if feed.end_date|date:"Y.m.d" == '2020.01.01' %}
+                    마감일 미정</br>
                 {% else %}
                     마감일 {{ feed.end_date|date:"Y.m.d" }} </br>
                 {% endif %}
@@ -80,13 +80,13 @@
             <div>
                 {{ feed.title }} </br>
                 보관료 {{ feed.reward }} </br>
-                {% if not feed.stat_date %}
-                    미정
+                {% if feed.start_date|date:"Y.m.d" == '2020.01.01' %}
+                    시작일 미정 </br>
                 {% else %}
                     시작일 {{ feed.start_date|date:"Y.m.d" }} </br>
                 {% endif %}
-                {% if not feed.end_date %}
-                    미정
+                {% if feed.end_date|date:"Y.m.d" == '2020.01.01' %}
+                    마감일 미정</br>
                 {% else %}
                     마감일 {{ feed.end_date|date:"Y.m.d" }} </br>
                 {% endif %}

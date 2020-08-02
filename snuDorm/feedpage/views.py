@@ -34,11 +34,9 @@ def get_board(board, category):
 # 기본 PAGE
 def showMain(request):
     if request.method == 'GET':
-        today = datetime.now()
-        today.strftime('%Y-%m-%d')
-        yesterday = datetime.now()
+        yesterday = datetime.now()-timedelta(days=1)
         yesterday.strftime('%Y-%m-%d')
-        tomorrow = datetime.now()-timedelta(days=1)
+        tomorrow = datetime.now()+timedelta(days=1)
         tomorrow.strftime('%Y-%m-%d')
         week_ago = datetime.now()-timedelta(weeks=1)
         week_ago.strftime('%Y-%m-%d') 
@@ -50,11 +48,11 @@ def showMain(request):
         dong = Minwon.objects.filter(board_info1="학부", board_info2="906동")
 
         # 전체게시판 = [ 주간게시글, 일간게시글 ] - 좋아요 기준 정렬
-        gong_feeds = [ Minwon.objects.filter(category='gong', created_at__range=(week_ago, today)).order_by('-like_users')[:5],
-                        Minwon.objects.filter(category='gong', created_at=today).order_by('-like_users')[:5] ]
+        gong_feeds = [ Minwon.objects.filter(category='gong', created_at__gte=week_ago).order_by('-like_users')[:5],
+                        Minwon.objects.filter(category='gong', created_at__gte=yesterday).order_by('-like_users')[:5] ]
         # 동별게시판 = [ 주간게시글, 일간게시글 ] - 좋아요 기준 정렬
-        dong_feeds = [ dong.filter(created_at__range=(week_ago, today)).order_by('-like_users')[:5],
-                        dong.filter(created_at=today).order_by('-like_users')[:5] ]
+        dong_feeds = [ dong.filter(created_at__gte=week_ago).order_by('-like_users')[:5],
+                        dong.filter(created_at__gte=yesterday).order_by('-like_users')[:5] ]
         # 생활게시판 - 시간 정렬
         life_feeds = [ [CoBuy.objects.all().order_by('-created_at')[:5], CoBuy.objects.all().order_by('-created_at')[5:10]],
                         [Keep.objects.all().order_by('-created_at')[:5], Keep.objects.all().order_by('-created_at')[5:10]],
@@ -132,7 +130,7 @@ def newFeed(request, board, category):
     now_date = datetime.now()
 
     if request.method == 'GET':
-        return render(request, 'feedpage/new.html', {'board': board, 'now_date': now_date,
+        return render(request, 'feedpage/new.html', {'board': board,
                     'category': category, 'board_name': board_info[2] })
 
     elif request.method == 'POST':
@@ -157,7 +155,7 @@ def newFeed(request, board, category):
             if category == "cobuy":
                 price = request.POST['price']
                 url = request.POST['url']
-                duedate = request.POST['duedate']
+                duedate = request.POST.get('duedate', '2020-01-01')
                 CoBuy.objects.create(title=title, content=content, photo=photo, noname=noname,
                                     price=price, url=url, duedate=duedate, 
                                     author=request.user, board=board, category=category,
@@ -167,8 +165,8 @@ def newFeed(request, board, category):
             elif category == "rent":
                 purpose = Rent.OPTION[0] if request.POST['purpose'] == 'borrow' else Rent.OPTION[1][0]
                 deposit = request.POST['deposit']
-                start_date = request.POST['start_date']
-                end_date = request.POST['duedate']
+                start_date = request.POST.get('start_date', '2020-01-01')
+                end_date = request.POST.get('duedate', '2020-01-01')
                 Rent.objects.create(title=title, content=content, photo=photo, noname=noname, deposit=deposit, 
                                     purpose=purpose, start_date=start_date, end_date=end_date, 
                                     author=request.user, board=board, category=category,
@@ -178,8 +176,8 @@ def newFeed(request, board, category):
             elif category == "keep":
                 purpose = Keep.OPTION[0] if request.POST['purpose'] == 'keep' else Keep.OPTION[1][0]
                 reward = request.POST['reward']
-                start_date = request.POST['start_date']
-                end_date = request.POST['duedate']
+                start_date = request.POST.get('start_date', '2020-01-01')
+                end_date = request.POST.get('duedate', '2020-01-01')
                 Keep.objects.create(title=title, content=content, photo=photo, noname=noname, purpose=purpose, 
                                     reward=reward, start_date=start_date, end_date=end_date,
                                     author=request.user, board=board, category=category, 
