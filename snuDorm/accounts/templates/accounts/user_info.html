@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div>
-        <a href="{% url 'userinfo' user.id %}">내 정보</a>
-        <a href="{% url 'useredit' user.id %}">개인정보 변경</a>
-        <a href="{% url 'usernotice' user.id %}">게시글 알림</a>
-        <a href="{% url 'messagebox' user.id %}">쪽지함</a>
+<div class="form">
+    <div class="nav">
+        <div class="nav-title"><span>마이페이지</span></div>
+        <div class="nav-list"><a href="{% url 'userinfo' user.id %}">내 정보</a></div>
+        <div class="nav-list"><a href="{% url 'useredit' user.id %}">개인정보 변경</a></div>
+        <div class="nav-list"><a href="{% url 'passwordedit' user.id %}">비밀번호 변경</a></div>
+        <div class="nav-list"><a href="{% url 'usernotice' user.id %}">게시글 알림</a></div>
+        <div class="nav-list"><a href="{% url 'messagebox' user.id %}">쪽지함</a></div>
     </div>
 
     <div class="info">
@@ -14,11 +17,11 @@
         닉네임 : {{ user.profile.nickname }}</br>
         이메일 : {{ user.email }} @ snu.ac.kr</br>
         기숙사 동 : {{ user.profile.building_category }} {{ user.profile.building_dong}}동</br>
-        <a href="{%url 'useredit' user.id %}" style="margin-right: 10px;">
+        <a href="{% url 'useredit' user.id %}" style="margin-right: 10px;">
             <button>내 정보 수정하기</button>
         </a>
     </div> 
-    
+</div>
     
 
 {% endblock content %}
