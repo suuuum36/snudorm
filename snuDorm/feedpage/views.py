@@ -106,13 +106,13 @@ def showBoard(request, board, category):
                 
         # 전체글 버튼
         feeds = feeds.order_by('-created_at')
-        paginator = Paginator(feeds, 1)
+        paginator = Paginator(feeds, 11)
         page = request.GET.get('page')
         posts = paginator.get_page(page)
 
         # 베스트 버튼 
         best_feeds = feeds.order_by('-like_users')
-        paginator2 = Paginator(best_feeds, 1)
+        paginator2 = Paginator(best_feeds, 11)
         best_page = request.GET.get('best_page')
         best_posts = paginator2.get_page(best_page)
 
