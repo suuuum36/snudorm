@@ -1,35 +1,84 @@
-{% extends 'base.html' %}
-{% block content %}
-    <div class="info">
-        <div>회원가입</div>
-        {{ error }}<br>
+<!-- TODO: 중복확인 버튼 작동 구현 -->
+
+{% load static%}
+{% load sass_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>도미토리</title>
+    <link rel="stylesheet" href="{% sass_src 'accounts/css/signup.scss' %}" type="text/css">
+    <link rel="stylesheet" href="{% sass_src 'accounts/css/reset.scss' %}" type="text/css">
+    <!-- <script src="http://code.jquery.com/jquery-latest.js"></script> -->
+</head>
+<body>
+    <div class="form">
+        <div class="headline">
+            <a href="{% url 'signup' %}">
+                <img src="{% static 'accounts/img/logo-img.png' %}" alt="로고">
+                <span>회원가입</span>
+            </a>            
+        </div>
         <form method="POST" action="{% url 'signup' %}">
             {% csrf_token %}
-            <div>   
-                사용자 이름</br>
-                <input name="username" type="text" required>
-            </div></br>
-            <div>   
-                닉네임</br>
-                <input name="nickname" type="text" required>
-            </div></br>
+            <div class="name-input">   
+                <span class="head">이름</span>
+                <input class="input-value long" name="name" type="text" placeholder="이름" required>
+            </div>
+            <div class="id-input">
+                <span class="head">아이디</span>
+                <span class="description">5자 이상의 아이디를 입력해 주세요.</span>
+                <input class="input-value long" name="user_id" type="text" placeholder="아이디 (5자 이상)" minlength="5" required>
+                <button class="db-check" type="button">중복확인</button>
+                <div class="available-1 check-confirm">
+                    <span>사용가능</span>
+                </div>
+            </div>
+            <div class="pw-input">
+                <span class="head">비밀번호</span>
+                <span class="description">영어, 숫자, 특수문자가 포함된 8자 이상의 비밀번호를 입력해주세요.</span>
+                <input class="input-value long" name="password" type="password" placeholder="비밀번호" required>
+            </div>
+            <div class="pw2-input">
+                <span class="head">비밀번호 확인</span>
+                <input class="input-value long" name="confirm_password" type="password" placeholder="비밀번호 확인" required>
+            </div>
+            <div class="nickname-input">
+                <span class="head">닉네임</span>
+                <span class="description">다른 유저와 겹치지 않는 닉네임을 입력해 주세요. (2-8자)</span>
+                <input class="input-value long" name="nickname" type="text" placeholder="닉네임 (2-8자)" minlength="2" maxlength="8" required>
+                <button class="db-check" type="button">중복확인</button>
+                <div class="available-2 check-confirm">
+                    <span>사용가능</span>
+                </div>
+            </div>
+            <div class="email-input">
+                <span class="head">이메일</span> 
+                <input class="input-value short" name="email" type="text" placeholder="이메일" required><span> @ snu.ac.kr</span>
+            </div>
             <div>
-                비밀번호</br>
-                <input name="password1" type="password" required>
-            </div></br>
-            <div>
-                비밀번호 확인</br>
-                <input name="password2" type="password" required>
-            </div></br>
-            <div>
-                이메일</br>
-                <input name="email" type="text" required>
-            </div></br>
-            <div>
-                기숙사 동</br>
-                <input name="building" type="text" required>
-            </div></br>
-            <button type="submit">Sign Up</button>
+                <span class="head">기숙사 동</span>
+                <div class="dorm-input">
+                    <div class="category-input">                    
+                        <select class="category-option" name="building_category" onchange="categoryChange(this)">
+                            <option value="default" disabled selected hidden>생활관</option>
+                            <option value="bachelor">학부생활관</option>
+                            <option value="master">대학원생활관</option>
+                            <option value="family">가족생활관</option>
+                            <option value="bk">BK생활관</option>
+                        </select>
+                    </div>
+                    <div class="dong-input">
+                        <select id="dong-option" name="building_dong">
+                            <option value="default" disabled selected hidden>동</option>
+                            <option value="fail" disabled>생활관을 선택해주세요</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <button class="signup" type="submit">회원가입</button>
         </form>
     </div>
-{% endblock content %}
+    <script src="{% static 'accounts/js/signup.js' %}"></script>
+</body>
+</html>

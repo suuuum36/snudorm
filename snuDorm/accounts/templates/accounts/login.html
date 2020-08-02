@@ -1,20 +1,69 @@
-{% extends 'base.html' %}
-{% block content %}
-    <div class="info" style="margin:50px">
-        <div>
-            <span>로그인</span>
+{% load static %}
+{% load sass_tags %}
+<!-- social login/signup
+{% load socialaccount %}
+{% providers_media_js %} -->
+
+<!--
+    TODO:
+    1) 로그인 이후 이전 페이지로 돌아가기 구현
+    2) 소셜 로그인 주석처리 해제
+    3) 아이디/비밀번호 찾기 구현
+ -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>도미토리</title>
+    <link rel="stylesheet" href="{% sass_src 'accounts/css/login.scss' %}" type="text/css">
+    <link rel="stylesheet" href="{% sass_src 'accounts/css/reset.scss' %}" type="text/css">
+</head>
+<body>
+    <div class="form">
+        <div class="logo">
+            <a href="{% url 'showmain' %}">
+                <img src="{% static 'accounts/img/main-logo.png' %}" alt="메인 로고">
+            </a>
         </div>
-        <form method="post" action="{% url 'login' %}">
-            {% csrf_token %}
-            <div>
-                 <label for="username">사용자 이름</label>
-                <input name="username" type="text" id="username" required>
-            </div></br>
-            <div>
-                <label for="password">비밀번호</label>
-                <input name="password" type="password" id="password" required>
-            </div></br>
-            <button type="submit">로그인</button>
-        </form>
+        <div class="input">
+            <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                <div class="id-pw">
+                    <div>
+                        <input class="id" name="user_id" type="text" id="user_id" placeholder="아이디" required>
+                    </div>
+                    <div>
+                        <input class="pw" name="password" type="password" id="password" placeholder="비밀번호" required>
+                    </div>
+                </div>
+                <button type="submit">로그인</button>
+                <!-- TODO: 로그인 이후 이전 페이지로 돌아가기
+                <input type="hidden" name="next" value="{{ next }}">  -->
+            </form>
+        </div>
+        <div class="social">
+            <div class="naver">
+                <a href="#">
+                    <img src="{% static 'accounts/img/naver-login_1.png' %}" alt="">
+                    <span>네이버로 로그인/회원가입</span>
+                </a>
+            </div>
+            <div class="google">
+                <a href="#">
+                    <img src="{% static 'accounts/img/google-login_1.png' %}" alt="">
+                    <span>구글로 로그인/회원가입</span>
+                </a>
+            </div>
+            <!-- TODO: 소셜 로그인 주석처리 해제
+            <a href="{% provider_login_url 'naver' %}">네이버로 로그인/회원가입</a>
+            <a href="{% provider_login_url 'google'%}">구글로 로그인/회원가입</a> -->
+        </div>
+        <div class="find-signup">
+            <!-- TODO: 아이디/비밀번호 찾기 구현 -->
+            <a class="find" href="#">아이디/비밀번호 찾기</a>
+            <a class="signup" href="{% url 'signup' %}">회원가입</a>
+        </div>
     </div>
-{% endblock content %}
+</body>
+</html>

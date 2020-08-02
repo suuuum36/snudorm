@@ -1,16 +1,232 @@
 /* 전체 적용 css */
 * {
-   
+   margin:0;
+   padding: 0;
+   font-family: 'Noto Sans KR', sans-serif;
 }
 
-header {
-    position: fixed;
-    margin: 0 auto;
-    padding: 10px;
-    height: 10%;
+input:focus {outline:none;}
+select:focus {outline:none;}
+a {text-decoration-line:none}
+
+
+.first-header {
+    height: 40px;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 50px;
+}
+.first-header-inner {
+    width: 95%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.logo {
+    height: 100%;
+}
+
+.logo img {
+    height: 100%;
+    width: auto;
+}
+
+.first-header-text {
+    width: 450px;
+    display: flex;
+    justify-content: space-around;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.first-header-text > a {
+    font-size: 17px;
+    color: #7f7f7f;
+}
+
+.first-header-text a:hover {color: black !important;}
+
+/* 검색 */
+.search {
+    width: 430px;
+    border: 1px solid #b9b9b9;
+    border-radius: 7px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 19px;
+    color: #7f7f7f;
+}
+
+.search-content {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.search-form {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.search-text {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.search-option {
+    font-size: 15px;
+    border: 0px solid;
+    margin-right: 22px;
+    margin-left: 12px;
+}
+
+.search-text {
+    font-size: 15px;
+    border: 0px solid;
+    color: black;
+    margin-right: 5px;
+}
+
+/* 웹이 1180이하일때 */
+/* @media (max-width: 1180px) {
+    .search-text {
+      display: none;               
+    }
+} */
+
+.search-img {
+    height: 20px;
+    width: auto;
+}
+
+.logout {
+    color: #7f7f7f !important;
+}
+
+.logout:hover {color: black !important;}
+
+.first-header-user {
+    width: 220px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.first-header-user > a {
+    color: #ffca00 ;
+    font-size: 15px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+/* 회원가입 */
+.login-signup {
+    width: 200px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.signup {
+    width: 80px;
+    background-color: #ffca00;
+    border-radius: 7px;
+    display: flex;
+    justify-content: center;
+}
+
+.signup > a {
+    font-size: 15px;
+    color: white;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.login {
+    color: #ffca00 ;
+    font-size: 15px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+/* 카테고리 */
+.category-bar {
+    visibility: hidden;
+}
+
+.category {
+    position: relative;
+    width: 100%;
+    margin-top: 25px;
+}
+
+.minwon-category {
+    height: 65px;
+    background-color: #f2f2f2;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.life-category {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 65px;
+    background-color: #f2f2f2;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.minwon-category > a, .life-category > a {
+    color: #7f7f7f;
+    font-size: 16px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+/* 동 카테고리 */
+.building {
+    height: 60px;
+    position: relative;
     width: 100%;
 }
 
-.info {
-    margin: 100px;
+.building-1, .building-2, .building-3, .building-4 {
+    width: 100%;
+    height: 60px;
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: space-evenly;
+    border-bottom : 1px solid #b9b9b9;
 }
+
+.building-1>a, .building-2>a, .building-3>a, .building-4>a {
+    color: #7f7f7f;
+    font-size: 16px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+
+/*상단바 아이콘 이미지로 넣을때 - 남겨놓기 */
+
+/* .profile-div {
+    height: 25px !important;
+}
+
+.profile {
+    height: 25px;
+    width: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.alarm-div {
+    height: 27px !important;
+}
+
+.alarm {
+    height: 27px;
+    width: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+} */

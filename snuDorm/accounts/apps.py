@@ -1,5 +1,9 @@
 from django.apps import AppConfig
+from django.utils.translation import ugettext_lazy as _
 
+class ProfilesConfig(AppConfig):
+    name = 'accounts'
+    verbose_name = _('account')
 
-class AccountConfig(AppConfig):
-    name = 'account'
+    def ready(self):
+        import accounts.signals

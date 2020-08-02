@@ -22,17 +22,34 @@ function startCheck(stat) {
     }
 }
 
-document.getElementById('currentDate').value = new Date().toISOString().substring(0, 10);;
+$('#startDate').val(new Date().toISOString().substring(0, 10));
 
-$('#uncertain').click(function() {
-    console.log('hello')
-    // .prop .attr 이용하여 수정 해보기
-    // if ($('#currentDate').hasAttr("required")) {
-    //     $("#currentDate").removeAttr('disabled');
-    //     $("#currentDate").attr('required', true);        
-    // }
-    // else
-        $("#currentDate").removeAttr('required');
-        $("#currentDate").attr('disabled', true);
-        
+$(document).on('click', '#uncertain1', ()=> {
+    if($('#startDate').attr("required")) {
+        $("#startDate").removeAttr('required');
+        $("#startDate").attr('disabled', true);
+        console.log('hello')
+    } else {
+        $("#startDate").removeAttr('disabled');
+        $("#startDate").attr('required', true);   
+        console.log('bye')
+    }     
 })
+
+
+$('#dueDate').val(new Date().toISOString().substring(0, 10));
+
+$(document).on('click', '#uncertain2', ()=> {
+    if($('#dueDate').attr("required")) {
+        $("#dueDate").removeAttr('required');
+        $("#dueDate").attr('disabled', true);
+        console.log('hello')
+    } else {
+        $("#dueDate").removeAttr('disabled');
+        $("#dueDate").attr('required', true);   
+        console.log('bye')
+    }     
+})
+
+
+
