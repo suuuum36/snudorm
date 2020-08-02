@@ -13,7 +13,6 @@ BestButton.addEventListener('click', () => {
     BestList.style.visibility = 'visible'
     AllList.style.visibility = 'hidden'
     AllButton.style.fontWeight = '400';
-    BestButton.style.fontWeight = '500';
     BestButton.style.color = 'black';
     AllButton.style.color = '#7f7f7f';
 })
