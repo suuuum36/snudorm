@@ -10,9 +10,8 @@
     <div class = "title-div">
         <div class = "title-text" >{{ board_name }} 게시판 </div>
         <div>
-            <a id="not_best" href="{% url 'showboard' board category %}">전체글
+            <a id="not_best" href="{% url 'showboard' board category %}">전체글</a>
         </div>
-        </a>
         <div id="best" style="color:#7f7f7f;">베스트</div>
 
             <!-- 전체글을 보는 게시판은 글쓰기 불가능하게! -->
@@ -83,13 +82,13 @@
                                         {% elif board == "life" %}  
                                             <div>{{ feed.board_info2 }}</div>  <!-- 공구|대여|보관|중고 -->
                                             <div class = "life-status">
-                                                <div class = "status-text"> {{ feed.status }} </div> <!-- 진행중|판매중|마감 -->   
+                                                <div class = "status-text"> {{ feed.status.1 }} </div> <!-- 진행중|판매중|마감 -->   
                                             </div>      
                                         {% endif %}
                                     </div>
                                 {% elif board == "life" %} 
                                     <div class = "life-status">
-                                        <div class = "status-text"> {{ feed.status }} </div>
+                                        <div class = "status-text"> {{ feed.status.1 }} </div>
                                     </div>       
                                 {% endif %}
 
@@ -126,7 +125,7 @@
                                 <option value="default">선택</option>
                                 <option value="title">제목</option>
                                 <option value="content">내용</option>
-                                <option value="title-and-content">재목+내용</option>
+                                <option value="title-and-content">제목+내용</option>
                             </select>
                             <input type="text" class = "search-text" size ="30" placeholder = "검색어를 입력하세요.">
                         </div>
@@ -149,16 +148,16 @@
                         <a href="?page={{posts.previous_page_number}}"> 이전 </a>
                     </div> 
                 {% endif %}
-                {% for num in posts.paginator.page_range %} 
-                    {% comment %} {% if num - 5 > posts.number and num - 5 < posts.number  %} {% endcomment %}
-                        {% if posts.number == num %}
-                            <div class = "num1" >{{ num }}</div> 
-                        {% else %}
+                {% for num in paginator_range %} 
+                    {% if posts.number == num %}
+                        <div class = "num1" >{{ num }}</div> 
+                    {% else %}
+                        <!-- 수민님 a href를 빼면 css 잘 작동합니다. -->
+                        <a href="?best_page={{num}}">
                             <div class = "num2" >{{ num }}</div>
-                        {% endif %}
-                    {% comment %} {% endif %} {% endcomment %}
+                        </a>
+                    {% endif %}
                 {% endfor %}
-                {% comment %} <span>{{posts.paginator.num_pages}}</span>  {% endcomment %}
                 {% if posts.has_next %}
                     <div class = "next">
                         <a href="?page={{posts.next_page_number}}"> 다음</a> 
@@ -214,10 +213,14 @@
                                         {% elif board == 'life' %}  
                                             <div>{{ feed.board_info2 }}</div>  <!-- 공구|대여|보관|중고 -->
                                             <div class = "life-status">
-                                                <div class = "status-text"> {{ feed.status }} </div> <!-- 진행중|판매중|마감 -->   
+                                                <div class = "status-text"> {{ feed.status.1 }} </div> <!-- 진행중|판매중|마감 -->   
                                             </div>        
                                         {% endif %}
                                     </div>
+                                {% elif board == "life" %} 
+                                    <div class = "life-status">
+                                        <div class = "status-text"> {{ feed.status.1 }} </div>
+                                    </div>       
                                 {% endif %}
 
                                 <div class = "feed-p">
@@ -273,14 +276,16 @@
                         <a href="?best_page={{best_posts.previous_page_number}}">이전</a> 
                     </div>
                 {% endif %}
-                {% for num in best_posts.paginator.page_range %} 
-                        {% if best_posts.number == num %}
-                            <div class = "num3">{{ num }}</div> 
-                        {% else %}
+                {% for num in paginator_range %} 
+                    {% if best_posts.number == num %}
+                        <div class = "num3">{{ num }}</div> 
+                    {% else %}
+                        <!-- 수민님 a href를 빼면 css 잘 작동합니다. -->
+                        <a href="?best_page={{num}}">
                             <div class = "num4">{{ num }}</div>
-                        {% endif %}
+                        </a>
+                    {% endif %}
                 {% endfor %}
-                {% comment %} <span>{{posts.paginator.num_pages}}</span>  {% endcomment %}
                 {% if best_posts.has_next %}
                     <div class ="next">
                         <a href="?best_page={{best_posts.next_page_number}}"> 다음</a>

@@ -22,7 +22,7 @@
             </div> 
         </div> 
         <div style="display:flex; align-items: right;">
-            <div> {{ feed.status }} </div>
+            <div> {{ feed.status.1 }} </div>
             <div>
                 {{ feed.like_users.count }} <a href="{% url 'likefeed' board category fid %}">좋아요</a>
             </div>
@@ -38,73 +38,75 @@
         <div>
             {{ feed.title }} </br>
             {{ feed.content }} </br>
-            {% if feed.photo %}
-                {{ feed.photo }} </br>
-            {% endif %}
+            {% if feed.photo %} 
+                <img src="{{ feed.photo.url }}" alt="" width:"30%" height="20%">
+            {% endif %} <br/>
         </div>
     {% elif board == "life" %}
         {% if category == "cobuy" %}
             <div>
                 {{ feed.title }} </br>
                 링크  <a href="{{feed.url}}"> {{ feed.url }}</a> </br>
-                {% if not feed.duedate %}
-                    미정
+                {% if feed.duedate|date:"Y.m.d" == '2020.01.01' %}
+                    마감일 미정</br>
                 {% else %}
                     마감일 {{ feed.duedate|date:"Y.m.d" }} </br>
                 {% endif %}
                 {{ feed.content }} </br>
-                {% if feed.photo %}
-                    {{ feed.photo }} </br>
-                {% endif %}
+                {% if feed.photo %} 
+                    <img src="{{ feed.photo.url }}" alt="" width:"30%" height="20%">
+                {% endif %} <br/>
             </div>
         {% elif category == "rent" %}
             <div>
                 {{ feed.title }} </br>
+                목적 {{ feed.purpose.1 }} </br>
                 대여료 {{ feed.deposit }} </br>
-                 {% if not feed.start_date %}
-                    미정
+                 {% if feed.start_date|date:"Y.m.d" == '2020.01.01' %}
+                    시작일 미정 </br>
                 {% else %}
                     시작일 {{ feed.start_date|date:"Y.m.d" }} </br>
                 {% endif %}
-                {% if not feed.end_date %}
-                    미정
+                {% if feed.end_date|date:"Y.m.d" == '2020.01.01' %}
+                    마감일 미정</br>
                 {% else %}
                     마감일 {{ feed.end_date|date:"Y.m.d" }} </br>
                 {% endif %}
                 {{ feed.content }} </br>
-                {% if feed.photo %}
-                    {{ feed.photo }} </br>
-                {% endif %}            
+                {% if feed.photo %} 
+                    <img src="{{ feed.photo.url }}" alt="" width:"30%" height="20%">
+                {% endif %} <br/>     
             </div>
         {% elif category == "keep" %}
             <div>
                 {{ feed.title }} </br>
+                목적 {{ feed.purpose.1 }} </br>
                 보관료 {{ feed.reward }} </br>
-                {% if not feed.stat_date %}
-                    미정
+                {% if feed.start_date|date:"Y.m.d" == '2020.01.01' %}
+                    시작일 미정 </br>
                 {% else %}
                     시작일 {{ feed.start_date|date:"Y.m.d" }} </br>
                 {% endif %}
-                {% if not feed.end_date %}
-                    미정
+                {% if feed.end_date|date:"Y.m.d" == '2020.01.01' %}
+                    마감일 미정</br>
                 {% else %}
                     마감일 {{ feed.end_date|date:"Y.m.d" }} </br>
                 {% endif %}
                 {{ endif }}
                 {{ feed.content }} </br>
-                {% if feed.photo %}
-                    {{ feed.photo }} </br>
-                {% endif %}  
+                {% if feed.photo %} 
+                    <img src="{{ feed.photo.url }}" alt="" width:"30%" height="20%">
+                {% endif %} <br/>
             </div>  
         {% elif category == "resell" %}
             <div>
                 {{ feed.title }} </br>
-                목적 {{ feed.purpose }} </br>
+                목적 {{ feed.purpose.1 }} </br>
                 가격 {{ feed.price }} </br>
                 {{ feed.content }} </br>
-                {% if feed.photo %}
-                    {{ feed.photo }} </br>
-                {% endif %} 
+                {% if feed.photo %} 
+                    <img src="{{ feed.photo.url }}" alt="" width:"30%" height="20%">
+                {% endif %} <br/>
             </div>
         {% endif %}
     {% endif %}

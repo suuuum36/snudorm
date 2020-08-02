@@ -10,7 +10,7 @@
         {% if board == 'minwon' or board == 'freeboard' %}
         <!-- Minwon, freeboard 게시판 -->
         <div class="minwon_or_free_new">
-            <form method="POST" action="{% url 'newfeed' board category %}">
+            <form method="POST" enctype="multipart/form-data" action="{% url 'newfeed' board category %}">
                 {% csrf_token %}
                 <div>
                     제목</br>
@@ -36,7 +36,7 @@
         {% elif category == 'cobuy' %}
         <!-- Cobuy 공구 게시판 -->
         <div class="cobuy_board_new">
-            <form method="POST" action="{% url 'newfeed' 'life' 'cobuy' %}">
+            <form method="POST" enctype="multipart/form-data" action="{% url 'newfeed' 'life' 'cobuy' %}">
                 {% csrf_token %}
                 <div>
                     제목 </br>
@@ -55,11 +55,10 @@
                 </div></br>
                 <div>
                     마감일</br>
-                    <input name="duedate" placeholder="{{now_date|date:"Y.m.d"}}" 
-                        onfocus="(this.type='date')" onblur="(this.type='text')" type="date" required>
+                    <input name="duedate" id="dueDate" type="date" required>
                     <div>
-                        <input name="uncertain" type="checkbox" id="uncertain" onclick="duedateCheck(this);">
-                        <label for="uncertain">미정</label>
+                        <input name="uncertain" type="checkbox" id="uncertain2">
+                        <label for="uncertain2">미정</label>
                     </div></br>
                 </div></br>
                 <div>
@@ -81,7 +80,7 @@
         {% elif category == 'rent' %}
         <!-- Rent 게시판 -->
         <div class="rent_board_new"> 
-            <form method="POST" action="{% url 'newfeed' 'life' 'rent' %}">
+            <form method="POST" enctype="multipart/form-data" action="{% url 'newfeed' 'life' 'rent' %}">
                 {% csrf_token %}
                 <div>
                     제목 </br>
@@ -102,18 +101,18 @@
                 </div></br>
                 <div style="display:flex;">
                     시작일</br>
-                    <input name="start_date" type="date" required>
+                    <input name="start_date" id="startDate" type="date" required>
                     <div >
-                        <input name="uncertain" type="checkbox" id="uncertain" onclick="startCheck(this);">
-                        <label for="uncertain">미정</label>
+                        <input name="uncertain" type="checkbox" id="uncertain1" onclick="startCheck(this);">
+                        <label for="uncertain1">미정</label>
                     </div></br>
                 </div></br>
                 <div style="display:flex;">
                     마감일</br>
-                    <input name="duedate" type="date" required>
+                    <input name="duedate" id="dueDate" type="date" required>
                     <div>
-                        <input name="uncertain" type="checkbox" id="uncertain" onclick="duedateCheck(this);">
-                        <label for="uncertain">미정</label>
+                        <input name="uncertain" type="checkbox" id="uncertain2" onclick="duedateCheck(this);">
+                        <label for="uncertain2">미정</label>
                     </div></br>
                 </div></br>
                 <div>
@@ -156,18 +155,18 @@
                 </div></br>
                  <div style="display:flex;">
                     시작일</br>
-                    <input name="start_date" type="date" required>
+                    <input name="start_date" id="startDate" type="date" required>
                     <div >
-                        <input name="uncertain" type="checkbox" id="uncertain" onclick="startCheck(this);">
-                        <label for="uncertain">미정</label>
+                        <input name="uncertain" type="checkbox" id="uncertain1" onclick="startCheck(this);">
+                        <label for="uncertain1">미정</label>
                     </div></br>
                 </div></br>
                 <div style="display:flex;">
                     마감일</br>
-                    <input name="duedate" type="date" required>
+                    <input name="duedate" id="dueDate" type="date" required>
                     <div>
-                        <input name="uncertain" type="checkbox" id="uncertain" onclick="duedateCheck(this);">
-                        <label for="uncertain">미정</label>
+                        <input name="uncertain" type="checkbox" id="uncertain2" onclick="duedateCheck(this);">
+                        <label for="uncertain2">미정</label>
                     </div></br>
                 </div></br>
                 <div>
@@ -188,7 +187,7 @@
         {% elif category == "resell" %}
         <!-- Resell 게시판 -->
         <div class="resell_board_new">
-            <form method="POST" action="{% url 'newfeed' 'life' 'resell' %}">
+            <form method="POST" enctype="multipart/form-data" action="{% url 'newfeed' 'life' 'resell' %}">
                 {% csrf_token %}
                 <div>
                     제목 </br>

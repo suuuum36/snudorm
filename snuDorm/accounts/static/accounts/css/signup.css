@@ -1,0 +1,106 @@
+input:focus::-webkit-input-placeholder,
+textarea:focus::-webkit-input-placeholder {
+  color: transparent; }
+
+.form {
+  width: 500px;
+  margin: 100px auto; }
+  .form .headline {
+    font-weight: bold; }
+    .form .headline img {
+      width: 40px; }
+    .form .headline span {
+      color: #ffca00; }
+  .form .email-input span {
+    font-weight: bold; }
+  .form .dorm-input {
+    display: flex;
+    justify-content: space-between; }
+    .form .dorm-input select {
+      width: 240px;
+      height: 50px;
+      border: 2px solid #b9b9b9;
+      border-radius: 7px;
+      padding-left: 20px;
+      font-weight: bold;
+      color: #b9b9b9; }
+      .form .dorm-input select option {
+        color: black; }
+      .form .dorm-input select option:hover {
+        color: #3e3eff; }
+    .form .dorm-input select:hover, .form .dorm-input select:focus {
+      box-shadow: 0 0 7px 0 #bfbfbf; }
+  .form .signup {
+    width: 500px;
+    height: 70px;
+    text-align: center;
+    background-color: #ffca00;
+    color: #ffffff;
+    font-weight: bold;
+    border-radius: 7px;
+    margin-top: 15px;
+    cursor: pointer; }
+
+.head {
+  display: inline-block;
+  line-height: 50px;
+  width: 500px;
+  height: 50px;
+  margin-top: 15px;
+  font-weight: bold; }
+
+.description {
+  display: inline-block;
+  width: 500px;
+  height: 30px;
+  font-size: 12px;
+  color: #7f7f7f;
+  font-weight: bold; }
+
+.input-value {
+  height: 50px;
+  border: 2px solid #b9b9b9;
+  border-radius: 7px;
+  padding-left: 20px;
+  font-weight: bold;
+  color: #b9b9b9; }
+
+.input-value:hover, .input-value:focus {
+  box-shadow: 0 0 7px 0 #bfbfbf; }
+
+.input-value::placeholder {
+  color: #b9b9b9;
+  font-weight: bold; }
+
+.short {
+  width: 240px; }
+
+.long {
+  width: 400px; }
+
+.db-check {
+  width: 90px;
+  height: 50px;
+  border-radius: 30px;
+  background-color: #b9b9b9;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: bold; }
+
+.check-confirm {
+  display: none;
+  position: relative;
+  width: 90px;
+  height: 50px;
+  border-radius: 30px;
+  background-color: #3e3eff;
+  color: #ffffff;
+  font-weight: bold; }
+  .check-confirm span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap; }
+
+/*# sourceMappingURL=signup.css.map */

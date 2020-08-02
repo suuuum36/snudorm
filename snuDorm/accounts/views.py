@@ -32,7 +32,7 @@ def signup(request):
                 )
             # username이 중복될 경우 error가 발생
             except:
-                context = "username이 중복되었습니다(좀 더 구체화 하겠습니다)."
+                context = "username(아이디)이 중복되었습니다(좀 더 구체화 하겠습니다)."
                 return render(request, 'accounts/error.html', {'context': context})
 
             # update로 구현해보기
@@ -51,10 +51,12 @@ def signup(request):
         
         return redirect('/feeds')
 
-    return render(request, 'accounts/signup.html')
+    elif request.method == "GET":
+        
+        return render(request, 'accounts/signup.html')
 
 
-def error(request): # 회원가입 실패, 회원정보 수정 실패 등은 추후에 자바 스크립트로 구현
+def error(request): # alert로 구현 필요
 
     return render(request, 'accounts/error.html')
 
@@ -68,10 +70,7 @@ def login(request):
             auth.login(request, user)
             return redirect('/feeds')
         else:
-            context = "로그인 실패"
-            return render(request, 'accounts/error.html', {'context': context})
-            # error 추가 가능:  , 'error':'username or password is incorrect')
-            # 혹은 pop up page
+            return redirect('error') # alert로 구현 필요
 
     elif request.method == 'GET':
         return render(request, 'accounts/login.html')
@@ -97,7 +96,6 @@ def userEdit(request, id):
         # 현재 비밀번호와 입력한 비밀번호가 일치할 때
         if check_password(current_password, current_user.password): 
             User.objects.filter(username=request.user.username).update(
-                username=request.POST['user_id'],
                 email=request.POST['email'],
             )            
             Profile.objects.filter(user=request.user).update(
@@ -107,7 +105,7 @@ def userEdit(request, id):
                 building_dong=request.POST['building_dong'],
             )
 
-            return render(request, 'accounts/user_info.html', {'id': id})
+            return redirect('userinfo', id=id)
 
         # 현재 비밀번호와 입력한 비밀번호가 일치하지 않을 때
         else: 
@@ -124,25 +122,19 @@ def passwordEdit(request, id):
         current_user = request.user
         current_password = request.POST['origin_password']
 
-        # 현재 비밀번호와 입력한 비밀번호가 일치할 때
+        # 1) 기존 비밀번호와 입력한 비밀번호의 비교
         if check_password(current_password, current_user.password): 
             new_password = request.POST['new_password']
             password_confirm = request.POST['password_confirm']
 
-            # 새로운 비밀번호와 확인까지 일치할 때 비밀번호 변경완료
+            # 2) 새로운 비밀번호와 확인까지 일치할 때 비밀번호 변경완료
             if new_password == password_confirm:
                 current_user.set_password(new_password)
                 current_user.save()                
                 update_session_auth_hash(request, current_user)  # 변경된 비밀번호로 로그인 시켜주기
                 return redirect('userinfo', id=id)
                 
-                '''
-                else:
-                    context = "로그인이 왜 안되는거지?"
-                    return render(request, 'accounts/error.html', {'context': context})
-                '''
-                
-            # 새로운 비밀번호 두 개가 일치하지 않을 때 변경 실패
+            # 3) 새로운 비밀번호 두 개가 일치하지 않을 때 변경 실패
             else:
                 context = "새로운 비밀번호를 확인해 주세요"
                 return render(request, 'accounts/error.html', {'context': context})
@@ -164,3 +156,18 @@ def userNotice(request, id):
 def messageBox(request, id):
 
     return render(request, 'accounts/messagebox.html', {'id': id})
+
+def id_overlap_check(request):
+    username = request.GET['username']
+    try:
+        # 중복 검사 실패
+        user = User.objects.get(username=username)
+    except:
+        # 중복 검사 성공
+        user = None
+    if user is None:
+        overlap_check = "pass"
+    else:
+        overlap_check = "fail"
+    context = {'overlap_check': overlap_check}
+    return JsonResponse(context)
