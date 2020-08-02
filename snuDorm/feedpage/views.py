@@ -248,7 +248,7 @@ def editFeed(request, board, category, fid):
         elif board == "freeboard":
             feed = FreeBoard.objects.get(id=fid)
 
-        return render(request, 'feedpage/edit.html', {'feed': feed, 'board': board, 'complete': complete,
+        return render(request, 'feedpage/edit.html', {'feed': feed, 'board': board,
                         'category': category, 'fid': fid, 'board_name': board_info[2] })
 
     elif request.method == 'POST':
