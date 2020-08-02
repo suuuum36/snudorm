@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect, HttpResponseRedirect
 from .models import Feed, Minwon, Life, FreeBoard, CoBuy, Rent, Keep, Resell, FeedComment, \
                     FeedLike, CommentLike, Recomment, RecommentLike, STAT_OPTION
 from django.contrib.auth.models import User
-from accounts.models import Profile
 from django.http import JsonResponse
 from django.core.paginator import Paginator 
 
