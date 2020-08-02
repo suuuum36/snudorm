@@ -1,6 +1,6 @@
 <!-- TODO: 중복확인 버튼 작동 구현 -->
 
-{% load static%}
+{% load static %}
 {% load sass_tags %}
 <!DOCTYPE html>
 <html lang="en">
@@ -56,23 +56,41 @@
                 <span class="head">이메일</span> 
                 <input class="input-value short" name="email" type="text" placeholder="이메일" required><span> @ snu.ac.kr</span>
             </div>
-            <div>
+            <div class="building">
                 <span class="head">기숙사 동</span>
-                <div class="dorm-input">
-                    <div class="category-input">                    
-                        <select class="category-option" name="building_category" onchange="categoryChange(this)">
-                            <option value="default" disabled selected hidden>생활관</option>
-                            <option value="bachelor">학부생활관</option>
-                            <option value="master">대학원생활관</option>
-                            <option value="family">가족생활관</option>
-                            <option value="bk">BK생활관</option>
-                        </select>
+                <div class="building-category">
+                    <div class="category-container">
+                        <div class="category-option">
+                            <input type="radio" class="radio" id="bachelor" value="bachelor" onclick="categoryChange(this)" name="building_category">
+                            <label for="bachelor">학부생활관</label>
+                        </div>
+                        <div class="category-option">
+                            <input type="radio" class="radio" id="master" value="master" onclick="categoryChange(this)" name="building_category">
+                            <label for="master">대학원생활관</label>
+                        </div>
+                        <div class="category-option">
+                            <input type="radio" class="radio" id="family" value="family" onclick="categoryChange(this)" name="building_category">
+                            <label for="family">가족생활관</label>
+                        </div>
+                        <div class="category-option">
+                            <input type="radio" class="radio" id="bk" value="bk" onclick="categoryChange(this)" name="building_category">
+                            <label for="bk">BK생활관</label>
+                        </div>
+                        
                     </div>
-                    <div class="dong-input">
-                        <select id="dong-option" name="building_dong">
-                            <option value="default" disabled selected hidden>동</option>
-                            <option value="fail" disabled>생활관을 선택해주세요</option>
-                        </select>
+                    <div class="selected">
+                        생활관
+                    </div>
+                </div>
+                <div class="building-dong">
+                    <div class="dong-container" id="dong-container-id">
+                        <div class="dong-option">
+                            <input type="radio" class="radio" id="default" name="building_dong">
+                            <label for="default">생활관을 선택해주세요</label>
+                        </div>
+                    </div>
+                    <div class="selected-dong">
+                        동
                     </div>
                 </div>
             </div>

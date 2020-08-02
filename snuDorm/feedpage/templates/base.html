@@ -14,6 +14,8 @@
     <!-- TODO: Web Page Name -->
     <title>도미토리</title>
     <!-- Main Page -->
+    <link rel="stylesheet" href="{% sass_src 'accounts/css/reset.scss' %}">
+    <link rel="stylesheet" href="{% sass_src 'accounts/css/user_info.scss' %}">
     <link rel="stylesheet" href="{% static 'feedpage/main.css' %}">
     <!-- TODO: Bootstrap Icon -->
     {% comment %} <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> {% endcomment %}
@@ -57,7 +59,7 @@
                         <a class = "alarm-div" href="{% url 'messagebox' user.id %}"> 알람
                             {% comment %} <img class = "alarm" src="{% static 'img/alarm.png' %}">  {% endcomment %}
                         </a>
-                        <a class = "profile-div" href="{% url 'useredit' user.id %}"> 마이페이지
+                        <a class = "profile-div" href="{% url 'userinfo' user.id %}"> 마이페이지
                             {% comment %} <img class = "profile" src="{% static 'img/profile.png' %}">    {% endcomment %}
                         </a>
                         <a class = 'logout' href="{% url 'logout' %}">

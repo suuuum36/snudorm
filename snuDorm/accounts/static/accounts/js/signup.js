@@ -43,32 +43,79 @@
 //     });
 //   }
 
-// 생활관 카테고리 지정 시 자동으로 동 옵션을 배정
-// TODO: 생활관 카테고리 변경 시에 dong-option에 '동'이 나오도록
+// 기숙사 동 반응형 구현
 function categoryChange(e) {
-  
-  // 생활관: 학부/대학원/가족/BK
-  var bachelor_option = ['906', '915', '919A', '919B', '919C', 
-  '919D', '921', '922', '923', '924', '925', '926'];
+
+  var bachelor_option = ['906', '915', '919A', '919B', '919C', '919D', '921', '922', '923', '924', '925', '926'];
   var master_option = ['900', '901', '902', '903', '904', '905', '917', '918'];
   var family_option = ['931', '932', '933', '934', '935'];
   var bk_option = ['946A', '946B'];
-
-  var target = document.getElementById("dong-option");
 
   if(e.value == "bachelor") var category = bachelor_option;
   else if(e.value == "master") var category = master_option;
   else if(e.value == "family") var category = family_option;
   else if(e.value == "bk") var category = bk_option;
 
-
-  target.options.length = 1; // template의 '동'은 남겨두기
+  var target = document.getElementById("dong-container-id");
   
-  // 생활관 별 동 옵션 추가
-  for (dong in category) {
-    var opt = document.createElement("option");
-    opt.value = category[dong];
-    opt.innerHTML = `${category[dong]}동`;
-    target.appendChild(opt);
+  while ( target.hasChildNodes() ) {
+    target.removeChild(target.firstChild);
   }
-}
+
+  for (dong in category) {
+    var div = document.createElement('div');
+    var input = document.createElement('input');
+    var label = document.createElement('label');
+
+    div.className = "dong-option";
+    input.type = "radio";
+    input.className = "radio";
+    input.id = category[dong];
+    input.name = "building_dong";
+    label.setAttribute("for", category[dong]);
+    label.innerHTML = `${category[dong]}동`;
+
+    div.appendChild(input);
+    div.appendChild(label);
+    
+    target.appendChild(div);
+  }
+};
+
+// 기숙사 생활관
+const selected = document.querySelector(".selected");
+const category_container = document.querySelector(".category-container");
+
+const category_options = document.querySelectorAll(".category-option");
+
+selected.addEventListener("click", () => {
+  category_container.classList.toggle("active");
+});
+
+category_options.forEach(o => {
+  o.addEventListener("click", () => {
+    selected.innerHTML = o.querySelector("label").innerHTML;
+    category_container.classList.remove("active");
+  });
+});
+
+// 기숙사 동
+const selected_dong = document.querySelector(".selected-dong");
+const dong_container = document.querySelector(".dong-container");
+
+const dong_options = document.querySelectorAll(".dong-option");
+
+selected_dong.addEventListener("click", () => {
+  dong_container.classList.toggle("active");
+  console.log(selected_dong.innerHTML);
+});
+
+dong_options.forEach(d => {
+  d.addEventListener("click", () => {
+    selected_dong.innerHTML = d.querySelector("label").innerHTML;
+    dong_container.classList.remove("active");
+    console.log(selected_dong.innerHTML);
+  });
+});
+
+

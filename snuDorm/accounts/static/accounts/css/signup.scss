@@ -50,39 +50,183 @@ textarea:focus::-webkit-input-placeholder {
             font-weight: bold;
         }
     }
-
-    // 생활관 및 동 선택. select box로 구현. 생활관에 따라 유동적으로 변화.
-    .dorm-input {
-        display: flex;
-        justify-content: space-between;
-
-        .category-input {}
     
-        // javascript로 구현
-        .dong-input {}
+    // 기숙사 생활관 및 동 선택
+    .building {
+        display: flex;
+        flex-wrap: wrap;
 
-        select {
+        span {
+            width: 500px;
+        }
+
+        // 셀렉트 박스 스타일 구현
+        .building-category {
+            display: flex;
             width: 240px;
-            height: 50px;
-            border: 2px solid $gray_border;
-            border-radius: 7px;
-            padding-left: 20px;
-            font-weight: bold;
-            color: $gray_border;
+            flex-direction: column;
+            margin-right: 20px;
 
-            option {
-                color: black;
+            .category-container {
+                border: 2px solid $gray_border;
+                max-height: 0;
+                width: 100%;
+                opacity: 0;
+                transition: all 0.4s;
+                border-radius: 7px;
+                overflow: hidden;
+                order: 1;
             }
-            option:hover {
+
+            .category-container.active {
+                max-height: 162px;
+                opacity: 1;
+                overflow-y: scroll;
+            }
+
+            .category-container.active + .selected::after {
+                transform: rotateX(180deg);
+                top: -6px;
+            }
+
+            .category-container::-webkit-scrollbar {
+                width: 8px;
+                border-radius: 0 3px 3px 0;
+                //background-color: $gray_border;
+            }
+            
+            .category-container::-webkit-scrollbar-thumb {
+                background-color: $gray_border;
+                border-radius: 3px;
+            }
+
+            .selected {
+                color: $gray_text;
+                padding: 12px 20px;
+                cursor: pointer;
+                border: 2px solid $gray_border;
+                border-radius: 7px;
+                margin-bottom: -2px;
+                position: relative;
+                order: 0;
+            }
+
+            .selected::after {
+                content: "";
+                background: url("../img/arrow-down.png");
+                background-size: contain;
+                background-repeat: no-repeat;
+                
+                position: absolute;
+                height: 100%;
+                width: 32px;
+                right: 18px;
+                top: 5px;
+                
+                transition: all 0.4s;
+            }
+
+            .category-option {
+                padding: 12px 20px;
+                cursor: pointer;
+
+                .radio {
+                    display:none;
+                }
+            }
+
+            .category-option:hover {
                 color: $blue_text;
             }
+
+            label {
+                cursor: pointer;
+            }
         }
 
-        select:hover, select:focus {
-            box-shadow: $gray_shadow;
+        .building-dong {
+            display: flex;
+            width: 240px;
+            flex-direction: column;
+
+            .dong-container {
+                border: 2px solid $gray_border;
+                max-height: 0;
+                width: 100%;
+                opacity: 0;
+                transition: all 0.4s;
+                border-radius: 7px;
+                overflow: hidden;
+                order: 1;
+            }
+
+            .dong-container.active {
+                max-height: 162px;
+                opacity: 1;
+                overflow-y: scroll;
+            }
+
+            .dong-container.active + .selected-dong::after {
+                transform: rotateX(180deg);
+                top: -6px;
+            }
+
+            .dong-container::-webkit-scrollbar {
+                width: 8px;
+                border-radius: 0 3px 3px 0;
+                //background-color: $gray_border;
+            }
+            
+            .dong-container::-webkit-scrollbar-thumb {
+                background-color: $gray_border;
+                border-radius: 3px;
+            }
+
+            .selected-dong {
+                color: $gray_text;
+                padding: 12px 20px;
+                cursor: pointer;
+                border: 2px solid $gray_border;
+                border-radius: 7px;
+                margin-bottom: -2px;
+                position: relative;
+                order: 0;
+            }
+
+            .selected-dong::after {
+                content: "";
+                background: url("../img/arrow-down.png");
+                background-size: contain;
+                background-repeat: no-repeat;
+                
+                position: absolute;
+                height: 100%;
+                width: 32px;
+                right: 18px;
+                top: 5px;
+                
+                transition: all 0.4s;
+            }
+
+            .dong-option {
+                padding: 12px 20px;
+                cursor: pointer;
+
+                .radio {
+                    display:none;
+                }
+            }
+
+            .dong-option:hover {
+                color: $blue_text;
+            }
+
+            label {
+                cursor: pointer;
+            }
         }
     }
-    
+
     // 회원가입 버튼
     .signup {
         width: 500px;
@@ -177,3 +321,4 @@ textarea:focus::-webkit-input-placeholder {
         white-space: nowrap;
     }
 }
+
