@@ -63,10 +63,17 @@
                 </div></br>
                 <div>
                     마감일</br>
-                    <input name="duedate" value="{{now_date|date:"Y.m.d"}}" type="date" required>
+                    {% if feed.duedate|date:"Y.m.d" == '2020.01.01' %}
+                    <input name="duedate" id="dueDate" type="date" disabled>
                     <div>
-                        <input name="uncertain" type="checkbox" id="uncertain"  onclick="duedateCheck(this);">
-                        <label for="uncertain">미정</label>
+                        <input name="uncertain" type="checkbox" id="uncertain2" checked>
+                        <label for="uncertain2">미정</label>
+                    {% else %}
+                    <input name="duedate" id="edueDate" value="{{feed.duedate|date:"Y-m-d"}}" type="date" required>
+                    <div>
+                        <input name="uncertain" type="checkbox" id="euncertain2">
+                        <label for="euncertain2">미정</label>
+                    {% endif %}
                     </div></br>
                 </div></br>
                 <div>
@@ -139,18 +146,32 @@
                 </div></br>
                 <div style="display:flex;">
                     시작일</br>
-                    <input name="start_date" type="date" required >
-                    <div >
-                        <input name="uncertain" type="checkbox" id="uncertain"  onclick="startCheck(this);">
-                        <label for="uncertain">미정</label>
+                    {% if feed.start_date|date:"Y.m.d" == '2020.01.01' %}
+                    <input name="start_date" id="startDate" type="date" disabled>
+                    <div>
+                        <input name="uncertain" type="checkbox" id="uncertain1" checked>
+                        <label for="uncertain1">미정</label>
+                    {% else %}
+                    <input name="start_date" id="estartDate" value="{{feed.start_date|date:"Y-m-d"}}" type="date" required>
+                    <div>
+                        <input name="uncertain" type="checkbox" id="euncertain1">
+                        <label for="euncertain1">미정</label>
+                    {% endif %}
                     </div></br>
                 </div></br>
                 <div style="display:flex;">
                     마감일</br>
-                    <input name="duedate" type="date" required>
+                    {% if feed.end_date|date:"Y.m.d" == '2020.01.01' %}
+                    <input name="duedate" id="dueDate" type="date" disabled>
                     <div>
-                        <input name="uncertain" type="checkbox" id="uncertain"  onclick="duedateCheck(this);">
-                        <label for="uncertain">미정</label>
+                        <input name="uncertain" type="checkbox" id="uncertain2" checked>
+                        <label for="uncertain2">미정</label>
+                    {% else %}
+                    <input name="duedate" id="edueDate" value="{{feed.end_date|date:"Y-m-d"}}" type="date" required>
+                    <div>
+                        <input name="uncertain" type="checkbox" id="euncertain2">
+                        <label for="euncertain2">미정</label>
+                    {% endif %}
                     </div></br>
                 </div></br>
                 <div>
@@ -182,10 +203,10 @@
                 {% endif %}
                <div class="option_noname">
                     {% if feed.noname %}
-                        <input name="noname" type="checkbox" id="noname" checked>
+                        <input name="noname" value="{{feed.start_date|date:"Y-m-d"}}" type="checkbox" id="noname" checked>
                         <label for="noname">익명</label>
                     {% else %}
-                        <input name="noname" type="checkbox" id="noname">
+                        <input name="noname" value="{{feed.end_date|date:"Y-m-d"}}" type="checkbox" id="noname">
                         <label for="noname">익명</label>
                     {% endif %}
                 </div></br>
@@ -223,18 +244,32 @@
                 </div></br>
                 <div style="display:flex;">
                     시작일
-                    <input name="start_date" type="date" required>
-                    <div >
-                        <input name="uncertain" type="checkbox" id="uncertain"  onclick="startCheck(this);">
-                        <label for="uncertain">미정</label>
+                    {% if feed.start_date|date:"Y.m.d" == '2020.01.01' %}
+                    <input name="start_date" id="startDate" type="date" disabled>
+                    <div>
+                        <input name="uncertain" type="checkbox" id="uncertain1" checked>
+                        <label for="uncertain1">미정</label>
+                    {% else %}
+                    <input name="start_date" id="estartDate" value="{{feed.start_date|date:"Y-m-d"}}" type="date" required>
+                    <div>
+                        <input name="uncertain" type="checkbox" id="euncertain1">
+                        <label for="euncertain1">미정</label>
+                    {% endif %}
                     </div></br>
                 </div></br>
                 <div style="display:flex;">
                     마감일</br>
-                    <input name="duedate" type="date" required>
+                    {% if feed.end_date|date:"Y.m.d" == '2020.01.01' %}
+                    <input name="duedate" id="dueDate" type="date" disabled>
                     <div>
-                        <input name="uncertain" type="checkbox" id="uncertain"  onclick="duedateCheck(this);">
-                        <label for="uncertain">미정</label>
+                        <input name="uncertain" type="checkbox" id="uncertain2" checked>
+                        <label for="uncertain2">미정</label>
+                    {% else %}
+                    <input name="duedate" id="edueDate" value="{{feed.end_date|date:"Y-m-d"}}" type="date" required>
+                    <div>
+                        <input name="uncertain" type="checkbox" id="euncertain2">
+                        <label for="euncertain2">미정</label>
+                    {% endif %}
                     </div></br>
                 </div></br>
                 <div>
