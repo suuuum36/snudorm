@@ -10,7 +10,7 @@
         {% if board == 'minwon' or board == 'freeboard' %}
         <!-- Minwon, freeboard 게시판 -->
         <div class="minwon_or_free_new">
-            <form method="POST" action="{% url 'newfeed' board category %}">
+            <form method="POST" enctype="multipart/form-data" action="{% url 'newfeed' board category %}">
                 {% csrf_token %}
                 <div>
                     제목</br>
@@ -36,7 +36,7 @@
         {% elif category == 'cobuy' %}
         <!-- Cobuy 공구 게시판 -->
         <div class="cobuy_board_new">
-            <form method="POST" action="{% url 'newfeed' 'life' 'cobuy' %}">
+            <form method="POST" enctype="multipart/form-data" action="{% url 'newfeed' 'life' 'cobuy' %}">
                 {% csrf_token %}
                 <div>
                     제목 </br>
@@ -80,7 +80,7 @@
         {% elif category == 'rent' %}
         <!-- Rent 게시판 -->
         <div class="rent_board_new"> 
-            <form method="POST" action="{% url 'newfeed' 'life' 'rent' %}">
+            <form method="POST" enctype="multipart/form-data" action="{% url 'newfeed' 'life' 'rent' %}">
                 {% csrf_token %}
                 <div>
                     제목 </br>
@@ -187,7 +187,7 @@
         {% elif category == "resell" %}
         <!-- Resell 게시판 -->
         <div class="resell_board_new">
-            <form method="POST" action="{% url 'newfeed' 'life' 'resell' %}">
+            <form method="POST" enctype="multipart/form-data" action="{% url 'newfeed' 'life' 'resell' %}">
                 {% csrf_token %}
                 <div>
                     제목 </br>
