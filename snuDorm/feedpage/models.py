@@ -24,7 +24,7 @@ def get_image_filename(instanece, filename):
 class Feed(models.Model):
     title = models.CharField(max_length=256)
     content = models.TextField()
-    photo = models.ImageField(blank=True, upload_to='feed_photos')
+    photo = models.ImageField(blank=True, null=True, upload_to='feed_photos')
     noname = models.BooleanField(default=False)
 
     author = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
@@ -67,6 +67,7 @@ class FreeBoard(Feed):
         return self.title
 
 class Life(Feed):
+    status = MultiSelectField(choices=STAT_OPTION, default='ongoing')    
     class Meta:
         ordering = ('created_at', )
 
@@ -75,7 +76,6 @@ class CoBuy(Life):
     price = models.CharField(max_length=256)
     url = models.CharField(max_length=256, null=True)
     duedate = models.DateTimeField(blank=False, default=timezone.now)
-    status = MultiSelectField(choices=STAT_OPTION, default='ongoing')    
 
 class Rent(Life):
     OPTION = (('lender', '빌려줄게요'), ('user', '빌려주세요'))   
@@ -83,7 +83,6 @@ class Rent(Life):
     deposit = models.CharField(max_length=256)
     start_date = models.DateTimeField(blank=False, default=timezone.now)
     end_date = models.DateTimeField(blank=False, default=timezone.now)
-    status = MultiSelectField(choices=STAT_OPTION, default='ongoing')    
 
 
 class Keep(Life):
@@ -92,15 +91,12 @@ class Keep(Life):
     reward = models.CharField(max_length=256)
     start_date = models.DateTimeField(blank=False, default=timezone.now)
     end_date = models.DateTimeField(blank=False, default=timezone.now)
-    status = MultiSelectField(choices=STAT_OPTION, default='ongoing')    
 
 
 class Resell(Life):
     OPTION = (('seller', '판매'), ('buyer', '구매'))
     purpose = MultiSelectField(choices=OPTION, default='seller')   
     price = models.CharField(max_length=256)
-    status = MultiSelectField(choices=STAT_OPTION, default='onsale')    
-
 
 class FeedComment(models.Model):
     content = models.TextField()

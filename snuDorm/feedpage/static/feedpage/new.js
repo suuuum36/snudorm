@@ -22,13 +22,34 @@ function startCheck(stat) {
     }
 }
 
-function duedateCheck(stat) {
-    var duedate = document.getElementByName("duedate");
+$('#startDate').val(new Date().toISOString().substring(0, 10));
 
-    if(stat.checked) {
-        duedate.required = false;
-        duedate.value = null;
+$(document).on('click', '#uncertain1', ()=> {
+    if($('#startDate').attr("required")) {
+        $("#startDate").removeAttr('required');
+        $("#startDate").attr('disabled', true);
+        console.log('hello')
     } else {
-        duedate.required = true;
-    }    
-}
+        $("#startDate").removeAttr('disabled');
+        $("#startDate").attr('required', true);   
+        console.log('bye')
+    }     
+})
+
+
+$('#dueDate').val(new Date().toISOString().substring(0, 10));
+
+$(document).on('click', '#uncertain2', ()=> {
+    if($('#dueDate').attr("required")) {
+        $("#dueDate").removeAttr('required');
+        $("#dueDate").attr('disabled', true);
+        console.log('hello')
+    } else {
+        $("#dueDate").removeAttr('disabled');
+        $("#dueDate").attr('required', true);   
+        console.log('bye')
+    }     
+})
+
+
+
