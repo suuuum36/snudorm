@@ -99,9 +99,14 @@ def showBoard(request, board, category):
 
         # 생활 게시판 보여주기
         elif board == "life":
-            feeds = CoBuy.objects.all() if category == "cobuy" else \
-                    (Rent.objects.all() if category == "rent" else
-                    (Keep.objects.all() if category == "keep" else
+            life_category = category
+            if category == 'tori':
+                feeds = Life.objects.get(id=fid)
+                life_category = feeds.category 
+
+            feeds = CoBuy.objects.all() if life_category == "cobuy" else \
+                    (Rent.objects.all() if life_category == "rent" else
+                    (Keep.objects.all() if life_category == "keep" else
                     Resell.objects.all()))
         else:
             feeds = Feed.objects.all()
@@ -200,14 +205,20 @@ def showFeed(request, board, category, fid): # board, category 필요없음.
     # 조회수 count 본인 게시글 조회 제외!
     feed = Feed.objects.filter(board=board, category=category, id=fid)
 
+
     if board == "minwon":
         feed = Minwon.objects.get(id=fid)
 
     elif board == "life":
+        if category == 'tori':
+            feed = Life.objects.get(id=fid)
+            category = feed.category 
+
         feed = CoBuy.objects.get(id=fid) if category == "cobuy" else \
-            (Rent.objects.get(id=fid) if category == "rent" else 
-            (Keep.objects.get(id=fid) if category == "keep" else 
-            (Resell.objects.get(id=fid) if category == "resell" else "tori")))
+        (Rent.objects.get(id=fid) if category == "rent" else 
+        (Keep.objects.get(id=fid) if category == "keep" else 
+        (Resell.objects.get(id=fid) if category == "resell" else 
+        ())))
 
     elif board == "freeboard":
         feed = FreeBoard.objects.get(id=fid)
