@@ -41,10 +41,10 @@
                     <form class = "search-form" action="{% url 'search' %}" method="get">
                         <div class = "search-text">
                             <select class="search-option" name="select-option" style = "color: #7f7f7f;">
-                                <option value="default">선택</option>
+                                {% comment %} <option value="default">선택</option> {% endcomment %}
                                 <option value="title">제목</option>
                                 <option value="content">내용</option>
-                                <option value="title-and-content">재목+내용</option>
+                                <option value="title-and-content">제목+내용</option>
                             </select>
                             <input type="text" name="query" class = "search-text" size ="30" placeholder = "검색어를 입력하세요.">
                         </div>
