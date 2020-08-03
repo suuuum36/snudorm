@@ -3,7 +3,7 @@
 
 {% if user.is_authenticated %}
 <div class="info">
-    <div>{{ board_name }} 게시판 </div>
+    <div>{{ board_name }} </div>
     {% if feed.author == request.user %}
     <div style="margin: 10px; text-align: right;">
         <a href="{% url 'editfeed' board category feed.id %}">수정</a>

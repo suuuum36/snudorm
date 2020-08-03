@@ -31,6 +31,54 @@ def get_board(board, category):
 
     return board_info
 
+def get_feed(board, category):
+    board_info = get_board(board, category)           
+    # 전체게시판 보여주기: minwon / life / freeboard
+    if category == "tori":
+        feeds = Minwon.objects.all() if board == "minwon" else \
+                (Life.objects.all() if board == "life" else
+                (FreeBoard.objects.all()))
+
+    # 민원 게시판 보여주기
+    elif board == "minwon":
+        feeds = Minwon.objects.filter(board_info1=board_info[0], board_info2=board_info[1])
+
+    # 생활 게시판 보여주기
+    elif board == "life":
+        feeds = CoBuy.objects.all() if category == "cobuy" else \
+                (Rent.objects.all() if category == "rent" else
+                (Keep.objects.all() if category == "keep" else
+                (Resell.objects.all() if category == "resell" else 
+                (Life.objecst.all()))))
+    else:
+        feeds = []
+    return feeds
+
+def get_pages(feeds, request):
+    # 전체글 버튼
+    paginator = Paginator(feeds, 1)
+    page = request.GET.get('page')
+    posts = paginator.get_page(page)
+
+    # 베스트 버튼 
+    best_feeds = feeds.order_by('-like_users')
+    paginator2 = Paginator(best_feeds, 1)
+    best_page = request.GET.get('best_page', 1)
+    best_posts = paginator2.get_page(best_page)
+    
+    page_numbers_range = 10
+
+    max_index = len(paginator.page_range)
+    current_page = int(page) if page else 1
+    start_index = int((current_page - 1) / page_numbers_range) * page_numbers_range
+    end_index = start_index + page_numbers_range
+    
+    if end_index >= max_index:
+        end_index = max_index
+
+    paginator_range = paginator.page_range[start_index:end_index]
+    return [posts, best_posts, paginator_range]
+
 # 기본 PAGE
 def showMain(request):
     if request.method == 'GET':
@@ -87,54 +135,15 @@ def showBoard(request, board, category):
         |  freeboard  |  tori                             | 전체 게시판      
         ---------------------------------------------------------------------
     '''
-    if request.method == 'GET':
-        board_info = get_board(board, category)
-        # 전체게시판 보여주기: minwon / life / freeboard
-        if category == "tori":
-            feeds = Minwon.objects.all() if board == "minwon" else \
-                    (Life.objects.all() if board == "life" else
-                    (FreeBoard.objects.all()))
-
-        # 민원 게시판 보여주기
-        elif board == "minwon":
-            feeds = Minwon.objects.filter(board_info1=board_info[0], board_info2=board_info[1])
-
-        # 생활 게시판 보여주기
-        elif board == "life":
-            feeds = CoBuy.objects.all() if category == "cobuy" else \
-                    (Rent.objects.all() if category == "rent" else
-                    (Keep.objects.all() if category == "keep" else
-                    (Resell.objects.all() if category == "resell" else 
-                    (Life.objecst.all()))))
-        else:
-            feeds = Feed.objects.all()
-                
+    if request.method == 'GET': 
+        board_info = get_board(board, category)           
         # 전체글 버튼
-        feeds = feeds.order_by('-created_at')
-        paginator = Paginator(feeds, 1)
-        page = request.GET.get('page')
-        posts = paginator.get_page(page)
+        feeds = get_feed(board, category).order_by('-created_at')
+        pages = get_pages(feeds, request)
 
-        # 베스트 버튼 
-        best_feeds = feeds.order_by('-like_users')
-        paginator2 = Paginator(best_feeds, 1)
-        best_page = request.GET.get('best_page', 1)
-        best_posts = paginator2.get_page(best_page)
-        
-        page_numbers_range = 10
-
-        max_index = len(paginator.page_range)
-        current_page = int(page) if page else 1
-        start_index = int((current_page - 1) / page_numbers_range) * page_numbers_range
-        end_index = start_index + page_numbers_range
-        
-        if end_index >= max_index:
-            end_index = max_index
-        paginator_range = paginator.page_range[start_index:end_index]
-
-        return render(request, 'feedpage/show.html', {'posts':posts, 'best_posts': best_posts, 
-                            'board': board, 'category': category, 'board_name': board_info[2], 
-                            'paginator_range':paginator_range })
+        return render(request, 'feedpage/show.html', {'posts':pages[0], 'best_posts': pages[1], 
+                            'board': board, 'category': category, 'board_name': board_info[2] + ' 게시판', 
+                            'paginator_range':pages[2] })
 
     elif request.method == 'POST':
         return redirect('showboard', board=board, category=category)
@@ -146,7 +155,7 @@ def newFeed(request, board, category):
 
     if request.method == 'GET':
         return render(request, 'feedpage/new.html', {'board': board,
-                    'category': category, 'board_name': board_info[2] })
+                    'category': category, 'board_name': board_info[2] + ' 게시판' })
 
     elif request.method == 'POST':
         title = request.POST['title']
@@ -247,7 +256,7 @@ def showFeed(request, board, category, fid): # board, category 필요없음.
             notice.save()
 
     return render(request, 'feedpage/feed.html', {'feed': feed, 'board': board, 'fid':fid, 
-                                        'category': category, 'board_name': board_info[2]})
+                                        'category': category, 'board_name': board_info[2] + ' 게시판'})
 
 
 
@@ -271,7 +280,7 @@ def editFeed(request, board, category, fid):
             feed = FreeBoard.objects.get(id=fid)
 
         return render(request, 'feedpage/edit.html', {'feed': feed, 'board': board,
-                        'category': category, 'fid': fid, 'board_name': board_info[2] })
+                        'category': category, 'fid': fid, 'board_name': board_info[2] + ' 게시판' })
 
     elif request.method == 'POST':
         feed = Minwon.objects.get(id=fid) if board == 'minwon' else \
@@ -393,11 +402,7 @@ def editComment(request, board, category, fid, cid):
         return JsonResponse(context)
 
 
-
-
 # 댓글 좋아요
-
-
 def likeComment(request, board, category, fid, cid):
     feedcomment = FeedComment.objects.get(id=cid)
     like_list = feedcomment.commentlike_set.filter(user_id=request.user.id)
@@ -481,66 +486,51 @@ def likeRecomment(request, board, category, fid, cid, rcid):
     return JsonResponse(context)
 
 def search(request):
+    if request.method == 'GET':
+        searchtype = request.GET
+        query = request.GET['query']
+        search_option = request.GET['select-option']
+
+        feeds = []
+        if search_option == 'title':
+            feeds = Feed.objects.all().filter(title__contains = query).order_by('-created_at')
+        elif search_option == 'content':
+            feeds = Feed.objects.all().filter(content__contains = query).order_by('-created_at')
+        elif search_option == 'title-and-content':
+            feeds = Feed.objects.all().filter(title__contains = query, content__contains = query).order_by('-created_at')
+        
+        board_name = '제목 검색 결과' if search_option == 'title' else \
+                    ('내용 검색 결과' if search_option == 'content' else 
+                    ('제목 + 내용 검색 결과'))
+
+        if len(feeds) == 0:
+            board_name += ' 없음'
+
+        pages = get_pages(feeds, request)
+        return render(request, 'feedpage/show.html', {'posts': pages[0], 'query':query, 'search': 'all', 'option': search_option,
+                                'board_name': board_name, 'paginator_range': pages[2], 'board': 'search' })
+
+def searchMore(request, board, category):
     searchtype = request.GET
-    query = request.GET['query']
-    searchtype = request.GET['searchtype']
-    feeds = Feed.objects.all()
-    posts = set()
-    board_name = '제목 검색 결과' if searchtype == 'title' else \
-                 ('내용 검색 결과' if searchtype == 'conttent' else 
+    query = request.GET['query2']
+    search_option = request.GET['select-option2']
+
+    feeds = get_feed(board, category)
+    if search_option == 'title':
+        feeds = feeds.filter(title__contains = query).order_by('-created_at')
+    elif search_option == 'content':
+        feeds = feeds.filter(content__contains = query).order_by('-created_at')
+    elif search_option == 'title-and-content':
+        feeds = feeds.filter(title__contains = query, content__contains = query).order_by('-created_at')
+    
+    board_name = '제목 검색 결과' if search_option == 'title' else \
+                 ('내용 검색 결과' if search_option == 'content' else 
                  ('제목 + 내용 검색 결과'))
+   
+    pages = get_pages(feeds, request)
+    if len(feeds) == 0:
+        board_name += ' 없음'
+        
+    return render(request, 'feedpage/show.html', {'posts': pages[0], 'board': board, 'category': category, 'option': search_option,
+                        'query':query, 'board_name': board_name, 'paginator_range': pages[2], 'search': 'part' })
 
-    for feed in feeds:
-        if searchtype == 'title':
-            if feed.title.find(query) != -1:
-                posts.add(feed)
-        elif searchtype == 'content':
-            if feed.content.find(query) != -1:
-                posts.add(feed)
-        elif searchtype == 'both':
-            if feed.title.find(query) != -1:
-                posts.add(feed)
-            elif feed.content.find(query) != -1:
-                posts.add(feed)
-    
-    # 전체글 버튼
-    feeds = feeds.order_by('-created_at')
-    paginator = Paginator(feeds, 1)
-    page = request.GET.get('page')
-    posts = paginator.get_page(page)
-    page_numbers_range = 10
-
-    max_index = len(paginator.page_range)
-    current_page = int(page) if page else 1
-    start_index = int((current_page - 1) / page_numbers_range) * page_numbers_range
-    end_index = start_index + page_numbers_range
-    
-    if end_index >= max_index:
-        end_index = max_index
-    paginator_range = paginator.page_range[start_index:end_index]
-
-    return render(request, 'feedpage/show.html', {'posts': posts, 'board': 'search', 'category': searchtype,
-                 'query':query, 'board_name': boarde_name, 'paginator_range':paginator_range })
-
-def searchmore(request, board, category):
-    searchtype = request.GET
-    query = request.GET['query']
-    searchtype = request.GET['searchtype']
-    feeds = Feed.objects.all()
-    results = set()
-
-
-    for feed in feeds:
-        if searchtype == 'title':
-            if feed.title.find(query) != -1:
-                results.add(feed)
-        elif searchtype == 'content':
-            if feed.content.find(query) != -1:
-                results.add(feed)
-        elif searchtype == 'both':
-            if feed.title.find(query) != -1:
-                results.add(feed)
-            elif feed.content.find(query) != -1:
-                results.add(feed)
-
-    return render(request, 'feedpage/search.html', {'results': results})

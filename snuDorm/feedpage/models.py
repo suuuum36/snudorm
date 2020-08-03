@@ -44,6 +44,7 @@ class Feed(models.Model):
     board_info1 = models.CharField(max_length=20, blank=False)
     board_info2 = models.CharField(max_length=20, blank=False)
 
+    status = MultiSelectField(choices=STAT_OPTION, default='ongoing')    
     class Meta:
         ordering = ('created_at',)
 
@@ -67,7 +68,6 @@ class FreeBoard(Feed):
         return self.title
 
 class Life(Feed):
-    status = MultiSelectField(choices=STAT_OPTION, default='ongoing')    
     class Meta:
         ordering = ('created_at', )
 
