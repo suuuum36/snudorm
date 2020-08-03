@@ -50,37 +50,11 @@ if(urlPath.indexOf("best")!= -1 && urlPath.indexOf(num3Text)!= -1) {
 }
 
 
-//완료 dim 처리
-var BestButton = document.getElementById("best")
-
-var wholeFeed = document.querySelector('.whole-feed')
-var comment = document.querySelector('.comment')
-
-var wholeFeed2 = document.getElementById("whole-feed")
-var comment2 = document.getElementById("comment")
-
-var statusText = document.querySelector('.status-text').innerText;
-var statusBox = document.querySelector('.life-status')
-
-var statusText2 = document.getElementById("status-text").innerText;
-var statusBox2 = document.getElementById("life-status")
-
-var oneFeed = document.querySelector('.one-feed').childElementCount;
+//완료 dim 처리 
 
 
-if (statusText == "완료") {
-    wholeFeed.style.color = '#7f7f7f';
-    comment.style.color = '#7f7f7f';
-    statusBox.style.backgroundColor = '#7f7f7f';
-}
+var string = '완료';
 
-
-BestButton.addEventListener('click', () => {
-    if (statusText == "완료") {
-        wholeFeed2.style.color = '#7f7f7f';
-        comment2.style.color = '#7f7f7f';
-        statusBox2.style.backgroundColor = '#7f7f7f';
-    } else {
-
-    }
-})
+$('.whole-feed:contains("'+string+'")').css("color","#7f7f7f");
+$('.whole-feed:contains("'+string+'")').find( '.comment' ).css("color","#7f7f7f");
+$('.life-status:contains("'+string+'")').css("background-color","#7f7f7f");
