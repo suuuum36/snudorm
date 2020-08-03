@@ -7,6 +7,11 @@
 // 3) 글씨체
 // 4) 셀렉트박스 화살표 이미지 변경 및 수정
 
+
+* {
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
 // input 태그 focus 시 글자 사라지도록
 input:focus::-webkit-input-placeholder, 
 textarea:focus::-webkit-input-placeholder {
@@ -140,6 +145,10 @@ textarea:focus::-webkit-input-placeholder {
             }
 
             label {
+                display: inline-block;
+                width: 188px;
+                height: 16px;
+                line-height: 16px;
                 cursor: pointer;
             }
         }

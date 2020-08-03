@@ -1,3 +1,6 @@
+* {
+  font-family: 'Noto Sans KR', sans-serif; }
+
 input:focus::-webkit-input-placeholder,
 textarea:focus::-webkit-input-placeholder {
   color: transparent; }
@@ -71,8 +74,12 @@ textarea:focus::-webkit-input-placeholder {
         .form .building .building-category .category-option .radio {
           display: none; }
       .form .building .building-category .category-option:hover {
-        color: #3e3eff; }
+        color: #016aff; }
       .form .building .building-category label {
+        display: inline-block;
+        width: 188px;
+        height: 16px;
+        line-height: 16px;
         cursor: pointer; }
     .form .building .building-dong {
       display: flex;
@@ -126,7 +133,7 @@ textarea:focus::-webkit-input-placeholder {
         .form .building .building-dong .dong-option .radio {
           display: none; }
       .form .building .building-dong .dong-option:hover {
-        color: #3e3eff; }
+        color: #016aff; }
       .form .building .building-dong label {
         cursor: pointer; }
   .form .signup {
@@ -192,7 +199,7 @@ textarea:focus::-webkit-input-placeholder {
   width: 90px;
   height: 50px;
   border-radius: 30px;
-  background-color: #3e3eff;
+  background-color: #016aff;
   color: #ffffff;
   font-weight: bold; }
   .check-confirm span {

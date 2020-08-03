@@ -1,47 +1,64 @@
-// function id_overlap_check() {
+// 중복확인을 하지 않고 회원가입 버튼을 눌렀을 때
+//  if ($('.user-id').attr("check_result") == "fail"){
+    //    alert("아이디 중복체크를 해주시기 바랍니다.");
+    //    $('user-id').focus();
+    //    return false;
+    //  }
 
-//     $('.username_input').change(function () {
-//       $('#id_check_sucess').hide();
-//       $('.id_overlap_button').show();
-//       $('.username_input').attr("check_result", "fail");
-//     })
+function id_db_check() {
+
+     $('.user-id').change(function () {
+       $('#id-check').hide();
+       $('.db-check').show();
+       $('.user-id').attr("check_result", "fail");
+     })
 
 
-//     if ($('.username_input').val() == '') {
-//       alert('아이디를 입력해주세요.')
-//       return;
-//     }
+     if ($('.user-id').val() == '') {
+       alert('아이디를 입력해주세요.')
+       return;
+     }
 
-//     id_overlap_input = document.querySelector('input[name="username"]');
+     id_input = document.querySelector('input[name="user_id"]');
 
-//     $.ajax({
-//       url: "{% url 'signup' %}",
-//       data: {
-//         'username': id_overlap_input.value
-//       },
-//       datatype: 'json',
-//       success: function (data) {
-//         console.log(data['overlap_check']);
-//         if (data['overlap_check'] == "fail") {
-//           alert("이미 존재하는 아이디 입니다.");
-//           id_overlap_input.focus();
-//           return;
-//         } else {
-//           alert("사용가능한 아이디 입니다.");
-//           $('.username_input').attr("check_result", "success");
-//           $('#id_check_sucess').show();
-//           $('.id_overlap_button').hide();
-//           return;
-//         }
-//       },
-//       error: function(response, status, error) {
-//         console.log(response, status, error);
-//       },
-//       complete: function(response) {
-//         console.log(response);
-//       },
-//     });
-//   }
+     $.ajax({
+       url: "/accounts/signup/iddbcheck",
+       data: {
+         'user_id': id_input.value
+       },
+       datatype: 'json',
+       success: function (data) {
+         if (data['overlap_check'] == "fail") {
+           alert("이미 존재하는 아이디 입니다.");
+           id_input.focus();
+           return;
+         } else {
+           alert("사용가능한 아이디 입니다.");
+           $('.user-id').attr("check_result", "success");
+           $('#id_check').show();
+           $('.db-check').hide();
+           return;
+         }
+       }
+     });
+   }
+
+// 기숙사 생활관
+const selected = document.querySelector(".selected");
+const category_container = document.querySelector(".category-container");
+
+const category_options = document.querySelectorAll(".category-option");
+
+selected.addEventListener("click", () => {
+  category_container.classList.toggle("active");
+});
+
+category_options.forEach(o => {
+  o.addEventListener("click", () => {
+    selected.innerHTML = o.querySelector("label").innerHTML;
+    category_container.classList.remove("active");
+  });
+});
 
 // 기숙사 동 반응형 구현
 function categoryChange(e) {
@@ -81,23 +98,6 @@ function categoryChange(e) {
     target.appendChild(div);
   }
 };
-
-// 기숙사 생활관
-const selected = document.querySelector(".selected");
-const category_container = document.querySelector(".category-container");
-
-const category_options = document.querySelectorAll(".category-option");
-
-selected.addEventListener("click", () => {
-  category_container.classList.toggle("active");
-});
-
-category_options.forEach(o => {
-  o.addEventListener("click", () => {
-    selected.innerHTML = o.querySelector("label").innerHTML;
-    category_container.classList.remove("active");
-  });
-});
 
 // 기숙사 동
 const selected_dong = document.querySelector(".selected-dong");
