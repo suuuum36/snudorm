@@ -1,40 +1,75 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load sass_tags %}
 {% block content %}
-    <div>
-        <a href="{% url 'userinfo' user.id %}">내 정보</a>
-        <a href="{% url 'useredit' user.id %}">개인정보 변경</a>
-        <a href="{% url 'usernotice' user.id %}">게시글 알림</a>
-        <a href="{% url 'messagebox' user.id %}">쪽지함</a>
+<div class="form">
+    <div class="nav">
+        <div class="nav-title"><span>마이페이지</span></div>
+        <div class="nav-list"><a href="{% url 'userinfo' user.id %}">내 정보</a></div>
+        <div class="nav-list"><a href="{% url 'useredit' user.id %}">개인정보 변경</a></div>
+        <div class="nav-list"><a href="{% url 'passwordedit' user.id %}">비밀번호 변경</a></div>
+        <div class="nav-list"><a href="{% url 'usernotice' user.id %}">게시글 알림</a></div>
+        <div class="nav-list"><a href="{% url 'messagebox' user.id %}">쪽지함</a></div>
     </div>
-    </br>
-    </br>
-    </br>
-    </br>
     <div class="info">
+        <div class="title">개인정보 변경</div>
         <form method="POST" action="{% url 'useredit' user.id %}">
             {% csrf_token %}
-            {{ context.error }}
-            <div>
-                이름 <input name="name" type="text" value="{{ user.profile.name }}" required>
-            </div></br>
-            <div>
-                아이디 <input name="user_id" type="text" value="{{ user.username }}" readonly>
-            </div></br>
-            <div>
-                닉네임 <input name="nickname" type="text" value="{{ user.profile.nickname }}" required>
-            </div></br>
-            <div>
-                이메일 <input name="email" type="text" value="{{ user.email }}" required> @ snu.ac.kr
-            </div></br>
-            <div>
-                기숙사 동 <input name="building_category" type="text" value="{{ user.profile.building_category }}" required>
-                <input name="building_dong" type="text" value="{{ user.profile.building_dong }}" required>
-            </div></br>
-            <div>
-                기존_비밀번호 <input name="origin_password" type="password" required>
-            </div></br>
-            <button type="submit">개인정보 변경</button>
+            <div class="container">
+                <div class="name">
+                    <div class="field">
+                        <span>이름</span>
+                    </div>
+                    <div class="value">
+                        <input class="input-box" name="name" type="text" placeholder="{{ user.profile.name }}" required>
+                    </div>
+                </div>
+                <div class="id">
+                    <div class="field">
+                        <span>아이디</span>
+                    </div>
+                    <div class="value">
+                        <input class="input-box" id="no" name="user_id" type="text" placeholder="{{ user.username }}" readonly>
+                    </div>
+                </div>
+                <div class="nickname">
+                    <div class="field">
+                        <span>닉네임</span>
+                    </div>
+                    <div class="value">
+                        <input class="input-box" name="nickname" type="text" placeholder="{{ user.profile.nickname }}" required>
+                    </div>
+                </div>
+                <div class="email">
+                    <div class="field">
+                        <span>이메일</span>
+                    </div>
+                    <div class="value">
+                        <input class="input-box" name="email" type="text" placeholder="{{ user.email }}" required> @ snu.ac.kr
+                    </div>
+                </div>
+                <div class="building">
+                    <div class="field">
+                        <span>기숙사 동</span>
+                    </div>  
+                    <div class="value" id="building-item">
+                        <input id="category" class="input-box" name="building_category" type="text" placeholder="{{ user.profile.building_category }}" required>
+                        <input id="dong" class="input-box" name="building_dong" type="text" placeholder="{{ user.profile.building_dong }}" required>
+                    </div>
+                </div>
+                <div class="password">
+                    <div class="field">
+                        <span>비밀번호</span>
+                    </div>  
+                    <div class="value">
+                        <input class="input-box" name="origin_password" type="password" required>
+                    </div>
+                </div>
+            </div>  
+            <div class="edit">
+                <button type="submit">개인정보 변경</button>
+            </div>   
         </form>
-        <a href="{% url 'passwordedit' user.id %}">비밀번호 변경하기</a>
     </div>
+</div>
 {% endblock content %}

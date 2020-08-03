@@ -1,9 +1,0 @@
-{
-	"version": 3,
-	"file": "user_edit.css",
-	"sources": [
-		"user_edit.scss"
-	],
-	"names": [],
-	"mappings": "AAEA,AAAA,IAAI,CAAC;EACD,gBAAgB,EAAE,KAAK,GAC1B"
-}

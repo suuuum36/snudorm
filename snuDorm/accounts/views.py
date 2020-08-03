@@ -9,6 +9,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 
+from django.http import JsonResponse
+
 # 비밀번호 변경
 from django.contrib.auth.hashers import check_password
 
@@ -55,6 +57,25 @@ def signup(request):
         
         return render(request, 'accounts/signup.html')
 
+
+# 아이디 중복 확인
+def id_db_check(request):
+    username = request.GET['user_id']
+
+    try:
+        # 아이디 중복 o (사용 불가능)
+        user = User.objects.get(username=username)
+    except:
+        # 아이디 중복 x (사용 가능)
+        user = None
+
+    if user is None:
+        db_check = "pass"
+    else:
+        db_check = "fail"
+
+    context = {'db_check': db_check}
+    return JsonResponse(context)
 
 def error(request): # alert로 구현 필요
 
@@ -151,7 +172,7 @@ def userInfo(request, id):
 
 def userNotice(request, id):
 
-    return render(request, 'accounts/user_notice', {'id': id})
+    return render(request, 'accounts/user_notice.html', {'id': id})
 
 def messageBox(request, id):
 

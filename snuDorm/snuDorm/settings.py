@@ -141,6 +141,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 SASS_PROCESSOR_ENABLED =  True
+
 # TODO: feedpage와 accounts 모두 scss 적용가능하도록
 SASS_PROCESSOR_ROOT =  os.path.join(BASE_DIR, 'accounts', 'static') 
 
