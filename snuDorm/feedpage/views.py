@@ -507,7 +507,7 @@ def search(request):
             board_name += ' 없음'
 
         pages = get_pages(feeds, request)
-        return render(request, 'feedpage/show.html', {'posts': pages[0], 'query':query, 'search': True, 'category': '',
+        return render(request, 'feedpage/show.html', {'posts': pages[0], 'query':query, 'search': 'all', 'option': search_option,
                                 'board_name': board_name, 'paginator_range': pages[2], 'board': 'search' })
 
 def searchMore(request, board, category):
@@ -531,6 +531,6 @@ def searchMore(request, board, category):
     if len(feeds) == 0:
         board_name += ' 없음'
         
-    return render(request, 'feedpage/show.html', {'posts': pages[0], 'board': board, 'category': category, 
-                        'query':query, 'board_name': board_name, 'paginator_range': pages[2], 'search': True })
+    return render(request, 'feedpage/show.html', {'posts': pages[0], 'board': board, 'category': category, 'option': search_option,
+                        'query':query, 'board_name': board_name, 'paginator_range': pages[2], 'search': 'part' })
 

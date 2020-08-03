@@ -8,7 +8,7 @@
 
 <div class="info">
     <div class = "title-div">
-        {% if search == True %}
+        {% if search == 'all' or search == 'part' %}
             <div class = "title-text"> '{{ query }}' {{ board_name }} </div> 
         {% else %}
             <div class = "title-text" >{{ board_name }} </div>
@@ -17,7 +17,7 @@
             </div>
             <div id="best" style="color:#7f7f7f;">베스트</div>
             <!-- 전체글을 보는 게시판은 글쓰기 불가능하게! -->
-            {% if board == "freeboard" or board_name != "전체" %}
+            {% if board == "freeboard" or board_name != "전체 게시판" %}
                 <div class = "write">
                     <a class = "write-button" href="{% url 'newfeed' board category %}">글쓰기</a>
                 </div>
@@ -29,7 +29,7 @@
         {% if board == 'search' %}
             <div class="i-board">분류</div> 
         {% endif %}
-        {% if board == 'search' or board_name == "전체" and board != "freeboard" %}
+        {% if board == 'search' or board_name == "전체 게시판" and board != "freeboard" %}
             <div class = "i-board">게시판</div>
         {% elif board == 'life' %}
             <div class = "i-board i-status">상태</div> 
@@ -59,7 +59,7 @@
                                 {% endif %}
                             {% endif %}
                                 
-                            {% if board == "search" or board_name == "전체" and board != "freeboard"%}
+                            {% if board == "search" or board_name == "전체 게시판" and board != "freeboard"%}
                                 <div class="board_name"> 
                                     {% if feed.board == 'minwon' %}
                                         <div>{{ feed.board_info1 }}</div> <!-- 공통|학부|대학원|가족|BK -->
@@ -99,7 +99,7 @@
                                         <div>자유</div> 
                                     {% endif %}
                                 {% endif %}
-                                {% if board == "search" or board_name == "전체" and board != "freeboard" %}
+                                {% if board == "search" or board_name == "전체 게시판" and board != "freeboard" %}
                                     <div class="board_name"> 
                                         {% if feed.board == "minwon" %}
                                             <div>{{ feed.board_info1 }}</div> <!-- 공통|학부|대학원|가족|BK -->
@@ -143,33 +143,62 @@
             {% endfor %} 
             {% if board != 'search' %}
                 <div class = "below">
-                    <div class="search">
-                        <form class = "search-form" action="{% url 'searchmore' board category %}" method="get">
-                            <div class = "search-text">
-                                <select class="search-option2" name="select-option2" style = "color: #7f7f7f;">
-                                    <option value="title">제목</option>
-                                    <option value="content">내용</option>
-                                    <option value="title-and-content">제목+내용</option>
-                                </select>
-                                <input type="text" name="query2" class = "search-text" size ="30" placeholder = "검색어를 입력하세요.">
-                            </div>
-                        </form>
-                    </div>
-                {% if not search %}
-                    <!-- 전체글을 보는 게시판은 글쓰기 불가능하게! -->
-                    {% if board == "freeboard" or board_name != "전체" %}
-                        <div class = "write2">
-                            <a class = "write-button" href="{% url 'newfeed' board category %}">글쓰기</a>
+                    {% if search == 'part'%}
+                        <div class="search">
+                            <form class = "search-form" action="{% url 'searchmore' board category %}" method="get">
+                                <div class = "search-text">
+                                    <select class="search-option2" name="select-option2" style = "color: #7f7f7f;">
+                                        <option value="title">제목</option>
+                                        {% if option == "content" %}
+                                            <option value="content" selected="selected">내용</option>
+                                        {% else %}
+                                            <option value="content">내용</option>
+                                        {% endif %}
+                                        {% if option == "title-and-content" %}
+                                            <option value="title-and-content" selected="selected">제목+내용</option>
+                                        {% else %}
+                                            <option value="title-and-content">제목+내용</option>
+                                        {% endif %}
+                                    </select>
+                                    <input type="text" name="query2" class = "search-text" size ="30" value={{query}} placeholder = "검색어를 입력하세요.">
+                                </div>
+                            </form>
+                        </div>
+                    {% else %}
+                        <div class="search">
+                            <form class = "search-form" action="{% url 'searchmore' board category %}" method="get">
+                                <div class = "search-text">
+                                    <select class="search-option2" name="select-option2" style = "color: #7f7f7f;">
+                                        <option value="title">제목</option>
+                                        <option value="content">내용</option>
+                                        <option value="title-and-content">제목+내용</option>
+                                    </select>
+                                    <input type="text" name="query2" class = "search-text" size ="30" placeholder = "검색어를 입력하세요.">
+                                </div>
+                            </form>
                         </div>
                     {% endif %}
-                {% endif %} 
-            </div>
+                    {% if not search %}
+                        <!-- 전체글을 보는 게시판은 글쓰기 불가능하게! -->
+                        {% if board == "freeboard" or board_name != "전체 게시판" %}
+                            <div class = "write2">
+                                <a class = "write-button" href="{% url 'newfeed' board category %}">글쓰기</a>
+                            </div>
+                        {% endif %}
+                    {% endif %} 
+                </div>
             {% endif %}
 
             <div class="page_numbers" >
                 {% if posts.has_previous %}
                     <div class = "previous">
-                        <a href="?page={{posts.previous_page_number}}"> 이전 </a>
+                        {% if search == 'all' %}
+                            <a href="?page={{posts.previous_page_number}}&select-option={{option}}&query={{query}}"> 이전 </a>
+                        {% elif search == 'part' %}
+                            <a href="?page={{posts.previous_page_number}}&select-option2={{option}}&query2={{query}}"> 이전 </a>
+                        {% else %}
+                            <a href="?page={{posts.previous_page_number}}"> 이전 </a>
+                        {% endif%}
                     </div> 
                 {% endif %}
                 {% for num in paginator_range %} 
@@ -177,14 +206,30 @@
                         <div class = "num1" >{{ num }}</div> 
                     {% else %}
                         <!-- 수민님 a href를 빼면 css 잘 작동합니다. -->
-                        <a href="?best_page={{num}}">
-                            <div class = "num2" >{{ num }}</div>
-                        </a>
+                        {% if search == 'all' %}
+                            <a href="?page={{num}}&select-option={{option}}&query={{query}}">
+                                <div class = "num2" >{{ num }}</div>
+                            </a>
+                        {% elif search == 'part' %}
+                            <a href="?page={{num}}&select-option2={{option}}&query2={{query}}">
+                                <div class = "num2" >{{ num }}</div>
+                            </a>
+                        {% else %}
+                            <a href="?page={{num}}">
+                                <div class = "num2" >{{ num }}</div>
+                            </a>
+                        {% endif %}
                     {% endif %}
                 {% endfor %}
                 {% if posts.has_next %}
                     <div class = "next">
-                        <a href="?page={{posts.next_page_number}}"> 다음</a> 
+                        {% if search == 'all' %}
+                            <a href="?page={{posts.next_page_number}}&select-option={{option}}&query={{query}}"> 다음</a> 
+                        {% elif search == 'part' %}
+                            <a href="?page={{posts.next_page_number}}&select-option2={{option}}&query2={{query}}"> 다음</a> 
+                        {% else %}
+                            <a href="?page={{posts.next_page_number}}"> 다음</a> 
+                        {% endif %}
                     </div>
                 {% endif %}
             </div> 
@@ -206,7 +251,7 @@
                                     <div>자유</div> 
                                 {% endif %}
                             {% endif %}
-                            {% if board == "search" or board_name == "전체" and board != "freeboard" %}
+                            {% if board == "search" or board_name == "전체 게시판" and board != "freeboard" %}
                                 <div class="board_name" style="display:flex; flex-direction:column;"> 
                                     {% if feed.board == "minwon" %}
                                         <div>{{ feed.board_info1 }}</div> <!-- 공통|학부|대학원|가족|BK -->
@@ -247,7 +292,7 @@
                                     {% endif %}
                                 {% endif %}
                                 <!-- 게시판 항목 이름 -->
-                                {% if board == "search" or board_name == "전체" and board != "freeboard" %}
+                                {% if board == "search" or board_name == "전체 게시판" and board != "freeboard" %}
                                     <div class="board_name" style="display:flex; flex-direction:column;"> 
                                         {% if feed.board == "minwon" %}
                                             <div>{{ feed.board_info1 }}</div> <!-- 공통|학부|대학원|가족|BK -->
@@ -291,25 +336,49 @@
             {% endfor %}
             {% if board != 'search' %}
             <div class = "below">
-                <div class="search">
-                    <form class = "search-form" action="{% url 'searchmore' board category %}" method="get">
-                        <div class = "search-text">
-                            <select class="search-option2" name="select-option2" style = "color: #7f7f7f;">
-                                <option value="title">제목</option>
-                                <option value="content">내용</option>
-                                <option value="title-and-content">재목+내용</option>
-                            </select>
-                            <input type="text" name="query2" class = "search-text" size ="30" placeholder = "검색어를 입력하세요.">
-                        </div>
-                    </form>
-                </div>
-               {% if not search %}
-                    {% if board == "freeboard" or board_name != "전체" %}
+                {% if search == 'part'%}
+                    <div class="search">
+                        <form class = "search-form" action="{% url 'searchmore' board category %}" method="get">
+                            <div class = "search-text">
+                                <select class="search-option2" name="select-option2" style = "color: #7f7f7f;">
+                                    <option value="title">제목</option>
+                                    {% if option == "content" %}
+                                        <option value="content" selected="selected">내용</option>
+                                    {% else %}
+                                        <option value="content">내용</option>
+                                    {% endif %}
+                                    {% if option == "title-and-content" %}
+                                        <option value="title-and-content" selected="selected">제목+내용</option>
+                                    {% else %}
+                                        <option value="title-and-content">제목+내용</option>
+                                    {% endif %}
+                                </select>
+                                <input type="text" name="query2" class = "search-text" size ="30" value={{query}} placeholder = "검색어를 입력하세요.">
+                            </div>
+                        </form>
+                    </div>
+                {% else %}
+                    <div class="search">
+                        <form class = "search-form" action="{% url 'searchmore' board category %}" method="get">
+                            <div class = "search-text">
+                                <select class="search-option2" name="select-option2" style = "color: #7f7f7f;">
+                                    <option value="title">제목</option>
+                                    <option value="content">내용</option>
+                                    <option value="title-and-content">제목+내용</option>
+                                </select>
+                                <input type="text" name="query2" class = "search-text" size ="30" placeholder = "검색어를 입력하세요.">
+                            </div>
+                        </form>
+                    </div>
+                {% endif %}
+                {% if search != 'all' and search != 'part' %}
+                    <!-- 전체글을 보는 게시판은 글쓰기 불가능하게! -->
+                    {% if board == "freeboard" or board_name != "전체 게시판" %}
                         <div class = "write2">
                             <a class = "write-button" href="{% url 'newfeed' board category %}">글쓰기</a>
                         </div>
                     {% endif %}
-                {% endif %}
+                {% endif %} 
             </div>
             {% endif %}
 
