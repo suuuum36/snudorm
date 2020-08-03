@@ -29,6 +29,6 @@ urlpatterns = [
          views.deleteRecomment, name='deleterecomment'),
     path('<str:board>/<str:category>/<int:fid>/<int:cid>/<int:rcid>/likerecomment/',
          views.likeRecomment, name='likerecomment'),
-    path('search',
+    path('search/',
          views.search, name='search'),
 ]

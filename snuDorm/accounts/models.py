@@ -7,12 +7,19 @@ from django.core.validators import MinLengthValidator
 
 from multiselectfield import MultiSelectField
 from faker import Faker
+from django.contrib.postgres.fields import ArrayField
 
 class Profile(models.Model):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, related_name='profile')
     name = models.CharField(max_length=15, verbose_name='이름')
     nickname = models.CharField(max_length=15, verbose_name='닉네임')
+    # notices = ArrayField(   
+    #                 ArrayField(models.CharField(max_length=50, blank=True)))
+    '''
+        이중 array -> 1) 게시글|댓글  2) 공감|댓글|대댓글  3) username
+                      4) created_at  5) board   6) category  7) fid
+    '''
 
     # 셀렉트 박스 사용
     BUIDING_CATEGORY_CHOICES = {
@@ -35,7 +42,7 @@ class Profile(models.Model):
     building_dong = models.CharField(max_length=20, choices=BUIDING_DONG_CHOICES, verbose_name='동')
 
     def __str__(self):
-        return f'user={self.user}, name={self.name}, nickname={self.nickname}, \
+        return f'user={self.user}, name={self.name}, nickname={self.nickname}, notices={self.notices},\
             building_category={self.building_category}, building_dong={self.building_dong}'
 
     # # testing을 위함

@@ -313,9 +313,8 @@ def editFeed(request, board, category, fid):
         feed.save()
         return redirect('showfeed', board=board, category=category, fid=fid)
 
+
 # 게시글 삭제
-
-
 def deleteFeed(request, board, category, fid):
     feed = Feed.objects.get(id=fid)
     feed.delete()
@@ -337,11 +336,14 @@ def likeFeed(request, board, category, fid):
         elif board == "freeboard":
             feed = FreeBoard.objects.get(id=fid)
         
-        user_like = feed.feedlike.filter(user_id=request.user.id)
-        if user_like.count() > 0:
-            feed.feedlike.get(user_id=request.user.id).delete()
-        else:
-            FeedLike.objects.create(user_id=request.user.id, feed_id=feed.id)
+        if request.user.id != feed.author.id:
+            user_like = feed.feedlike.filter(user_id=request.user.id)
+            if user_like.count() > 0:
+                feed.feedlike.get(user_id=request.user.id).delete()
+            else:
+                FeedLike.objects.create(user_id=request.user.id, feed_id=feed.id)
+                # feed.author.notice.append(['게시글', '공감', request.user.username, datetime.now(), 
+                #                             board, category, fid, False ])
 
     return render(request, 'feedpage/feed.html', {'feed': feed, 'board': board, 
                             'category': category, 'fid': fid, 'board_name': board_info[2]})
@@ -360,6 +362,8 @@ def newComment(request, board, category, fid):
         'content': new_comment.content,
         'like_count': like_count.count(),
     }
+    # feed.author.notice.append(['게시글', '댓글', request.user.username, datetime.now(), 
+    #                             board, category, fid, False ])
 
     return JsonResponse(context)
 
@@ -391,11 +395,12 @@ def likeComment(request, board, category, fid, cid):
     if like_list.count() > 0:
         feedcomment.commentlike_set.get(user_id=request.user.id).delete()
     else:
-
         CommentLike.objects.create(user_id = request.user.id, comment_id = feedcomment.id)
     context = {
         'likecount': like_list.count()
     }
+    # feed.author.notice.append(['댓글', '대댓글', request.user.username, datetime.now(), 
+    #                             board, category, fid, False, cid ])
     return JsonResponse(context)
     # return redirect('showfeed', board=board, category=category, fid=fid)
 
@@ -461,24 +466,42 @@ def search(request):
     query = request.GET['query']
     searchtype = request.GET['searchtype']
     feeds = Feed.objects.all()
-    results = set()
+    posts = set()
+    board_name = '제목 검색 결과' if searchtype == 'title' else \
+                 ('내용 검색 결과' if searchtype == 'conttent' else 
+                 ('제목 + 내용 검색 결과'))
 
     for feed in feeds:
         if searchtype == 'title':
             if feed.title.find(query) != -1:
-                results.add(feed)
+                posts.add(feed)
         elif searchtype == 'content':
             if feed.content.find(query) != -1:
-                results.add(feed)
+                posts.add(feed)
         elif searchtype == 'both':
             if feed.title.find(query) != -1:
-                results.add(feed)
+                posts.add(feed)
             elif feed.content.find(query) != -1:
-                results.add(feed)
-            
-            
+                posts.add(feed)
+    
+    # 전체글 버튼
+    feeds = feeds.order_by('-created_at')
+    paginator = Paginator(feeds, 1)
+    page = request.GET.get('page')
+    posts = paginator.get_page(page)
+    page_numbers_range = 10
 
-    return render(request, 'feedpage/search.html', {'results': results})
+    max_index = len(paginator.page_range)
+    current_page = int(page) if page else 1
+    start_index = int((current_page - 1) / page_numbers_range) * page_numbers_range
+    end_index = start_index + page_numbers_range
+    
+    if end_index >= max_index:
+        end_index = max_index
+    paginator_range = paginator.page_range[start_index:end_index]
+
+    return render(request, 'feedpage/show.html', {'posts': posts, 'board': 'search', 'category': searchtype,
+                 'query':query, 'board_name': boarde_name, 'paginator_range':paginator_range })
 
 def searchmore(request, board, category):
     searchtype = request.GET
