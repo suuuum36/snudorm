@@ -8,7 +8,7 @@
 
 <div class="info">
     <div class = "title-div">
-        {% if board == 'search'%}
+        {% if search == True %}
             <div class = "title-text"> '{{ query }}' {{ board_name }} </div> 
         {% else %}
             <div class = "title-text" >{{ board_name }} </div>
@@ -26,10 +26,10 @@
     </div>
 
     <div class = "index-div">
-        {% if board == "search" %}
+        {% if board == 'search' %}
             <div class="i-board">분류</div> 
         {% endif %}
-        {% if board == "search" or board_name == "전체" and board != "freeboard" %}
+        {% if board == 'search' or board_name == "전체" and board != "freeboard" %}
             <div class = "i-board">게시판</div>
         {% elif board == 'life' %}
             <div class = "i-board i-status">상태</div> 
@@ -141,23 +141,21 @@
                     </div>
                 {% endif %}
             {% endfor %} 
-
-            <div class = "below">
-                <div class="search">
-                    <form class = "search-form" action="{% url 'searchmore' board category %}" method="get">
-                        <div class = "search-text">
-                            <select class="search-option2" name="select-option2" style = "color: #7f7f7f;">
-                                <option value="default">선택</option>
-                                <option value="title">제목</option>
-                                <option value="content">내용</option>
-                                <option value="title-and-content">제목+내용</option>
-                            </select>
-                            <input type="text" name="query2" class = "search-text" size ="30" placeholder = "검색어를 입력하세요.">
-                        </div>
-                    </form>
-                </div>
-
-                {% if board != 'search' %}
+            {% if board != 'search' %}
+                <div class = "below">
+                    <div class="search">
+                        <form class = "search-form" action="{% url 'searchmore' board category %}" method="get">
+                            <div class = "search-text">
+                                <select class="search-option2" name="select-option2" style = "color: #7f7f7f;">
+                                    <option value="title">제목</option>
+                                    <option value="content">내용</option>
+                                    <option value="title-and-content">제목+내용</option>
+                                </select>
+                                <input type="text" name="query2" class = "search-text" size ="30" placeholder = "검색어를 입력하세요.">
+                            </div>
+                        </form>
+                    </div>
+                {% if not search %}
                     <!-- 전체글을 보는 게시판은 글쓰기 불가능하게! -->
                     {% if board == "freeboard" or board_name != "전체" %}
                         <div class = "write2">
@@ -166,6 +164,7 @@
                     {% endif %}
                 {% endif %} 
             </div>
+            {% endif %}
 
             <div class="page_numbers" >
                 {% if posts.has_previous %}
@@ -290,13 +289,12 @@
                     </div>
                 {% endif %}
             {% endfor %}
-
+            {% if board != 'search' %}
             <div class = "below">
                 <div class="search">
                     <form class = "search-form" action="{% url 'searchmore' board category %}" method="get">
                         <div class = "search-text">
                             <select class="search-option2" name="select-option2" style = "color: #7f7f7f;">
-                                <option value="default">선택</option>
                                 <option value="title">제목</option>
                                 <option value="content">내용</option>
                                 <option value="title-and-content">재목+내용</option>
@@ -305,7 +303,7 @@
                         </div>
                     </form>
                 </div>
-               {% if board != 'search' %}
+               {% if not search %}
                     {% if board == "freeboard" or board_name != "전체" %}
                         <div class = "write2">
                             <a class = "write-button" href="{% url 'newfeed' board category %}">글쓰기</a>
@@ -313,6 +311,7 @@
                     {% endif %}
                 {% endif %}
             </div>
+            {% endif %}
 
             <div class="page_numbers">
                 {% if best_posts.has_previous %}

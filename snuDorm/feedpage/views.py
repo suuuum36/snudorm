@@ -54,6 +54,31 @@ def get_feed(board, category):
         feeds = []
     return feeds
 
+def get_pages(feeds, request):
+    # 전체글 버튼
+    paginator = Paginator(feeds, 1)
+    page = request.GET.get('page')
+    posts = paginator.get_page(page)
+
+    # 베스트 버튼 
+    best_feeds = feeds.order_by('-like_users')
+    paginator2 = Paginator(best_feeds, 1)
+    best_page = request.GET.get('best_page', 1)
+    best_posts = paginator2.get_page(best_page)
+    
+    page_numbers_range = 10
+
+    max_index = len(paginator.page_range)
+    current_page = int(page) if page else 1
+    start_index = int((current_page - 1) / page_numbers_range) * page_numbers_range
+    end_index = start_index + page_numbers_range
+    
+    if end_index >= max_index:
+        end_index = max_index
+
+    paginator_range = paginator.page_range[start_index:end_index]
+    return [posts, best_posts, paginator_range]
+
 # 기본 PAGE
 def showMain(request):
     if request.method == 'GET':
@@ -114,30 +139,11 @@ def showBoard(request, board, category):
         board_info = get_board(board, category)           
         # 전체글 버튼
         feeds = get_feed(board, category).order_by('-created_at')
-        paginator = Paginator(feeds, 1)
-        page = request.GET.get('page')
-        posts = paginator.get_page(page)
+        pages = get_pages(feeds, request)
 
-        # 베스트 버튼 
-        best_feeds = feeds.order_by('-like_users')
-        paginator2 = Paginator(best_feeds, 1)
-        best_page = request.GET.get('best_page', 1)
-        best_posts = paginator2.get_page(best_page)
-        
-        page_numbers_range = 10
-
-        max_index = len(paginator.page_range)
-        current_page = int(page) if page else 1
-        start_index = int((current_page - 1) / page_numbers_range) * page_numbers_range
-        end_index = start_index + page_numbers_range
-        
-        if end_index >= max_index:
-            end_index = max_index
-        paginator_range = paginator.page_range[start_index:end_index]
-
-        return render(request, 'feedpage/show.html', {'posts':posts, 'best_posts': best_posts, 
+        return render(request, 'feedpage/show.html', {'posts':pages[0], 'best_posts': pages[1], 
                             'board': board, 'category': category, 'board_name': board_info[2] + ' 게시판', 
-                            'paginator_range':paginator_range })
+                            'paginator_range':pages[2] })
 
     elif request.method == 'POST':
         return redirect('showboard', board=board, category=category)
@@ -480,42 +486,29 @@ def likeRecomment(request, board, category, fid, cid, rcid):
     return JsonResponse(context)
 
 def search(request):
-    searchtype = request.GET
-    query = request.GET['query']
-    search_option = request.GET['select-option']
+    if request.method == 'GET':
+        searchtype = request.GET
+        query = request.GET['query']
+        search_option = request.GET['select-option']
 
-    feeds = []
-    if search_option == 'title':
-        feeds = Feed.objects.all().filter(title__contains = query).order_by('-created_at')
-    elif search_option == 'content':
-        feeds = Feed.objects.all().filter(content__contains = query).order_by('-created_at')
-    elif search_option == 'title-and-content':
-        feeds = Feed.objects.all().filter(title__contains = query, content__contains = query).order_by('-created_at')
-    
-    board_name = '제목 검색 결과' if search_option == 'title' else \
-                 ('내용 검색 결과' if search_option == 'content' else 
-                 ('제목 + 내용 검색 결과'))
+        feeds = []
+        if search_option == 'title':
+            feeds = Feed.objects.all().filter(title__contains = query).order_by('-created_at')
+        elif search_option == 'content':
+            feeds = Feed.objects.all().filter(content__contains = query).order_by('-created_at')
+        elif search_option == 'title-and-content':
+            feeds = Feed.objects.all().filter(title__contains = query, content__contains = query).order_by('-created_at')
+        
+        board_name = '제목 검색 결과' if search_option == 'title' else \
+                    ('내용 검색 결과' if search_option == 'content' else 
+                    ('제목 + 내용 검색 결과'))
 
-    if len(feeds) == 0:
-        board_name += ' 없음'
+        if len(feeds) == 0:
+            board_name += ' 없음'
 
-    # 전체글 버튼
-    paginator = Paginator(feeds, 1)
-    page = request.GET.get('page')
-    posts = paginator.get_page(page)
-    page_numbers_range = 10
-
-    max_index = len(paginator.page_range)
-    current_page = int(page) if page else 1
-    start_index = int((current_page - 1) / page_numbers_range) * page_numbers_range
-    end_index = start_index + page_numbers_range
-    
-    if end_index >= max_index:
-        end_index = max_index
-    paginator_range = paginator.page_range[start_index:end_index]
-
-    return render(request, 'feedpage/show.html', {'posts': posts, 'query':query, 
-                'board_name': board_name, 'paginator_range': paginator_range })
+        pages = get_pages(feeds, request)
+        return render(request, 'feedpage/show.html', {'posts': pages[0], 'query':query, 'search': True, 'category': '',
+                                'board_name': board_name, 'paginator_range': pages[2], 'board': 'search' })
 
 def searchMore(request, board, category):
     searchtype = request.GET
@@ -533,25 +526,11 @@ def searchMore(request, board, category):
     board_name = '제목 검색 결과' if search_option == 'title' else \
                  ('내용 검색 결과' if search_option == 'content' else 
                  ('제목 + 내용 검색 결과'))
-
+   
+    pages = get_pages(feeds, request)
     if len(feeds) == 0:
         board_name += ' 없음'
         
-    # 전체글 버튼
-    paginator = Paginator(feeds, 1)
-    page = request.GET.get('page')
-    posts = paginator.get_page(page)
-    page_numbers_range = 10
-
-    max_index = len(paginator.page_range)
-    current_page = int(page) if page else 1
-    start_index = int((current_page - 1) / page_numbers_range) * page_numbers_range
-    end_index = start_index + page_numbers_range
-    
-    if end_index >= max_index:
-        end_index = max_index
-    paginator_range = paginator.page_range[start_index:end_index]
-
-    return render(request, 'feedpage/show.html', {'posts': posts, 'board': board, 'category': category, 
-            'query':query, 'board_name': board_name, 'paginator_range': paginator_range, })
+    return render(request, 'feedpage/show.html', {'posts': pages[0], 'board': board, 'category': category, 
+                        'query':query, 'board_name': board_name, 'paginator_range': pages[2], 'search': True })
 
