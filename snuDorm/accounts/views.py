@@ -26,17 +26,13 @@ def signup(request):
         building_dong = request.POST['building_dong'] # Profile, 동
 
         if password == confirm_password: # 1,2차 비밀번호가 일치할 시에 회원가입
-            try:
-                user = User.objects.create_user(
-                    username=user_id,
-                    email=email,
-                    password=password,
-                )
-            # username이 중복될 경우 error가 발생
-            except:
-                context = "username(아이디)이 중복되었습니다(좀 더 구체화 하겠습니다)."
-                return render(request, 'accounts/error.html', {'context': context})
-
+            
+            user = User.objects.create_user(
+                username=user_id,
+                email=email,
+                password=password,
+            )
+            
             # update로 구현해보기
             user.profile.name = name
             user.profile.nickname = nickname
@@ -77,6 +73,25 @@ def id_db_check(request):
     context = {'db_check': db_check}
     return JsonResponse(context)
 
+# 닉네임 중복 확인
+def nk_db_check(request):
+    nickname = request.GET['nickname']
+
+    try:
+        # 닉네임 중복 o (사용 불가능)
+        user = Profile.objects.get(nickname=nickname)
+    except:
+        # 닉네임 중복 x (사용 가능)
+        user = None
+
+    if user is None:
+        db_check = "pass"
+    else:
+        db_check = "fail"
+
+    context = {'db_check': db_check}
+    return JsonResponse(context)
+
 def error(request): # alert로 구현 필요
 
     return render(request, 'accounts/error.html')
@@ -91,7 +106,7 @@ def login(request):
             auth.login(request, user)
             return redirect('/feeds')
         else:
-            return redirect('error') # alert로 구현 필요
+            return e
 
     elif request.method == 'GET':
         return render(request, 'accounts/login.html')

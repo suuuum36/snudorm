@@ -28,10 +28,12 @@
             <div class="id-input">
                 <span class="head">아이디</span>
                 <span class="description">5자 이상의 아이디를 입력해 주세요.</span>
-                <input class="input-value long user-id" name="user_id" check_result="fail" type="text" placeholder="아이디 (5자 이상)" minlength="5" required>
-                <button class="db-check" type="button" onclick="id_db_check()">중복확인</button>
-                <div id="id-check" class="available-1 check-confirm">
-                    <span>사용가능</span>
+                <div class="signup-container">
+                    <input class="input-value long user-id" name="user_id" check_result="fail" type="text" placeholder="아이디 (5자 이상)" minlength="5" maxlength="15" required>
+                    <button class="id-check" type="button" onclick="id_db_check()">중복확인</button>
+                    <div id="id-confirm" class="available-1 check-confirm">
+                        <span>사용가능</span>
+                    </div>
                 </div>
             </div>
             <div class="pw-input">
@@ -46,20 +48,24 @@
             <div class="nickname-input">
                 <span class="head">닉네임</span>
                 <span class="description">다른 유저와 겹치지 않는 닉네임을 입력해 주세요. (2-8자)</span>
-                <input class="input-value long nickname" name="nickname" type="text" placeholder="닉네임 (2-8자)" minlength="2" maxlength="8" required>
-                <button class="db-check" type="button">중복확인</button>
-                <div class="available-2 check-confirm">
-                    <span>사용가능</span>
+                <div class="signup-container">
+                    <input class="input-value long nickname" name="nickname" type="text" placeholder="닉네임 (2-8자)" minlength="2" maxlength="8" required>
+                    <button class="nk-check" type="button" onclick="nk_db_check()">중복확인</button>
+                    <div id="nk-confirm" class="available-2 check-confirm">
+                        <span>사용가능</span>
+                    </div>
                 </div>
             </div>
             <div class="email-input">
                 <span class="head">이메일</span> 
                 <input class="input-value short" name="email" type="text" placeholder="이메일" required><span> @ snu.ac.kr</span>
             </div>
-            <!--
-                TODO: 반응형 구현 필요
-                1) category-option 선택 시 class=""slected"에 HTML 
-             -->
+            <!-- 
+                TODO: CSS와 Javascript를 통한 반응형 구현
+                1) toggle을 통해 옵션 값 숨기기/보여주기
+                2) Javascript를 통해 기숙사 생활관 옵션 선택에 따라 동 옵션 추가하기
+                3) 선택한 옵션 값을 selected(or selected-dong)에 표시해주기
+            -->
             <div class="building">
                 <span class="head">기숙사 동</span>
                 <div class="building-category">
@@ -86,6 +92,7 @@
                         생활관
                     </div>
                 </div>
+                
                 <div class="building-dong">
                     <div class="dong-container" id="dong-container-id">
                         <div class="dong-option">

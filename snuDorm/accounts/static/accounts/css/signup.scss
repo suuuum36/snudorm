@@ -65,7 +65,6 @@ textarea:focus::-webkit-input-placeholder {
             width: 500px;
         }
 
-        // 셀렉트 박스 스타일 구현
         .building-category {
             display: flex;
             width: 240px;
@@ -300,8 +299,13 @@ textarea:focus::-webkit-input-placeholder {
     width: 400px;
 }
 
+.signup-container {
+    display: flex;
+    justify-content: space-between;
+}
+
 // 중복확인 버튼
-.db-check {
+.id-check, .nk-check {
     width: 90px;
     height: 50px;
     border-radius: 30px;
@@ -312,7 +316,7 @@ textarea:focus::-webkit-input-placeholder {
 }
 
 // 사용가능 div
-.check-confirm {
+#id-confirm, #nk-confirm {
     display: none;
     position: relative;
     width: 90px;

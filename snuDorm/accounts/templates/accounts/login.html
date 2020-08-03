@@ -20,6 +20,9 @@
     <link rel="stylesheet" href="{% sass_src 'accounts/css/reset.scss' %}" type="text/css">
 </head>
 <body>
+    {% for message in messages %}
+    {{  messages.error }}
+    {% endfor %}
     <div class="form">
         <div class="logo">
             <a href="{% url 'showmain' %}">
