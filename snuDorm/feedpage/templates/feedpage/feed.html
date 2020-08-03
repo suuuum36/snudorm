@@ -46,7 +46,7 @@
         {% if category == "cobuy" %}
             <div>
                 {{ feed.title }} </br>
-                링크  <a href="{{feed.url}}"> {{ feed.url }}</a> </br>
+                링크  <a href="https://{{ feed.url }}"> {{ feed.url }}</a> </br>
                 {% if feed.duedate|date:"Y.m.d" == '2020.01.01' %}
                     마감일 미정</br>
                 {% else %}
@@ -110,7 +110,7 @@
             </div>
         {% endif %}
     {% endif %}
-{% endif %}
+
 </div>
 
 
@@ -170,7 +170,6 @@
 </div>
 
 {% endfor %}
-{% if user.is_authenticated %}
     <form method="POST" class="comment-submit"
         data-board="{{ board }}" data-category="{{ category }}" data-fid="{{ feed.id }}"
         data-csrfmiddlewaretoken="{{ csrf_token }}">
@@ -180,4 +179,9 @@
     </form>
 {% endif %}
 
+
+<div>
+    <h1>로그인 후 이용해 주세요!</h1>
+    <a href="{% url 'login' %}">로그인</a>
+</div>
 {% endblock content %}
