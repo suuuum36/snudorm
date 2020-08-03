@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
+{% if user.is_authenticated %}
 <div class="info">
     <div>{{ board_name }} 게시판 </div>
     {% if feed.author == request.user %}
@@ -8,8 +9,13 @@
         <a href="{% url 'editfeed' board category feed.id %}">수정</a>
         <a href="{% url 'deletefeed' board category feed.id %}">삭제</a>
     </div>
+    {% else %}
+    <div style="margin: 10px; text-align: right;">
+        <a href="{% url 'chatroom' request.user.id feed.author.id  %}">
+            쪽지보내기
+        </a>
+    </div>
     {% endif %}
-{% if user.is_authenticated %}
     <div style="display:flex; justify-content:space-around;">
         <div style="display:flex"> 
             <div>작성자</div>
@@ -177,11 +183,13 @@
         <input id="{{ feed.id }}" type="text" name="content" />
         <button type="submit">댓글 달기</button>
     </form>
-{% endif %}
+{% else %}
 
 
 <div>
     <h1>로그인 후 이용해 주세요!</h1>
     <a href="{% url 'login' %}">로그인</a>
 </div>
+
+{% endif %}
 {% endblock content %}

@@ -38,7 +38,7 @@
                 </div>
 
                 <div class="search">
-                    <form class = "search-form" action="{% url 'showmain' %}" method="get">
+                    <form class = "search-form" action="{% url 'search' %}" method="get">
                         <div class = "search-text">
                             <select class="search-option" name="select-option" style = "color: #7f7f7f;">
                                 <option value="default">선택</option>
@@ -46,14 +46,14 @@
                                 <option value="content">내용</option>
                                 <option value="title-and-content">재목+내용</option>
                             </select>
-                            <input type="text" class = "search-text" size ="30" placeholder = "검색어를 입력하세요.">
+                            <input type="text" name="query" class = "search-text" size ="30" placeholder = "검색어를 입력하세요.">
                         </div>
                     </form>
                 </div>
 
                 <div class = "first-header-user">
                     {% if user.is_authenticated %}
-                        <a class = "alarm-div" href="{% url 'messagebox' user.id %}"> 알람
+                        <a class = "alarm-div" href="{% url 'usernotice' user.id %}"> 알람
                             {% comment %} <img class = "alarm" src="{% static 'img/alarm.png' %}">  {% endcomment %}
                         </a>
                         <a class = "profile-div" href="{% url 'useredit' user.id %}"> 마이페이지

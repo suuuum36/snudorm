@@ -13,4 +13,6 @@ urlpatterns = [
     path('userinfo/<int:id>/', views.userInfo, name="userinfo"),
     path('usernotice/<int:id>/', views.userNotice, name="usernotice"),
     path('messagebox/<int:id>/', views.messageBox, name="messagebox"),
+    path('messagebox/<int:id1>/<int:id2>/', views.chatRoom, name="chatroom"),
+    path('messagebox/<int:id1>/<int:id2>/sendmessage', views.sendMessage, name="sendmessage"),
 ]

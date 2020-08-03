@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
 from .models import Feed, Minwon, Life, FreeBoard, CoBuy, Rent, Keep, Resell, FeedComment, \
-                    FeedLike, CommentLike, Recomment, RecommentLike, STAT_OPTION
+                    FeedLike, CommentLike, Recomment, RecommentLike, STAT_OPTION, Notice
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.core.paginator import Paginator 
@@ -239,6 +239,12 @@ def showFeed(request, board, category, fid): # board, category 필요없음.
     if request.user.id != feed.author.id:
         feed.views += 1     
         feed.save()
+    
+    if request.user.id != None:
+        notices = Notice.objects.filter(user_to = request.user)
+        for notice in notices:
+            notice.checked = True
+            notice.save()
 
     return render(request, 'feedpage/feed.html', {'feed': feed, 'board': board, 'fid':fid, 
                                         'category': category, 'board_name': board_info[2]})
@@ -335,8 +341,9 @@ def likeFeed(request, board, category, fid):
 
         elif board == "freeboard":
             feed = FreeBoard.objects.get(id=fid)
-        
+
         if request.user.id != feed.author.id:
+            Notice.objects.create(user_to_id = feed.author.id, user_from = request.user, feed_id = fid, type_info1='게시글', type_info2='공감')
             user_like = feed.feedlike.filter(user_id=request.user.id)
             if user_like.count() > 0:
                 feed.feedlike.get(user_id=request.user.id).delete()
@@ -346,8 +353,7 @@ def likeFeed(request, board, category, fid):
                 #                             board, category, fid, False ])
 
     return render(request, 'feedpage/feed.html', {'feed': feed, 'board': board, 
-                            'category': category, 'fid': fid, 'board_name': board_info[2]})
-
+                            'category': category, 'fid': fid, 'board_name': board_info[2]})    
 
 # 댓글 달기
 def newComment(request, board, category, fid):
@@ -355,6 +361,9 @@ def newComment(request, board, category, fid):
     new_comment = FeedComment.objects.create(feed_id=fid, content=content, author = request.user)
     like_count = new_comment.commentlike_set.filter(user_id = request.user.id)
     noname = True if "noname" in request.POST else False
+    feed = Feed.objects.get(id = fid)
+    if request.user.id != feed.author.id:
+        Notice.objects.create(user_to_id = feed.author.id, user_from = request.user, feed_id = fid, type_info1='게시글', type_info2='댓글')
 
     context = {
         'cid': new_comment.id,
@@ -392,10 +401,14 @@ def editComment(request, board, category, fid, cid):
 def likeComment(request, board, category, fid, cid):
     feedcomment = FeedComment.objects.get(id=cid)
     like_list = feedcomment.commentlike_set.filter(user_id=request.user.id)
+
     if like_list.count() > 0:
         feedcomment.commentlike_set.get(user_id=request.user.id).delete()
     else:
         CommentLike.objects.create(user_id = request.user.id, comment_id = feedcomment.id)
+        if request.user.id != feedcomment.author.id:
+            Notice.objects.create(user_to_id = feedcomment.author.id, user_from = request.user, feed_id = fid, type_info1='댓글', type_info2='공감')
+
     context = {
         'likecount': like_list.count()
     }
@@ -423,6 +436,10 @@ def newRecomment(request, board, category, fid, cid):
     like_count = new_recomment.recommentlike_set.filter(
         user_id=request.user.id)
     noname = True if "noname" in request.POST else False
+
+    feedcomment = FeedComment.objects.get(id=cid)
+    if request.user.id != feedcomment.author.id:
+        Notice.objects.create(user_to_id = feedcomment.author.id, user_from = request.user, feed_id = fid, type_info1='댓글', type_info2='대댓글')
 
     context = {
         'did': new_recomment.id,
@@ -455,6 +472,8 @@ def likeRecomment(request, board, category, fid, cid, rcid):
         recomment.recommentlike_set.get(user_id=request.user.id).delete()
     else:
         RecommentLike.objects.create(user_id = request.user.id, recomment_id = recomment.id)
+        if request.user.id != recomment.author.id:
+            Notice.objects.create(user_to_id = recomment.author.id, user_from = request.user, feed_id = fid, type_info1='대댓글', type_info2='공감')
     
     context = {
         'likecount': like_list.count()
