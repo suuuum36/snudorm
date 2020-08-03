@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div>
+        <a href="{% url 'userinfo' user.id %}">내 정보</a>
+        <a href="{% url 'useredit' user.id %}">개인정보 변경</a>
+        <a href="{% url 'usernotice' user.id %}">게시글 알림</a>
+        <a href="{% url 'messagebox' user.id %}">쪽지함</a>
+    </div>
+
+    <div>게시글 알림 </div>
+
+    {% for notice in notices %}
+     {{ notice }}
+    {% endfor %}
+
+{% endblock content %}

@@ -22,7 +22,7 @@ def signup(request):
         email = request.POST['email'] # User, 이메일
         building_category = request.POST['building_category'] # Profile, 생활관
         building_dong = request.POST['building_dong'] # Profile, 동
-
+        # notices = []
         if password == confirm_password: # 1,2차 비밀번호가 일치할 시에 회원가입
             try:
                 user = User.objects.create_user(
@@ -40,6 +40,7 @@ def signup(request):
             user.profile.nickname = nickname
             user.profile.building_category = building_category
             user.profile.building_dong = building_dong
+            # user.profile.notices = []
             user.save()
 
         else:
@@ -146,12 +147,14 @@ def passwordEdit(request, id):
         
 
 def userInfo(request, id):
-    
+
     return render(request, 'accounts/user_info.html', {'id': id})
 
 def userNotice(request, id):
+    user = User.objects.get(id = id)
+    # notices = user.profile.notices
 
-    return render(request, 'accounts/user_notice', {'id': id})
+    return render(request, 'accounts/user_notice.html', {'id': id})
 
 def messageBox(request, id):
 

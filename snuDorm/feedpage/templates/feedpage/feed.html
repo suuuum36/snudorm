@@ -39,7 +39,7 @@
             {{ feed.title }} </br>
             {{ feed.content }} </br>
             {% if feed.photo %} 
-                <img src="{{ feed.photo.url }}">
+                <img src="{{ feed.photo.url }}" alt="" width:"30%" height="20%">
             {% endif %} <br/>
         </div>
     {% elif board == "life" %}
@@ -54,7 +54,7 @@
                 {% endif %}
                 {{ feed.content }} </br>
                 {% if feed.photo %} 
-                    <img src="{{ feed.photo.url }}">
+                    <img src="{{ feed.photo.url }}" alt="" width:"30%" height="20%">
                 {% endif %} <br/>
             </div>
         {% elif category == "rent" %}
@@ -74,7 +74,7 @@
                 {% endif %}
                 {{ feed.content }} </br>
                 {% if feed.photo %} 
-                    <img src="{{ feed.photo.url }}">
+                    <img src="{{ feed.photo.url }}" alt="" width:"30%" height="20%">
                 {% endif %} <br/>     
             </div>
         {% elif category == "keep" %}
@@ -95,7 +95,7 @@
                 {{ endif }}
                 {{ feed.content }} </br>
                 {% if feed.photo %} 
-                    <img src="{{ feed.photo.url }}">
+                    <img src="{{ feed.photo.url }}" alt="" width:"30%" height="20%">
                 {% endif %} <br/>
             </div>  
         {% elif category == "resell" %}
@@ -105,7 +105,7 @@
                 가격 {{ feed.price }} </br>
                 {{ feed.content }} </br>
                 {% if feed.photo %} 
-                    <img src="{{ feed.photo.url }}">
+                    <img src="{{ feed.photo.url }}" alt="" width:"30%" height="20%">
                 {% endif %} <br/>
             </div>
         {% endif %}
