@@ -144,4 +144,4 @@ class Notice(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return self.user_to
+        return self.user_to.username

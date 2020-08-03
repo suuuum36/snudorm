@@ -239,11 +239,12 @@ def showFeed(request, board, category, fid): # board, category 필요없음.
     if request.user.id != feed.author.id:
         feed.views += 1     
         feed.save()
-
-    notices = Notice.objects.filter(user_to = request.user)
-    for notice in notices:
-        notice.checked = True
-        notice.save()
+    
+    if request.user.id != None:
+        notices = Notice.objects.filter(user_to = request.user)
+        for notice in notices:
+            notice.checked = True
+            notice.save()
 
     return render(request, 'feedpage/feed.html', {'feed': feed, 'board': board, 'fid':fid, 
                                         'category': category, 'board_name': board_info[2]})

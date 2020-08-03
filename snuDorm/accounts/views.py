@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import auth
-from .models import Profile
+from .models import Profile, Message
 from feedpage.models import Notice
 from django.contrib.auth import login as django_login
 from django.contrib.auth import authenticate as django_authenticate
@@ -154,14 +154,9 @@ def userInfo(request, id):
 def userNotice(request, id):
     user = User.objects.get(id = id)
     notices = Notice.objects.filter(user_to = request.user.id).order_by('-created_at')
+    count = notices.filter(checked = False).count()
 
-    return render(request, 'accounts/user_notice.html', {'id': id, 'notices':notices})
-
-def messageBox(request, id):
-    user = User.objects.get(id = id)
-    notices = Notice.objects.filter(user_to = request.user.id)
-
-    return render(request, 'accounts/messagebox.html', {'notices': notices})
+    return render(request, 'accounts/user_notice.html', {'id': id, 'notices':notices, 'count':count })
 
 def id_overlap_check(request):
     username = request.GET['username']
@@ -177,3 +172,50 @@ def id_overlap_check(request):
         overlap_check = "fail"
     context = {'overlap_check': overlap_check}
     return JsonResponse(context)
+
+def messageBox(request, id):
+    num = User.objects.latest('id').id
+    lastmessages = list()
+
+    for i in range(1, num+1):
+        if Message.objects.filter(user_to_id = i, user_from_id = id).count() > 0 and Message.objects.filter(user_to_id = id, user_from_id = i).count() > 0:
+            if Message.objects.filter(user_to_id = i, user_from_id = id).order_by('-created_at')[0].created_at < Message.objects.filter(user_to_id = id, user_from_id = i).order_by('-created_at')[0].created_at:
+                lastmessages.append(Message.objects.filter(user_to_id = id, user_from_id = i).order_by('-created_at')[0])
+            else:
+                lastmessages.append(Message.objects.filter(user_to_id = i, user_from_id = id).order_by('-created_at')[0])
+        elif Message.objects.filter(user_to_id = i, user_from_id = id).count() > 0 and Message.objects.filter(user_to_id = id, user_from_id = i).count() == 0:
+            lastmessages.append(Message.objects.filter(user_to_id = i, user_from_id = id).order_by('-created_at')[0])
+        elif Message.objects.filter(user_to_id = i, user_from_id = id).count() == 0 and Message.objects.filter(user_to_id = id, user_from_id = i).count() > 0:
+            lastmessages.append(Message.objects.filter(user_to_id = id, user_from_id = i).order_by('-created_at')[0])
+
+        
+
+    return render(request, 'accounts/messagebox.html', {'id':id, 'lastmessages': lastmessages })
+
+def chatRoom(request, id1, id2):
+    messages = list()
+    num = User.objects.latest('id').id
+    lastmessages = list()
+
+    for i in range(1, num+1):
+        if Message.objects.filter(user_to_id = i, user_from_id = id1).count() > 0 and Message.objects.filter(user_to_id = id1, user_from_id = i).count() > 0:
+            if Message.objects.filter(user_to_id = i, user_from_id = id1).order_by('-created_at')[0].created_at < Message.objects.filter(user_to_id = id1, user_from_id = i).order_by('-created_at')[0].created_at:
+                lastmessages.append(Message.objects.filter(user_to_id = id1, user_from_id = i).order_by('-created_at')[0])
+            else:
+                lastmessages.append(Message.objects.filter(user_to_id = i, user_from_id = id1).order_by('-created_at')[0])
+        elif Message.objects.filter(user_to_id = i, user_from_id = id1).count() > 0 and Message.objects.filter(user_to_id = id1, user_from_id = i).count() == 0:
+            lastmessages.append(Message.objects.filter(user_to_id = i, user_from_id = id1).order_by('-created_at')[0])
+        elif Message.objects.filter(user_to_id = i, user_from_id = id1).count() == 0 and Message.objects.filter(user_to_id = id1, user_from_id = i).count() > 0:
+            lastmessages.append(Message.objects.filter(user_to_id = id1, user_from_id = i).order_by('-created_at')[0])
+    
+    for message in Message.objects.filter(user_to_id = id2, user_from_id = id1):
+        messages.append(message)
+    for message in Message.objects.filter(user_to_id = id1, user_from_id = id2):
+        messages.append(message)
+
+    return render(request, 'accounts/chatroom.html', {'chat_from': id1, 'chat_to':id2, 'lastmessages':lastmessages, 'messages': messages })
+
+def sendMessage(request, id1, id2):
+    content = request.POST['content']
+    Message.objects.create(user_to_id = id2, user_from_id = id1, content =content)
+    return redirect('chatroom', id1=id1, id2=id2)

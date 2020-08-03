@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div>
-        <a href="{% url 'userinfo' user.id %}">내 정보</a>
-        <a href="{% url 'useredit' user.id %}">개인정보 변경</a>
-        <a href="{% url 'usernotice' user.id %}">게시글 알림</a>
-        <a href="{% url 'messagebox' user.id %}">쪽지함</a>
-    </div>
-
     <div>쪽지함</div>
+    <!-- 페이지 좌측에 현재 대화중인 목록 나타내는 부분-->
+    {% for lastmessage in lastmessages %}
+        {% if lastmessage.user_to.id == id %}
+            <a href="{% url 'chatroom' id lastmessage.user_from.id %}">{{ lastmessage.user_from }} {{ lastmessage.content }} {{ lastmessage.created_at|date:"y.m.d" }}</a> </br>
+        {% else %}
+            <a href="{% url 'chatroom' id lastmessage.user_to.id %}">{{ lastmessage.user_to }} {{ lastmessage.content }} {{ lastmessage.created_at|date:"y.m.d" }}</a> </br>
+        {% endif %}
+    {% endfor %}
 
-    
 
 
 {% endblock content %}

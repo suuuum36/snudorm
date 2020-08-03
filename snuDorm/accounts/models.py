@@ -39,3 +39,11 @@ class Profile(models.Model):
         return f'user={self.user}, name={self.name}, nickname={self.nickname}, notices={self.notices},\
             building_category={self.building_category}, building_dong={self.building_dong}'
 
+class Message(models.Model):
+    user_to = models.ForeignKey(User, on_delete=models.CASCADE, related_name='chatfrom')
+    user_from = models.ForeignKey(User, on_delete=models.CASCADE, related_name='chatto')
+    content = models.CharField(max_length=100)
+    created_at = models.DateTimeField(default = timezone.now)
+
+    def __str__(self):
+        return self.content
