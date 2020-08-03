@@ -177,11 +177,13 @@
         <input id="{{ feed.id }}" type="text" name="content" />
         <button type="submit">댓글 달기</button>
     </form>
-{% endif %}
+{% else %}
 
 
 <div>
     <h1>로그인 후 이용해 주세요!</h1>
     <a href="{% url 'login' %}">로그인</a>
 </div>
+
+{% endif %}
 {% endblock content %}

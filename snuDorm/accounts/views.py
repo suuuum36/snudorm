@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import auth
 from .models import Profile
+from feedpage.models import Notice
 from django.contrib.auth import login as django_login
 from django.contrib.auth import authenticate as django_authenticate
 from django.http import JsonResponse
@@ -152,13 +153,15 @@ def userInfo(request, id):
 
 def userNotice(request, id):
     user = User.objects.get(id = id)
-    # notices = user.profile.notices
+    notices = Notice.objects.filter(user_to = request.user.id).order_by('-created_at')
 
-    return render(request, 'accounts/user_notice.html', {'id': id})
+    return render(request, 'accounts/user_notice.html', {'id': id, 'notices':notices})
 
 def messageBox(request, id):
+    user = User.objects.get(id = id)
+    notices = Notice.objects.filter(user_to = request.user.id)
 
-    return render(request, 'accounts/messagebox.html', {'id': id})
+    return render(request, 'accounts/messagebox.html', {'notices': notices})
 
 def id_overlap_check(request):
     username = request.GET['username']

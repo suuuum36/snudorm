@@ -10,7 +10,19 @@
     <div>게시글 알림 </div>
 
     {% for notice in notices %}
-     {{ notice }}
+    <a href="{% url 'showfeed' notice.feed.board notice.feed.category notice.feed.id %}">
+        {{ notice.user_from }}님이 회원님의 {{ notice.type_info1 }}에
+        {% if notice.type_info2 == '공감' %}
+            {{ notice.type_info2 }}을 눌렀습니다.
+        {% else %}
+            {{ notice.type_info2 }}을 달았습니다.
+        {% endif %}
+
+        {{ notice.created_at|date:'y.m.d' }}
+
+        {{ notice.checked }}
+        </br>
+    </a>
     {% endfor %}
 
 {% endblock content %}

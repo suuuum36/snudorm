@@ -133,3 +133,15 @@ class RecommentLike(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)
     recomment = models.ForeignKey(Recomment, on_delete=models.CASCADE)
+
+class Notice(models.Model):
+    user_to = models.ForeignKey(User, on_delete=models.CASCADE, related_name='mynotice')
+    user_from = models.ForeignKey(User, on_delete=models.CASCADE, related_name='mylog')
+    feed = models.ForeignKey(Feed, on_delete=models.CASCADE, related_name='notification')
+    type_info1 = models.CharField(max_length=20, blank=False)
+    type_info2 = models.CharField(max_length=20, blank=False)
+    checked = models.BooleanField(default=False)
+    created_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.user_to
