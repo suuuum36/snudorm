@@ -52,4 +52,32 @@ $(document).on('click', '#uncertain2', ()=> {
 })
 
 
+var input = document.querySelector('#photo');
+var preview = document.querySelector('#preview');
+// 못생긴 image button 숨기기 
+input.style.opacity = 0; 
+const list = document.createElement('ol');
+list.style = "display:flex;"
+preview.appendChild(list);
+
+photo.onchange = function () {
+    console.log('photo form submitted');   
+    const photoFiles =  input.files;
+
+    if(photoFiles.length == 1) {
+        for(const file of photoFiles) {
+            const listItem = document.createElement('li');
+            const para = document.createElement('p');
+            const image = document.createElement('img');
+            image.src = URL.createObjectURL(file);
+            image.style.width = '200px';
+            image.style.height = '200px';
+            listItem.appendChild(image);
+            listItem.appendChild(para);
+            list.appendChild(listItem);
+        }
+    }
+}
+
+
 
