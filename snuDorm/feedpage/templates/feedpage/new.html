@@ -23,9 +23,12 @@
                             placeholder="글 내용을 입력해주세요..." required>
                 </div></br>
                 <div>
-                    사진</br>
-                    <input name="photo" type="file">
+                    <label for="photo">사진</label>
+                    <input class="photo" name = "photo" id="photo" 
+                        type="file" accept=".jpg, .jpeg, .png">
                 </div></br>
+                <div class="preview">
+                </div>
                 <div>
                     <input name="noname" type="checkbox" id="noname">
                     <label for="noname">익명</label>

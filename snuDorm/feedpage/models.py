@@ -2,8 +2,6 @@ from django.db import models
 from django.utils import timezone
 from django.conf import settings
 from django.contrib.auth.models import User
-
-# TODO: pip install django-multiselectfield 를 해주세요 ㅎㅅㅎ
 from multiselectfield import MultiSelectField
 
 # 게시판
@@ -145,3 +143,7 @@ class Notice(models.Model):
 
     def __str__(self):
         return self.user_to.username
+
+class Image(models.Model):
+    feed = models.ForeignKey(Feed, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to="feed/%Y/%m/%d")
