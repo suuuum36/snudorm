@@ -317,21 +317,21 @@ def editFeed(request, board, category, fid):
             if category == "cobuy":
                 feed.price = request.POST['price']
                 feed.url = request.POST['url']
-                feed.duedate = request.POST['duedate']
+                feed.duedate = request.POST.get('duedate', '2020-01-01')
 
             # rent 게시판 - (제목, 설명, 사진, 익명) + 목적, 대여료, 시작일(+ 미정), 마감일(+ 미정)
             elif category == "rent":
                 feed.deposit = request.POST['deposit']
                 feed.purpose = Rent.OPTION[0] if request.POST['purpose'] == 'borrow' else Rent.OPTION[1]
-                feed.start_date = request.POST['start_date']
-                feed.end_date = request.POST['duedate']
+                feed,start_date = request.POST.get('start_date', '2020-01-01')
+                feed.end_date = request.POST.get('duedate', '2020-01-01')
 
             # keep 게시판 - (제목, 설명, 사진, 익명) + 목적, 보관료, 시작일(+ 미정), 마감일(+ 미정)
             elif category == "keep":
                 feed.purpose = Keep.OPTION[0] if request.POST['purpose'] == 'keep' else Keep.OPTION[1]
                 feed.reward = request.POST['reward']
-                feed.start_date = request.POST['start_date']
-                feed.end_date = request.POST['duedate']
+                feed,start_date = request.POST.get('start_date', '2020-01-01')
+                feed.end_date = request.POST.get('duedate', '2020-01-01')
 
             # resell 게시판 - (제목, 설명, 사진, 익명) + 목적, 가격
             elif category == "resell":
