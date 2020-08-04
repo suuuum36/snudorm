@@ -263,7 +263,7 @@ def showFeed(request, board, category, fid): # board, category 필요없음.
         feed.save()
     
     if request.user.id != None:
-        notices = Notice.objects.filter(user_to = request.user)
+        notices = Notice.objects.filter(user_to = request.user, feed_id = fid)
         for notice in notices:
             notice.checked = True
             notice.save()
@@ -353,48 +353,49 @@ def deleteFeed(request, board, category, fid):
 # 민원게시판 게시글 좋아요
 def likeFeed(request, board, category, fid):
     board_info = get_board(board, category)
-    if request.method == 'GET':
-        if board == "minwon":
-            feed = Minwon.objects.get(id=fid)
+    
+    if board == "minwon":
+        feed = Minwon.objects.get(id=fid)
 
-        elif board == "life":
-            feed = CoBuy.objects.get(id=fid) if category == "cobuy" else (Rent.objects.get(id=fid) if category == "rent" else (
-            Keep.objects.get(id=fid) if category == "keep" else (Resell.objects.get(id=fid) if category == "resell" else "tori")))
+    elif board == "life":
+        feed = CoBuy.objects.get(id=fid) if category == "cobuy" else (Rent.objects.get(id=fid) if category == "rent" else (
+        Keep.objects.get(id=fid) if category == "keep" else (Resell.objects.get(id=fid) if category == "resell" else "tori")))
 
-        elif board == "freeboard":
-            feed = FreeBoard.objects.get(id=fid)
+    elif board == "freeboard":
+        feed = FreeBoard.objects.get(id=fid)
 
-        if request.user.id != feed.author.id:
-            Notice.objects.create(user_to_id = feed.author.id, user_from = request.user, feed_id = fid, type_info1='게시글', type_info2='공감')
-            user_like = feed.feedlike.filter(user_id=request.user.id)
-            if user_like.count() > 0:
-                feed.feedlike.get(user_id=request.user.id).delete()
-            else:
-                FeedLike.objects.create(user_id=request.user.id, feed_id=feed.id)
-                # feed.author.notice.append(['게시글', '공감', request.user.username, datetime.now(), 
-                #                             board, category, fid, False ])
+    if request.user.id != feed.author.id:
+        Notice.objects.create(user_to_id = feed.author.id, user_from = request.user, feed_id = fid, type_info1='게시글', type_info2='공감')
+    
+    user_like = feed.feedlike.filter(user_id=request.user.id)
+    if user_like.count() > 0:
+        feed.feedlike.get(user_id=request.user.id).delete()
+    else:
+        FeedLike.objects.create(user_id=request.user.id, feed_id=feed.id)
 
-    return render(request, 'feedpage/feed.html', {'feed': feed, 'board': board, 
-                            'category': category, 'fid': fid, 'board_name': board_info[2]})    
+    context = {
+        'likecount': user_like.count()
+    }
+    return JsonResponse(context)
 
 # 댓글 달기
 def newComment(request, board, category, fid):
     content = request.POST['content']
-    new_comment = FeedComment.objects.create(feed_id=fid, content=content, author = request.user)
+    noname = True if "noname[]" in request.POST else False
+    # noname = request.POST['noname']
+    new_comment = FeedComment.objects.create(feed_id=fid, content=content, author = request.user, noname = noname)
     like_count = new_comment.commentlike_set.filter(user_id = request.user.id)
-    noname = True if "noname" in request.POST else False
     feed = Feed.objects.get(id = fid)
     if request.user.id != feed.author.id:
-        Notice.objects.create(user_to_id = feed.author.id, user_from = request.user, feed_id = fid, type_info1='게시글', type_info2='댓글')
+        Notice.objects.create(user_to_id = feed.author.id, user_from = request.user, feed_id = fid, type_info1='게시글', type_info2='댓글', noname=noname)
 
     context = {
         'cid': new_comment.id,
-        'username': new_comment.author.username,
+        'nickname': new_comment.author.profile.nickname,
         'content': new_comment.content,
         'like_count': like_count.count(),
+        'noname': noname,
     }
-    # feed.author.notice.append(['게시글', '댓글', request.user.username, datetime.now(), 
-    #                             board, category, fid, False ])
 
     return JsonResponse(context)
 
@@ -430,10 +431,9 @@ def likeComment(request, board, category, fid, cid):
     context = {
         'likecount': like_list.count()
     }
-    # feed.author.notice.append(['댓글', '대댓글', request.user.username, datetime.now(), 
-    #                             board, category, fid, False, cid ])
+
     return JsonResponse(context)
-    # return redirect('showfeed', board=board, category=category, fid=fid)
+
 
 
 # 댓글 삭제
@@ -449,21 +449,22 @@ def deleteComment(request, board, category, fid, cid):
 
 def newRecomment(request, board, category, fid, cid):
     content = request.POST['content']
+    noname = True if "noname[]" in request.POST else False
     new_recomment = Recomment.objects.create(
-        comment_id=cid, content=content, author=request.user)
+        comment_id=cid, content=content, author=request.user, noname = noname)
     like_count = new_recomment.recommentlike_set.filter(
         user_id=request.user.id)
-    noname = True if "noname" in request.POST else False
 
     feedcomment = FeedComment.objects.get(id=cid)
     if request.user.id != feedcomment.author.id:
-        Notice.objects.create(user_to_id = feedcomment.author.id, user_from = request.user, feed_id = fid, type_info1='댓글', type_info2='대댓글')
+        Notice.objects.create(user_to_id = feedcomment.author.id, user_from = request.user, feed_id = fid, type_info1='댓글', type_info2='대댓글', noname=noname)
 
     context = {
         'did': new_recomment.id,
-        'username': new_recomment.author.username,
+        'nickname': new_recomment.author.profile.nickname,
         'content': new_recomment.content,
         'like_count': like_count.count(),
+        'noname': noname,
     }
 
     return JsonResponse(context)
