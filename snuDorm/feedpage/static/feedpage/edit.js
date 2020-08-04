@@ -24,29 +24,6 @@ function doStatCheck(status){
     }
 }
 
-// function startCheck(stat) {
-//     var start_date = document.getElementByName("start_date");
-
-//     if(stat.checked) {
-//         start_date.required = false;
-//         start_date.value = null;
-//     } else {
-//         start_date.required = true;
-//     }
-// }
-
-// function duedateCheck(stat) {
-//     var duedate = document.getElementByName("duedate");
-
-//     if(stat.checked) {
-//         duedate.required = false;
-//         duedate.value = null;
-//     } else {
-//         duedate.required = true;
-//     }    
-// }
-
-// 기간이 미정값일때 실행
 
 $(document).on('click', '#euncertain1', ()=> {
     if($('#estartDate').attr("required")) {

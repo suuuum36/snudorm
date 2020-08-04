@@ -27,7 +27,7 @@
 
 #not_best {
     color:black;
-    margin-right: 5px;
+    margin-right: 15px;
 }
 
 #best {
@@ -198,15 +198,25 @@
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 50px;
-    color: #7f7f7f;
-    font-size: 14px;
 }
 
-.page_numbers > div {
+.page_numbers > a  {
+    color: #7f7f7f;
+}
+
+.num1, .num2, .num3, .num4 {
     margin-left: 20px;
     margin-right: 20px;
 }
 
 .previous > a , .next > a {
     color: black;
+}
+
+.previous {
+    margin-right: 20px;
+}
+
+.next {
+    margin-left: 20px;
 }
