@@ -197,6 +197,11 @@ def chatRoom(request, id1, id2):
     num = User.objects.latest('id').id
     lastmessages = list()
 
+    notices = Notice.objects.filter(user_to = request.user, feed = None)
+    for notice in notices:
+        notice.checked = True
+        notice.save()
+
     for i in range(1, num+1):
         if Message.objects.filter(user_to_id = i, user_from_id = id1).count() > 0 and Message.objects.filter(user_to_id = id1, user_from_id = i).count() > 0:
             if Message.objects.filter(user_to_id = i, user_from_id = id1).order_by('-created_at')[0].created_at < Message.objects.filter(user_to_id = id1, user_from_id = i).order_by('-created_at')[0].created_at:
@@ -218,4 +223,5 @@ def chatRoom(request, id1, id2):
 def sendMessage(request, id1, id2):
     content = request.POST['content']
     Message.objects.create(user_to_id = id2, user_from_id = id1, content =content)
+    Notice.objects.create(user_to_id = id2, user_from_id = id1, type_info1='쪽지')
     return redirect('chatroom', id1=id1, id2=id2)

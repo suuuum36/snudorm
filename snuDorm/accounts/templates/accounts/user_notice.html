@@ -12,12 +12,25 @@
 
     
     {% for notice in notices %}
-    <a href="{% url 'showfeed' notice.feed.board notice.feed.category notice.feed.id %}">
-        {{ notice.user_from }}님이 회원님의 {{ notice.type_info1 }}에
-        {% if notice.type_info2 == '공감' %}
-            {{ notice.type_info2 }}을 눌렀습니다.
+        {% if notice.type_info1 == '쪽지' %}
+            <a href="{% url 'chatroom' notice.user_to.id notice.user_from.id%}">
         {% else %}
-            {{ notice.type_info2 }}을 달았습니다.
+            <a href="{% url 'showfeed' notice.feed.board notice.feed.category notice.feed.id %}">
+        {% endif %}
+        {% if notice.noname %}
+            익명의 회원님이
+        {% else %}
+            {{ notice.user_from.profile.nickname }}님이
+        {% endif %}
+        {% if notice.type_info1 == '쪽지' %}
+            회원님에게 쪽지를 보냈습니다.
+        {% else %}
+            회원님의 {{ notice.type_info1 }}에
+            {% if notice.type_info2 == '공감' %}
+                {{ notice.type_info2 }}을 눌렀습니다.
+            {% else %}
+                {{ notice.type_info2 }}을 달았습니다.
+            {% endif %}
         {% endif %}
 
         {{ notice.created_at|date:'y.m.d' }}
