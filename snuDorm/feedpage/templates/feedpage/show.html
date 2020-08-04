@@ -64,12 +64,15 @@
                                     {% if feed.board == 'minwon' %}
                                         <div>{{ feed.board_info1 }}</div> <!-- 공통|학부|대학원|가족|BK -->
                                         <div>{{ feed.board_info2 }}</div>  <!-- 906동 -->
-                                    {% elif feed.board == 'life' %}  
+                                    {% elif feed.board == 'life' %}   
                                         <div>{{ feed.board_info2 }}</div>  <!-- 공구|대여|보관|중고 -->
                                     {% endif %}
                                 </div>
                             {% endif %}
-
+                            
+                            {% if board_name == "공구 게시판" or board_name == "보관 게시판" or board_name == "대여 게시판" or board_name == "중고 게시판" %}
+                                <div class = "board_name"></div> 
+                            {% endif %}
                             <div class="feed-p notice-p">
                                 <div class = "title-comment">
                                     <div class = "title" maxlength="20" text-overflow:ellipsis;> {{feed.title|truncatechars:25}} </div> 
@@ -272,6 +275,10 @@
                                         <div>{{ feed.board_info2 }}</div>  <!-- 공구|대여|보관|중고 -->
                                     {% endif %}
                                 </div>
+                            {% endif %}
+
+                            {% if board_name == "공구 게시판" or board_name == "보관 게시판" or board_name == "대여 게시판" or board_name == "중고 게시판" %}
+                                <div class = "board_name"></div> 
                             {% endif %}
 
                             <div class="feed-p notice-p">
