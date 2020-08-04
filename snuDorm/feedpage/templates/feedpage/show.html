@@ -48,14 +48,14 @@
                 <!-- 공지사항 list  -->
                 {% if feed.notice %}
                     <a href="{% url 'showfeed' feed.board feed.category feed.id %}">
-                        <div class = "whole-feed" style="background-color: #f9f9f9;">
+                        <div class = "whole-feed notice" style="background-color: #f9f9f9;">
                             {% if board == "search" %}
                                 {% if feed.board == "minwon" %}
-                                    <div>민원</div> 
+                                    <div class = "board_name">민원</div> 
                                 {% elif feed.board == "life" %}
-                                    <div>생활</div> 
+                                    <div class = "board_name">생활</div> 
                                 {% else %}
-                                    <div>자유</div> 
+                                    <div class = "board_name">자유</div> 
                                 {% endif %}
                             {% endif %}
                                 
@@ -70,10 +70,10 @@
                                 </div>
                             {% endif %}
 
-                            <div class="feed-p">
+                            <div class="feed-p notice-p">
                                 <div class = "title-comment">
                                     <div class = "title" maxlength="20" text-overflow:ellipsis;> {{feed.title|truncatechars:25}} </div> 
-                                        <div class = "comment" > {{ feed.feedcomment_set.count }} 공지 </div>
+                                        <div class = "comment" > 공지 </div>
                                 </div>
                                 <div class = "content" style="color:gray" maxlength="30" text-overflow:ellipsis;>
                                     {{ feed.content|truncatechars:35 }}
@@ -241,7 +241,7 @@
             <!-- 공지사항 list  -->
                 {% if feed.notice %}
                     <a href="{% url 'showfeed' feed.board feed.category feed.id %}">
-                        <div class = "whole-feed" style="background-color: #f9f9f9;">
+                        <div class = "whole-feed notice" style="background-color: #f9f9f9;">
                             {% if board == "search" %}
                                 {% if feed.board == "minwon" %}
                                     <div>민원</div> 
@@ -262,10 +262,10 @@
                                 </div>
                             {% endif %}
 
-                            <div class="feed-p">
+                            <div class="feed-p notice-p">
                                 <div class = "title-comment">
                                     <div class = "title" maxlength="20" text-overflow:ellipsis;> {{feed.title|truncatechars:25}} </div> 
-                                    <div class = "comment" > {{ feed.feedcomment_set.count }} 공지 </div>
+                                    <div class = "comment" >공지 </div>
                                 </div>
                                 <div class = "content" style="color:gray" maxlength="30" text-overflow:ellipsis;>
                                     {{ feed.content|truncatechars:35 }}

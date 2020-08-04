@@ -110,6 +110,20 @@
     justify-content: space-evenly;
 }
 
+/*공지사항*/
+
+.notice {
+    justify-content: start !important;
+}
+
+.notice-inner {
+    margin-left : 30px !important;
+    display: flex;
+
+}
+
+
+
 .whole-feed > div {
     margin-top: auto;
     margin-bottom: auto;

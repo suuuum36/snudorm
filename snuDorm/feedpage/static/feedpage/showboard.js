@@ -7,30 +7,14 @@ var AllList = document.getElementById("show_normal_lists")
 
 var urlPath = window.location.href
 
-var num1Text = document.querySelector('.num1').innerText;
+var num1Text = document.querySelector('.num1').innerHTML;
 var num1 = document.querySelector('.num1')
 
-var num3Text = document.querySelector('.num3').innerText;
+
 var num3 = document.querySelector('.num3')
-
-//전체글
-AllButton.addEventListener('click', () => {
-    BestList.style.visibility = 'hidden'
-    AllList.style.visibility = 'visible'
-    AllButton.style.color = 'black';
-    BestButton.style.color = '#7f7f7f';
-    num3.style.color = '#016aff';
-})
-
-//베스트
-BestButton.addEventListener('click', () => {
-    BestList.style.visibility = 'visible'
-    AllList.style.visibility = 'hidden'
-    BestButton.style.color = 'black';
-    AllButton.style.color = '#7f7f7f';
-    num3.style.color = '#016aff';
-})
-
+if(num3 != null){
+    var num3Text=document.querySelector('.num3').innerHTML;
+}
 
 // page numbers 효과
 if(urlPath.indexOf(num1Text)!= -1) {
@@ -49,12 +33,31 @@ if(urlPath.indexOf("best")!= -1 && urlPath.indexOf(num3Text)!= -1) {
 
 }
 
-
 //완료 dim 처리 
-
-
 var string = '완료';
 
 $('.whole-feed:contains("'+string+'")').css("color","#7f7f7f");
 $('.whole-feed:contains("'+string+'")').find( '.comment' ).css("color","#7f7f7f");
 $('.life-status:contains("'+string+'")').css("background-color","#7f7f7f");
+
+
+
+//전체글
+AllButton.addEventListener('click', () => {
+    BestList.style.visibility = 'hidden'
+    AllList.style.visibility = 'visible'
+    AllButton.style.color = 'black';
+    BestButton.style.color = '#7f7f7f';
+    num1.style.color = '#016aff';
+})
+
+//베스트
+BestButton.addEventListener('click', () => {
+    BestList.style.visibility = 'visible'
+    AllList.style.visibility = 'hidden'
+    BestButton.style.color = 'black';
+    AllButton.style.color = '#7f7f7f';
+    num3.style.color = '#016aff';
+})
+
+
