@@ -1,12 +1,6 @@
-// 중복확인을 하지 않고 회원가입 버튼을 눌렀을 때
-//  if ($('.user-id').attr("check_result") == "fail"){
-    //    alert("아이디 중복체크를 해주시기 바랍니다.");
-    //    $('user-id').focus();
-    //    return false;
-    //  }
+// TODO: 로그인 실패 기능
+// 아이디 숫자로만 이루어지지 않게
 
-
-// 로그인 실패 기능
 
 // 아이디 중복확인 기능
 function id_db_check() {
@@ -18,11 +12,23 @@ function id_db_check() {
     $('.user-id').attr("check_result", "fail");
   })
 
-  // 5자 이상의 아이디가 입력되지 않았을 경우
+  // 5자 이상의 아이디 입력
   if ($('.user-id').val().length < 5) {
-    alert('5자 이상의 아이디를 입력해 주세요.');
-    return;
+    alert('5자 이상의 아이디를 입력해주세요.');
+    $('.user-id').focus();
+    return false;
   }
+  
+  // 영문 또는 숫자 조합의 아이디가 입력되지 않았을 경우
+  var userIdRegex = /^[a-zA-Z0-9]{5,}$/;
+  var idInput = document.getElementById("user-id");
+
+  if (!userIdRegex.test(idInput.value)) {
+    alert("아이디를 확인해주세요.");
+    idInput.focus();
+    return false;
+  }
+  
 
   id_input = document.querySelector('input[name="user_id"]');
 
@@ -57,11 +63,22 @@ function nk_db_check() {
     $('.nk-check').show();
     $('.nickname').attr("check_result", "fail");
   })
-
-  // nickname input 값이 2-8자가 아닐 경우
+  
+  // 2-8자의 닉네임 입력
   if ($('.nickname').val().length < 2 || $('.nickname').val().length > 8) {
     alert('2-8자의 닉네임을 입력해주세요.')
+    $('.nickname').focus();
     return;
+  }
+
+  // 한글 & 영문 & 숫자 조합의 닉네임 입력
+  var nkRegex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9]{2,8}$/;
+  var nkInput = document.getElementById("nickname");
+
+  if (!nkRegex.test(nkInput.value)) {
+    alert("닉네임을 확인해주세요.");
+    nkInput.focus();
+    return false;
   }
   
   nk_input = document.querySelector('input[name="nickname"]');
@@ -87,6 +104,89 @@ function nk_db_check() {
     }
   });
 }
+
+// 회원가입 form 유효성 검사
+function validateForm() {
+
+  // input 변수 지정
+  var nameInput = document.getElementById("name");
+  var pw1Input = document.getElementById("pw1");
+  var pw2Input = document.getElementById("pw2");
+  var emailInput = document.getElementById("email");
+
+  // regex 변수 지정
+  // 2-4자의 한글 이름
+  var nameRegex = /^[가-힣]{2,4}$/; 
+  // 영문, 숫자, 특수문자 최소 한 글자씩 포함 & 8자 이상
+  var pwRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
+  
+
+  // 이름 확인
+  if(nameInput.value == "") {
+    alert("이름을 입력해주세요.");
+    nameInput.focus();
+    return false;
+  };
+  
+  if (!nameRegex.test(nameInput.value)) {
+    alert("이름을 확인해주세요.");
+    nameInput.focus();
+    return false;
+  };
+  
+  // 아이디 중복확인 여부
+  if ($('.user-id').attr("check_result") == "fail"){
+    alert("아이디 중복체크를 해주시기 바랍니다.");
+    $('.user-id').focus();
+    return false;
+  };
+
+  // 비밀번호 확인
+  // 1) 비밀번호 regex 확인
+  // 2) 비밀번호 일치여부 확인
+  if (!pwRegex.test(pw1Input.value)) {
+    alert("비밀번호를 확인해주세요.");
+    pw1Input.focus();
+    return false;
+  };
+  
+  if (pw1Input.value != pw2Input.value) {
+    alert("비밀번호가 일치하지 않습니다.");
+    pw1Input.focus();
+    return false;
+  };
+
+  // 닉네임 중복확인 여부
+  if ($('.nickname').attr("check_result") == "fail"){
+    alert("닉네임 중복체크를 해주시기 바랍니다.");
+    console.log(pw1Input.value == pw2Input.value);
+    console.log(pw2Input.value);
+    $('.nickname').focus();
+    return false;
+  };
+
+  // 이메일 
+  if (emailInput.value == "") {
+    alert("이메일을 입력해주세요.");
+    emailInput.focus();
+    return false;
+  };
+  
+
+  // 모든 유효성 검사 통과 시 form 제출
+  document.getElementById("submit").submit();
+};
+
+// 유효성 검사를 위한 tool fucntion
+function regexCheck(regex, what, message) {
+  if(regex.test(what.value)) {
+    return true;
+  }
+  alert(message);
+  what.value = "";
+  what.focus();
+};
+
 
 // 기숙사 생활관 selected 표시 변경
 const selected = document.querySelector(".selected");
