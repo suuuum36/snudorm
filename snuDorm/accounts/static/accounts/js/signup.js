@@ -186,87 +186,139 @@ function blankCheck(field, message) {
 
 
 // 기숙사 생활관 selected 표시 변경
-const selected = document.querySelector(".selected");
-const category_container = document.querySelector(".category-container");
-const category_options = document.querySelectorAll(".category-option");
+var selected = document.querySelector(".selected");
+var categoryContainer = document.querySelector(".category-container");
+var categoryOptions = document.querySelectorAll(".category-option");
 
 // selected 선택시 toggle을 통해 옵션 보여주기
 selected.addEventListener("click", () => {
-  category_container.classList.toggle("active");
+  categoryContainer.classList.toggle("active");
 });
 
 // 옵션 선택시 selected의 innerHTML 값 변경을 통해 노출되는 innerHTML 변경
 // 옵션 선택시 toggle을 통해 옵션 숨기기
-category_options.forEach(o => {
+categoryOptions.forEach(o => {
   o.addEventListener("click", () => {
     selected.innerHTML = o.querySelector("label").innerHTML;
-    category_container.classList.remove("active");
+    categoryContainer.classList.remove("active");
+
+    var bachelor_option = ['906', '915', '919A', '919B', '919C', '919D', '921', '922', '923', '924', '925', '926'];
+    var master_option = ['900', '901', '902', '903', '904', '905', '917', '918'];
+    var family_option = ['931', '932', '933', '934', '935'];
+    var bk_option = ['946A', '946B'];
+
+    var category = [];
+    var choice = o.querySelector("input").value;
+
+    // 기숙사 생활관 옵션 값에 따른 변수 지정
+    if(choice == "bachelor") {
+      category = bachelor_option;
+    } else if(choice == "master") {
+      category = master_option;
+    } else if(choice == "family") {
+      category = family_option;
+    } else if(choice == "bk") {
+      category = bk_option;
+    };
+    
+    // 기숙사 동 옵션을 추가하고자 하는 target 요소의 위치
+    var target = document.getElementById("dong-container-id");
+    
+    // 이전에 선택한 옵션으로 인해 추가되어 있는 기숙사 동 옵션 제거
+    while (target.hasChildNodes()) {
+      target.removeChild(target.firstChild);
+    };
+
+    // for문을 통해 target의 자식 요소로 기숙사 동 옵션 추가
+    for (dong in category) {
+      var div = document.createElement('div');
+      var input = document.createElement('input');
+      var label = document.createElement('label');
+
+      div.className = "dong-option";
+      input.type = "radio";
+      input.className = "radio";
+      input.id = category[dong];
+      input.name = "building_dong";
+      label.setAttribute("for", category[dong]);
+      label.innerHTML = `${category[dong]}동`;
+
+      div.appendChild(input);
+      div.appendChild(label);
+      
+      target.appendChild(div);
+    };
   });
 });
 
 // 기숙사 동 selected_dong 표시 변경(위와 동일한 방식)
-const selected_dong = document.querySelector(".selected-dong");
-const dong_container = document.querySelector(".dong-container");
+var selectedDong = document.querySelector(".selected-dong");
+var dongContainer = document.querySelector(".dong-container");
 
-const dong_options = document.querySelectorAll(".dong-option");
+var dongOptions = document.querySelectorAll(".dong-option");
 
-selected_dong.addEventListener("click", () => {
-  dong_container.classList.toggle("active");
-  console.log(selected_dong.innerHTML);
+selectedDong.addEventListener("click", () => {
+  dongContainer.classList.toggle("active");
 });
 
-dong_options.forEach(d => {
+dongOptions.forEach(d => {
   d.addEventListener("click", () => {
-    selected_dong.innerHTML = d.querySelector("label").innerHTML;
-    dong_container.classList.remove("active");
-    console.log(selected_dong.innerHTML);
+    selectedDong.innerHTML = d.querySelector("label").innerHTML;
+    dongContainer.classList.remove("active");
   });
 });
 
 
-// 기숙사 동 반응형 구현
-function categoryChange(e) {
+// // 기숙사 동 반응형 구현
+// function categoryChange(e) {
 
-  // 추가할 옵션 리스트 변수 설정
-  var bachelor_option = ['906', '915', '919A', '919B', '919C', '919D', '921', '922', '923', '924', '925', '926'];
-  var master_option = ['900', '901', '902', '903', '904', '905', '917', '918'];
-  var family_option = ['931', '932', '933', '934', '935'];
-  var bk_option = ['946A', '946B'];
+//   // 추가할 옵션 리스트 변수 설정
+//   var bachelor_option = ['906', '915', '919A', '919B', '919C', '919D', '921', '922', '923', '924', '925', '926'];
+//   var master_option = ['900', '901', '902', '903', '904', '905', '917', '918'];
+//   var family_option = ['931', '932', '933', '934', '935'];
+//   var bk_option = ['946A', '946B'];
 
-  // 기숙사 생활관 옵션 값에 따른 변수 지정
-  if(e.value == "bachelor") var category = bachelor_option;
-  else if(e.value == "master") var category = master_option;
-  else if(e.value == "family") var category = family_option;
-  else if(e.value == "bk") var category = bk_option;
+//   var category = []
 
-  // 기숙사 동 옵션을 추가하고자 하는 target 요소의 위치
-  var target = document.getElementById("dong-container-id");
+//   // 기숙사 생활관 옵션 값에 따른 변수 지정
+//   if(e.value == "bachelor") {
+//     category = bachelor_option;
+//   } else if(e.value == "master") {
+//     category = master_option;
+//   } else if(e.value == "family") {
+//     category = family_option;
+//   } else if(e.value == "bk") {
+//     category = bk_option;
+//   }
+
+//   // 기숙사 동 옵션을 추가하고자 하는 target 요소의 위치
+//   var target = document.getElementById("dong-container-id");
   
-  // 이전에 선택한 옵션으로 인해 추가되어 있는 기숙사 동 옵션 제거
-  while ( target.hasChildNodes() ) {
-    target.removeChild(target.firstChild);
-  }
+//   // 이전에 선택한 옵션으로 인해 추가되어 있는 기숙사 동 옵션 제거
+//   while (target.hasChildNodes()) {
+//     target.removeChild(target.firstChild);
+//   }
 
-  // for문을 통해 target의 자식 요소로 기숙사 동 옵션 추가
-  for (dong in category) {
-    var div = document.createElement('div');
-    var input = document.createElement('input');
-    var label = document.createElement('label');
+//   // for문을 통해 target의 자식 요소로 기숙사 동 옵션 추가
+//   for (dong in category) {
+//     var div = document.createElement('div');
+//     var input = document.createElement('input');
+//     var label = document.createElement('label');
 
-    div.className = "dong-option";
-    input.type = "radio";
-    input.className = "radio";
-    input.id = category[dong];
-    input.name = "building_dong";
-    label.setAttribute("for", category[dong]);
-    label.innerHTML = `${category[dong]}동`;
+//     div.className = "dong-option";
+//     input.type = "radio";
+//     input.className = "radio";
+//     input.id = category[dong];
+//     input.name = "building_dong";
+//     label.setAttribute("for", category[dong]);
+//     label.innerHTML = `${category[dong]}동`;
 
-    div.appendChild(input);
-    div.appendChild(label);
+//     div.appendChild(input);
+//     div.appendChild(label);
     
-    target.appendChild(div);
-  }
-};
+//     target.appendChild(div);
+//   }
+// };
 
 
 

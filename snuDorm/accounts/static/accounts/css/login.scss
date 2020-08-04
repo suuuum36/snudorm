@@ -19,12 +19,10 @@
     // 로고
     .logo {
         width: 300px;
-        height: 150px;
-        margin: 0 auto;
+        margin: 0 auto 100px auto;
 
         img {
             max-width: 100%;
-            height: auto;
         }
     }
 
@@ -65,14 +63,19 @@
 
         // 로그인 버튼
         button {
-            margin-top: 20px;
+            margin-top: 40px;
             color: $gray_text;
-            background-color: #dfdfdf; // 색상 수정
+            background-color: $gray_button; // 색상 수정
             border-radius: 5px;
             width: 400px;
             height: 50px;
             cursor: pointer;
             font-weight: bold;
+        }
+
+        button:hover {
+            background-color: $gray_hover;
+            box-shadow: $gray_under_shadow;
         }
     }
     .error {
@@ -100,7 +103,7 @@
         }
         .google {
             position: relative;
-            margin-top: 5px;
+            margin-top: 10px;
 
             img {
                 max-width: 400px;
@@ -119,18 +122,25 @@
     .find-signup {
         display: flex;
         justify-content: center;
-        margin-top: 20px;
+        margin-top: 30px;
         font-weight: bold;
 
         // 아이디, 비밀번호 찾기
         .find {
             margin-right: 20px;
-            
+        }
+
+        .find:hover {
+            color: $gray_text_hover;
         }
 
         // 회원가입
         .signup {
             color: $blue_text;
+        }
+
+        .signup:hover {
+            color: $blue_hover;
         }
     }
 }

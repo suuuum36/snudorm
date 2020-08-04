@@ -21,7 +21,7 @@
                         <span>이름</span>
                     </div>
                     <div class="value">
-                        <input class="input-box" name="name" type="text" placeholder="{{ user.profile.name }}" required>
+                        <input class="input-box" name="name" type="text" value="{{ user.profile.name }}" required>
                     </div>
                 </div>
                 <div class="id">
@@ -37,7 +37,7 @@
                         <span>닉네임</span>
                     </div>
                     <div class="value">
-                        <input class="input-box" name="nickname" type="text" placeholder="{{ user.profile.nickname }}" required>
+                        <input class="input-box" name="nickname" type="text" value="{{ user.profile.nickname }}" required>
                     </div>
                 </div>
                 <div class="email">
@@ -45,7 +45,7 @@
                         <span>이메일</span>
                     </div>
                     <div class="value">
-                        <input class="input-box" name="email" type="text" placeholder="{{ user.email }}" required> @ snu.ac.kr
+                        <input class="input-box" name="email" type="text" value="{{ user.email }}" required> @ snu.ac.kr
                     </div>
                 </div>
                 <div class="building">
@@ -53,8 +53,8 @@
                         <span>기숙사 동</span>
                     </div>  
                     <div class="value" id="building-item">
-                        <input id="category" class="input-box" name="building_category" type="text" placeholder="{{ user.profile.building_category }}" required>
-                        <input id="dong" class="input-box" name="building_dong" type="text" placeholder="{{ user.profile.building_dong }}" required>
+                        <input id="category" class="input-box" name="building_category" type="text" value="{{ user.profile.building_category }}" required>
+                        <input id="dong" class="input-box" name="building_dong" type="text" value="{{ user.profile.building_dong }}" required>
                     </div>
                 </div>
                 <div class="password">

@@ -35,7 +35,7 @@ textarea:focus::-webkit-input-placeholder {
       .form .nav .nav-list a:hover {
         color: #016aff; }
     .form .nav .nav-list:hover {
-      background-color: #dfdfff;
+      background-color: #d3e6fe;
       cursor: pointer; }
   .form .info {
     background-color: #ffffff;
@@ -66,8 +66,10 @@ textarea:focus::-webkit-input-placeholder {
           color: #7f7f7f; }
           .form .info .container .name .value .input-box, .form .info .container .id .value .input-box, .form .info .container .nickname .value .input-box, .form .info .container .email .value .input-box, .form .info .container .building .value .input-box, .form .info .container .password .value .input-box {
             font-size: 18px;
+            font-weight: bold;
             border-style: none none solid none;
             border-color: #b9b9b9;
+            color: #7f7f7f;
             height: 50px;
             line-height: 50px; }
           .form .info .container .name .value .input-box::placeholder, .form .info .container .id .value .input-box::placeholder, .form .info .container .nickname .value .input-box::placeholder, .form .info .container .email .value .input-box::placeholder, .form .info .container .building .value .input-box::placeholder, .form .info .container .password .value .input-box::placeholder {

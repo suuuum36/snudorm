@@ -138,7 +138,12 @@ def login(request):
 
         # 실패
         else:
-            return render(request, 'accounts/login.html', {'error': '아이디와 비밀번호를 확인해주세요.'})
+            if user_id == "" or password == "":
+                error = "아이디와 비밀번호를 모두 입력해주세요."
+            else:
+                error = "아이디와 비밀번호를 확인해주세요."
+        
+        return render(request, 'accounts/login.html', {'error': error})
 
     else:
         return render(request, 'accounts/login.html')

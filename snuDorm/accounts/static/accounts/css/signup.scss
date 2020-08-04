@@ -25,29 +25,20 @@ textarea:focus::-webkit-input-placeholder {
 
     // 로고 및 headline
     .headline {
+        font-size: 20px;
         font-weight: bold;
         img {
-            width: 40px;
+            width: 30px;
         }
         span {
             color: $yellow_main;
         }
     }
 
-    // 이름 입력
-    .name-input {}
-
-    // 아이디 입력 및 중복확인
-    .id-input {}
-
-    // 패스워드 입력
-    .pw-input {}
-
-    // 패스워드 확인
-    .pw2-input {}
-
-    // 닉네임 입력 및 중복확인
-    .nickname-input {}
+    // 각 입력 항목 마진 값 적용
+    .signup-margin {
+        margin-top: 15px;
+    }
 
     // 이메일 입력
     .email-input {
@@ -66,12 +57,16 @@ textarea:focus::-webkit-input-placeholder {
         }
 
         .building-category {
+            margin-right: 20px;
+        }
+
+        .building-category, .building-dong {
             display: flex;
             width: 240px;
             flex-direction: column;
-            margin-right: 20px;
+            margin-top: 15px;
 
-            .category-container {
+            .category-container, .dong-container {
                 border: 2px solid $gray_border;
                 max-height: 0;
                 width: 100%;
@@ -82,29 +77,32 @@ textarea:focus::-webkit-input-placeholder {
                 order: 1;
             }
 
-            .category-container.active {
+            .category-container.active, .dong-container.active {
                 max-height: 162px;
                 opacity: 1;
                 overflow-y: scroll;
             }
 
-            .category-container.active + .selected::after {
+            .category-container.active + .selected::after, 
+            .dong-container.active + .selected-dong::after {
                 transform: rotateX(180deg);
                 top: -6px;
             }
 
-            .category-container::-webkit-scrollbar {
+            .category-container::-webkit-scrollbar,
+            .dong-container::-webkit-scrollbar {
                 width: 8px;
                 border-radius: 0 3px 3px 0;
                 //background-color: $gray_border;
             }
             
-            .category-container::-webkit-scrollbar-thumb {
+            .category-container::-webkit-scrollbar-thumb, 
+            .dong-container::-webkit-scrollbar-thumb {
                 background-color: $gray_border;
                 border-radius: 3px;
             }
 
-            .selected {
+            .selected, .selected-dong {
                 color: $gray_text;
                 padding: 12px 20px;
                 cursor: pointer;
@@ -115,7 +113,7 @@ textarea:focus::-webkit-input-placeholder {
                 order: 0;
             }
 
-            .selected::after {
+            .selected::after, .selected-dong::after {
                 content: "";
                 background: url("../img/arrow-down.png");
                 background-size: contain;
@@ -130,7 +128,7 @@ textarea:focus::-webkit-input-placeholder {
                 transition: all 0.4s;
             }
 
-            .category-option {
+            .category-option, .dong-option {
                 padding: 12px 20px;
                 cursor: pointer;
 
@@ -139,7 +137,7 @@ textarea:focus::-webkit-input-placeholder {
                 }
             }
 
-            .category-option:hover {
+            .category-option:hover, .dong-option:hover {
                 color: $blue_text;
             }
 
@@ -151,101 +149,20 @@ textarea:focus::-webkit-input-placeholder {
                 cursor: pointer;
             }
         }
-
-        .building-dong {
-            display: flex;
-            width: 240px;
-            flex-direction: column;
-
-            .dong-container {
-                border: 2px solid $gray_border;
-                max-height: 0;
-                width: 100%;
-                opacity: 0;
-                transition: all 0.4s;
-                border-radius: 7px;
-                overflow: hidden;
-                order: 1;
-            }
-
-            .dong-container.active {
-                max-height: 162px;
-                opacity: 1;
-                overflow-y: scroll;
-            }
-
-            .dong-container.active + .selected-dong::after {
-                transform: rotateX(180deg);
-                top: -6px;
-            }
-
-            .dong-container::-webkit-scrollbar {
-                width: 8px;
-                border-radius: 0 3px 3px 0;
-                //background-color: $gray_border;
-            }
-            
-            .dong-container::-webkit-scrollbar-thumb {
-                background-color: $gray_border;
-                border-radius: 3px;
-            }
-
-            .selected-dong {
-                color: $gray_text;
-                padding: 12px 20px;
-                cursor: pointer;
-                border: 2px solid $gray_border;
-                border-radius: 7px;
-                margin-bottom: -2px;
-                position: relative;
-                order: 0;
-            }
-
-            .selected-dong::after {
-                content: "";
-                background: url("../img/arrow-down.png");
-                background-size: contain;
-                background-repeat: no-repeat;
-                
-                position: absolute;
-                height: 100%;
-                width: 32px;
-                right: 18px;
-                top: 5px;
-                
-                transition: all 0.4s;
-            }
-
-            .dong-option {
-                padding: 12px 20px;
-                cursor: pointer;
-
-                .radio {
-                    display:none;
-                }
-            }
-
-            .dong-option:hover {
-                color: $blue_text;
-            }
-
-            label {
-                cursor: pointer;
-            }
-        }
     }
 
     // 회원가입 버튼
     .signup {
         width: 500px;
         height: 70px;
-        text-align: center;
         background-color: $yellow_main;
         color: #ffffff;
         font-weight: bold;
         border-radius: 7px;
-        margin-top: 15px;
+        margin-top: 30px;
         cursor: pointer;
+        border: none;
+        font-size: 16px;
     }
 }
 
@@ -253,9 +170,7 @@ textarea:focus::-webkit-input-placeholder {
 // 항목별 head
 .head {
     display: inline-block;
-    line-height: 50px;
     width: 500px;
-    height: 50px;
     margin-top: 15px;
     font-weight: bold;
 }
@@ -264,10 +179,10 @@ textarea:focus::-webkit-input-placeholder {
 .description { 
     display: inline-block;
     width: 500px;
-    height: 30px;
     font-size: 12px;
     color: $gray_text;
     font-weight: bold;
+    margin-top: 15px;
 }
 
 // 항목별 input
@@ -277,7 +192,7 @@ textarea:focus::-webkit-input-placeholder {
     border-radius: 7px;
     padding-left: 20px;
     font-weight: bold;
-    color: $gray_border;
+    margin-top: 15px;
 }
 
 .input-value:hover, .input-value:focus {
@@ -287,6 +202,7 @@ textarea:focus::-webkit-input-placeholder {
 .input-value::placeholder {
     color: $gray_border;
     font-weight: bold;
+    font-size: 14px;
 }
 
 // 이메일 input
@@ -299,6 +215,7 @@ textarea:focus::-webkit-input-placeholder {
     width: 400px;
 }
 
+// input box와 버튼 높이 조정
 .signup-container {
     display: flex;
     justify-content: space-between;
@@ -309,10 +226,17 @@ textarea:focus::-webkit-input-placeholder {
     width: 90px;
     height: 50px;
     border-radius: 30px;
-    background-color: $gray_border;
+    background-color: $gray_button;
     color: #ffffff;
     cursor: pointer;
     font-weight: bold;
+    font-size: 14px;
+    margin-top: 15px;
+}
+
+.id-check:hover, .nk-check:hover {
+    background-color: $gray_hover;
+    box-shadow: $gray_under_shadow;
 }
 
 // 사용가능 div
@@ -325,6 +249,7 @@ textarea:focus::-webkit-input-placeholder {
     background-color: $blue_text;
     color: #ffffff;
     font-weight: bold;
+    margin-top: 15px;
     
     span {
         position: absolute;
@@ -332,6 +257,7 @@ textarea:focus::-webkit-input-placeholder {
         left: 50%;
         transform: translate(-50%, -50%);
         white-space: nowrap;
+        font-size: 14px;
     }
 }
 
