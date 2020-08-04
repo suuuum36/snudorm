@@ -56,13 +56,13 @@ def get_feed(board, category):
 
 def get_pages(feeds, request):
     # 전체글 버튼
-    paginator = Paginator(feeds, 1)
+    paginator = Paginator(feeds, 3)
     page = request.GET.get('page')
     posts = paginator.get_page(page)
 
     # 베스트 버튼 
     best_feeds = feeds.order_by('-like_users')
-    paginator2 = Paginator(best_feeds, 1)
+    paginator2 = Paginator(best_feeds, 3)
     best_page = request.GET.get('best_page', 1)
     best_posts = paginator2.get_page(best_page)
     
@@ -140,6 +140,18 @@ def showBoard(request, board, category):
         # 전체글 버튼
         feeds = get_feed(board, category).order_by('-created_at')
         pages = get_pages(feeds, request)
+        feeds = feeds.order_by('-created_at')
+        paginator = Paginator(feeds, 11)
+        page = request.GET.get('page')
+        posts = paginator.get_page(page)
+
+        # 베스트 버튼 
+        best_feeds = feeds.order_by('-like_users')
+        paginator2 = Paginator(best_feeds, 11)
+        best_page = request.GET.get('best_page', 1)
+        best_posts = paginator2.get_page(best_page)
+        
+        page_numbers_range = 10
 
         return render(request, 'feedpage/show.html', {'posts':pages[0], 'best_posts': pages[1], 
                             'board': board, 'category': category, 'board_name': board_info[2] + ' 게시판', 
@@ -162,6 +174,7 @@ def newFeed(request, board, category):
         content = request.POST['content']
         photo = request.FILES.get('photo', False)
         noname = True if "noname" in request.POST else False
+        # 관리자 계정('domitori) 일 때만 공지사항 작동 
         notice = True if request.user.username == 'domitori' else False
 
         # 민원 게시판 
@@ -189,7 +202,7 @@ def newFeed(request, board, category):
 
             # rent 게시판 - (제목, 설명, 사진, 익명) + 목적, 대여료, 시작일(+ 미정), 마감일(+ 미정)
             elif category == "rent":
-                purpose = Rent.OPTION[0] if request.POST['purpose'] == 'borrow' else Rent.OPTION[1][0]
+                purpose = Rent.OPTION[0] if request.POST['purpose'] == 'borrow' else Rent.OPTION[1]
                 deposit = request.POST['deposit']
                 start_date = request.POST.get('start_date', '2020-01-01')
                 end_date = request.POST.get('duedate', '2020-01-01')
@@ -201,7 +214,7 @@ def newFeed(request, board, category):
 
             # keep 게시판 - (제목, 설명, 사진, 익명) + 목적, 보관료, 시작일(+ 미정), 마감일(+ 미정)
             elif category == "keep":
-                purpose = Keep.OPTION[0] if request.POST['purpose'] == 'keep' else Keep.OPTION[1][0]
+                purpose = Keep.OPTION[0] if request.POST['purpose'] == 'keep' else Keep.OPTION[1]
                 reward = request.POST['reward']
                 start_date = request.POST.get('start_date', '2020-01-01')
                 end_date = request.POST.get('duedate', '2020-01-01')
@@ -213,7 +226,7 @@ def newFeed(request, board, category):
 
             # resell 게시판 - (제목, 설명, 사진, 익명) + 목적, 가격
             elif category == "resell":
-                purpose = Resell.OPTION[0] if request.POST['purpose'] == "sell" else Resell.OPTION[1][0]
+                purpose = Resell.OPTION[0] if request.POST['purpose'] == "sell" else Resell.OPTION[1]
                 price = request.POST['price']
                 status = STAT_OPTION[1]   
                 Resell.objects.create(title=title, content=content, photo=photo, noname=noname, purpose=purpose, 
@@ -304,21 +317,21 @@ def editFeed(request, board, category, fid):
             if category == "cobuy":
                 feed.price = request.POST['price']
                 feed.url = request.POST['url']
-                feed.duedate = request.POST['duedate']
+                feed.duedate = request.POST.get('duedate', '2020-01-01')
 
             # rent 게시판 - (제목, 설명, 사진, 익명) + 목적, 대여료, 시작일(+ 미정), 마감일(+ 미정)
             elif category == "rent":
                 feed.deposit = request.POST['deposit']
                 feed.purpose = Rent.OPTION[0] if request.POST['purpose'] == 'borrow' else Rent.OPTION[1]
-                feed.start_date = request.POST['start_date']
-                feed.end_date = request.POST['duedate']
+                feed.start_date = request.POST.get('start_date', '2020-01-01')
+                feed.end_date = request.POST.get('duedate', '2020-01-01')
 
             # keep 게시판 - (제목, 설명, 사진, 익명) + 목적, 보관료, 시작일(+ 미정), 마감일(+ 미정)
             elif category == "keep":
                 feed.purpose = Keep.OPTION[0] if request.POST['purpose'] == 'keep' else Keep.OPTION[1]
                 feed.reward = request.POST['reward']
-                feed.start_date = request.POST['start_date']
-                feed.end_date = request.POST['duedate']
+                feed.start_date = request.POST.get('start_date', '2020-01-01')
+                feed.end_date = request.POST.get('duedate', '2020-01-01')
 
             # resell 게시판 - (제목, 설명, 사진, 익명) + 목적, 가격
             elif category == "resell":
