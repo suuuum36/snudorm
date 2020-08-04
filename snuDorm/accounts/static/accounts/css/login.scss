@@ -75,10 +75,15 @@
             font-weight: bold;
         }
     }
-
+    .error {
+        text-align: center;
+        margin-top: 30px;
+        margin-bottom: 30px;
+        color:red;
+        height: 16px;
+    }
     // 소셜 로그인
     .social {
-        margin-top: 60px;
         width: 400px;
         .naver {
             position: relative;

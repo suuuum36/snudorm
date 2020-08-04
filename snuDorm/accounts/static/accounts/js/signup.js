@@ -23,13 +23,10 @@ function id_db_check() {
   var userIdRegex = /^[a-zA-Z0-9]{5,}$/;
   var idInput = document.getElementById("user-id");
 
-  if (!userIdRegex.test(idInput.value)) {
-    alert("아이디를 확인해주세요.");
-    idInput.focus();
+  if (!regexCheck(userIdRegex, idInput, "아이디를 확인해주세요.")) {
     return false;
   }
   
-
   id_input = document.querySelector('input[name="user_id"]');
 
   $.ajax({
@@ -75,9 +72,7 @@ function nk_db_check() {
   var nkRegex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9]{2,8}$/;
   var nkInput = document.getElementById("nickname");
 
-  if (!nkRegex.test(nkInput.value)) {
-    alert("닉네임을 확인해주세요.");
-    nkInput.focus();
+  if (!regexCheck(nkRegex, nkInput, "닉네임을 확인해주세요.")) {
     return false;
   }
   
@@ -122,15 +117,11 @@ function validateForm() {
   
 
   // 이름 확인
-  if(nameInput.value == "") {
-    alert("이름을 입력해주세요.");
-    nameInput.focus();
+  if(blankCheck(nameInput, "이름을 입력해주세요.")) {
     return false;
   };
   
-  if (!nameRegex.test(nameInput.value)) {
-    alert("이름을 확인해주세요.");
-    nameInput.focus();
+  if (!regexCheck(nameRegex, nameInput, "이름을 확인해주세요.")) {
     return false;
   };
   
@@ -144,11 +135,13 @@ function validateForm() {
   // 비밀번호 확인
   // 1) 비밀번호 regex 확인
   // 2) 비밀번호 일치여부 확인
-  if (!pwRegex.test(pw1Input.value)) {
-    alert("비밀번호를 확인해주세요.");
-    pw1Input.focus();
+  if (!regexCheck(pwRegex, pw1Input, "비밀번호를 확인해주세요.")) {
     return false;
-  };
+  }; // 1차 비밀번호 확인
+
+  if (!regexCheck(pwRegex, pw2Input, "비밀번호를 확인해주세요.")) {
+    return false;
+  }; // 2차 비밀번호 확인
   
   if (pw1Input.value != pw2Input.value) {
     alert("비밀번호가 일치하지 않습니다.");
@@ -159,16 +152,12 @@ function validateForm() {
   // 닉네임 중복확인 여부
   if ($('.nickname').attr("check_result") == "fail"){
     alert("닉네임 중복체크를 해주시기 바랍니다.");
-    console.log(pw1Input.value == pw2Input.value);
-    console.log(pw2Input.value);
     $('.nickname').focus();
     return false;
   };
 
   // 이메일 
-  if (emailInput.value == "") {
-    alert("이메일을 입력해주세요.");
-    emailInput.focus();
+  if (blankCheck(emailInput, "이메일을 입력해주세요.")) {
     return false;
   };
   
@@ -177,14 +166,22 @@ function validateForm() {
   document.getElementById("submit").submit();
 };
 
-// 유효성 검사를 위한 tool fucntion
+// regex 검증을 위한 tool fucntion
 function regexCheck(regex, what, message) {
   if(regex.test(what.value)) {
     return true;
-  }
+  };
   alert(message);
   what.value = "";
   what.focus();
+};
+
+// 공백 여부 판단을 위한 tool function
+function blankCheck(field, message) {
+  if(field.vaule == "") {
+    alert(message);
+    field.focus();
+  };
 };
 
 

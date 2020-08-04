@@ -20,9 +20,6 @@
     <link rel="stylesheet" href="{% sass_src 'accounts/css/reset.scss' %}" type="text/css">
 </head>
 <body>
-    {% for message in messages %}
-    {{  messages.error }}
-    {% endfor %}
     <div class="form">
         <div class="logo">
             <a href="{% url 'showmain' %}">
@@ -34,16 +31,19 @@
                 {% csrf_token %}
                 <div class="id-pw">
                     <div>
-                        <input class="id" name="user_id" type="text" id="user_id" placeholder="아이디" required>
+                        <input class="id" name="user_id" type="text" id="user_id" placeholder="아이디" spellcheck="false">
                     </div>
                     <div>
-                        <input class="pw" name="password" type="password" id="password" placeholder="비밀번호" required>
+                        <input class="pw" name="password" type="password" id="password" placeholder="비밀번호">
                     </div>
                 </div>
                 <button type="submit">로그인</button>
                 <!-- TODO: 로그인 이후 이전 페이지로 돌아가기
                 <input type="hidden" name="next" value="{{ next }}">  -->
             </form>
+        </div>
+        <div class="error">
+            <span>{{ error }}</span>
         </div>
         <div class="social">
             <div class="naver">
