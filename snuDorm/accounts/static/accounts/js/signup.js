@@ -116,50 +116,50 @@ function validateForm() {
   var pwRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
   
 
-  // 이름 확인
-  if(blankCheck(nameInput, "이름을 입력해주세요.")) {
-    return false;
-  };
+  // // 이름 확인
+  // if(blankCheck(nameInput, "이름을 입력해주세요.")) {
+  //   return false;
+  // };
   
-  if (!regexCheck(nameRegex, nameInput, "이름을 확인해주세요.")) {
-    return false;
-  };
+  // if (!regexCheck(nameRegex, nameInput, "이름을 확인해주세요.")) {
+  //   return false;
+  // };
   
-  // 아이디 중복확인 여부
-  if ($('.user-id').attr("check_result") == "fail"){
-    alert("아이디 중복체크를 해주시기 바랍니다.");
-    $('.user-id').focus();
-    return false;
-  };
+  // // 아이디 중복확인 여부
+  // if ($('.user-id').attr("check_result") == "fail"){
+  //   alert("아이디 중복체크를 해주시기 바랍니다.");
+  //   $('.user-id').focus();
+  //   return false;
+  // };
 
-  // 비밀번호 확인
-  // 1) 비밀번호 regex 확인
-  // 2) 비밀번호 일치여부 확인
-  if (!regexCheck(pwRegex, pw1Input, "비밀번호를 확인해주세요.")) {
-    return false;
-  }; // 1차 비밀번호 확인
+  // // 비밀번호 확인
+  // // 1) 비밀번호 regex 확인
+  // // 2) 비밀번호 일치여부 확인
+  // if (!regexCheck(pwRegex, pw1Input, "비밀번호를 확인해주세요.")) {
+  //   return false;
+  // }; // 1차 비밀번호 확인
 
-  if (!regexCheck(pwRegex, pw2Input, "비밀번호를 확인해주세요.")) {
-    return false;
-  }; // 2차 비밀번호 확인
+  // if (!regexCheck(pwRegex, pw2Input, "비밀번호를 확인해주세요.")) {
+  //   return false;
+  // }; // 2차 비밀번호 확인
   
-  if (pw1Input.value != pw2Input.value) {
-    alert("비밀번호가 일치하지 않습니다.");
-    pw1Input.focus();
-    return false;
-  };
+  // if (pw1Input.value != pw2Input.value) {
+  //   alert("비밀번호가 일치하지 않습니다.");
+  //   pw1Input.focus();
+  //   return false;
+  // };
 
-  // 닉네임 중복확인 여부
-  if ($('.nickname').attr("check_result") == "fail"){
-    alert("닉네임 중복체크를 해주시기 바랍니다.");
-    $('.nickname').focus();
-    return false;
-  };
+  // // 닉네임 중복확인 여부
+  // if ($('.nickname').attr("check_result") == "fail"){
+  //   alert("닉네임 중복체크를 해주시기 바랍니다.");
+  //   $('.nickname').focus();
+  //   return false;
+  // };
 
-  // 이메일 
-  if (blankCheck(emailInput, "이메일을 입력해주세요.")) {
-    return false;
-  };
+  // // 이메일 
+  // if (blankCheck(emailInput, "이메일을 입력해주세요.")) {
+  //   return false;
+  // };
   
 
   // 모든 유효성 검사 통과 시 form 제출
@@ -183,9 +183,6 @@ function blankCheck(field, message) {
     field.focus();
   };
 };
-
-
-
 
 
 // 기숙사 생활관 selected 표시 변경
@@ -313,3 +310,20 @@ bkOptions.forEach(d => {
     bkContainer.classList.remove("active");
   });
 });
+
+
+
+// name 값 지정
+var choose = document.querySelectorAll(".dong-option");
+
+choose.forEach(x => {
+  x.addEventListener("click", () => {
+    var ipt = x.firstElementChild;
+    var beforeName = document.getElementsByName("building_dong");
+    if (beforeName.length == 1) {
+      beforeName[0].removeAttribute("name");
+    };
+    ipt.setAttribute("name", "building_dong");
+  });
+});
+
