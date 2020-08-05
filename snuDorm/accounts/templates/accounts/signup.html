@@ -23,7 +23,7 @@
             {% csrf_token %}
             <div class="signup-margin">   
                 <span class="head">이름</span>
-                <span class="description">한글 이름을 입력해주세요. (2-4자)</span>
+                <span class="description">4자 이내의 한글 이름 또는 15자 이내의 영어 이름을 입력해주세요.</span>
                 <input id="name" class="input-value long" name="name" type="text" placeholder="이름" required>
             </div>
             <div class="signup-margin">
@@ -72,42 +72,177 @@
                 <span class="head">기숙사 동</span>
                 <div class="building-category">
                     <div class="category-container">
-                        <div class="category-option">  <!-- onclick="categoryChange(this)" -->
-                            <input type="radio" class="radio" id="bachelor" value="bachelor" name="building_category">
+                        <div class="category-option">
+                            <input type="radio" class="radio" id="bachelor" value="학부생활관" name="building_category">
                             <label for="bachelor">학부생활관</label>
                         </div>
                         <div class="category-option">
-                            <input type="radio" class="radio" id="master" value="master" name="building_category">
+                            <input type="radio" class="radio" id="master" value="대학원생활관"" name="building_category">
                             <label for="master">대학원생활관</label>
                         </div>
                         <div class="category-option">
-                            <input type="radio" class="radio" id="family" value="family" name="building_category">
+                            <input type="radio" class="radio" id="family" value="가족생활관" name="building_category">
                             <label for="family">가족생활관</label>
                         </div>
                         <div class="category-option">
-                            <input type="radio" class="radio" id="bk" value="bk" name="building_category">
+                            <input type="radio" class="radio" id="bk" value="BK생활관" name="building_category">
                             <label for="bk">BK생활관</label>
                         </div>
                         
                     </div>
-                    <div class="selected">
+                    <div class="selected" id="selected" onclick="back()">
                         생활관
                     </div>
                 </div>
-                
-                <div class="building-dong">
-                    <div class="dong-container" id="dong-container-id">
-                        <div class="dong-option">
-                            <input type="radio" class="radio" id="default" name="building_dong">
+                <div class="building-default" id="default-dong">
+                    <div class="default-container">
+                        <div class="default-option">
+                            <input type="radio" class="radio" id="default" value="default" name="building_dong">
                             <label for="default">생활관을 선택해주세요</label>
                         </div>
                     </div>
-                    <div class="selected-dong">
+                    <div class="selected-default">
                         동
                     </div>
                 </div>
+                <div class="building-bachelor remove" id="bachelor-dong">
+                    <div class="bachelor-container">
+                        <div class="bachelor-option">
+                            <input type="radio" class="radio" id="906" value="906동" name="building_dong">
+                            <label for="906">906동</label>
+                        </div>
+                        <div class="bachelor-option">
+                            <input type="radio" class="radio" id="915" value="915동" name="building_dong">
+                            <label for="915">915동</label>
+                        </div>
+                        <div class="bachelor-option">
+                            <input type="radio" class="radio" id="919A" value="919A동" name="building_dong">
+                            <label for="919A">919A동</label>
+                        </div>
+                        <div class="bachelor-option">
+                            <input type="radio" class="radio" id="919B" value="919B동" name="building_dong">
+                            <label for="919B">919B동</label>
+                        </div>
+                        <div class="bachelor-option">
+                            <input type="radio" class="radio" id="919C" value="919C동" name="building_dong">
+                            <label for="919C">919C동</label>
+                        </div>
+                        <div class="bachelor-option">
+                            <input type="radio" class="radio" id="919D" value="919D동" name="building_dong">
+                            <label for="919D">919D동</label>
+                        </div>
+                        <div class="bachelor-option">
+                            <input type="radio" class="radio" id="921" value="921동" name="building_dong">
+                            <label for="921">921동</label>
+                        </div>
+                        <div class="bachelor-option">
+                            <input type="radio" class="radio" id="922" value="922동" name="building_dong">
+                            <label for="922">922동</label>
+                        </div>
+                        <div class="bachelor-option">
+                            <input type="radio" class="radio" id="923" value="923동" name="building_dong">
+                            <label for="923">923동</label>
+                        </div>
+                        <div class="bachelor-option">
+                            <input type="radio" class="radio" id="924" value="924동" name="building_dong">
+                            <label for="924">924동</label>
+                        </div>
+                        <div class="bachelor-option">
+                            <input type="radio" class="radio" id="925" value="925동" name="building_dong">
+                            <label for="925">925동</label>
+                        </div>
+                        <div class="bachelor-option">
+                            <input type="radio" class="radio" id="926" value="926동" name="building_dong">
+                            <label for="926">926동</label>
+                        </div>
+                    </div>
+                    <div class="selected-bachelor">
+                        동
+                    </div>
+                </div>
+                <div class="building-master remove" id="master-dong">
+                    <div class="master-container">
+                        <div class="master-option">
+                            <input type="radio" class="radio" id="900" value="900동" name="building_dong">
+                            <label for="900">900동</label>
+                        </div>
+                        <div class="master-option">
+                            <input type="radio" class="radio" id="901" value="901동" name="building_dong">
+                            <label for="901">901동</label>
+                        </div>
+                        <div class="master-option">
+                            <input type="radio" class="radio" id="902" value="902동" name="building_dong">
+                            <label for="902">902동</label>
+                        </div>
+                        <div class="master-option">
+                            <input type="radio" class="radio" id="903" value="903동" name="building_dong">
+                            <label for="903">903동</label>
+                        </div>
+                        <div class="master-option">
+                            <input type="radio" class="radio" id="904" value="904동" name="building_dong">
+                            <label for="904">904동</label>
+                        </div>
+                        <div class="master-option">
+                            <input type="radio" class="radio" id="905" value="905동" name="building_dong">
+                            <label for="905">905동</label>
+                        </div>
+                        <div class="master-option">
+                            <input type="radio" class="radio" id="917" value="917동" name="building_dong">
+                            <label for="917">917동</label>
+                        </div>
+                        <div class="master-option">
+                            <input type="radio" class="radio" id="918" value="918동" name="building_dong">
+                            <label for="918">918동</label>
+                        </div>
+                    </div>
+                    <div class="selected-master">
+                        동
+                    </div>
+                </div>
+                <div class="building-family remove" id="family-dong">
+                    <div class="family-container">
+                        <div class="family-option">
+                            <input type="radio" class="radio" id="931" value="931동" name="building_dong">
+                            <label for="931">931동</label>
+                        </div>
+                        <div class="family-option">
+                            <input type="radio" class="radio" id="932" value="932동" name="building_dong">
+                            <label for="932">932동</label>
+                        </div>
+                        <div class="family-option">
+                            <input type="radio" class="radio" id="933" value="933동" name="building_dong">
+                            <label for="933">933동</label>
+                        </div>
+                        <div class="family-option">
+                            <input type="radio" class="radio" id="934" value="934동" name="building_dong">
+                            <label for="934">934동</label>
+                        </div>
+                        <div class="family-option">
+                            <input type="radio" class="radio" id="935" value="935동" name="building_dong">
+                            <label for="935">935동</label>
+                        </div>
+                    </div>
+                    <div class="selected-family">
+                        동
+                    </div>
+                </div>
+                <div class="building-bk remove" id="bk-dong">
+                    <div class="bk-container">
+                        <div class="bk-option">
+                            <input type="radio" class="radio" id="946A" value="946A동" name="building_dong">
+                            <label for="946A">946A동</label>
+                        </div>
+                        <div class="bk-option">
+                            <input type="radio" class="radio" id="946B" value="946B동" name="building_dong">
+                            <label for="946B">946B동</label>
+                        </div>
+                    </div>
+                    <div class="selected-bk">
+                        동
+                    </div>
+                </div>
+                <input type="button" class="signup" onclick="validateForm()" value="회원가입">
             </div>
-            <input type="button" class="signup" onclick="validateForm()" value="회원가입">
         </form>
     </div>
     <script src="{% static 'accounts/js/signup.js' %}"></script>

@@ -39,13 +39,14 @@
                     <div class="value">
                         <input class="input-box" name="nickname" type="text" value="{{ user.profile.nickname }}" required>
                     </div>
+                    <!-- <button class="id-check" type="button" onclick="id_db_check()">중복확인</button> -->
                 </div>
                 <div class="email">
                     <div class="field">
                         <span>이메일</span>
                     </div>
                     <div class="value">
-                        <input class="input-box" name="email" type="text" value="{{ user.email }}" required> @ snu.ac.kr
+                        <input class="input-box" name="email" type="text" value="{{ user.profile.email }}" spellcheck="false" required> @ snu.ac.kr
                     </div>
                 </div>
                 <div class="building">

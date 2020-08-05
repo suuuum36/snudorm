@@ -1,5 +1,67 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
 * {
-  font-family: 'Noto Sans KR', sans-serif; }
+  box-sizing: border-box; }
+
+a {
+  text-decoration: none; }
+
+a:link, a:visited, a:hover, a:active {
+  color: black; }
+
+button {
+  padding: 0;
+  margin: 0;
+  border: none;
+  outline-style: none; }
+
+input {
+  padding: 0;
+  margin: 0;
+  outline-style: none; }
+
+select {
+  outline-style: none; }
 
 input:focus::-webkit-input-placeholder,
 textarea:focus::-webkit-input-placeholder {
@@ -7,7 +69,8 @@ textarea:focus::-webkit-input-placeholder {
 
 .form {
   width: 500px;
-  margin: 100px auto; }
+  margin: 100px auto;
+  height: 1100px; }
   .form .headline {
     font-size: 20px;
     font-weight: bold; }
@@ -21,17 +84,47 @@ textarea:focus::-webkit-input-placeholder {
     font-weight: bold; }
   .form .building {
     display: flex;
-    flex-wrap: wrap; }
+    flex-wrap: wrap;
+    position: relative; }
     .form .building span {
       width: 500px; }
     .form .building .building-category {
-      margin-right: 20px; }
-    .form .building .building-category, .form .building .building-dong {
+      margin-right: 20px;
+      position: relative; }
+    .form .building .building-category, .form .building .building-bachelor,
+    .form .building .building-master, .form .building .building-family,
+    .form .building .building-bk, .form .building .building-default {
       display: flex;
       width: 240px;
       flex-direction: column;
-      margin-top: 15px; }
-      .form .building .building-category .category-container, .form .building .building-category .dong-container, .form .building .building-dong .category-container, .form .building .building-dong .dong-container {
+      margin-top: 15px;
+      position: relative; }
+      .form .building .building-category .default-container, .form .building .building-bachelor .default-container,
+      .form .building .building-master .default-container, .form .building .building-family .default-container,
+      .form .building .building-bk .default-container, .form .building .building-default .default-container {
+        position: absolute !important;
+        z-index: -1 !important; }
+      .form .building .building-category .category-container, .form .building .building-category .bachelor-container,
+      .form .building .building-category .master-container, .form .building .building-category .family-container,
+      .form .building .building-category .bk-container, .form .building .building-category .default-container, .form .building .building-bachelor .category-container, .form .building .building-bachelor .bachelor-container,
+      .form .building .building-bachelor .master-container, .form .building .building-bachelor .family-container,
+      .form .building .building-bachelor .bk-container, .form .building .building-bachelor .default-container,
+      .form .building .building-master .category-container,
+      .form .building .building-master .bachelor-container,
+      .form .building .building-master .master-container,
+      .form .building .building-master .family-container,
+      .form .building .building-master .bk-container,
+      .form .building .building-master .default-container, .form .building .building-family .category-container, .form .building .building-family .bachelor-container,
+      .form .building .building-family .master-container, .form .building .building-family .family-container,
+      .form .building .building-family .bk-container, .form .building .building-family .default-container,
+      .form .building .building-bk .category-container,
+      .form .building .building-bk .bachelor-container,
+      .form .building .building-bk .master-container,
+      .form .building .building-bk .family-container,
+      .form .building .building-bk .bk-container,
+      .form .building .building-bk .default-container, .form .building .building-default .category-container, .form .building .building-default .bachelor-container,
+      .form .building .building-default .master-container, .form .building .building-default .family-container,
+      .form .building .building-default .bk-container, .form .building .building-default .default-container {
         border: 2px solid #b9b9b9;
         max-height: 0;
         width: 100%;
@@ -39,27 +132,161 @@ textarea:focus::-webkit-input-placeholder {
         transition: all 0.4s;
         border-radius: 7px;
         overflow: hidden;
-        order: 1; }
-      .form .building .building-category .category-container.active, .form .building .building-category .dong-container.active, .form .building .building-dong .category-container.active, .form .building .building-dong .dong-container.active {
+        order: 1;
+        position: absolute;
+        top: 44px;
+        z-index: 3;
+        margin-top: -2px;
+        background-color: #ffffff; }
+      .form .building .building-category .category-container.active, .form .building .building-category .bachelor-container.active,
+      .form .building .building-category .master-container.active, .form .building .building-category .family-container.active,
+      .form .building .building-category .bk-container.active, .form .building .building-category .default-container.active, .form .building .building-bachelor .category-container.active, .form .building .building-bachelor .bachelor-container.active,
+      .form .building .building-bachelor .master-container.active, .form .building .building-bachelor .family-container.active,
+      .form .building .building-bachelor .bk-container.active, .form .building .building-bachelor .default-container.active,
+      .form .building .building-master .category-container.active,
+      .form .building .building-master .bachelor-container.active,
+      .form .building .building-master .master-container.active,
+      .form .building .building-master .family-container.active,
+      .form .building .building-master .bk-container.active,
+      .form .building .building-master .default-container.active, .form .building .building-family .category-container.active, .form .building .building-family .bachelor-container.active,
+      .form .building .building-family .master-container.active, .form .building .building-family .family-container.active,
+      .form .building .building-family .bk-container.active, .form .building .building-family .default-container.active,
+      .form .building .building-bk .category-container.active,
+      .form .building .building-bk .bachelor-container.active,
+      .form .building .building-bk .master-container.active,
+      .form .building .building-bk .family-container.active,
+      .form .building .building-bk .bk-container.active,
+      .form .building .building-bk .default-container.active, .form .building .building-default .category-container.active, .form .building .building-default .bachelor-container.active,
+      .form .building .building-default .master-container.active, .form .building .building-default .family-container.active,
+      .form .building .building-default .bk-container.active, .form .building .building-default .default-container.active {
         max-height: 162px;
         opacity: 1;
         overflow-y: scroll; }
       .form .building .building-category .category-container.active + .selected::after,
-      .form .building .building-category .dong-container.active + .selected-dong::after, .form .building .building-dong .category-container.active + .selected::after,
-      .form .building .building-dong .dong-container.active + .selected-dong::after {
+      .form .building .building-category .bachelor-container.active + .selected-bachelor::after,
+      .form .building .building-category .master-container.active + .selected-master::after,
+      .form .building .building-category .family-container.active + .selected-family::after,
+      .form .building .building-category .bk-container.active + .selected-bk::after,
+      .form .building .building-category .default-container.active + .selected-default::after, .form .building .building-bachelor .category-container.active + .selected::after,
+      .form .building .building-bachelor .bachelor-container.active + .selected-bachelor::after,
+      .form .building .building-bachelor .master-container.active + .selected-master::after,
+      .form .building .building-bachelor .family-container.active + .selected-family::after,
+      .form .building .building-bachelor .bk-container.active + .selected-bk::after,
+      .form .building .building-bachelor .default-container.active + .selected-default::after,
+      .form .building .building-master .category-container.active + .selected::after,
+      .form .building .building-master .bachelor-container.active + .selected-bachelor::after,
+      .form .building .building-master .master-container.active + .selected-master::after,
+      .form .building .building-master .family-container.active + .selected-family::after,
+      .form .building .building-master .bk-container.active + .selected-bk::after,
+      .form .building .building-master .default-container.active + .selected-default::after, .form .building .building-family .category-container.active + .selected::after,
+      .form .building .building-family .bachelor-container.active + .selected-bachelor::after,
+      .form .building .building-family .master-container.active + .selected-master::after,
+      .form .building .building-family .family-container.active + .selected-family::after,
+      .form .building .building-family .bk-container.active + .selected-bk::after,
+      .form .building .building-family .default-container.active + .selected-default::after,
+      .form .building .building-bk .category-container.active + .selected::after,
+      .form .building .building-bk .bachelor-container.active + .selected-bachelor::after,
+      .form .building .building-bk .master-container.active + .selected-master::after,
+      .form .building .building-bk .family-container.active + .selected-family::after,
+      .form .building .building-bk .bk-container.active + .selected-bk::after,
+      .form .building .building-bk .default-container.active + .selected-default::after, .form .building .building-default .category-container.active + .selected::after,
+      .form .building .building-default .bachelor-container.active + .selected-bachelor::after,
+      .form .building .building-default .master-container.active + .selected-master::after,
+      .form .building .building-default .family-container.active + .selected-family::after,
+      .form .building .building-default .bk-container.active + .selected-bk::after,
+      .form .building .building-default .default-container.active + .selected-default::after {
         transform: rotateX(180deg);
         top: -6px; }
       .form .building .building-category .category-container::-webkit-scrollbar,
-      .form .building .building-category .dong-container::-webkit-scrollbar, .form .building .building-dong .category-container::-webkit-scrollbar,
-      .form .building .building-dong .dong-container::-webkit-scrollbar {
+      .form .building .building-category .bachelor-container::-webkit-scrollbar,
+      .form .building .building-category .master-container::-webkit-scrollbar,
+      .form .building .building-category .family-container::-webkit-scrollbar,
+      .form .building .building-category .bk-container::-webkit-scrollbar,
+      .form .building .building-category .default-container::-webkit-scrollbar, .form .building .building-bachelor .category-container::-webkit-scrollbar,
+      .form .building .building-bachelor .bachelor-container::-webkit-scrollbar,
+      .form .building .building-bachelor .master-container::-webkit-scrollbar,
+      .form .building .building-bachelor .family-container::-webkit-scrollbar,
+      .form .building .building-bachelor .bk-container::-webkit-scrollbar,
+      .form .building .building-bachelor .default-container::-webkit-scrollbar,
+      .form .building .building-master .category-container::-webkit-scrollbar,
+      .form .building .building-master .bachelor-container::-webkit-scrollbar,
+      .form .building .building-master .master-container::-webkit-scrollbar,
+      .form .building .building-master .family-container::-webkit-scrollbar,
+      .form .building .building-master .bk-container::-webkit-scrollbar,
+      .form .building .building-master .default-container::-webkit-scrollbar, .form .building .building-family .category-container::-webkit-scrollbar,
+      .form .building .building-family .bachelor-container::-webkit-scrollbar,
+      .form .building .building-family .master-container::-webkit-scrollbar,
+      .form .building .building-family .family-container::-webkit-scrollbar,
+      .form .building .building-family .bk-container::-webkit-scrollbar,
+      .form .building .building-family .default-container::-webkit-scrollbar,
+      .form .building .building-bk .category-container::-webkit-scrollbar,
+      .form .building .building-bk .bachelor-container::-webkit-scrollbar,
+      .form .building .building-bk .master-container::-webkit-scrollbar,
+      .form .building .building-bk .family-container::-webkit-scrollbar,
+      .form .building .building-bk .bk-container::-webkit-scrollbar,
+      .form .building .building-bk .default-container::-webkit-scrollbar, .form .building .building-default .category-container::-webkit-scrollbar,
+      .form .building .building-default .bachelor-container::-webkit-scrollbar,
+      .form .building .building-default .master-container::-webkit-scrollbar,
+      .form .building .building-default .family-container::-webkit-scrollbar,
+      .form .building .building-default .bk-container::-webkit-scrollbar,
+      .form .building .building-default .default-container::-webkit-scrollbar {
         width: 8px;
-        border-radius: 0 3px 3px 0; }
+        border-radius: 0 3px 3px 0;
+        background-color: #ffffff;
+        visibility: hidden; }
       .form .building .building-category .category-container::-webkit-scrollbar-thumb,
-      .form .building .building-category .dong-container::-webkit-scrollbar-thumb, .form .building .building-dong .category-container::-webkit-scrollbar-thumb,
-      .form .building .building-dong .dong-container::-webkit-scrollbar-thumb {
+      .form .building .building-category .bachelor-container::-webkit-scrollbar-thumb,
+      .form .building .building-category .master-container::-webkit-scrollbar-thumb,
+      .form .building .building-category .family-container::-webkit-scrollbar-thumb,
+      .form .building .building-category .bk-container::-webkit-scrollbar-thumb,
+      .form .building .building-category .default-container::-webkit-scrollbar-thumb, .form .building .building-bachelor .category-container::-webkit-scrollbar-thumb,
+      .form .building .building-bachelor .bachelor-container::-webkit-scrollbar-thumb,
+      .form .building .building-bachelor .master-container::-webkit-scrollbar-thumb,
+      .form .building .building-bachelor .family-container::-webkit-scrollbar-thumb,
+      .form .building .building-bachelor .bk-container::-webkit-scrollbar-thumb,
+      .form .building .building-bachelor .default-container::-webkit-scrollbar-thumb,
+      .form .building .building-master .category-container::-webkit-scrollbar-thumb,
+      .form .building .building-master .bachelor-container::-webkit-scrollbar-thumb,
+      .form .building .building-master .master-container::-webkit-scrollbar-thumb,
+      .form .building .building-master .family-container::-webkit-scrollbar-thumb,
+      .form .building .building-master .bk-container::-webkit-scrollbar-thumb,
+      .form .building .building-master .default-container::-webkit-scrollbar-thumb, .form .building .building-family .category-container::-webkit-scrollbar-thumb,
+      .form .building .building-family .bachelor-container::-webkit-scrollbar-thumb,
+      .form .building .building-family .master-container::-webkit-scrollbar-thumb,
+      .form .building .building-family .family-container::-webkit-scrollbar-thumb,
+      .form .building .building-family .bk-container::-webkit-scrollbar-thumb,
+      .form .building .building-family .default-container::-webkit-scrollbar-thumb,
+      .form .building .building-bk .category-container::-webkit-scrollbar-thumb,
+      .form .building .building-bk .bachelor-container::-webkit-scrollbar-thumb,
+      .form .building .building-bk .master-container::-webkit-scrollbar-thumb,
+      .form .building .building-bk .family-container::-webkit-scrollbar-thumb,
+      .form .building .building-bk .bk-container::-webkit-scrollbar-thumb,
+      .form .building .building-bk .default-container::-webkit-scrollbar-thumb, .form .building .building-default .category-container::-webkit-scrollbar-thumb,
+      .form .building .building-default .bachelor-container::-webkit-scrollbar-thumb,
+      .form .building .building-default .master-container::-webkit-scrollbar-thumb,
+      .form .building .building-default .family-container::-webkit-scrollbar-thumb,
+      .form .building .building-default .bk-container::-webkit-scrollbar-thumb,
+      .form .building .building-default .default-container::-webkit-scrollbar-thumb {
         background-color: #b9b9b9;
-        border-radius: 3px; }
-      .form .building .building-category .selected, .form .building .building-category .selected-dong, .form .building .building-dong .selected, .form .building .building-dong .selected-dong {
+        border-radius: 3px;
+        border: 2px 2px 2px 0 solid #b9b9b9; }
+      .form .building .building-category .selected, .form .building .building-category .selected-bachelor, .form .building .building-category .selected-master,
+      .form .building .building-category .selected-family, .form .building .building-category .selected-bk, .form .building .building-category .selected-default, .form .building .building-bachelor .selected, .form .building .building-bachelor .selected-bachelor, .form .building .building-bachelor .selected-master,
+      .form .building .building-bachelor .selected-family, .form .building .building-bachelor .selected-bk, .form .building .building-bachelor .selected-default,
+      .form .building .building-master .selected,
+      .form .building .building-master .selected-bachelor,
+      .form .building .building-master .selected-master,
+      .form .building .building-master .selected-family,
+      .form .building .building-master .selected-bk,
+      .form .building .building-master .selected-default, .form .building .building-family .selected, .form .building .building-family .selected-bachelor, .form .building .building-family .selected-master,
+      .form .building .building-family .selected-family, .form .building .building-family .selected-bk, .form .building .building-family .selected-default,
+      .form .building .building-bk .selected,
+      .form .building .building-bk .selected-bachelor,
+      .form .building .building-bk .selected-master,
+      .form .building .building-bk .selected-family,
+      .form .building .building-bk .selected-bk,
+      .form .building .building-bk .selected-default, .form .building .building-default .selected, .form .building .building-default .selected-bachelor, .form .building .building-default .selected-master,
+      .form .building .building-default .selected-family, .form .building .building-default .selected-bk, .form .building .building-default .selected-default {
         color: #7f7f7f;
         padding: 12px 20px;
         cursor: pointer;
@@ -68,7 +295,27 @@ textarea:focus::-webkit-input-placeholder {
         margin-bottom: -2px;
         position: relative;
         order: 0; }
-      .form .building .building-category .selected::after, .form .building .building-category .selected-dong::after, .form .building .building-dong .selected::after, .form .building .building-dong .selected-dong::after {
+      .form .building .building-category .selected::after, .form .building .building-category .selected-bachelor::after,
+      .form .building .building-category .selected-master::after, .form .building .building-category .selected-family::after,
+      .form .building .building-category .selected-bk::after, .form .building .building-category .selected-default::after, .form .building .building-bachelor .selected::after, .form .building .building-bachelor .selected-bachelor::after,
+      .form .building .building-bachelor .selected-master::after, .form .building .building-bachelor .selected-family::after,
+      .form .building .building-bachelor .selected-bk::after, .form .building .building-bachelor .selected-default::after,
+      .form .building .building-master .selected::after,
+      .form .building .building-master .selected-bachelor::after,
+      .form .building .building-master .selected-master::after,
+      .form .building .building-master .selected-family::after,
+      .form .building .building-master .selected-bk::after,
+      .form .building .building-master .selected-default::after, .form .building .building-family .selected::after, .form .building .building-family .selected-bachelor::after,
+      .form .building .building-family .selected-master::after, .form .building .building-family .selected-family::after,
+      .form .building .building-family .selected-bk::after, .form .building .building-family .selected-default::after,
+      .form .building .building-bk .selected::after,
+      .form .building .building-bk .selected-bachelor::after,
+      .form .building .building-bk .selected-master::after,
+      .form .building .building-bk .selected-family::after,
+      .form .building .building-bk .selected-bk::after,
+      .form .building .building-bk .selected-default::after, .form .building .building-default .selected::after, .form .building .building-default .selected-bachelor::after,
+      .form .building .building-default .selected-master::after, .form .building .building-default .selected-family::after,
+      .form .building .building-default .selected-bk::after, .form .building .building-default .selected-default::after {
         content: "";
         background: url("../img/arrow-down.png");
         background-size: contain;
@@ -79,30 +326,91 @@ textarea:focus::-webkit-input-placeholder {
         right: 18px;
         top: 5px;
         transition: all 0.4s; }
-      .form .building .building-category .category-option, .form .building .building-category .dong-option, .form .building .building-dong .category-option, .form .building .building-dong .dong-option {
+      .form .building .building-category .category-option, .form .building .building-category .bachelor-option, .form .building .building-category .master-option,
+      .form .building .building-category .family-option, .form .building .building-category .bk-option, .form .building .building-category .default-option, .form .building .building-bachelor .category-option, .form .building .building-bachelor .bachelor-option, .form .building .building-bachelor .master-option,
+      .form .building .building-bachelor .family-option, .form .building .building-bachelor .bk-option, .form .building .building-bachelor .default-option,
+      .form .building .building-master .category-option,
+      .form .building .building-master .bachelor-option,
+      .form .building .building-master .master-option,
+      .form .building .building-master .family-option,
+      .form .building .building-master .bk-option,
+      .form .building .building-master .default-option, .form .building .building-family .category-option, .form .building .building-family .bachelor-option, .form .building .building-family .master-option,
+      .form .building .building-family .family-option, .form .building .building-family .bk-option, .form .building .building-family .default-option,
+      .form .building .building-bk .category-option,
+      .form .building .building-bk .bachelor-option,
+      .form .building .building-bk .master-option,
+      .form .building .building-bk .family-option,
+      .form .building .building-bk .bk-option,
+      .form .building .building-bk .default-option, .form .building .building-default .category-option, .form .building .building-default .bachelor-option, .form .building .building-default .master-option,
+      .form .building .building-default .family-option, .form .building .building-default .bk-option, .form .building .building-default .default-option {
         padding: 12px 20px;
-        cursor: pointer; }
-        .form .building .building-category .category-option .radio, .form .building .building-category .dong-option .radio, .form .building .building-dong .category-option .radio, .form .building .building-dong .dong-option .radio {
+        cursor: pointer;
+        background-color: #ffffff; }
+        .form .building .building-category .category-option .radio, .form .building .building-category .bachelor-option .radio, .form .building .building-category .master-option .radio,
+        .form .building .building-category .family-option .radio, .form .building .building-category .bk-option .radio, .form .building .building-category .default-option .radio, .form .building .building-bachelor .category-option .radio, .form .building .building-bachelor .bachelor-option .radio, .form .building .building-bachelor .master-option .radio,
+        .form .building .building-bachelor .family-option .radio, .form .building .building-bachelor .bk-option .radio, .form .building .building-bachelor .default-option .radio,
+        .form .building .building-master .category-option .radio,
+        .form .building .building-master .bachelor-option .radio,
+        .form .building .building-master .master-option .radio,
+        .form .building .building-master .family-option .radio,
+        .form .building .building-master .bk-option .radio,
+        .form .building .building-master .default-option .radio, .form .building .building-family .category-option .radio, .form .building .building-family .bachelor-option .radio, .form .building .building-family .master-option .radio,
+        .form .building .building-family .family-option .radio, .form .building .building-family .bk-option .radio, .form .building .building-family .default-option .radio,
+        .form .building .building-bk .category-option .radio,
+        .form .building .building-bk .bachelor-option .radio,
+        .form .building .building-bk .master-option .radio,
+        .form .building .building-bk .family-option .radio,
+        .form .building .building-bk .bk-option .radio,
+        .form .building .building-bk .default-option .radio, .form .building .building-default .category-option .radio, .form .building .building-default .bachelor-option .radio, .form .building .building-default .master-option .radio,
+        .form .building .building-default .family-option .radio, .form .building .building-default .bk-option .radio, .form .building .building-default .default-option .radio {
           display: none; }
-      .form .building .building-category .category-option:hover, .form .building .building-category .dong-option:hover, .form .building .building-dong .category-option:hover, .form .building .building-dong .dong-option:hover {
+      .form .building .building-category .category-option:hover, .form .building .building-category .bachelor-option:hover,
+      .form .building .building-category .master-option:hover, .form .building .building-category .family-option:hover,
+      .form .building .building-category .bk-option:hover, .form .building .building-category .default-option:hover, .form .building .building-bachelor .category-option:hover, .form .building .building-bachelor .bachelor-option:hover,
+      .form .building .building-bachelor .master-option:hover, .form .building .building-bachelor .family-option:hover,
+      .form .building .building-bachelor .bk-option:hover, .form .building .building-bachelor .default-option:hover,
+      .form .building .building-master .category-option:hover,
+      .form .building .building-master .bachelor-option:hover,
+      .form .building .building-master .master-option:hover,
+      .form .building .building-master .family-option:hover,
+      .form .building .building-master .bk-option:hover,
+      .form .building .building-master .default-option:hover, .form .building .building-family .category-option:hover, .form .building .building-family .bachelor-option:hover,
+      .form .building .building-family .master-option:hover, .form .building .building-family .family-option:hover,
+      .form .building .building-family .bk-option:hover, .form .building .building-family .default-option:hover,
+      .form .building .building-bk .category-option:hover,
+      .form .building .building-bk .bachelor-option:hover,
+      .form .building .building-bk .master-option:hover,
+      .form .building .building-bk .family-option:hover,
+      .form .building .building-bk .bk-option:hover,
+      .form .building .building-bk .default-option:hover, .form .building .building-default .category-option:hover, .form .building .building-default .bachelor-option:hover,
+      .form .building .building-default .master-option:hover, .form .building .building-default .family-option:hover,
+      .form .building .building-default .bk-option:hover, .form .building .building-default .default-option:hover {
         color: #016aff; }
-      .form .building .building-category label, .form .building .building-dong label {
+      .form .building .building-category label, .form .building .building-bachelor label,
+      .form .building .building-master label, .form .building .building-family label,
+      .form .building .building-bk label, .form .building .building-default label {
         display: inline-block;
         width: 188px;
         height: 16px;
         line-height: 16px;
         cursor: pointer; }
   .form .signup {
+    position: absolute;
+    top: 150px;
     width: 500px;
     height: 70px;
     background-color: #ffca00;
     color: #ffffff;
     font-weight: bold;
     border-radius: 7px;
-    margin-top: 30px;
     cursor: pointer;
     border: none;
     font-size: 16px; }
+  .form .signup.z {
+    z-index: -1; }
+
+.remove {
+  display: none !important; }
 
 .head {
   display: inline-block;

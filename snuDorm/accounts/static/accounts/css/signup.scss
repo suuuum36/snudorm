@@ -7,21 +7,98 @@
 // 3) 글씨체
 // 4) 셀렉트박스 화살표 이미지 변경 및 수정
 
-
-* {
-    font-family: 'Noto Sans KR', sans-serif;
+// reset. css
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
 }
+
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+
+body {
+	line-height: 1;
+}
+
+ol, ul {
+	list-style: none;
+}
+
+blockquote, q {
+	quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+// 추가한 코드
+* {
+	box-sizing: border-box;
+}
+
+a {
+   text-decoration: none;
+}
+
+a:link, a:visited, a:hover, a:active {
+	color: black;
+}
+
+button {
+	padding: 0;
+	margin: 0;
+	border: none;
+	outline-style: none;
+}
+
+input {
+	padding: 0;
+	margin: 0;
+	outline-style: none;
+}
+
+select {
+	outline-style: none;
+}
+// reset.css 끝
 
 // input 태그 focus 시 글자 사라지도록
 input:focus::-webkit-input-placeholder, 
 textarea:focus::-webkit-input-placeholder {
-    color:transparent;
+    color: transparent;
 }
 
 // 전체 구조
 .form {
     width: 500px;
     margin: 100px auto;
+    height: 1100px;
 
     // 로고 및 headline
     .headline {
@@ -51,22 +128,35 @@ textarea:focus::-webkit-input-placeholder {
     .building {
         display: flex;
         flex-wrap: wrap;
+        position: relative;
 
         span {
             width: 500px;
         }
 
-        .building-category {
+        .building-category{
             margin-right: 20px;
+            position: relative;
         }
 
-        .building-category, .building-dong {
+        .building-category, .building-bachelor, 
+        .building-master, .building-family,
+        .building-bk, .building-default {
             display: flex;
             width: 240px;
             flex-direction: column;
             margin-top: 15px;
+            position: relative;
 
-            .category-container, .dong-container {
+            // '생활관을 선택하세요.'는 선택 불가능
+            .default-container {
+                position: absolute !important;
+                z-index: -1 !important;
+            }
+
+            .category-container, .bachelor-container,
+            .master-container, .family-container,
+            .bk-container, .default-container {
                 border: 2px solid $gray_border;
                 max-height: 0;
                 width: 100%;
@@ -75,34 +165,56 @@ textarea:focus::-webkit-input-placeholder {
                 border-radius: 7px;
                 overflow: hidden;
                 order: 1;
+                position: absolute;
+                top: 44px;
+                z-index: 3;
+                margin-top: -2px;
+                background-color: #ffffff;
             }
 
-            .category-container.active, .dong-container.active {
+            .category-container.active, .bachelor-container.active, 
+            .master-container.active, .family-container.active,
+            .bk-container.active, .default-container.active {
                 max-height: 162px;
                 opacity: 1;
                 overflow-y: scroll;
             }
 
             .category-container.active + .selected::after, 
-            .dong-container.active + .selected-dong::after {
+            .bachelor-container.active + .selected-bachelor::after,
+            .master-container.active + .selected-master::after, 
+            .family-container.active + .selected-family::after,
+            .bk-container.active + .selected-bk::after,
+            .default-container.active + .selected-default::after {
                 transform: rotateX(180deg);
                 top: -6px;
             }
 
             .category-container::-webkit-scrollbar,
-            .dong-container::-webkit-scrollbar {
+            .bachelor-container::-webkit-scrollbar, 
+            .master-container::-webkit-scrollbar,
+            .family-container::-webkit-scrollbar,
+            .bk-container::-webkit-scrollbar,
+            .default-container::-webkit-scrollbar {
                 width: 8px;
                 border-radius: 0 3px 3px 0;
-                //background-color: $gray_border;
+                background-color: #ffffff;
+                visibility: hidden;
             }
             
             .category-container::-webkit-scrollbar-thumb, 
-            .dong-container::-webkit-scrollbar-thumb {
+            .bachelor-container::-webkit-scrollbar-thumb, 
+            .master-container::-webkit-scrollbar-thumb,
+            .family-container::-webkit-scrollbar-thumb,
+            .bk-container::-webkit-scrollbar-thumb,
+            .default-container::-webkit-scrollbar-thumb {
                 background-color: $gray_border;
                 border-radius: 3px;
+                border: 2px 2px 2px 0 solid $gray_border;
             }
 
-            .selected, .selected-dong {
+            .selected, .selected-bachelor, .selected-master,
+            .selected-family, .selected-bk, .selected-default {
                 color: $gray_text;
                 padding: 12px 20px;
                 cursor: pointer;
@@ -113,7 +225,9 @@ textarea:focus::-webkit-input-placeholder {
                 order: 0;
             }
 
-            .selected::after, .selected-dong::after {
+            .selected::after, .selected-bachelor::after, 
+            .selected-master::after, .selected-family::after,
+            .selected-bk::after, .selected-default::after {
                 content: "";
                 background: url("../img/arrow-down.png");
                 background-size: contain;
@@ -127,17 +241,23 @@ textarea:focus::-webkit-input-placeholder {
                 
                 transition: all 0.4s;
             }
-
-            .category-option, .dong-option {
+            
+            .category-option, .bachelor-option, .master-option,
+            .family-option, .bk-option, .default-option {
                 padding: 12px 20px;
                 cursor: pointer;
+                background-color: #ffffff;
 
                 .radio {
                     display:none;
                 }
             }
 
-            .category-option:hover, .dong-option:hover {
+
+
+            .category-option:hover, .bachelor-option:hover, 
+            .master-option:hover, .family-option:hover,
+            .bk-option:hover, .default-option:hover {
                 color: $blue_text;
             }
 
@@ -153,17 +273,26 @@ textarea:focus::-webkit-input-placeholder {
 
     // 회원가입 버튼
     .signup {
+        position: absolute;
+        top: 150px;
         width: 500px;
         height: 70px;
         background-color: $yellow_main;
         color: #ffffff;
         font-weight: bold;
         border-radius: 7px;
-        margin-top: 30px;
         cursor: pointer;
         border: none;
         font-size: 16px;
     }
+
+    .signup.z {
+        z-index: -1;
+    }
+}
+
+.remove {
+    display: none !important;
 }
 
 // 공통 항목

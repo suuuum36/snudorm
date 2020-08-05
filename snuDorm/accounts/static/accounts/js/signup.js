@@ -110,8 +110,8 @@ function validateForm() {
   var emailInput = document.getElementById("email");
 
   // regex 변수 지정
-  // 2-4자의 한글 이름
-  var nameRegex = /^[가-힣]{2,4}$/; 
+  // 4자 이내의 한글 이름(공백 불가능) 또는 15자 이내의 영어 이름(공백 가능)
+  var nameRegex = /^[가-힣]{1,4}|[\sa-zA-Z]{1,15}$/; 
   // 영문, 숫자, 특수문자 최소 한 글자씩 포함 & 8자 이상
   var pwRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
   
@@ -185,6 +185,9 @@ function blankCheck(field, message) {
 };
 
 
+
+
+
 // 기숙사 생활관 selected 표시 변경
 var selected = document.querySelector(".selected");
 var categoryContainer = document.querySelector(".category-container");
@@ -201,124 +204,112 @@ categoryOptions.forEach(o => {
   o.addEventListener("click", () => {
     selected.innerHTML = o.querySelector("label").innerHTML;
     categoryContainer.classList.remove("active");
-
-    var bachelor_option = ['906', '915', '919A', '919B', '919C', '919D', '921', '922', '923', '924', '925', '926'];
-    var master_option = ['900', '901', '902', '903', '904', '905', '917', '918'];
-    var family_option = ['931', '932', '933', '934', '935'];
-    var bk_option = ['946A', '946B'];
-
-    var category = [];
-    var choice = o.querySelector("input").value;
-
-    // 기숙사 생활관 옵션 값에 따른 변수 지정
-    if(choice == "bachelor") {
-      category = bachelor_option;
-    } else if(choice == "master") {
-      category = master_option;
-    } else if(choice == "family") {
-      category = family_option;
-    } else if(choice == "bk") {
-      category = bk_option;
-    };
     
-    // 기숙사 동 옵션을 추가하고자 하는 target 요소의 위치
-    var target = document.getElementById("dong-container-id");
-    
-    // 이전에 선택한 옵션으로 인해 추가되어 있는 기숙사 동 옵션 제거
-    while (target.hasChildNodes()) {
-      target.removeChild(target.firstChild);
-    };
-
-    // for문을 통해 target의 자식 요소로 기숙사 동 옵션 추가
-    for (dong in category) {
-      var div = document.createElement('div');
-      var input = document.createElement('input');
-      var label = document.createElement('label');
-
-      div.className = "dong-option";
-      input.type = "radio";
-      input.className = "radio";
-      input.id = category[dong];
-      input.name = "building_dong";
-      label.setAttribute("for", category[dong]);
-      label.innerHTML = `${category[dong]}동`;
-
-      div.appendChild(input);
-      div.appendChild(label);
-      
-      target.appendChild(div);
+    var dorm = document.getElementById("selected").innerHTML;
+    if (dorm == "학부생활관") {
+      document.getElementById("default-dong").className='remove';
+      document.getElementById("bachelor-dong").className='building-bachelor';
+      document.getElementById("master-dong").className='remove';
+      document.getElementById("family-dong").className='remove';
+      document.getElementById("bk-dong").className='remove';
+    } else if (dorm == "대학원생활관") {
+      document.getElementById("default-dong").className='remove';
+      document.getElementById("bachelor-dong").className='remove';
+      document.getElementById("master-dong").className='building-master';
+      document.getElementById("family-dong").className='remove';
+      document.getElementById("bk-dong").className='remove';
+    } else if (dorm == "가족생활관") {
+      document.getElementById("default-dong").className='remove';
+      document.getElementById("bachelor-dong").className='remove';
+      document.getElementById("master-dong").className='remove';
+      document.getElementById("family-dong").className='building-family';
+      document.getElementById("bk-dong").className='remove';
+    } else if (dorm == "BK생활관") {
+      document.getElementById("default-dong").className='remove';
+      document.getElementById("bachelor-dong").className='remove';
+      document.getElementById("master-dong").className='remove';
+      document.getElementById("family-dong").className='remove';
+      document.getElementById("bk-dong").className='building-bk';
     };
   });
 });
 
-// 기숙사 동 selected_dong 표시 변경(위와 동일한 방식)
-var selectedDong = document.querySelector(".selected-dong");
-var dongContainer = document.querySelector(".dong-container");
+// default 표시 변경
+var defaultSelected = document.querySelector(".selected-default");
+var defaultContainer = document.querySelector(".default-container");
+var defaultOptions = document.querySelectorAll(".default-option");
 
-var dongOptions = document.querySelectorAll(".dong-option");
-
-selectedDong.addEventListener("click", () => {
-  dongContainer.classList.toggle("active");
+defaultSelected.addEventListener("click", () => {
+  defaultContainer.classList.toggle("active");
 });
 
-dongOptions.forEach(d => {
+defaultOptions.forEach(d => {
   d.addEventListener("click", () => {
-    selectedDong.innerHTML = d.querySelector("label").innerHTML;
-    dongContainer.classList.remove("active");
+    defaultSelected.innerHTML = d.querySelector("label").innerHTML;
+    defaultContainer.classList.remove("active");
   });
 });
 
+// 학부생활관 동 표시 변경
+var bachelorSelected = document.querySelector(".selected-bachelor");
+var bachelorContainer = document.querySelector(".bachelor-container");
+var bachelorOptions = document.querySelectorAll(".bachelor-option");
 
-// // 기숙사 동 반응형 구현
-// function categoryChange(e) {
+bachelorSelected.addEventListener("click", () => {
+  bachelorContainer.classList.toggle("active");
+});
 
-//   // 추가할 옵션 리스트 변수 설정
-//   var bachelor_option = ['906', '915', '919A', '919B', '919C', '919D', '921', '922', '923', '924', '925', '926'];
-//   var master_option = ['900', '901', '902', '903', '904', '905', '917', '918'];
-//   var family_option = ['931', '932', '933', '934', '935'];
-//   var bk_option = ['946A', '946B'];
+bachelorOptions.forEach(d => {
+  d.addEventListener("click", () => {
+    bachelorSelected.innerHTML = d.querySelector("label").innerHTML;
+    bachelorContainer.classList.remove("active");
+  });
+});
 
-//   var category = []
+// 대학원생활관 동 표시 변경
+var masterSelected = document.querySelector(".selected-master");
+var masterContainer = document.querySelector(".master-container");
+var masterOptions = document.querySelectorAll(".master-option");
 
-//   // 기숙사 생활관 옵션 값에 따른 변수 지정
-//   if(e.value == "bachelor") {
-//     category = bachelor_option;
-//   } else if(e.value == "master") {
-//     category = master_option;
-//   } else if(e.value == "family") {
-//     category = family_option;
-//   } else if(e.value == "bk") {
-//     category = bk_option;
-//   }
+masterSelected.addEventListener("click", () => {
+  masterContainer.classList.toggle("active");
+});
 
-//   // 기숙사 동 옵션을 추가하고자 하는 target 요소의 위치
-//   var target = document.getElementById("dong-container-id");
-  
-//   // 이전에 선택한 옵션으로 인해 추가되어 있는 기숙사 동 옵션 제거
-//   while (target.hasChildNodes()) {
-//     target.removeChild(target.firstChild);
-//   }
+masterOptions.forEach(d => {
+  d.addEventListener("click", () => {
+    masterSelected.innerHTML = d.querySelector("label").innerHTML;
+    masterContainer.classList.remove("active");
+  });
+});
 
-//   // for문을 통해 target의 자식 요소로 기숙사 동 옵션 추가
-//   for (dong in category) {
-//     var div = document.createElement('div');
-//     var input = document.createElement('input');
-//     var label = document.createElement('label');
+// 가족생활관 동 표시 변경
+var familySelected = document.querySelector(".selected-family");
+var familyContainer = document.querySelector(".family-container");
+var familyOptions = document.querySelectorAll(".family-option");
 
-//     div.className = "dong-option";
-//     input.type = "radio";
-//     input.className = "radio";
-//     input.id = category[dong];
-//     input.name = "building_dong";
-//     label.setAttribute("for", category[dong]);
-//     label.innerHTML = `${category[dong]}동`;
+familySelected.addEventListener("click", () => {
+  familyContainer.classList.toggle("active");
+});
 
-//     div.appendChild(input);
-//     div.appendChild(label);
-    
-//     target.appendChild(div);
-//   }
-// };
+familyOptions.forEach(d => {
+  d.addEventListener("click", () => {
+    familySelected.innerHTML = d.querySelector("label").innerHTML;
+    familyContainer.classList.remove("active");
+  });
+});
 
+// BK생활관 동 표시 변경
+var bkSelected = document.querySelector(".selected-bk");
+var bkContainer = document.querySelector(".bk-container");
+var bkOptions = document.querySelectorAll(".bk-option");
 
+bkSelected.addEventListener("click", () => {
+  bkContainer.classList.toggle("active");
+});
 
+bkOptions.forEach(d => {
+  d.addEventListener("click", () => {
+    bkSelected.innerHTML = d.querySelector("label").innerHTML;
+    bkContainer.classList.remove("active");
+  });
+});

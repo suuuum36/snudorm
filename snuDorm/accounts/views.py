@@ -39,33 +39,25 @@ def signup(request):
         building_category = request.POST['building_category'] # Profile, 생활관
         building_dong = request.POST['building_dong'] # Profile, 동
 
+
+
         # 1차, 2차 비밀번호 일치여부 판단(js에서 1차 검증)
         if password == confirm_password:
             # 유저 생성            
             user = User.objects.create_user(
                 username=user_id,
-                email=email,
                 password=password,
             )
             
-            # TODO: update로 구현해보기/ 유저 profile 설정
-            # profile = Profile(
-            #     user=user,
-            #     name=name,
-            #     nickname=nickname,
-            #     building_category=building_category,
-            #     building_dong=building_dong
-            # )
-            # profile.save()
             user.profile.name = name
             user.profile.nickname = nickname
+            user.profile.email = email
             user.profile.building_category = building_category
             user.profile.building_dong = building_dong
             user.is_active = False # 유저 비활성화
             user.save()
 
             # 이메일 인증을 위한 설정
-            
             current_site = get_current_site(request)
             message = render_to_string('accounts/activation_email.html', {
                 'user': user,

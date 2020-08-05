@@ -13,26 +13,9 @@ class Profile(models.Model):
         User, on_delete=models.CASCADE, related_name='profile')
     name = models.CharField(max_length=15, verbose_name='이름')
     nickname = models.CharField(max_length=15, verbose_name='닉네임')
-
-    # 셀렉트 박스 사용
-    BUIDING_CATEGORY_CHOICES = {
-        ('bachelor', '학부생활관'),
-        ('master', '대학원생활관'),
-        ('family', '가족생활관'),
-        ('BK', 'BK생활관'),
-    }
-    building_category = models.CharField(max_length=20, choices=BUIDING_CATEGORY_CHOICES, verbose_name='생활관')
-
-    BUIDING_DONG_CHOICES = {
-        ('900', '900동'),
-        ('901', '901동'),
-        ('902', '902동'),
-        ('903', '903동'),
-        ('904', '904동'),
-        ('905', '905동'),
-        ('906', '906동'),
-    }
-    building_dong = models.CharField(max_length=20, choices=BUIDING_DONG_CHOICES, verbose_name='동')
+    building_category = models.CharField(max_length=20, verbose_name='생활관')
+    building_dong = models.CharField(max_length=20, verbose_name='동')
+    email = models.CharField(max_length=20, verbose_name='이메일')
 
     def __str__(self):
         return f'user={self.user}, name={self.name}, nickname={self.nickname}, \
