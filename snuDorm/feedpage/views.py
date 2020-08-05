@@ -234,21 +234,11 @@ def newFeed(request, board, category):
                                 board_info1=board_info[0], board_info2=board_info[1], notice=notice, views=0)
             
         feed.save()
-        photos = request.POST.getlist('photos[]')
-        print(photos)
-        print(len(photos))
-        print('hi')
-        print(result_photos)
+        photos = request.FILES.getlist('photo[]')
         for image in photos:
             print(image)
             new_image = Image.objects.create(feed_id = feed.id, photo = image)
             new_image.save()
-        
-        context = {
-
-        }
-
-        return JsonResponse(context)
         
 
     return redirect('showboard', board=board, category=category)
