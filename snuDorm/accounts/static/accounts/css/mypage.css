@@ -118,46 +118,78 @@ textarea:focus::-webkit-input-placeholder {
       line-height: 60px; }
     .form .info .container {
       margin: 30px 0; }
-      .form .info .container .name, .form .info .container .id, .form .info .container .nickname, .form .info .container .email, .form .info .container .building, .form .info .container .password {
+      .form .info .container .name, .form .info .container .id, .form .info .container .nk, .form .info .container .email, .form .info .container .building, .form .info .container .password {
         display: flex;
         height: 60px;
         font-size: 18px;
         line-height: 60px; }
-        .form .info .container .name .field, .form .info .container .id .field, .form .info .container .nickname .field, .form .info .container .email .field, .form .info .container .building .field, .form .info .container .password .field {
+        .form .info .container .name .field, .form .info .container .id .field, .form .info .container .nk .field, .form .info .container .email .field, .form .info .container .building .field, .form .info .container .password .field {
           width: 150px;
           padding-left: 30px; }
-        .form .info .container .name .value, .form .info .container .id .value, .form .info .container .nickname .value, .form .info .container .email .value, .form .info .container .building .value, .form .info .container .password .value {
-          width: 400px;
+        .form .info .container .name .value, .form .info .container .id .value, .form .info .container .nk .value, .form .info .container .email .value, .form .info .container .building .value, .form .info .container .password .value {
+          width: 250px;
           color: #7f7f7f; }
-          .form .info .container .name .value .input-box, .form .info .container .id .value .input-box, .form .info .container .nickname .value .input-box, .form .info .container .email .value .input-box, .form .info .container .building .value .input-box, .form .info .container .password .value .input-box {
+          .form .info .container .name .value .input-box, .form .info .container .id .value .input-box, .form .info .container .nk .value .input-box, .form .info .container .email .value .input-box, .form .info .container .building .value .input-box, .form .info .container .password .value .input-box {
             font-size: 18px;
             font-weight: bold;
             border-style: none none solid none;
             border-color: #b9b9b9;
             color: #7f7f7f;
             height: 50px;
+            width: 250px;
             line-height: 50px; }
-          .form .info .container .name .value .input-box::placeholder, .form .info .container .id .value .input-box::placeholder, .form .info .container .nickname .value .input-box::placeholder, .form .info .container .email .value .input-box::placeholder, .form .info .container .building .value .input-box::placeholder, .form .info .container .password .value .input-box::placeholder {
+          .form .info .container .name .value .input-box::placeholder, .form .info .container .id .value .input-box::placeholder, .form .info .container .nk .value .input-box::placeholder, .form .info .container .email .value .input-box::placeholder, .form .info .container .building .value .input-box::placeholder, .form .info .container .password .value .input-box::placeholder {
             font-weight: bold;
             color: #7f7f7f; }
-          .form .info .container .name .value #no::placeholder, .form .info .container .id .value #no::placeholder, .form .info .container .nickname .value #no::placeholder, .form .info .container .email .value #no::placeholder, .form .info .container .building .value #no::placeholder, .form .info .container .password .value #no::placeholder {
+          .form .info .container .name .value #no::placeholder, .form .info .container .id .value #no::placeholder, .form .info .container .nk .value #no::placeholder, .form .info .container .email .value #no::placeholder, .form .info .container .building .value #no::placeholder, .form .info .container .password .value #no::placeholder {
             color: #7f7f7f !important; }
-        .form .info .container .name #building-item, .form .info .container .id #building-item, .form .info .container .nickname #building-item, .form .info .container .email #building-item, .form .info .container .building #building-item, .form .info .container .password #building-item {
+        .form .info .container .name .nk-check, .form .info .container .id .nk-check, .form .info .container .nk .nk-check, .form .info .container .email .nk-check, .form .info .container .building .nk-check, .form .info .container .password .nk-check {
+          width: 90px;
+          height: 50px;
+          border-radius: 30px;
+          background-color: #d6d6d6;
+          color: #ffffff;
+          cursor: pointer;
+          font-weight: bold;
+          font-size: 14px;
+          margin-left: 20px;
+          margin-top: 5px; }
+        .form .info .container .name .nk-check:hover, .form .info .container .id .nk-check:hover, .form .info .container .nk .nk-check:hover, .form .info .container .email .nk-check:hover, .form .info .container .building .nk-check:hover, .form .info .container .password .nk-check:hover {
+          background-color: #cecece;
+          box-shadow: 0 2px 5px #bfbfbf; }
+        .form .info .container .name #id-confirm, .form .info .container .name #nk-confirm, .form .info .container .id #id-confirm, .form .info .container .id #nk-confirm, .form .info .container .nk #id-confirm, .form .info .container .nk #nk-confirm, .form .info .container .email #id-confirm, .form .info .container .email #nk-confirm, .form .info .container .building #id-confirm, .form .info .container .building #nk-confirm, .form .info .container .password #id-confirm, .form .info .container .password #nk-confirm {
+          display: none;
+          position: relative;
+          width: 90px;
+          height: 50px;
+          border-radius: 30px;
+          background-color: #016aff;
+          color: #ffffff;
+          font-weight: bold;
+          margin-top: 15px; }
+          .form .info .container .name #id-confirm span, .form .info .container .name #nk-confirm span, .form .info .container .id #id-confirm span, .form .info .container .id #nk-confirm span, .form .info .container .nk #id-confirm span, .form .info .container .nk #nk-confirm span, .form .info .container .email #id-confirm span, .form .info .container .email #nk-confirm span, .form .info .container .building #id-confirm span, .form .info .container .building #nk-confirm span, .form .info .container .password #id-confirm span, .form .info .container .password #nk-confirm span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            white-space: nowrap;
+            font-size: 14px; }
+        .form .info .container .name #building-item, .form .info .container .id #building-item, .form .info .container .nk #building-item, .form .info .container .email #building-item, .form .info .container .building #building-item, .form .info .container .password #building-item {
           display: flex;
           align-items: center; }
-          .form .info .container .name #building-item #category, .form .info .container .id #building-item #category, .form .info .container .nickname #building-item #category, .form .info .container .email #building-item #category, .form .info .container .building #building-item #category, .form .info .container .password #building-item #category {
+          .form .info .container .name #building-item #category, .form .info .container .id #building-item #category, .form .info .container .nk #building-item #category, .form .info .container .email #building-item #category, .form .info .container .building #building-item #category, .form .info .container .password #building-item #category {
             width: 170px;
             margin-right: 20px;
             margin-bottom: -2px; }
-          .form .info .container .name #building-item #dong, .form .info .container .id #building-item #dong, .form .info .container .nickname #building-item #dong, .form .info .container .email #building-item #dong, .form .info .container .building #building-item #dong, .form .info .container .password #building-item #dong {
+          .form .info .container .name #building-item #dong, .form .info .container .id #building-item #dong, .form .info .container .nk #building-item #dong, .form .info .container .email #building-item #dong, .form .info .container .building #building-item #dong, .form .info .container .password #building-item #dong {
             width: 170px;
             margin-bottom: -2px; }
-        .form .info .container .name .pw-field, .form .info .container .id .pw-field, .form .info .container .nickname .pw-field, .form .info .container .email .pw-field, .form .info .container .building .pw-field, .form .info .container .password .pw-field {
+        .form .info .container .name .pw-field, .form .info .container .id .pw-field, .form .info .container .nk .pw-field, .form .info .container .email .pw-field, .form .info .container .building .pw-field, .form .info .container .password .pw-field {
           width: 250px;
           padding-left: 30px; }
-        .form .info .container .name .pw-value, .form .info .container .id .pw-value, .form .info .container .nickname .pw-value, .form .info .container .email .pw-value, .form .info .container .building .pw-value, .form .info .container .password .pw-value {
+        .form .info .container .name .pw-value, .form .info .container .id .pw-value, .form .info .container .nk .pw-value, .form .info .container .email .pw-value, .form .info .container .building .pw-value, .form .info .container .password .pw-value {
           width: 350px; }
-          .form .info .container .name .pw-value .pw-input, .form .info .container .id .pw-value .pw-input, .form .info .container .nickname .pw-value .pw-input, .form .info .container .email .pw-value .pw-input, .form .info .container .building .pw-value .pw-input, .form .info .container .password .pw-value .pw-input {
+          .form .info .container .name .pw-value .pw-input, .form .info .container .id .pw-value .pw-input, .form .info .container .nk .pw-value .pw-input, .form .info .container .email .pw-value .pw-input, .form .info .container .building .pw-value .pw-input, .form .info .container .password .pw-value .pw-input {
             border-style: none none solid none;
             border-color: #b9b9b9;
             height: 30px;

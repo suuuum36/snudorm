@@ -32,14 +32,17 @@
                         <input class="input-box" id="no" name="user_id" type="text" placeholder="{{ user.username }}" readonly>
                     </div>
                 </div>
-                <div class="nickname">
+                <div class="nk">
                     <div class="field">
                         <span>닉네임</span>
                     </div>
                     <div class="value">
-                        <input class="input-box" name="nickname" type="text" value="{{ user.profile.nickname }}" required>
+                        <input id="nickname" class="input-box nickname" name="nickname" type="text" value="{{ user.profile.nickname }}" check_result="fail" required>
                     </div>
-                    <!-- <button class="id-check" type="button" onclick="id_db_check()">중복확인</button> -->
+                    <button class="nk-check" type="button" onclick="nk_db_check()">중복확인</button>
+                    <div id="nk-confirm" class="available-2 check-confirm">
+                        <span>사용가능</span>
+                    </div>
                 </div>
                 <div class="email">
                     <div class="field">

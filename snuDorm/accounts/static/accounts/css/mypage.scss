@@ -1,7 +1,7 @@
 @charset "utf-8";
 @import "variable.scss";
 
-// reset. css
+// reset.css
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -171,7 +171,7 @@ textarea:focus::-webkit-input-placeholder {
         .container {
             margin: 30px 0;
             
-            .name, .id, .nickname, .email, .building, .password {
+            .name, .id, .nk, .email, .building, .password {
                 display: flex;
                 height: 60px;
                 font-size: 18px;
@@ -186,7 +186,7 @@ textarea:focus::-webkit-input-placeholder {
 
                 // 우측 input
                 .value {
-                    width: 400px;
+                    width: 250px;
                     color: $gray_text;
                     
                     .input-box {
@@ -196,6 +196,7 @@ textarea:focus::-webkit-input-placeholder {
                         border-color: $gray_border;
                         color: $gray_text;
                         height: 50px;
+                        width: 250px;
                         line-height: 50px;
                     }
 
@@ -207,6 +208,46 @@ textarea:focus::-webkit-input-placeholder {
                     // 아이디 input은 수정 불가능
                     #no::placeholder {
                         color: $gray_text !important;
+                    }
+                }
+
+                .nk-check {
+                    width: 90px;
+                    height: 50px;
+                    border-radius: 30px;
+                    background-color: $gray_button;
+                    color: #ffffff;
+                    cursor: pointer;
+                    font-weight: bold;
+                    font-size: 14px;
+                    margin-left: 20px;
+                    margin-top: 5px;
+                }
+
+                .nk-check:hover {
+                    background-color: $gray_hover;
+                    box-shadow: $gray_under_shadow;
+                }
+                
+                // 사용가능 div
+                #id-confirm, #nk-confirm {
+                    display: none;
+                    position: relative;
+                    width: 90px;
+                    height: 50px;
+                    border-radius: 30px;
+                    background-color: $blue_text;
+                    color: #ffffff;
+                    font-weight: bold;
+                    margin-top: 15px;
+                    
+                    span {
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        white-space: nowrap;
+                        font-size: 14px;
                     }
                 }
 
