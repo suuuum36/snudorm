@@ -76,4 +76,6 @@ function cobuy() {
     $('#resell').attr("style", "color:#7f7f7f;");
 }
 
+var list = $('.life-list').find('.list').children().length;
+console.log(list);
 
