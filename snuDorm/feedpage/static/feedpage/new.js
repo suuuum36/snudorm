@@ -1,5 +1,3 @@
-var input = document.querySelector('#photo');
-input.style.opacity = 0; 
 
 $(document).on('change', '#photo', function(e) {
     console.log('clicked');
@@ -8,21 +6,19 @@ $(document).on('change', '#photo', function(e) {
 
     var input = document.querySelector('#photo');
     const photoFiles =  input.files;
-    input.style.opacity = 0; 
+    // input.style.opacity = 0; 
 
     for(const file of photoFiles) {
         var src = URL.createObjectURL(file);
-        const strimg = `<img class="image" src=${src} width="200px" height="200px" name="photo">`
+        const strimg = `<img class="image" src=${src} width="200px" height="200px">`
         $(strimg).insertBefore($this);
     }
 
-    if( $this.siblings('.image').length < 5 ) {
-        const str = `
-            <input class="photo" name="photo[]" id="photo" accept=".jpg, .jpeg, .png"
-            type="file" style="display:none" multiple>
-        `
-        $(str).insertAfter($this);
-    }
+    const str = `
+        <input class="photo" name="photo[]" id="photo" accept=".jpg, .jpeg, .png"
+        type="file"  multiple>
+    `
+    $(str).insertAfter($this);
 })    
 
 
