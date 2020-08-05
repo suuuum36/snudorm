@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // var input = document.querySelector('#photo');
 // var preview = document.querySelector('#preview');
 // // 못생긴 image button 숨기기 
@@ -35,15 +36,36 @@
 // }
 
 $(document).on('click', '#photo', function(e) {
+=======
+
+$(document).on('change', '#photo', function(e) {
+>>>>>>> 5f498eb60d20e51278f5fe7deafd14576142045e
     console.log('clicked');
     const $this = $(e.currentTarget);
     $this.css('display', 'none')
 
+<<<<<<< HEAD
     const str =
     `
     <input class="photo" name = "photo[]" id="photo" accept=".jpg, .jpeg, .png" type="file" multiple>
     `
     
+=======
+    var input = document.querySelector('#photo');
+    const photoFiles =  input.files;
+    // input.style.opacity = 0; 
+
+    for(const file of photoFiles) {
+        var src = URL.createObjectURL(file);
+        const strimg = `<img class="image" src=${src} width="200px" height="200px">`
+        $(strimg).insertBefore($this);
+    }
+
+    const str = `
+        <input class="photo" name="photo[]" id="photo" accept=".jpg, .jpeg, .png"
+        type="file"  multiple>
+    `
+>>>>>>> 5f498eb60d20e51278f5fe7deafd14576142045e
     $(str).insertAfter($this);
 })    
 
