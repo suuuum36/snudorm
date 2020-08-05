@@ -157,23 +157,37 @@
     </div>
     {% for d in c.recomment_set.all %}
     <div>
-        {% if d.noname %} 
-        <p>익명
-        {% else %}
-        <p>{{ d.author.profile.nickname }}
-        {% endif %}
-        : {{ d.content }}</p>
-        {% if user.is_authenticated %}
         <div>
-            <a class='recomment-like' data-board="{{ board }}" data-category="{{ category }}" data-fid='{{ feed.id }}' data-cid='{{ c.id }}' data-did='{{ d.id }}' data-count='{{ d.recommentlike_set.count }}' data-csrfmiddlewaretoken="{{ csrf_token }}">대댓글 좋아요: [{{ d.recommentlike_set.count }}]</a>
+            {% if d.noname %} 
+            <p>익명
+            {% else %}
+            <p>{{ d.author.profile.nickname }}
+            {% endif %}
+            : {{ d.content }}</p>
+            {% if request.user == d.author %}
+            <a class='editrecommentform'>
+                <button>대댓글 수정</button>
+            </a>
+            <form method="POST" class='deleterecomment' data-board="{{ board }}" data-category="{{ category }}" data-fid='{{ feed.id }}' data-cid='{{ c.id }}' data-did='{{ d.id }}' data-csrfmiddlewaretoken="{{ csrf_token }}">
+                {% csrf_token %}
+                <button>대댓글 삭제</button>
+            </form>
+            {% endif %}
+            {% if user.is_authenticated %}
+            <div>
+                <a class='recomment-like' data-board="{{ board }}" data-category="{{ category }}" data-fid='{{ feed.id }}' data-cid='{{ c.id }}' data-did='{{ d.id }}' data-count='{{ d.recommentlike_set.count }}' data-csrfmiddlewaretoken="{{ csrf_token }}">대댓글 좋아요: [{{ d.recommentlike_set.count }}]</a>
+            </div>
+            {% endif %}
         </div>
-        {% endif %}
-        {% if request.user == d.author %}
-        <form method="POST" class='deleterecomment' data-board="{{ board }}" data-category="{{ category }}" data-fid='{{ feed.id }}' data-cid='{{ c.id }}' data-did='{{ d.id }}' data-csrfmiddlewaretoken="{{ csrf_token }}">
+        <div id='editrecommentsubmit' style="display: none">
+            <form method="POST" class="recomment-edit"
+            data-board="{{ board }}" data-category="{{ category }}" data-fid="{{ feed.id }}" data-cid="{{c.id}}" data-did="{{ d.id }}" data-count = "{{ d.recommentlike_set.count }}"
+            data-csrfmiddlewaretoken="{{ csrf_token }}">
             {% csrf_token %}
-            <button>대댓글 삭제</button>
-        </form>
-        {% endif %}
+            <input id="c{{ c.id }}_d{{ d.id }}" type="text" name="content" value="{{ d.content }}"/>
+            <button type="submit">대댓글 수정</button>
+            </form>
+        </div>
     </div>
     {% endfor %}
     <div>
