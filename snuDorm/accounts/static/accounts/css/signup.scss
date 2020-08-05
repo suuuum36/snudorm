@@ -7,42 +7,115 @@
 // 3) 글씨체
 // 4) 셀렉트박스 화살표 이미지 변경 및 수정
 
+// reset. css
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+
+body {
+	line-height: 1;
+}
+
+ol, ul {
+	list-style: none;
+}
+
+blockquote, q {
+	quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+// 추가한 코드
+* {
+	box-sizing: border-box;
+}
+
+a {
+   text-decoration: none;
+}
+
+a:link, a:visited, a:hover, a:active {
+	color: black;
+}
+
+button {
+	padding: 0;
+	margin: 0;
+	border: none;
+	outline-style: none;
+}
+
+input {
+	padding: 0;
+	margin: 0;
+	outline-style: none;
+}
+
+select {
+	outline-style: none;
+}
+// reset.css 끝
+
 // input 태그 focus 시 글자 사라지도록
 input:focus::-webkit-input-placeholder, 
 textarea:focus::-webkit-input-placeholder {
-    color:transparent;
+    color: transparent;
 }
 
 // 전체 구조
 .form {
     width: 500px;
     margin: 100px auto;
+    height: 1100px;
 
     // 로고 및 headline
     .headline {
+        font-size: 20px;
         font-weight: bold;
         img {
-            width: 40px;
+            width: 30px;
         }
         span {
             color: $yellow_main;
         }
     }
 
-    // 이름 입력
-    .name-input {}
-
-    // 아이디 입력 및 중복확인
-    .id-input {}
-
-    // 패스워드 입력
-    .pw-input {}
-
-    // 패스워드 확인
-    .pw2-input {}
-
-    // 닉네임 입력 및 중복확인
-    .nickname-input {}
+    // 각 입력 항목 마진 값 적용
+    .signup-margin {
+        margin-top: 15px;
+    }
 
     // 이메일 입력
     .email-input {
@@ -50,60 +123,183 @@ textarea:focus::-webkit-input-placeholder {
             font-weight: bold;
         }
     }
-
-    // 생활관 및 동 선택. select box로 구현. 생활관에 따라 유동적으로 변화.
-    .dorm-input {
-        display: flex;
-        justify-content: space-between;
-
-        .category-input {}
     
-        // javascript로 구현
-        .dong-input {}
+    // 기숙사 생활관 및 동 선택
+    .building {
+        display: flex;
+        flex-wrap: wrap;
+        position: relative;
 
-        select {
+        span {
+            width: 500px;
+        }
+
+        .building-category{
+            margin-right: 20px;
+            position: relative;
+        }
+
+        .building-category, .building-bachelor, 
+        .building-master, .building-family,
+        .building-bk, .building-default {
+            display: flex;
             width: 240px;
-            height: 50px;
-            border: 2px solid $gray_border;
-            border-radius: 7px;
-            padding-left: 20px;
-            font-weight: bold;
-            color: $gray_border;
+            flex-direction: column;
+            margin-top: 15px;
+            position: relative;
 
-            option {
-                color: black;
+            // '생활관을 선택하세요.'는 선택 불가능
+            .default-container {
+                position: absolute !important;
+                z-index: -1 !important;
             }
-            option:hover {
+
+            .category-container, .bachelor-container,
+            .master-container, .family-container,
+            .bk-container, .default-container {
+                border: 2px solid $gray_border;
+                max-height: 0;
+                width: 100%;
+                opacity: 0;
+                transition: all 0.4s;
+                border-radius: 7px;
+                overflow: hidden;
+                order: 1;
+                position: absolute;
+                top: 44px;
+                z-index: 3;
+                margin-top: -2px;
+                background-color: #ffffff;
+            }
+
+            .category-container.active, .bachelor-container.active, 
+            .master-container.active, .family-container.active,
+            .bk-container.active, .default-container.active {
+                max-height: 162px;
+                opacity: 1;
+                overflow-y: scroll;
+            }
+
+            .category-container.active + .selected::after, 
+            .bachelor-container.active + .selected-bachelor::after,
+            .master-container.active + .selected-master::after, 
+            .family-container.active + .selected-family::after,
+            .bk-container.active + .selected-bk::after,
+            .default-container.active + .selected-default::after {
+                transform: rotateX(180deg);
+                top: -6px;
+            }
+
+            .category-container::-webkit-scrollbar,
+            .bachelor-container::-webkit-scrollbar, 
+            .master-container::-webkit-scrollbar,
+            .family-container::-webkit-scrollbar,
+            .bk-container::-webkit-scrollbar,
+            .default-container::-webkit-scrollbar {
+                width: 8px;
+                border-radius: 0 3px 3px 0;
+                background-color: #ffffff;
+                visibility: hidden;
+            }
+            
+            .category-container::-webkit-scrollbar-thumb, 
+            .bachelor-container::-webkit-scrollbar-thumb, 
+            .master-container::-webkit-scrollbar-thumb,
+            .family-container::-webkit-scrollbar-thumb,
+            .bk-container::-webkit-scrollbar-thumb,
+            .default-container::-webkit-scrollbar-thumb {
+                background-color: $gray_border;
+                border-radius: 3px;
+                border: 2px 2px 2px 0 solid $gray_border;
+            }
+
+            .selected, .selected-bachelor, .selected-master,
+            .selected-family, .selected-bk, .selected-default {
+                color: $gray_text;
+                padding: 12px 20px;
+                cursor: pointer;
+                border: 2px solid $gray_border;
+                border-radius: 7px;
+                margin-bottom: -2px;
+                position: relative;
+                order: 0;
+            }
+
+            .selected::after, .selected-bachelor::after, 
+            .selected-master::after, .selected-family::after,
+            .selected-bk::after, .selected-default::after {
+                content: "";
+                background: url("../img/arrow-down.png");
+                background-size: contain;
+                background-repeat: no-repeat;
+                
+                position: absolute;
+                height: 100%;
+                width: 32px;
+                right: 18px;
+                top: 5px;
+                
+                transition: all 0.4s;
+            }
+            
+            .category-option, .bachelor-option, .master-option,
+            .family-option, .bk-option, .default-option {
+                padding: 12px 20px;
+                cursor: pointer;
+                background-color: #ffffff;
+
+                .radio {
+                    display:none;
+                }
+            }
+
+
+
+            .category-option:hover, .bachelor-option:hover, 
+            .master-option:hover, .family-option:hover,
+            .bk-option:hover, .default-option:hover {
                 color: $blue_text;
             }
-        }
 
-        select:hover, select:focus {
-            box-shadow: $gray_shadow;
+            label {
+                display: inline-block;
+                width: 188px;
+                height: 16px;
+                line-height: 16px;
+                cursor: pointer;
+            }
         }
     }
-    
+
     // 회원가입 버튼
     .signup {
+        position: absolute;
+        top: 150px;
         width: 500px;
         height: 70px;
-        text-align: center;
         background-color: $yellow_main;
         color: #ffffff;
         font-weight: bold;
         border-radius: 7px;
-        margin-top: 15px;
         cursor: pointer;
+        border: none;
+        font-size: 16px;
     }
+
+    .signup.z {
+        z-index: -1;
+    }
+}
+
+.remove {
+    display: none !important;
 }
 
 // 공통 항목
 // 항목별 head
 .head {
     display: inline-block;
-    line-height: 50px;
     width: 500px;
-    height: 50px;
     margin-top: 15px;
     font-weight: bold;
 }
@@ -112,10 +308,10 @@ textarea:focus::-webkit-input-placeholder {
 .description { 
     display: inline-block;
     width: 500px;
-    height: 30px;
     font-size: 12px;
     color: $gray_text;
     font-weight: bold;
+    margin-top: 15px;
 }
 
 // 항목별 input
@@ -125,7 +321,7 @@ textarea:focus::-webkit-input-placeholder {
     border-radius: 7px;
     padding-left: 20px;
     font-weight: bold;
-    color: $gray_border;
+    margin-top: 15px;
 }
 
 .input-value:hover, .input-value:focus {
@@ -135,6 +331,7 @@ textarea:focus::-webkit-input-placeholder {
 .input-value::placeholder {
     color: $gray_border;
     font-weight: bold;
+    font-size: 14px;
 }
 
 // 이메일 input
@@ -147,19 +344,32 @@ textarea:focus::-webkit-input-placeholder {
     width: 400px;
 }
 
+// input box와 버튼 높이 조정
+.signup-container {
+    display: flex;
+    justify-content: space-between;
+}
+
 // 중복확인 버튼
-.db-check {
+.id-check, .nk-check {
     width: 90px;
     height: 50px;
     border-radius: 30px;
-    background-color: $gray_border;
+    background-color: $gray_button;
     color: #ffffff;
     cursor: pointer;
     font-weight: bold;
+    font-size: 14px;
+    margin-top: 15px;
+}
+
+.id-check:hover, .nk-check:hover {
+    background-color: $gray_hover;
+    box-shadow: $gray_under_shadow;
 }
 
 // 사용가능 div
-.check-confirm {
+#id-confirm, #nk-confirm {
     display: none;
     position: relative;
     width: 90px;
@@ -168,6 +378,7 @@ textarea:focus::-webkit-input-placeholder {
     background-color: $blue_text;
     color: #ffffff;
     font-weight: bold;
+    margin-top: 15px;
     
     span {
         position: absolute;
@@ -175,5 +386,7 @@ textarea:focus::-webkit-input-placeholder {
         left: 50%;
         transform: translate(-50%, -50%);
         white-space: nowrap;
+        font-size: 14px;
     }
 }
+

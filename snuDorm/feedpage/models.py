@@ -22,7 +22,7 @@ def get_image_filename(instanece, filename):
 class Feed(models.Model):
     title = models.CharField(max_length=256)
     content = models.TextField()
-    photo = models.ImageField(blank=True, null=True, upload_to='feed_photos')
+    # photo = ArrayField(models.ImageField(blank=True, null=True, upload_to='feed_photos')))
     noname = models.BooleanField(default=False)
 
     author = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
@@ -30,7 +30,7 @@ class Feed(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(blank=True, null=True)
     views = models.IntegerField(blank=True, default=0)
-    
+
     # 공지사항인지 check하는 값
     notice = models.BooleanField(default=False)
 
@@ -147,4 +147,4 @@ class Notice(models.Model):
 
 class Image(models.Model):
     feed = models.ForeignKey(Feed, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to="feed/%Y/%m/%d")
+    photo = models.ImageField(blank=True, null=True, upload_to='feed_photos')

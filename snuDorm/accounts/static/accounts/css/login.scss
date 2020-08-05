@@ -6,6 +6,87 @@
 // 2) 반응형 구현
 // 3) 여백 수정
 
+// reset. css
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+
+body {
+	line-height: 1;
+}
+
+ol, ul {
+	list-style: none;
+}
+
+blockquote, q {
+	quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+// 추가한 코드
+* {
+	box-sizing: border-box;
+}
+
+a {
+   text-decoration: none;
+}
+
+a:link, a:visited, a:hover, a:active {
+	color: black;
+}
+
+button {
+	padding: 0;
+	margin: 0;
+	border: none;
+	outline-style: none;
+}
+
+input {
+	padding: 0;
+	margin: 0;
+	outline-style: none;
+}
+
+select {
+	outline-style: none;
+}
+// reset.css 끝
+
 // 로그인 전체 폼
 .form {
     margin: 100px auto;
@@ -15,12 +96,10 @@
     // 로고
     .logo {
         width: 300px;
-        height: 150px;
-        margin: 0 auto;
+        margin: 0 auto 100px auto;
 
         img {
             max-width: 100%;
-            height: auto;
         }
     }
 
@@ -61,20 +140,30 @@
 
         // 로그인 버튼
         button {
-            margin-top: 20px;
+            margin-top: 40px;
             color: $gray_text;
-            background-color: #dfdfdf; // 색상 수정
+            background-color: $gray_button; // 색상 수정
             border-radius: 5px;
             width: 400px;
             height: 50px;
             cursor: pointer;
             font-weight: bold;
         }
-    }
 
+        button:hover {
+            background-color: $gray_hover;
+            box-shadow: $gray_under_shadow;
+        }
+    }
+    .error {
+        text-align: center;
+        margin-top: 30px;
+        margin-bottom: 30px;
+        color:red;
+        height: 16px;
+    }
     // 소셜 로그인
     .social {
-        margin-top: 60px;
         width: 400px;
         .naver {
             position: relative;
@@ -91,7 +180,7 @@
         }
         .google {
             position: relative;
-            margin-top: 5px;
+            margin-top: 10px;
 
             img {
                 max-width: 400px;
@@ -110,18 +199,25 @@
     .find-signup {
         display: flex;
         justify-content: center;
-        margin-top: 20px;
+        margin-top: 30px;
         font-weight: bold;
 
         // 아이디, 비밀번호 찾기
         .find {
             margin-right: 20px;
-            
+        }
+
+        .find:hover {
+            color: $gray_text_hover;
         }
 
         // 회원가입
         .signup {
             color: $blue_text;
+        }
+
+        .signup:hover {
+            color: $blue_hover;
         }
     }
 }

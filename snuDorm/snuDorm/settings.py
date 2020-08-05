@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'feedpage',
     'sass_processor',
+    'six',
 
     #allauth
      'allauth',
@@ -126,7 +127,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -141,6 +142,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 SASS_PROCESSOR_ENABLED =  True
+
 # TODO: feedpage와 accounts 모두 scss 적용가능하도록
 SASS_PROCESSOR_ROOT =  os.path.join(BASE_DIR, 'accounts', 'static') 
 
@@ -156,3 +158,11 @@ SITE_ID = 1
 
 ACCOUNT_LOGOUT_ON_GET = True 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# 이메일 인증 기능 적용
+EMAIL_HOST = 'smtp.gmail.com' 		 # 메일 호스트 서버
+EMAIL_PORT = '587' 			 # gmail과의 통신하는 포트
+EMAIL_HOST_USER = '' 	 # 발신할 이메일
+EMAIL_HOST_PASSWORD = ''		 # 발신할 메일의 비밀번호
+EMAIL_USE_TLS = True			 # TLS 보안 설정
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER	 # 사이트와 관련한 자동응답을 받을 이메일 주소
