@@ -46,9 +46,9 @@
         <div>
             {{ feed.title }} </br>
             {{ feed.content }} </br>
-            {% if feed.photo %} 
-                <img src="{{ feed.photo.url }}" alt="" width:"30%" height="20%">
-            {% endif %} <br/>
+            {% for photo in feed.image_set.all %} 
+                <img src="{{ photo.photo.url }}" alt="" width:"200px" height="200px">
+            {% endfor %} <br/>
         </div>
     {% elif board == "life" %}
         {% if category == "cobuy" %}
