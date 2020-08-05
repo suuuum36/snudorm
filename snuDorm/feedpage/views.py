@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
 from .models import Feed, Minwon, Life, FreeBoard, CoBuy, Rent, Keep, Resell, FeedComment, \
-                    FeedLike, CommentLike, Recomment, RecommentLike, STAT_OPTION, Notice
+                    FeedLike, CommentLike, Recomment, RecommentLike, STAT_OPTION, Notice, Image 
+# from django.contrib.postgres.fields import ArrayField
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.core.paginator import Paginator 
@@ -172,19 +173,18 @@ def newFeed(request, board, category):
     elif request.method == 'POST':
         title = request.POST['title']
         content = request.POST['content']
-        photo = request.FILES.get('photo', False)
         noname = True if "noname" in request.POST else False
         # 관리자 계정('domitori) 일 때만 공지사항 작동 
         notice = True if request.user.username == 'domitori' else False
 
         # 민원 게시판 
         if board == "minwon":
-            Minwon.objects.create(title=title, content=content, photo=photo, noname=noname, views=0,
+            feed = Minwon.objects.create(title=title, content=content,  noname=noname, views=0,
                                 author=request.user, board=board, category=category, notice=notice,
                                 board_info1=board_info[0], board_info2=board_info[1])
         # 자유 게시판 
         elif board == 'freeboard':
-            FreeBoard.objects.create(title=title, content=content, photo=photo, noname=noname, views=0,
+            feed = FreeBoard.objects.create(title=title, content=content,  noname=noname, views=0,
                                     author=request.user, board=board, category=category, notice=notice,
                                     board_info1=board_info[0], board_info2=board_info[1])   
         # 생필품 게시판 
@@ -195,7 +195,7 @@ def newFeed(request, board, category):
                 url = request.POST['url']
                 duedate = request.POST.get('duedate', '2020-01-01')
                 status = STAT_OPTION[0]
-                CoBuy.objects.create(title=title, content=content, photo=photo, noname=noname, views=0,
+                feed = CoBuy.objects.create(title=title, content=content,  noname=noname, views=0,
                                     price=price, url=url, duedate=duedate, status=status, notice=notice,
                                     author=request.user, board=board, category=category,
                                     board_info1=board_info[0], board_info2=board_info[1])
@@ -207,7 +207,7 @@ def newFeed(request, board, category):
                 start_date = request.POST.get('start_date', '2020-01-01')
                 end_date = request.POST.get('duedate', '2020-01-01')
                 status = STAT_OPTION[0]
-                Rent.objects.create(title=title, content=content, photo=photo, noname=noname, deposit=deposit, 
+                feed = Rent.objects.create(title=title, content=content,  noname=noname, deposit=deposit, 
                                     purpose=purpose, start_date=start_date, end_date=end_date, status=status,
                                     author=request.user, board=board, category=category, notice=notice, views=0,
                                     board_info1=board_info[0], board_info2=board_info[1])
@@ -219,7 +219,7 @@ def newFeed(request, board, category):
                 start_date = request.POST.get('start_date', '2020-01-01')
                 end_date = request.POST.get('duedate', '2020-01-01')
                 status = STAT_OPTION[0]
-                Keep.objects.create(title=title, content=content, photo=photo, noname=noname, purpose=purpose, 
+                feed = Keep.objects.create(title=title, content=content,  noname=noname, purpose=purpose, 
                                     reward=reward, start_date=start_date, end_date=end_date, status=status,
                                     author=request.user, board=board, category=category, notice=notice, views=0,
                                     board_info1=board_info[0], board_info2=board_info[1])
@@ -229,9 +229,27 @@ def newFeed(request, board, category):
                 purpose = Resell.OPTION[0] if request.POST['purpose'] == "sell" else Resell.OPTION[1]
                 price = request.POST['price']
                 status = STAT_OPTION[1]   
-                Resell.objects.create(title=title, content=content, photo=photo, noname=noname, purpose=purpose, 
+                feed = Resell.objects.create(title=title, content=content,  noname=noname, purpose=purpose, 
                                 price=price, status=status, author=request.user, board=board, category=category,
                                 board_info1=board_info[0], board_info2=board_info[1], notice=notice, views=0)
+            
+        feed.save()
+        photos = request.POST.getlist('photos[]')
+        print(photos)
+        print(len(photos))
+        print('hi')
+        print(result_photos)
+        for image in photos:
+            print(image)
+            new_image = Image.objects.create(feed_id = feed.id, photo = image)
+            new_image.save()
+        
+        context = {
+
+        }
+
+        return JsonResponse(context)
+        
 
     return redirect('showboard', board=board, category=category)
 
