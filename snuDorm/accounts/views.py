@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.models import User
 from django.contrib import auth
 from .models import Profile, Message
@@ -10,11 +10,27 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 
+from django.http import JsonResponse
+
 # 비밀번호 변경
 from django.contrib.auth.hashers import check_password
 
+# SMTP 관련 인증
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
+from django.core.mail import EmailMessage
+from django.utils.encoding import force_bytes, force_text
+from .tokens import account_activation_token
+
+
+# 회원가입
 def signup(request):
+
+    # POST 방식
     if request.method == "POST":
+        
+        # form 값 저장
         user_id = request.POST['user_id'] # User, 아이디
         password = request.POST['password'] # User, 비밀번호 
         confirm_password = request.POST['confirm_password'] # 비밀번호 확인
@@ -23,64 +39,128 @@ def signup(request):
         email = request.POST['email'] # User, 이메일
         building_category = request.POST['building_category'] # Profile, 생활관
         building_dong = request.POST['building_dong'] # Profile, 동
-        # notices = []
-        if password == confirm_password: # 1,2차 비밀번호가 일치할 시에 회원가입
-            try:
-                user = User.objects.create_user(
-                    username=user_id,
-                    email=email,
-                    password=password,
-                )
-            # username이 중복될 경우 error가 발생
-            except:
-                context = "username(아이디)이 중복되었습니다(좀 더 구체화 하겠습니다)."
-                return render(request, 'accounts/error.html', {'context': context})
 
-            # update로 구현해보기
+
+        # 1차, 2차 비밀번호 일치여부 판단(js에서 1차 검증)
+        if password == confirm_password:
+            # 유저 생성            
+            user = User.objects.create_user(
+                username=user_id,
+                password=password,
+            )
+            
             user.profile.name = name
             user.profile.nickname = nickname
+            user.profile.email = email
             user.profile.building_category = building_category
             user.profile.building_dong = building_dong
-            # user.profile.notices = []
+            user.is_active = False # 유저 비활성화
             user.save()
 
-        else:
-            context = "비밀번호가 일치하지 않습니다."
-            return render(request, 'accounts/error.html', {'context': context})
+            # 이메일 인증을 위한 설정
+            current_site = get_current_site(request)
+            message = render_to_string('accounts/activation_email.html', {
+                'user': user,
+                'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)), # .encode().decode()
+                'token': account_activation_token.make_token(user),
+            })
+            mail_title = "계정 활성화 확인 이메일입니다"
+            email_send = EmailMessage(mail_title, message, to=[email])
+            email_send.send()
+            return redirect('showmain')
 
-        login_user = django_authenticate(username=user_id, password=password)
-        django_login(request, login_user)
+        # login_user = django_authenticate(username=user_id, password=password)
+        # django_login(request, login_user)
         
-        return redirect('/feeds')
+    return render(request, 'accounts/signup.html')
 
-    elif request.method == "GET":
-        
-        return render(request, 'accounts/signup.html')
+# 아이디 중복 확인
+def id_db_check(request):
+    username = request.GET['user_id']
 
+    try:
+        # 아이디 중복 o (사용 불가능)
+        user = User.objects.get(username=username)
+    except:
+        # 아이디 중복 x (사용 가능)
+        user = None
 
-def error(request): # alert로 구현 필요
+    if user is None:
+        db_check = "pass"
+    else:
+        db_check = "fail"
 
-    return render(request, 'accounts/error.html')
+    context = {'db_check': db_check}
+    return JsonResponse(context)
 
+# 닉네임 중복 확인
+def nk_db_check(request):
+    nickname = request.GET['nickname']
+
+    try:
+        user = Profile.objects.get(nickname=nickname)
+    except:
+        user = None
+
+    # 닉네임 중복 o (사용 불가능)
+    if user is None:
+        db_check = "pass"
+
+    # 닉네임 중복 x (사용 가능)
+    else:
+        db_check = "fail"
+
+    context = {'db_check': db_check}
+    return JsonResponse(context)
+
+# 로그인 기능
 def login(request):
     if request.method == 'POST':
         user_id = request.POST['user_id']
         password = request.POST['password']
+
+        # 로그인
         user = auth.authenticate(request, username=user_id, password=password)
 
-        if user:
+        # 성공
+        if user is not None:
             auth.login(request, user)
-            return redirect('/feeds')
-        else:
-            return redirect('error') # alert로 구현 필요
+            return redirect('showmain')
 
-    elif request.method == 'GET':
+        # 실패
+        else:
+            if user_id == "" or password == "":
+                error = "아이디와 비밀번호를 모두 입력해주세요."
+            else:
+                error = "아이디와 비밀번호를 확인해주세요."
+        
+        return render(request, 'accounts/login.html', {'error': error})
+
+    else:
         return render(request, 'accounts/login.html')
 
-
+# 로그아웃 기능
 def logout(request):
     auth.logout(request)
     return redirect('showmain')
+
+# 계정 활성화 함수(토큰을 통해 인증)
+def activate(request, uid64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uid64))
+        user = User.objects.get(pk=uid)
+
+    except(TypeError, ValueError, OverflowError, User.DoesNotExsit):
+        user = None
+
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        auth.login(request, user)
+        return redirect("showmain")
+    else:
+        return render(request, 'feedpage/index.html', {'error' : '계정 활성화 오류'})
 
 # 개인정보 변경하기
 @login_required
@@ -197,6 +277,11 @@ def chatRoom(request, id1, id2):
     num = User.objects.latest('id').id
     lastmessages = list()
 
+    notices = Notice.objects.filter(user_to = request.user, feed = None)
+    for notice in notices:
+        notice.checked = True
+        notice.save()
+
     for i in range(1, num+1):
         if Message.objects.filter(user_to_id = i, user_from_id = id1).count() > 0 and Message.objects.filter(user_to_id = id1, user_from_id = i).count() > 0:
             if Message.objects.filter(user_to_id = i, user_from_id = id1).order_by('-created_at')[0].created_at < Message.objects.filter(user_to_id = id1, user_from_id = i).order_by('-created_at')[0].created_at:
@@ -218,4 +303,5 @@ def chatRoom(request, id1, id2):
 def sendMessage(request, id1, id2):
     content = request.POST['content']
     Message.objects.create(user_to_id = id2, user_from_id = id1, content =content)
+    Notice.objects.create(user_to_id = id2, user_from_id = id1, type_info1='쪽지')
     return redirect('chatroom', id1=id1, id2=id2)

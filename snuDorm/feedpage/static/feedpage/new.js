@@ -1,3 +1,17 @@
+
+$(document).on('change', '#photo', function(e) {
+    console.log('clicked');
+    let $this = $(e.currentTarget);
+    $this.css('display', 'none')
+
+    const str = `
+        <input class="photo" name="photo[]" id="photo" accept=".jpg, .jpeg, .png"
+        type="file"  multiple>
+    `
+    $(str).insertAfter($this);
+})    
+
+
 function doOpenCheck(purpose){
     var option = document.getElementsByName("purpose");
     
