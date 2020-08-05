@@ -10,7 +10,7 @@
         {% if board == 'minwon' or board == 'freeboard' %}
         <!-- Minwon, freeboard 게시판 -->
         <div class="minwon_or_free_new">
-            <form method="POST" enctype="multipart/form-data" action="{% url 'newfeed' board category %}">
+            <form method="POST" class="new_form_create" enctype="multipart/form-data" action="{% url 'newfeed' board category %}">
                 {% csrf_token %}
                 <div>
                     제목</br>
@@ -22,13 +22,12 @@
                     <input name="content" type="text"  style="width:400px; height:50px;" 
                             placeholder="글 내용을 입력해주세요..." required>
                 </div></br>
-                <div>
-                    <label for="photo">사진</label>
-                    <input class="photo" name = "photo" id="photo" 
-                        type="file" accept=".jpg, .jpeg, .png">
+                <div style="display:flex">
+                   <div id="preview" style="display:flex">
+                    </div>
+                    <label for="photo">+</label>
+                    <input class="photo" name = "photo" id="photo" accept=".jpg, .jpeg, .png" type="file" multiple>
                 </div></br>
-                <div class="preview">
-                </div>
                 <div>
                     <input name="noname" type="checkbox" id="noname">
                     <label for="noname">익명</label>
@@ -69,9 +68,11 @@
                     <input name="content" type="text"  style="width:400px; height:50px;" 
                             placeholder="공구 내용과 연락수단을 적어주세요." required>
                 </div></br>
-                <div>
-                    사진</br>
-                    <input name="photo" type="file">
+                <div style="display:flex">
+                   <div id="preview" style="display:flex">
+                    </div>
+                    <label for="photo">+</label>
+                    <input class="photo" name = "photo" id="photo" accept=".jpg, .jpeg, .png" type="file">
                 </div></br>
                 <div>
                     <input name="noname" type="checkbox" id="noname">
@@ -123,9 +124,11 @@
                     <input name="content" type="text"  style="width:400px; height:50px;" 
                             placeholder="대여 내용을 입력해 주세요." required>
                 </div></br>
-                <div>
-                    사진</br>
-                    <input name="photo" type="file">
+                <div style="display:flex">
+                   <div id="preview" style="display:flex">
+                    </div>
+                    <label for="photo">+</label>
+                    <input class="photo" name = "photo" id="photo" accept=".jpg, .jpeg, .png" type="file">
                 </div></br>
                 <div >
                     <input name="noname" type="checkbox" id="noname">
@@ -177,9 +180,11 @@
                     <input name="content" type="text"  style="width:400px; height:50px;" 
                              placeholder="보관 내용을 입력해 주세요." required>
                 </div></br>
-                <div>
-                    사진</br>
-                    <input name="photo" type="file">
+                <div style="display:flex">
+                   <div id="preview" style="display:flex">
+                    </div>
+                    <label for="photo">+</label>
+                    <input class="photo" name = "photo" id="photo" accept=".jpg, .jpeg, .png" type="file">
                 </div></br>
                 <div>
                     <input name="noname" type="checkbox" id="noname">
@@ -213,9 +218,11 @@
                     <input name="content" type="text" style="width:400px; height:50px;" 
                              placeholder="중고거래 내용을 입력해 주세요." required>
                 </div></br>
-                <div>
-                    사진</br>
-                    <input name="photo" type="file">
+                <div style="display:flex">
+                   <div id="preview" style="display:flex">
+                    </div>
+                    <label for="photo">+</label>
+                    <input class="photo" name = "photo" id="photo" accept=".jpg, .jpeg, .png" type="file">
                 </div></br>
                 <div>
                     <input name="noname" type="checkbox" id="noname">
