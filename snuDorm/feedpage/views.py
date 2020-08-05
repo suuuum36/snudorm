@@ -235,6 +235,7 @@ def newFeed(request, board, category):
             
         feed.save()
         photos = request.FILES.getlist('photo[]')
+        print(photos)
         for image in photos:
             print(image)
             new_image = Image.objects.create(feed_id = feed.id, photo = image)
