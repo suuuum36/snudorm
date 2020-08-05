@@ -408,9 +408,9 @@ def editComment(request, board, category, fid, cid):
         like_count = edit_comment.commentlike_set.filter(user_id = request.user.id)
 
         context = {
-            'cid': edit_comment.id,
-            'username': edit_comment.author.username,
+            'nickname': edit_comment.author.profile.nickname,
             'content' : content,
+            'noname' : edit_comment.noname,
         }
 
         return JsonResponse(context)
@@ -463,7 +463,7 @@ def newRecomment(request, board, category, fid, cid):
         'did': new_recomment.id,
         'nickname': new_recomment.author.profile.nickname,
         'content': new_recomment.content,
-        'like_count': like_count.count(),
+        'likecount': like_count.count(),
         'noname': noname,
     }
 
@@ -472,8 +472,22 @@ def newRecomment(request, board, category, fid, cid):
 # 대댓글 수정 -- 미완성
 
 
-def editRecomment(request, board, category, fid, cid):
-    return redirect('showfeed', board=board, category=category, fid=fid)
+def editRecomment(request, board, category, fid, cid, rcid):
+    if request.method == 'POST':
+        content = request.POST['content']
+        Recomment.objects.filter(id = rcid).update(content = content)
+        edit_recomment = Recomment.objects.get(id = rcid)
+        like_count = edit_recomment.recommentlike_set.filter(user_id = request.user.id)
+
+        context = {
+            'nickname': edit_recomment.author.profile.nickname,
+            'content' : content,
+            'noname' : edit_recomment.noname,
+        }
+
+        return JsonResponse(context)
+
+
 
 # 대댓글 삭제
 
