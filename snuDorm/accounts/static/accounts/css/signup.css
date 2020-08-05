@@ -2,8 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Noto Sans KR', sans-serif;
-  font-size: 16px; }
+  font-family: 'Noto Sans KR', sans-serif; }
 
 body {
   line-height: 1; }
@@ -65,6 +64,41 @@ input:focus::-webkit-input-placeholder {
       color: #b9b9b9;
       font-weight: bold;
       font-size: 14px; }
+    .form .input-section .with-button {
+      display: flex;
+      justify-content: space-between; }
+      .form .input-section .with-button .id-check, .form .input-section .with-button .nk-check {
+        width: 90px;
+        height: 50px;
+        border-radius: 30px;
+        background-color: #d6d6d6;
+        color: #ffffff;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 14px;
+        margin-top: 15px;
+        border: none; }
+      .form .input-section .with-button .id-check:hover, .form .input-section .with-button .nk-check:hover {
+        background-color: #cecece;
+        box-shadow: 0 2px 5px #bfbfbf; }
+      .form .input-section .with-button #id-confirm, .form .input-section .with-button #nk-confirm {
+        display: none;
+        position: relative;
+        width: 90px;
+        height: 50px;
+        border-radius: 30px;
+        background-color: #016aff;
+        color: #ffffff;
+        font-weight: bold;
+        margin-top: 15px;
+        border: none; }
+        .form .input-section .with-button #id-confirm span, .form .input-section .with-button #nk-confirm span {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          white-space: nowrap;
+          font-size: 14px; }
     .form .input-section .snumail {
       font-weight: bold; }
   .form .building {
@@ -74,26 +108,22 @@ input:focus::-webkit-input-placeholder {
     .form .building span {
       width: 500px !important; }
     .form .building .building-category {
-      margin-right: 20px;
-      position: relative; }
-    .form .building .building-category, .form .building .building-bachelor,
-    .form .building .building-master, .form .building .building-family,
-    .form .building .building-bk, .form .building .building-default {
+      margin-right: 20px; }
+    .form .building .remove {
+      display: none !important; }
+    .form .building .building-category, .form .building .building-default, .form .building .building-bachelor,
+    .form .building .building-master, .form .building .building-family, .form .building .building-bk {
       display: flex;
       width: 240px;
       flex-direction: column;
       margin-top: 15px;
       position: relative; }
-      .form .building .building-category .default-container, .form .building .building-bachelor .default-container,
-      .form .building .building-master .default-container, .form .building .building-family .default-container,
-      .form .building .building-bk .default-container, .form .building .building-default .default-container {
+      .form .building .building-category .default-container, .form .building .building-default .default-container, .form .building .building-bachelor .default-container,
+      .form .building .building-master .default-container, .form .building .building-family .default-container, .form .building .building-bk .default-container {
         position: absolute !important;
         z-index: -1 !important; }
-      .form .building .building-category .category-container, .form .building .building-category .dong-container, .form .building .building-bachelor .category-container, .form .building .building-bachelor .dong-container,
-      .form .building .building-master .category-container,
-      .form .building .building-master .dong-container, .form .building .building-family .category-container, .form .building .building-family .dong-container,
-      .form .building .building-bk .category-container,
-      .form .building .building-bk .dong-container, .form .building .building-default .category-container, .form .building .building-default .dong-container {
+      .form .building .building-category .dropdown-container, .form .building .building-default .dropdown-container, .form .building .building-bachelor .dropdown-container,
+      .form .building .building-master .dropdown-container, .form .building .building-family .dropdown-container, .form .building .building-bk .dropdown-container {
         border: 2px solid #b9b9b9;
         max-height: 0;
         width: 100%;
@@ -107,138 +137,27 @@ input:focus::-webkit-input-placeholder {
         z-index: 3;
         margin-top: -2px;
         background-color: #ffffff; }
-      .form .building .building-category .category-container.active, .form .building .building-category .dong-container.active, .form .building .building-bachelor .category-container.active, .form .building .building-bachelor .dong-container.active,
-      .form .building .building-master .category-container.active,
-      .form .building .building-master .dong-container.active, .form .building .building-family .category-container.active, .form .building .building-family .dong-container.active,
-      .form .building .building-bk .category-container.active,
-      .form .building .building-bk .dong-container.active, .form .building .building-default .category-container.active, .form .building .building-default .dong-container.active {
+      .form .building .building-category .dropdown-container.active, .form .building .building-default .dropdown-container.active, .form .building .building-bachelor .dropdown-container.active,
+      .form .building .building-master .dropdown-container.active, .form .building .building-family .dropdown-container.active, .form .building .building-bk .dropdown-container.active {
         max-height: 162px;
         opacity: 1;
         overflow-y: scroll; }
-      .form .building .building-category .category-container.active + .selected::after,
-      .form .building .building-category .bachelor-container.active + .selected-bachelor::after,
-      .form .building .building-category .master-container.active + .selected-master::after,
-      .form .building .building-category .family-container.active + .selected-family::after,
-      .form .building .building-category .bk-container.active + .selected-bk::after,
-      .form .building .building-category .default-container.active + .selected-default::after, .form .building .building-bachelor .category-container.active + .selected::after,
-      .form .building .building-bachelor .bachelor-container.active + .selected-bachelor::after,
-      .form .building .building-bachelor .master-container.active + .selected-master::after,
-      .form .building .building-bachelor .family-container.active + .selected-family::after,
-      .form .building .building-bachelor .bk-container.active + .selected-bk::after,
-      .form .building .building-bachelor .default-container.active + .selected-default::after,
-      .form .building .building-master .category-container.active + .selected::after,
-      .form .building .building-master .bachelor-container.active + .selected-bachelor::after,
-      .form .building .building-master .master-container.active + .selected-master::after,
-      .form .building .building-master .family-container.active + .selected-family::after,
-      .form .building .building-master .bk-container.active + .selected-bk::after,
-      .form .building .building-master .default-container.active + .selected-default::after, .form .building .building-family .category-container.active + .selected::after,
-      .form .building .building-family .bachelor-container.active + .selected-bachelor::after,
-      .form .building .building-family .master-container.active + .selected-master::after,
-      .form .building .building-family .family-container.active + .selected-family::after,
-      .form .building .building-family .bk-container.active + .selected-bk::after,
-      .form .building .building-family .default-container.active + .selected-default::after,
-      .form .building .building-bk .category-container.active + .selected::after,
-      .form .building .building-bk .bachelor-container.active + .selected-bachelor::after,
-      .form .building .building-bk .master-container.active + .selected-master::after,
-      .form .building .building-bk .family-container.active + .selected-family::after,
-      .form .building .building-bk .bk-container.active + .selected-bk::after,
-      .form .building .building-bk .default-container.active + .selected-default::after, .form .building .building-default .category-container.active + .selected::after,
-      .form .building .building-default .bachelor-container.active + .selected-bachelor::after,
-      .form .building .building-default .master-container.active + .selected-master::after,
-      .form .building .building-default .family-container.active + .selected-family::after,
-      .form .building .building-default .bk-container.active + .selected-bk::after,
-      .form .building .building-default .default-container.active + .selected-default::after {
+      .form .building .building-category .dropdown-container.active + .selected-common::after, .form .building .building-default .dropdown-container.active + .selected-common::after, .form .building .building-bachelor .dropdown-container.active + .selected-common::after,
+      .form .building .building-master .dropdown-container.active + .selected-common::after, .form .building .building-family .dropdown-container.active + .selected-common::after, .form .building .building-bk .dropdown-container.active + .selected-common::after {
         transform: rotateX(180deg);
         top: -6px; }
-      .form .building .building-category .category-container::-webkit-scrollbar,
-      .form .building .building-category .bachelor-container::-webkit-scrollbar,
-      .form .building .building-category .master-container::-webkit-scrollbar,
-      .form .building .building-category .family-container::-webkit-scrollbar,
-      .form .building .building-category .bk-container::-webkit-scrollbar,
-      .form .building .building-category .default-container::-webkit-scrollbar, .form .building .building-bachelor .category-container::-webkit-scrollbar,
-      .form .building .building-bachelor .bachelor-container::-webkit-scrollbar,
-      .form .building .building-bachelor .master-container::-webkit-scrollbar,
-      .form .building .building-bachelor .family-container::-webkit-scrollbar,
-      .form .building .building-bachelor .bk-container::-webkit-scrollbar,
-      .form .building .building-bachelor .default-container::-webkit-scrollbar,
-      .form .building .building-master .category-container::-webkit-scrollbar,
-      .form .building .building-master .bachelor-container::-webkit-scrollbar,
-      .form .building .building-master .master-container::-webkit-scrollbar,
-      .form .building .building-master .family-container::-webkit-scrollbar,
-      .form .building .building-master .bk-container::-webkit-scrollbar,
-      .form .building .building-master .default-container::-webkit-scrollbar, .form .building .building-family .category-container::-webkit-scrollbar,
-      .form .building .building-family .bachelor-container::-webkit-scrollbar,
-      .form .building .building-family .master-container::-webkit-scrollbar,
-      .form .building .building-family .family-container::-webkit-scrollbar,
-      .form .building .building-family .bk-container::-webkit-scrollbar,
-      .form .building .building-family .default-container::-webkit-scrollbar,
-      .form .building .building-bk .category-container::-webkit-scrollbar,
-      .form .building .building-bk .bachelor-container::-webkit-scrollbar,
-      .form .building .building-bk .master-container::-webkit-scrollbar,
-      .form .building .building-bk .family-container::-webkit-scrollbar,
-      .form .building .building-bk .bk-container::-webkit-scrollbar,
-      .form .building .building-bk .default-container::-webkit-scrollbar, .form .building .building-default .category-container::-webkit-scrollbar,
-      .form .building .building-default .bachelor-container::-webkit-scrollbar,
-      .form .building .building-default .master-container::-webkit-scrollbar,
-      .form .building .building-default .family-container::-webkit-scrollbar,
-      .form .building .building-default .bk-container::-webkit-scrollbar,
-      .form .building .building-default .default-container::-webkit-scrollbar {
+      .form .building .building-category .dropdown-container::-webkit-scrollbar, .form .building .building-default .dropdown-container::-webkit-scrollbar, .form .building .building-bachelor .dropdown-container::-webkit-scrollbar,
+      .form .building .building-master .dropdown-container::-webkit-scrollbar, .form .building .building-family .dropdown-container::-webkit-scrollbar, .form .building .building-bk .dropdown-container::-webkit-scrollbar {
         width: 8px;
         border-radius: 0 3px 3px 0;
         background-color: #ffffff;
         visibility: hidden; }
-      .form .building .building-category .category-container::-webkit-scrollbar-thumb,
-      .form .building .building-category .bachelor-container::-webkit-scrollbar-thumb,
-      .form .building .building-category .master-container::-webkit-scrollbar-thumb,
-      .form .building .building-category .family-container::-webkit-scrollbar-thumb,
-      .form .building .building-category .bk-container::-webkit-scrollbar-thumb,
-      .form .building .building-category .default-container::-webkit-scrollbar-thumb, .form .building .building-bachelor .category-container::-webkit-scrollbar-thumb,
-      .form .building .building-bachelor .bachelor-container::-webkit-scrollbar-thumb,
-      .form .building .building-bachelor .master-container::-webkit-scrollbar-thumb,
-      .form .building .building-bachelor .family-container::-webkit-scrollbar-thumb,
-      .form .building .building-bachelor .bk-container::-webkit-scrollbar-thumb,
-      .form .building .building-bachelor .default-container::-webkit-scrollbar-thumb,
-      .form .building .building-master .category-container::-webkit-scrollbar-thumb,
-      .form .building .building-master .bachelor-container::-webkit-scrollbar-thumb,
-      .form .building .building-master .master-container::-webkit-scrollbar-thumb,
-      .form .building .building-master .family-container::-webkit-scrollbar-thumb,
-      .form .building .building-master .bk-container::-webkit-scrollbar-thumb,
-      .form .building .building-master .default-container::-webkit-scrollbar-thumb, .form .building .building-family .category-container::-webkit-scrollbar-thumb,
-      .form .building .building-family .bachelor-container::-webkit-scrollbar-thumb,
-      .form .building .building-family .master-container::-webkit-scrollbar-thumb,
-      .form .building .building-family .family-container::-webkit-scrollbar-thumb,
-      .form .building .building-family .bk-container::-webkit-scrollbar-thumb,
-      .form .building .building-family .default-container::-webkit-scrollbar-thumb,
-      .form .building .building-bk .category-container::-webkit-scrollbar-thumb,
-      .form .building .building-bk .bachelor-container::-webkit-scrollbar-thumb,
-      .form .building .building-bk .master-container::-webkit-scrollbar-thumb,
-      .form .building .building-bk .family-container::-webkit-scrollbar-thumb,
-      .form .building .building-bk .bk-container::-webkit-scrollbar-thumb,
-      .form .building .building-bk .default-container::-webkit-scrollbar-thumb, .form .building .building-default .category-container::-webkit-scrollbar-thumb,
-      .form .building .building-default .bachelor-container::-webkit-scrollbar-thumb,
-      .form .building .building-default .master-container::-webkit-scrollbar-thumb,
-      .form .building .building-default .family-container::-webkit-scrollbar-thumb,
-      .form .building .building-default .bk-container::-webkit-scrollbar-thumb,
-      .form .building .building-default .default-container::-webkit-scrollbar-thumb {
+      .form .building .building-category .dropdown-container::-webkit-scrollbar-thumb, .form .building .building-default .dropdown-container::-webkit-scrollbar-thumb, .form .building .building-bachelor .dropdown-container::-webkit-scrollbar-thumb,
+      .form .building .building-master .dropdown-container::-webkit-scrollbar-thumb, .form .building .building-family .dropdown-container::-webkit-scrollbar-thumb, .form .building .building-bk .dropdown-container::-webkit-scrollbar-thumb {
         background-color: #b9b9b9;
         border-radius: 3px; }
-      .form .building .building-category .selected, .form .building .building-category .selected-bachelor, .form .building .building-category .selected-master,
-      .form .building .building-category .selected-family, .form .building .building-category .selected-bk, .form .building .building-category .selected-default, .form .building .building-bachelor .selected, .form .building .building-bachelor .selected-bachelor, .form .building .building-bachelor .selected-master,
-      .form .building .building-bachelor .selected-family, .form .building .building-bachelor .selected-bk, .form .building .building-bachelor .selected-default,
-      .form .building .building-master .selected,
-      .form .building .building-master .selected-bachelor,
-      .form .building .building-master .selected-master,
-      .form .building .building-master .selected-family,
-      .form .building .building-master .selected-bk,
-      .form .building .building-master .selected-default, .form .building .building-family .selected, .form .building .building-family .selected-bachelor, .form .building .building-family .selected-master,
-      .form .building .building-family .selected-family, .form .building .building-family .selected-bk, .form .building .building-family .selected-default,
-      .form .building .building-bk .selected,
-      .form .building .building-bk .selected-bachelor,
-      .form .building .building-bk .selected-master,
-      .form .building .building-bk .selected-family,
-      .form .building .building-bk .selected-bk,
-      .form .building .building-bk .selected-default, .form .building .building-default .selected, .form .building .building-default .selected-bachelor, .form .building .building-default .selected-master,
-      .form .building .building-default .selected-family, .form .building .building-default .selected-bk, .form .building .building-default .selected-default {
+      .form .building .building-category .selected-common, .form .building .building-default .selected-common, .form .building .building-bachelor .selected-common,
+      .form .building .building-master .selected-common, .form .building .building-family .selected-common, .form .building .building-bk .selected-common {
         color: #b9b9b9;
         padding: 12px 20px;
         cursor: pointer;
@@ -251,27 +170,8 @@ input:focus::-webkit-input-placeholder {
         line-height: 22px;
         font-weight: bold;
         font-size: 14px; }
-      .form .building .building-category .selected::after, .form .building .building-category .selected-bachelor::after,
-      .form .building .building-category .selected-master::after, .form .building .building-category .selected-family::after,
-      .form .building .building-category .selected-bk::after, .form .building .building-category .selected-default::after, .form .building .building-bachelor .selected::after, .form .building .building-bachelor .selected-bachelor::after,
-      .form .building .building-bachelor .selected-master::after, .form .building .building-bachelor .selected-family::after,
-      .form .building .building-bachelor .selected-bk::after, .form .building .building-bachelor .selected-default::after,
-      .form .building .building-master .selected::after,
-      .form .building .building-master .selected-bachelor::after,
-      .form .building .building-master .selected-master::after,
-      .form .building .building-master .selected-family::after,
-      .form .building .building-master .selected-bk::after,
-      .form .building .building-master .selected-default::after, .form .building .building-family .selected::after, .form .building .building-family .selected-bachelor::after,
-      .form .building .building-family .selected-master::after, .form .building .building-family .selected-family::after,
-      .form .building .building-family .selected-bk::after, .form .building .building-family .selected-default::after,
-      .form .building .building-bk .selected::after,
-      .form .building .building-bk .selected-bachelor::after,
-      .form .building .building-bk .selected-master::after,
-      .form .building .building-bk .selected-family::after,
-      .form .building .building-bk .selected-bk::after,
-      .form .building .building-bk .selected-default::after, .form .building .building-default .selected::after, .form .building .building-default .selected-bachelor::after,
-      .form .building .building-default .selected-master::after, .form .building .building-default .selected-family::after,
-      .form .building .building-default .selected-bk::after, .form .building .building-default .selected-default::after {
+      .form .building .building-category .selected-common::after, .form .building .building-default .selected-common::after, .form .building .building-bachelor .selected-common::after,
+      .form .building .building-master .selected-common::after, .form .building .building-family .selected-common::after, .form .building .building-bk .selected-common::after {
         content: "";
         background: url("../img/arrow-down.png");
         background-size: contain;
@@ -282,11 +182,8 @@ input:focus::-webkit-input-placeholder {
         right: 18px;
         top: 5px;
         transition: all 0.4s; }
-      .form .building .building-category .category-option, .form .building .building-category .dong-option, .form .building .building-bachelor .category-option, .form .building .building-bachelor .dong-option,
-      .form .building .building-master .category-option,
-      .form .building .building-master .dong-option, .form .building .building-family .category-option, .form .building .building-family .dong-option,
-      .form .building .building-bk .category-option,
-      .form .building .building-bk .dong-option, .form .building .building-default .category-option, .form .building .building-default .dong-option {
+      .form .building .building-category .dropdown-option, .form .building .building-default .dropdown-option, .form .building .building-bachelor .dropdown-option,
+      .form .building .building-master .dropdown-option, .form .building .building-family .dropdown-option, .form .building .building-bk .dropdown-option {
         height: 50px;
         padding: 12px 20px;
         cursor: pointer;
@@ -295,79 +192,30 @@ input:focus::-webkit-input-placeholder {
         align-items: center;
         font-weight: bold;
         color: #b9b9b9; }
-        .form .building .building-category .category-option .radio, .form .building .building-category .dong-option .radio, .form .building .building-bachelor .category-option .radio, .form .building .building-bachelor .dong-option .radio,
-        .form .building .building-master .category-option .radio,
-        .form .building .building-master .dong-option .radio, .form .building .building-family .category-option .radio, .form .building .building-family .dong-option .radio,
-        .form .building .building-bk .category-option .radio,
-        .form .building .building-bk .dong-option .radio, .form .building .building-default .category-option .radio, .form .building .building-default .dong-option .radio {
+        .form .building .building-category .dropdown-option .radio, .form .building .building-default .dropdown-option .radio, .form .building .building-bachelor .dropdown-option .radio,
+        .form .building .building-master .dropdown-option .radio, .form .building .building-family .dropdown-option .radio, .form .building .building-bk .dropdown-option .radio {
           display: none; }
-      .form .building .building-category .category-option:hover, .form .building .building-category .dong-option:hover, .form .building .building-bachelor .category-option:hover, .form .building .building-bachelor .dong-option:hover,
-      .form .building .building-master .category-option:hover,
-      .form .building .building-master .dong-option:hover, .form .building .building-family .category-option:hover, .form .building .building-family .dong-option:hover,
-      .form .building .building-bk .category-option:hover,
-      .form .building .building-bk .dong-option:hover, .form .building .building-default .category-option:hover, .form .building .building-default .dong-option:hover {
+      .form .building .building-category .dropdown-option:hover, .form .building .building-default .dropdown-option:hover, .form .building .building-bachelor .dropdown-option:hover,
+      .form .building .building-master .dropdown-option:hover, .form .building .building-family .dropdown-option:hover, .form .building .building-bk .dropdown-option:hover {
         color: #016aff; }
-      .form .building .building-category label, .form .building .building-bachelor label,
-      .form .building .building-master label, .form .building .building-family label,
-      .form .building .building-bk label, .form .building .building-default label {
+      .form .building .building-category label, .form .building .building-default label, .form .building .building-bachelor label,
+      .form .building .building-master label, .form .building .building-family label, .form .building .building-bk label {
         display: inline-block;
         width: 100%;
         cursor: pointer; }
-  .form .signup {
-    position: absolute;
-    top: 150px;
-    width: 500px;
-    height: 70px;
-    background-color: #ffca00;
-    color: #ffffff;
-    font-weight: bold;
-    border-radius: 7px;
-    cursor: pointer;
-    border: none;
-    font-size: 16px; }
-  .form .signup.z {
-    z-index: -1; }
-
-.remove {
-  display: none !important; }
-
-.with-button {
-  display: flex;
-  justify-content: space-between; }
-
-.id-check, .nk-check {
-  width: 90px;
-  height: 50px;
-  border-radius: 30px;
-  background-color: #d6d6d6;
-  color: #ffffff;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 14px;
-  margin-top: 15px;
-  border: none; }
-
-.id-check:hover, .nk-check:hover {
-  background-color: #cecece;
-  box-shadow: 0 2px 5px #bfbfbf; }
-
-#id-confirm, #nk-confirm {
-  display: none;
-  position: relative;
-  width: 90px;
-  height: 50px;
-  border-radius: 30px;
-  background-color: #016aff;
-  color: #ffffff;
-  font-weight: bold;
-  margin-top: 15px;
-  border: none; }
-  #id-confirm span, #nk-confirm span {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    white-space: nowrap;
-    font-size: 14px; }
+    .form .building .signup {
+      position: absolute;
+      top: 150px;
+      width: 500px;
+      height: 70px;
+      background-color: #ffca00;
+      color: #ffffff;
+      font-weight: bold;
+      border-radius: 7px;
+      cursor: pointer;
+      border: none;
+      font-size: 16px; }
+    .form .building .signup.z {
+      z-index: -1; }
 
 /*# sourceMappingURL=signup.css.map */

@@ -12,7 +12,6 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Noto Sans KR', sans-serif;
-    font-size: 16px;
  }
 
 body {
@@ -111,6 +110,54 @@ input:focus::-webkit-input-placeholder {
             font-size: 14px;
         }
 
+        // input box와 중복확인 버튼 높이 조정
+        .with-button {
+            display: flex;
+            justify-content: space-between;
+
+            // 중복확인 버튼
+            .id-check, .nk-check {
+                width: 90px;
+                height: 50px;
+                border-radius: 30px;
+                background-color: $gray_button;
+                color: #ffffff;
+                cursor: pointer;
+                font-weight: bold;
+                font-size: 14px;
+                margin-top: 15px;
+                border: none;
+            }
+
+            .id-check:hover, .nk-check:hover {
+                background-color: $gray_hover;
+                box-shadow: $gray_under_shadow;
+            }
+
+            // 사용가능 div
+            #id-confirm, #nk-confirm {
+                display: none;
+                position: relative;
+                width: 90px;
+                height: 50px;
+                border-radius: 30px;
+                background-color: $blue_text;
+                color: #ffffff;
+                font-weight: bold;
+                margin-top: 15px;
+                border: none;
+                
+                span {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    white-space: nowrap;
+                    font-size: 14px;
+                }
+            }
+        }
+
         // @ snu.ac.kr
         .snumail {
             font-weight: bold;
@@ -128,27 +175,33 @@ input:focus::-webkit-input-placeholder {
             width: 500px !important;
         }
 
+        // 생활관 input box의 우측 마진 설정
         .building-category {
             margin-right: 20px;
-            position: relative;
         }
 
-        .building-category, .building-bachelor, 
-        .building-master, .building-family,
-        .building-bk, .building-default {
+        // 선택되지 않은 동 옵션 숨기기
+        .remove {
+            display: none !important;
+        }
+
+        // 생활관 분류 및 동 분류 dropdown
+        .building-category, .building-default, .building-bachelor,
+        .building-master, .building-family, .building-bk {
             display: flex;
             width: 240px;
             flex-direction: column;
             margin-top: 15px;
             position: relative;
-
-            // '생활관을 선택하세요.'는 선택 불가능
+                
+            // '생활관을 선택하세요.' 옵션 선택 불가
             .default-container {
                 position: absolute !important;
                 z-index: -1 !important;
             }
-
-            .category-container, .dong-container {
+            
+            // 생활관 및 동의 옵션을 갖는 container
+            .dropdown-container {
                 border: 2px solid $gray_border;
                 max-height: 0;
                 width: 100%;
@@ -164,46 +217,35 @@ input:focus::-webkit-input-placeholder {
                 background-color: #ffffff;
             }
 
-            .category-container.active, .dong-container.active {
+            // dropdown 작동
+            .dropdown-container.active {
                 max-height: 162px;
                 opacity: 1;
                 overflow-y: scroll;
             }
 
-            .category-container.active + .selected::after, 
-            .bachelor-container.active + .selected-bachelor::after,
-            .master-container.active + .selected-master::after, 
-            .family-container.active + .selected-family::after,
-            .bk-container.active + .selected-bk::after,
-            .default-container.active + .selected-default::after {
+            // 화살표 역전
+            .dropdown-container.active + .selected-common::after {
                 transform: rotateX(180deg);
                 top: -6px;
             }
 
-            .category-container::-webkit-scrollbar,
-            .bachelor-container::-webkit-scrollbar, 
-            .master-container::-webkit-scrollbar,
-            .family-container::-webkit-scrollbar,
-            .bk-container::-webkit-scrollbar,
-            .default-container::-webkit-scrollbar {
+            // option 스크롤바
+            .dropdown-container::-webkit-scrollbar {
                 width: 8px;
                 border-radius: 0 3px 3px 0;
                 background-color: #ffffff;
                 visibility: hidden;
             }
             
-            .category-container::-webkit-scrollbar-thumb, 
-            .bachelor-container::-webkit-scrollbar-thumb, 
-            .master-container::-webkit-scrollbar-thumb,
-            .family-container::-webkit-scrollbar-thumb,
-            .bk-container::-webkit-scrollbar-thumb,
-            .default-container::-webkit-scrollbar-thumb {
+            // option 스크롤
+            .dropdown-container::-webkit-scrollbar-thumb {
                 background-color: $gray_border;
                 border-radius: 3px;
             }
 
-            .selected, .selected-bachelor, .selected-master,
-            .selected-family, .selected-bk, .selected-default {
+            // 선택된 옵션 표시
+            .selected-common {
                 color: $gray_border;
                 padding: 12px 20px;
                 cursor: pointer;
@@ -218,9 +260,8 @@ input:focus::-webkit-input-placeholder {
                 font-size: 14px;
             }
 
-            .selected::after, .selected-bachelor::after, 
-            .selected-master::after, .selected-family::after,
-            .selected-bk::after, .selected-default::after {
+            // dropdown 화살표
+            .selected-common::after {
                 content: "";
                 background: url("../img/arrow-down.png");
                 background-size: contain;
@@ -235,7 +276,8 @@ input:focus::-webkit-input-placeholder {
                 transition: all 0.4s;
             }
             
-            .category-option, .dong-option {
+            // 옵션 설정
+            .dropdown-option {
                 height: 50px;
                 padding: 12px 20px;
                 cursor: pointer;
@@ -244,102 +286,47 @@ input:focus::-webkit-input-placeholder {
                 align-items: center;
                 font-weight: bold;
                 color: $gray_border;
-
+                
+                // input type = "radio"
                 .radio {
                     display:none;
                 }
             }
 
-            .category-option:hover, .dong-option:hover {
+            .dropdown-option:hover {
                 color: $blue_text;
             }
-
+            
+            // input type = "radio"와 연결
             label {
                 display: inline-block;
                 width: 100%;
                 cursor: pointer;
             }
         }
-    }
 
-    // 회원가입 submit
-    .signup {
-        position: absolute;
-        top: 150px;
-        width: 500px;
-        height: 70px;
-        background-color: $yellow_main;
-        color: #ffffff;
-        font-weight: bold;
-        border-radius: 7px;
-        cursor: pointer;
-        border: none;
-        font-size: 16px;
-    }
-
-    .signup.z {
-        z-index: -1;
-    }
-
+        // 회원가입 input type = "button"
+        .signup {
+            position: absolute;
+            top: 150px;
+            width: 500px;
+            height: 70px;
+            background-color: $yellow_main;
+            color: #ffffff;
+            font-weight: bold;
+            border-radius: 7px;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+        }
     
+        .signup.z {
+            z-index: -1;
+        }
+    }       
 }
 
-.remove {
-    display: none !important;
-}
-
-// 공통 항목
 
 
 
-
-
-
-// input box와 버튼 높이 조정
-.with-button {
-    display: flex;
-    justify-content: space-between;
-}
-
-// 중복확인 버튼
-.id-check, .nk-check {
-    width: 90px;
-    height: 50px;
-    border-radius: 30px;
-    background-color: $gray_button;
-    color: #ffffff;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 14px;
-    margin-top: 15px;
-    border: none;
-}
-
-.id-check:hover, .nk-check:hover {
-    background-color: $gray_hover;
-    box-shadow: $gray_under_shadow;
-}
-
-// 사용가능 div
-#id-confirm, #nk-confirm {
-    display: none;
-    position: relative;
-    width: 90px;
-    height: 50px;
-    border-radius: 30px;
-    background-color: $blue_text;
-    color: #ffffff;
-    font-weight: bold;
-    margin-top: 15px;
-    border: none;
-    
-    span {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        white-space: nowrap;
-        font-size: 14px;
-    }
-}
 
