@@ -2,8 +2,6 @@ from django.db import models
 from django.utils import timezone
 from django.conf import settings
 from django.contrib.auth.models import User
-
-# TODO: pip install django-multiselectfield 를 해주세요 ㅎㅅㅎ
 from multiselectfield import MultiSelectField
 
 # 게시판
@@ -24,7 +22,7 @@ def get_image_filename(instanece, filename):
 class Feed(models.Model):
     title = models.CharField(max_length=256)
     content = models.TextField()
-    photo = models.ImageField(blank=True, null=True, upload_to='feed_photos')
+    # photo = ArrayField(models.ImageField(blank=True, null=True, upload_to='feed_photos')))
     noname = models.BooleanField(default=False)
 
     author = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
@@ -32,7 +30,7 @@ class Feed(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(blank=True, null=True)
     views = models.IntegerField(blank=True, default=0)
-    
+
     # 공지사항인지 check하는 값
     notice = models.BooleanField(default=False)
 
@@ -44,6 +42,7 @@ class Feed(models.Model):
     board_info1 = models.CharField(max_length=20, blank=False)
     board_info2 = models.CharField(max_length=20, blank=False)
 
+    status = MultiSelectField(choices=STAT_OPTION, default='ongoing')    
     class Meta:
         ordering = ('created_at',)
 
@@ -67,7 +66,6 @@ class FreeBoard(Feed):
         return self.title
 
 class Life(Feed):
-    status = MultiSelectField(choices=STAT_OPTION, default='ongoing')    
     class Meta:
         ordering = ('created_at', )
 
@@ -133,3 +131,20 @@ class RecommentLike(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)
     recomment = models.ForeignKey(Recomment, on_delete=models.CASCADE)
+
+class Notice(models.Model):
+    user_to = models.ForeignKey(User, on_delete=models.CASCADE, related_name='mynotice')
+    user_from = models.ForeignKey(User, on_delete=models.CASCADE, related_name='mylog')
+    feed = models.ForeignKey(Feed, on_delete=models.CASCADE, related_name='notification', null=True)
+    type_info1 = models.CharField(max_length=20, blank=False)
+    type_info2 = models.CharField(max_length=20, null=True)
+    checked = models.BooleanField(default=False)
+    created_at = models.DateTimeField(default=timezone.now)
+    noname = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.user_to.username
+
+class Image(models.Model):
+    feed = models.ForeignKey(Feed, on_delete=models.CASCADE)
+    photo = models.ImageField(blank=True, null=True, upload_to='feed_photos')

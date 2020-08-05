@@ -1,4 +1,5 @@
 //설정
+var url = window.location.href
 var urlPath = window.location.pathname.split('/').reverse()[1]
 var urlPath2 = window.location.pathname.split('/').reverse()[2]
 
@@ -24,13 +25,16 @@ for(idx = 0; idx < 5; idx++) {
 var minwonC = document.querySelector('.minwon-category');
 var lifeC = document.querySelector('.life-category');
 
-if (urlPath2 == "minwon") {
+if (url.indexOf("minwon")!= -1) {
     minwonC.style.visibility = 'visible';
-} else if (urlPath2 == "life") { 
+    minwonText.style.color = 'black';
+} else if (url.indexOf("life")!= -1) { 
     lifeC.style.visibility = 'visible';
-} else {
-
+    lifeText.style.color = 'black';
+} else if (url.indexOf("freeboard")!= -1) { 
+    freeText.style.color = 'black';
 }
+
 
 //3단계 layer show
 var building1 = document.querySelector('.building-1');
@@ -43,7 +47,7 @@ var building = [building1, building2, building3, building4]
 var idx;
 
 for(idx = 0; idx < 12; idx++) {
-	if(urlPath.indexOf(category[idx])!= -1) {
+	if(url.indexOf(category[idx])!= -1) {
         building[idx].style.visibility = 'visible';
 	} 
 }
@@ -68,10 +72,10 @@ var category2 = ["tori", "tori", "gong", "bachelor", "graduate", "family", "bk",
 var categoryText = [mAll, lAll, mGong, mB, mG, mF, mBK, l1, l2, l3, l4]
 
 for (idx=0; idx < 11; idx++) {
-    if(urlPath == category2[idx]) {
+    if(url.indexOf(category2[idx])!= -1) {
         categoryText[idx].style.color = '#016aff';
-    } else if (urlPath.indexOf(category2[idx])!= -1) {
-        categoryText[idx].style.color = '#016aff';
+    } else {
+
     }
 }
 
@@ -113,7 +117,7 @@ var b_num = [b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12]
 var idx;
 
 for(idx = 0; idx < 12; idx++) {
-	if(urlPath.indexOf(Dong[idx])!= -1) {
+	if(url.indexOf(Dong[idx])!= -1) {
         b_num[idx].style.color = 'black';
 	} 
 }
@@ -124,7 +128,7 @@ var g_num = [g1, g2, g3, g4, g5, g6, g7, g8]
 var idx;
 
 for(idx = 0; idx < 12; idx++) {
-	if(urlPath.indexOf(Dong[idx])!= -1) {
+	if(url.indexOf(Dong[idx])!= -1) {
         g_num[idx].style.color = 'black';
 	} 
 }
@@ -135,7 +139,7 @@ var fbk_num = [f1, f2, f3, f4, f5, bk1, bk2]
 var idx;
 
 for(idx = 0; idx < 12; idx++) {
-	if(urlPath.indexOf(Dong[idx])!= -1) {
+	if(url.indexOf(Dong[idx])!= -1) {
         fbk_num[idx].style.color = 'black';
 	} 
 }
@@ -145,8 +149,10 @@ for(idx = 0; idx < 12; idx++) {
 var headerWhole = document.querySelector('.category-bar')
 var header3 = document.querySelector('.building')
 
-if (urlPath2 == "freeboard") {
+if (url.indexOf("freeboard")!= -1 || urlPath == "" || urlPath == "feeds" )  {
         headerWhole.style.height ='0';
-} else if (urlPath == "tori" || urlPath == "gong" || urlPath2 == "life") {
+} else if (url.indexOf("tori")!= -1 || url.indexOf("gong")!= -1 || url.indexOf("life")!= -1) {
         header3.style.height = '0';
-} 
+} else if (url.indexOf("select-option")!= -1 ) {
+        headerWhole.style.height ='0';
+}

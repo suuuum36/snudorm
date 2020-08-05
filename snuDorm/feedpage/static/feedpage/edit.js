@@ -24,25 +24,28 @@ function doStatCheck(status){
     }
 }
 
-function startCheck(stat) {
-    var start_date = document.getElementByName("start_date");
 
-    if(stat.checked) {
-        start_date.required = false;
-        start_date.value = null;
+$(document).on('click', '#euncertain1', ()=> {
+    if($('#estartDate').attr("required")) {
+        $("#estartDate").removeAttr('required');
+        $("#estartDate").attr('disabled', true);
+        console.log('hello')
     } else {
-        start_date.required = true;
-    }
-}
+        $("#estartDate").removeAttr('disabled');
+        $("#estartDate").attr('required', true);   
+        console.log('bye')
+    }     
+})
 
-function duedateCheck(stat) {
-    var duedate = document.getElementByName("duedate");
 
-    if(stat.checked) {
-        duedate.required = false;
-        duedate.value = null;
+$(document).on('click', '#euncertain2', ()=> {
+    if($('#edueDate').attr("required")) {
+        $("#edueDate").removeAttr('required');
+        $("#edueDate").attr('disabled', true);
+        console.log('hello')
     } else {
-        duedate.required = true;
-    }    
-}
-
+        $("#edueDate").removeAttr('disabled');
+        $("#edueDate").attr('required', true);   
+        console.log('bye')
+    }     
+})

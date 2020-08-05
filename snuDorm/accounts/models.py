@@ -7,6 +7,7 @@ from django.core.validators import MinLengthValidator
 
 from multiselectfield import MultiSelectField
 from faker import Faker
+# from django.contrib.postgres.fields import ArrayField
 
 class Profile(models.Model):
     user = models.OneToOneField(
@@ -18,23 +19,14 @@ class Profile(models.Model):
     email = models.CharField(max_length=20, verbose_name='이메일')
 
     def __str__(self):
-        return f'user={self.user}, name={self.name}, nickname={self.nickname}, \
+        return f'user={self.user}, name={self.name}, nickname={self.nickname}, notices={self.notices},\
             building_category={self.building_category}, building_dong={self.building_dong}'
 
-    # # testing을 위함
-    # def seed_user_profile():
-    #     myfake = Faker('ko_KR')
-    #     myfake2 = Faker('en_US')
+class Message(models.Model):
+    user_to = models.ForeignKey(User, on_delete=models.CASCADE, related_name='chatfrom')
+    user_from = models.ForeignKey(User, on_delete=models.CASCADE, related_name='chatto')
+    content = models.CharField(max_length=100)
+    created_at = models.DateTimeField(default = timezone.now)
 
-    #     for i in range(20):
-    #         username = myfake.name()
-    #         user = User.objects.create_user(username=username, password='123')
-
-    #         college = myfake2.state()
-    #         major = myfake.catch_phrase()
-    #         email = myfake.free_email()
-    #         birthday = myfake.date_of_birth()
-    #         address = myfake.address()
-
-    #         Profile.objects.filter(user=user).update(college=college,
-    #                                                  major=major, email=email, birthday=birthday, address=address)
+    def __str__(self):
+        return self.content
