@@ -149,7 +149,7 @@ for(idx = 0; idx < 12; idx++) {
 var headerWhole = document.querySelector('.category-bar')
 var header3 = document.querySelector('.building')
 
-if (url.indexOf("freeboard")!= -1) {
+if (url.indexOf("freeboard")!= -1 || urlPath == "" || urlPath == "feeds" )  {
         headerWhole.style.height ='0';
 } else if (url.indexOf("tori")!= -1 || url.indexOf("gong")!= -1 || url.indexOf("life")!= -1) {
         header3.style.height = '0';

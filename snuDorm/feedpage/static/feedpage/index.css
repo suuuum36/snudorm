@@ -1,0 +1,170 @@
+
+.whole {
+    display: flex;
+    margin-right: auto;
+    margin-left: auto;
+    width: fit-content;
+    margin-top: 10px;
+}
+
+.left {
+    margin-right: 5px;
+}
+
+.board {
+    display: flex;
+}
+
+.title {
+    position: relative;
+    font-size: 16px;
+    display: flex;
+    height: 50px;
+    padding-right: 20px;
+    padding-left: 20px;
+    border-bottom: 1px solid #aaaaaa;
+}
+
+.title > div {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.left > .head {
+    width: 710px;
+}
+.head {
+    display: flex;
+    height: 65px;
+    background-color: #f2f2f2;
+    margin-bottom: 10px;
+}
+
+.head-text {
+    margin-left: 20px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.head > div{ 
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.list {
+    border-bottom: 0px solid !important;
+    border: 1px solid #aaaaaa;
+    min-width: 350px;
+    margin-right: 5px;
+    height: fit-content;
+}
+
+#free-list {
+    width : 390px;
+}
+
+.life-list{
+    display: flex;
+}
+
+.one-feed {
+    border-bottom: 1px solid #aaaaaa;
+    padding: 10px;
+}
+
+.free-feed {
+    height: 50px;
+    padding-right: 20px;
+    padding-left: 20px;
+    border-bottom: 1px solid #aaaaaa;
+}
+
+.free-div {
+    display: flex;
+    height: 50px;
+}
+
+.free-content {
+    display: flex;
+    min-width: 350px;
+    justify-content: space-between;
+    margin-top: auto;
+    margin-bottom: auto;
+    word-spacing: 5px;
+    font-size: 14px;
+    color: black;
+}
+
+/* 상세 CSS */
+
+.feed-title {
+    color: black;
+    font-size: 16px;
+    margin-bottom: 3px;
+}
+
+.feed-content {
+    color: #7f7f7f;
+    font-size: 14px;
+    margin-bottom: 3px;
+}
+
+.feed-detail {
+    display:flex; 
+    word-spacing: 5px;
+    font-size: 14px;
+    color: #5f5f5f;
+}
+
+.feed-likes {
+    color: #016aff;
+    margin-left: 15px;
+}
+
+.feed-comments {
+    color: #ED702D;
+    margin-left: 15px;
+}
+
+/*자유게시판 상세*/
+.free-title {
+    color: black;
+    font-size: 14px;
+}
+
+.free-date {
+    color: #7f7f7f;
+    font-size: 14px;
+}
+
+/* 옵션 버튼 */
+
+#life-head {
+    margin-top : 10px;
+    position:relative;
+}
+.button {
+    display: flex;
+    position: absolute;
+    margin-right: 20px;
+    right: 0;
+    top: 50%;
+    transform:translate(0,-50%);
+    font-size: 14px;
+}
+
+#week_gong {
+    margin-right: 10px;
+}
+
+#day_gong {
+    color: #7f7f7f;
+}
+
+#life-button > div{
+    margin-left: 10px;
+}
+
+#keep, #rent, #resell {
+    color: #7f7f7f;
+}

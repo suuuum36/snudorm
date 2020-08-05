@@ -32,7 +32,7 @@ class Feed(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(blank=True, null=True)
     views = models.IntegerField(blank=True, default=0)
-    
+
     # 공지사항인지 check하는 값
     notice = models.BooleanField(default=False)
 
