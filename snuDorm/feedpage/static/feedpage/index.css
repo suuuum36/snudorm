@@ -22,7 +22,7 @@
     height: 50px;
     padding-right: 20px;
     padding-left: 20px;
-    border-bottom: 1px solid #aaaaaa;
+    border-bottom: 1px solid #c4c4c4;
 }
 
 .title > div {
@@ -53,8 +53,8 @@
 
 .list {
     border-bottom: 0px solid !important;
-    border: 1px solid #aaaaaa;
-    min-width: 350px;
+    border: 1px solid #c4c4c4;
+    width: 350px;
     margin-right: 5px;
     height: fit-content;
 }
@@ -65,19 +65,24 @@
 
 .life-list{
     display: flex;
+    margin-bottom: 100px;
 }
 
 .one-feed {
-    border-bottom: 1px solid #aaaaaa;
-    padding: 10px;
+    border-bottom: 1px solid #c4c4c4;
+    padding: 17px;
 }
+
+.one-feed:hover {background-color:#f2f2f2;}
 
 .free-feed {
     height: 50px;
     padding-right: 20px;
     padding-left: 20px;
-    border-bottom: 1px solid #aaaaaa;
+    border-bottom: 1px solid #c4c4c4;
 }
+
+.free-feed:hover {background-color:#f2f2f2;}
 
 .free-div {
     display: flex;
@@ -99,7 +104,7 @@
 
 .feed-title {
     color: black;
-    font-size: 16px;
+    font-size: 15px;
     margin-bottom: 3px;
 }
 
@@ -110,20 +115,28 @@
 }
 
 .feed-detail {
+    position: relative;
     display:flex; 
     word-spacing: 5px;
     font-size: 14px;
     color: #5f5f5f;
 }
 
+.count-div {
+    display: flex;
+    position: absolute;
+    right: 0;
+}
+
 .feed-likes {
     color: #016aff;
-    margin-left: 15px;
+    display: flex;
 }
 
 .feed-comments {
-    color: #ED702D;
-    margin-left: 15px;
+    display: flex;
+    color: #ff6600;
+    margin-left: 12px;
 }
 
 /*자유게시판 상세*/
@@ -140,7 +153,7 @@
 /* 옵션 버튼 */
 
 #life-head {
-    margin-top : 10px;
+    margin-top : 15px;
     position:relative;
 }
 .button {
@@ -162,13 +175,33 @@
 }
 
 #life-button > div{
-    margin-left: 10px;
+    margin-left: 20px;
 }
 
 #keep, #rent, #resell {
     color: #7f7f7f;
 }
 
-/* .panel-body {
+.panel-body {
     color: #016aff;
-} */
+}
+
+/* 댓글 코멘트 아이콘 */
+.feed-detail-inner {
+    display: flex;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.img {
+    margin-right: 5px;
+}
+.img1 {
+    width: 13px;
+    height: auto;
+}
+
+.img2 {
+    width: 15px !important;
+    height: auto;
+}
