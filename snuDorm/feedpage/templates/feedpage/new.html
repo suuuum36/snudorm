@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<head><link rel="stylesheet" href="{% static 'feedpage/new.css' %}"></head>
 <div class="info">
     {{ error }}<br>
     {% if user.is_authenticated %}
@@ -166,7 +167,7 @@
                         
                             <input name="uncertain" type="checkbox" id="uncertain" onclick="duedateCheck(this);">
                             <label for="uncertain">미정</label>
-                        </td>
+                        c</td>
                     </tr>
                     <tr>
                         <td class = "tr_title">설명</td>

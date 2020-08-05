@@ -1,219 +1,226 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
+<head><link rel="stylesheet" href="{% static 'feedpage/new.css' %}"></head>
+
 <div class="info">
     {{ error }}<br>
     {% if user.is_authenticated %}
         <!-- 게시판 이름 -->
         <div class="board_name" > 
-            {{ board_name }} 
+            {{ board_name }} 게시판 
         </div>
         {% if board == 'minwon' or board == 'freeboard' %}
         <!-- Minwon, freeboard 게시판 -->
         <div class="minwon_or_free_new">
             <form method="POST" action="{% url 'editfeed' board category fid %}">
                 {% csrf_token %}
-                <div>
-                    제목</br>
-                    <input name="title" type=" text" style="width:400px; height:50px;" 
-                        value={{feed.title}} required>
-                </div></br>
-                <div>
-                    내용</br>
-                    <input name="content" type="text"  style="width:400px; height:50px;" 
-                            value={{feed.content}} required>
-                </div></br>
-                <div>
-                    사진</br>
-                    <input name="photo" type="file"/> 
-                    {% if feed.photo %} 
-                        <img src="{{ feed.photo.url }}" alt="" width:"30%" height="20%">
-                    {% endif %}
-                </div></br>
-                <div class="option_noname">
-                    {% if feed.noname %}
-                        <input name="noname" type="checkbox" id="noname" checked>
-                        <label for="noname">익명</label>
-                    {% else %}
-                        <input name="noname" type="checkbox" id="noname">
-                        <label for="noname">익명</label>
-                    {% endif %}
-                </div></br>
-                <button type="submit">글쓰기</button>
-            </form>
+                <table id = "minwon_table" border="1">
+                    <tr height = "10%"><!-- 첫번째 줄 시작 -->
+                        
+                        <td><input name="title" type=" text" style="width:400px; height:50px;" 
+                        value={{feed.title}} required></td>
+                    </tr><!-- 첫번째 줄 끝 -->
+                    <tr><!-- 두번째 줄 시작 -->
+                        
+                        <td><input name="content" type="text"  style="width:400px; height:50px;" 
+                            value={{feed.content}} required></td>
+                    </tr><!-- 두번째 줄 끝 -->
+                    <tr height = "10%"><!-- 마지막 줄 시작 -->
+                        <td>
+                          <span>
+                          <input name="photo" type="file"/> 
+                            {% if feed.photo %} 
+                                <img src="{{ feed.photo.url }}" alt="" width:"30%" height="20%">
+                            {% endif %}
+                            </span>
+                            <span class="option_noname">
+                                {% if feed.noname %}
+                                    <input name="noname" type="checkbox" id="noname" checked>
+                                    <label for="noname">익명</label>
+                                {% else %}
+                                    <input name="noname" type="checkbox" id="noname">
+                                    <label for="noname">익명</label>
+                                {% endif %}
+                            </span>
+                        <button type="submit">글쓰기</button>
+                        </td>
+                    </tr><!-- 마지막 줄 끝 -->
+                </table>
+             </form>
         </div>
+    
         {% elif category == 'cobuy' %}
         <!-- Cobuy 공구 게시판 -->
         <div class="cobuy_board_new">
             <form method="POST" action="{% url 'editfeed' 'life' 'cobuy' fid %}">
                 {% csrf_token %}
-                <div>
-                    제목 </br>
-                    <input name="title" type="text"  style="width:400px; height:50px;" 
-                            value={{feed.title}} required>
-                </div></br>
-                <div>
-                    가격</br>
-                    <input name="price" type="text"  style="width:400px; height:50px;" 
-                            value={{feed.price}} required>
-                </div></br>
-                <div>
-                    링크</br>
-                    <input name="url" type="text"  style="width:400px; height:50px;" 
-                            value={{feed.url}} required>
-                </div></br>
-                <div>
-                    마감일</br>
-                    {% if feed.duedate|date:"Y.m.d" == '2020.01.01' %}
-                    <input name="duedate" id="dueDate" type="date" disabled>
-                    <div>
-                        <input name="uncertain" type="checkbox" id="uncertain2" checked>
-                        <label for="uncertain2">미정</label>
-                    </div>
-                    {% else %}
-                    <input name="duedate" id="edueDate" value="{{feed.duedate|date:"Y-m-d"}}" type="date" required>
-                    <div>
-                        <input name="uncertain" type="checkbox" id="euncertain2">
-                        <label for="euncertain2">미정</label>
-                    </div>
-                    {% endif %}
-                </div></br>
-                <div>
-                    설명</br>
-                    <input name="content" type="text"  style="width:400px; height:50px;" 
-                            value={{feed.content}} required>
-                </div></br>
-                <div>
-                    사진</br>
-                    <input name="photo" type="file"/> 
-                    {% if feed.photo %} 
-                        <img src="{{ feed.photo.url }}" alt="" width:"30%" height="20%">
-                    {% endif %}
-                </div></br>
-                 {% if feed.status.0 == 'ongoing' %}
-                    <div>
-                        <input name="status" onclick="doStatCheck(this);" type="checkbox" value="진행중" id="status" checked>
-                        <label for="status">진행중</label>
-                        <input name="status" onclick="doStatCheck(this);" type="checkbox" value="완료" id="status">
-                        <label for="status">완료</label>
-                    </div></br>
-                {% else %}
-                    <div>
-                        <input name="status" onclick="doStatCheck(this);" type="checkbox" value="진행중" id="status">
-                        <label for="status">진행중</label>
-                        <input name="status" onclick="doStatCheck(this);" type="checkbox" value="완료" id="status" checked>
-                        <label for="status">완료</label>
-                    </div></br>
-                {% endif %}
-                <div class="option_noname">
-                    {% if feed.noname %}
-                        <input name="noname" type="checkbox" id="noname" checked>
-                        <label for="noname">익명</label>
-                    {% else %}
-                        <input name="noname" type="checkbox" id="noname">
-                        <label for="noname">익명</label>
-                    {% endif %}
-                </div></br>
-                <button type="submit">글쓰기</button>
-            </form>
+                <table border="1">
+                    <tr height = "10%"><!-- 첫번째 줄 시작 -->
+                        <td class = "tr_title" width: "20%" >제목</td>
+                        <td width: "80%" ><input name="title" type="text"  style="width:400px; height:50px;" 
+                            value={{feed.title}} required></td>
+                    </tr><!-- 첫번째 줄 끝 -->
+                    <tr height = "10%"><!-- 두번째 줄 시작 -->
+                        <td class = "tr_title"> 가격</td>
+                        <td><input name="price" type="text"  style="width:400px; height:50px;" 
+                            value={{feed.price}} required></td>
+                    </tr ><!-- 두번째 줄 끝 -->
+                    <tr height = "10%">
+                        <td class = "tr_title">링크</td>
+                        <td><input name="url" type="text"  style="width:400px; height:50px;" 
+                            value={{feed.url}} required></td>
+                    </tr>
+                    <tr height = "10%">
+                        <td height = "10%" class = "tr_title">마감일</td>
+                        <td>
+                         {% if feed.duedate|date:"Y.m.d" == '2020.01.01' %}
+                         <input name="duedate" id="dueDate" type="date" disabled>
+                         <input name="uncertain" type="checkbox" id="uncertain2" checked>
+                         <label for="uncertain2">미정</label>
+                         {% else %}
+                         <input name="duedate" id="edueDate" value="{{feed.duedate|date:"Y-m-d"}}" type="date" required>
+                         <input name="uncertain" type="checkbox" id="euncertain2">
+                         <label for="euncertain2">미정</label>
+                        {% endif %}
+                         </td>
+                    </tr>
+                    <tr height = "50%">
+                        <td class = "tr_title">설명</td>
+                        <td><input name="content" type="text"  style="width:400px; height:50px;" 
+                            value={{feed.content}} required></td>
+                    </tr>
+                    <tr height = "10%"><!-- 마지막 줄 시작 -->
+                        <td colspan ="2">
+                            <input name="photo" type="file"/> 
+                            {% if feed.photo %} 
+                            <img src="{{ feed.photo.url }}" alt="" width:"30%" height="20%">
+                            {% endif %}
+
+                            {% if feed.status.0 == 'ongoing' %}
+                            
+                            <input name="status" onclick="doStatCheck(this);" type="checkbox" value="진행중" id="status" checked>
+                            <label for="status">진행중</label>
+                            <input name="status" onclick="doStatCheck(this);" type="checkbox" value="완료" id="status">
+                            <label for="status">완료</label>
+                            <label for="noname">익명</label><button type="submit">글쓰기</button>
+                            {% else %}
+                            <input name="status" onclick="doStatCheck(this);" type="checkbox" value="진행중" id="status">
+                            <label for="status">진행중</label>
+                            <input name="status" onclick="doStatCheck(this);" type="checkbox" value="완료" id="status" checked>
+                            <label for="status">완료</label>
+                            {% endif %}
+                            <span class="option_noname">
+                            {% if feed.noname %}
+                                <input name="noname" type="checkbox" id="noname" checked>
+                                <label for="noname">익명</label>
+                            {% else %}
+                                <input name="noname" type="checkbox" id="noname">
+                                <label for="noname">익명</label>
+                            {% endif %}
+                            </span>
+                            <button type="submit">글쓰기</button>
+                        </td>
+                    </tr><!-- 마지막 줄 끝 -->
+                </table>
+             </form>
         </div>
         {% elif category == 'rent' %}
         <!-- Rent 게시판 -->
         <div class="rent_board_new"> 
             <form method="POST" action="{% url 'editfeed' 'life' 'rent' fid %}">
                 {% csrf_token %}
-                <div>
-                    제목 </br>
-                    <input name="title" type="text"  style="width:400px; height:50px;" 
-                            value={{feed.title}} required>
-                </div></br>
-                <div style="display:flex;">
-                    목적 </br>
-                    {% if feed.purpose.0 == 'lender'%}                 
-                        <input name="purpose" type="checkbox" value="borrow" id="purpose" onclick="doOpenCheck(this);" checked>
-                        <label for="purpose">빌려줄게요</label>
-                        <input name="purpose" type="checkbox" value="lend" id="purpose" onclick="doOpenCheck(this);">
-                        <label for="purpose">빌려주세요</label>
-                    {% else %}
-                        <input name="purpose" type="checkbox" value="borrow" id="purpose" onclick="doOpenCheck(this);">
-                        <label for="purpose">빌려줄게요</label>
-                        <input name="purpose" type="checkbox" value="lend" id="purpose" onclick="doOpenCheck(this);" checked>
-                        <label for="purpose">빌려주세요</label>
-                    {% endif %}
-                </div></br>
-                <div>
-                    대여료</br>
-                    <input name="deposit" type="text" style="width:400px; height:50px;" 
+                <table border="1">
+                    <tr height = "10%"><!-- 첫번째 줄 시작 -->
+                        <td class = "tr_title" width: "20%"  >제목</td>
+                        <td width: "80%" ><input name="title" type="text"  style="width:400px; height:50px;" 
+                            value={{feed.title}} required></td>
+                    </tr><!-- 첫번째 줄 끝 -->
+                    <tr height = "10%">
+                        <td class = "tr_title">목적</td>
+                        <td>
+                            {% if feed.purpose.0 == 'lender'%}                 
+                            <input name="purpose" type="checkbox" value="borrow" id="purpose" onclick="doOpenCheck(this);" checked>
+                            <label for="purpose">빌려줄게요</label>
+                            <input name="purpose" type="checkbox" value="lend" id="purpose" onclick="doOpenCheck(this);">
+                            <label for="purpose">빌려주세요</label>
+                            {% else %}
+                            <input name="purpose" type="checkbox" value="borrow" id="purpose" onclick="doOpenCheck(this);">
+                            <label for="purpose">빌려줄게요</label>
+                            <input name="purpose" type="checkbox" value="lend" id="purpose" onclick="doOpenCheck(this);" checked>
+                            <label for="purpose">빌려주세요</label>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr height = "10%">
+                        <td class = "tr_title">대여료</td>
+                        <td><input name="deposit" type="text" style="width:400px; height:50px;" 
                     value={{feed.deposit}} required>
-                </div></br>
-                <div style="display:flex;">
-                    시작일</br>
-                    {% if feed.start_date|date:"Y.m.d" == '2020.01.01' %}
-                    <input name="start_date" id="startDate" type="date" disabled>
-                    <div>
-                        <input name="uncertain" type="checkbox" id="uncertain1" checked>
-                        <label for="uncertain1">미정</label>
-                    </div>
-                    {% else %}
-                    <input name="start_date" id="estartDate" value="{{feed.start_date|date:"Y-m-d"}}" type="date" required>
-                    <div>
-                        <input name="uncertain" type="checkbox" id="euncertain1">
-                        <label for="euncertain1">미정</label>
-                    </div>
-                    {% endif %}
-                </div></br>
-                <div style="display:flex;">
-                    마감일</br>
-                    {% if feed.end_date|date:"Y.m.d" == '2020.01.01' %}
-                    <input name="duedate" id="dueDate" type="date" disabled>
-                    <div>
-                        <input name="uncertain" type="checkbox" id="uncertain2" checked>
+                        </td>
+                    </tr>
+                    <tr height = "10%">
+                        <td class = "tr_title">시작일</td>
+                        <td>
+                             {% if feed.start_date|date:"Y.m.d" == '2020.01.01' %}
+                            <input name="start_date" id="startDate" type="date" disabled><input name="uncertain" type="checkbox" id="uncertain1" checked><label for="uncertain1">미정</label>
+                            {% else %}
+                            <input name="start_date" id="estartDate" value="{{feed.start_date|date:"Y-m-d"}}" type="date" required>
+                            <input name="uncertain" type="checkbox" id="euncertain1">
+                            <label for="euncertain1">미정</label>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr height = "10%">
+                        <td class = "tr_title">마감일</td>
+                        <td>
+                        {% if feed.end_date|date:"Y.m.d" == '2020.01.01' %}
+                        <input name="duedate" id="dueDate" type="date" disabled><input name="uncertain" type="checkbox" id="uncertain2" checked>
                         <label for="uncertain2">미정</label>
-                    </div>
-                    {% else %}
-                    <input name="duedate" id="edueDate" value="{{feed.end_date|date:"Y-m-d"}}" type="date" required>
-                    <div>
-                        <input name="uncertain" type="checkbox" id="euncertain2">
+                        {% else %}
+                        <input name="duedate" id="edueDate" value="{{feed.end_date|date:"Y-m-d"}}" type="date" required><input name="uncertain" type="checkbox" id="euncertain2">
                         <label for="euncertain2">미정</label>
-                    </div>
-                    {% endif %}
-                </div></br>
-                <div>
-                    설명</br>
-                    <input name="content" type="text"  style="width:400px; height:50px;" 
-                            value={{feed.content}} required>
-                </div></br>
-                <div>
-                    사진</br>
-                    <input name="photo" type="file"/> 
-                    {% if feed.photo %} 
-                        <img src="{{ feed.photo.url }}" alt="" width:"30%" height="20%">
-                    {% endif %}
-                </div></br>
-                {% if feed.status.0 == 'ongoing' %}
-                    <div>
-                        <input name="status" onclick="doStatCheck(this);" type="checkbox" value="진행중" id="status" checked>
-                        <label for="status">진행중</label>
-                        <input name="status" onclick="doStatCheck(this);" type="checkbox" value="완료" id="status">
-                        <label for="status">완료</label>
-                    </div></br>
-                {% else %}
-                    <div>
-                        <input name="status" onclick="doStatCheck(this);" type="checkbox" value="진행중" id="status">
-                        <label for="status">진행중</label>
-                        <input name="status" onclick="doStatCheck(this);" type="checkbox" value="완료" id="status" checked>
-                        <label for="status">완료</label>
-                    </div></br>
-                {% endif %}
-               <div class="option_noname">
-                    {% if feed.noname %}
-                        <input name="noname" value="{{feed.start_date|date:"Y-m-d"}}" type="checkbox" id="noname" checked>
-                        <label for="noname">익명</label>
-                    {% else %}
-                        <input name="noname" value="{{feed.end_date|date:"Y-m-d"}}" type="checkbox" id="noname">
-                        <label for="noname">익명</label>
-                    {% endif %}
-                </div></br>
-                <button type="submit">글쓰기</button>
+                        {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class = "tr_title">설명</td>
+                        <td><input name="content" type="text"  style="width:400px; height:50px;" 
+                            value={{feed.content}} required></td>
+                    </tr>
+                    <tr height = "10%"><!-- 마지막 줄 시작 -->
+                             <td colspan ="2">
+                             <input name="photo" type="file"/> 
+                            {% if feed.photo %} 
+                            <img src="{{ feed.photo.url }}" alt="" width:"30%" height="20%">
+                            {% endif %}
+                            {% if feed.status.0 == 'ongoing' %}
+                            <span>
+                                <input name="status" onclick="doStatCheck(this);" type="checkbox" value="진행중" id="status" checked>
+                                <label for="status">진행중</label>
+                                <input name="status" onclick="doStatCheck(this);" type="checkbox" value="완료" id="status">
+                                <label for="status">완료</label>
+                            </span>
+                            {% else %}
+                            <span>
+                                <input name="status" onclick="doStatCheck(this);" type="checkbox" value="진행중" id="status">
+                                <label for="status">진행중</label>
+                                <input name="status" onclick="doStatCheck(this);" type="checkbox" value="완료" id="status" checked>
+                                <label for="status">완료</label>
+                            </span>
+                            {% endif %}
+                            <span class="option_noname">
+                                {% if feed.noname %}
+                                    <input name="noname" value="{{feed.start_date|date:"Y-m-d"}}" type="checkbox" id="noname" checked>
+                                    <label for="noname">익명</label>
+                                {% else %}
+                                    <input name="noname" value="{{feed.end_date|date:"Y-m-d"}}" type="checkbox" id="noname">
+                                    <label for="noname">익명</label>
+                                {% endif %}
+                                <button type="submit">글쓰기</button>
+                            </span>
+                            </td>
+                    </tr><!-- 마지막 줄 끝 -->
+                </table> 
             </form>
         </div> 
         {% elif category == "keep" %}
@@ -221,167 +228,189 @@
         <div class="keep_board_new">
             <form method="POST" action="{% url 'editfeed' 'life' 'keep' fid %}">
                 {% csrf_token %}
-                <div>
-                    제목 </br>
-                    <input name="title" type="text" style="width:400px; height:50px;"
+                <table border="1">
+                    <tr height = "10%">
+                        <td class = "tr_title">제목</td>
+                        <td><input name="title" type="text" style="width:400px; height:50px;"
                          value={{feed.content}} required>
-                </div></br>
-                <div>
-                    목적 </br>
-                    {% if feed.purpose.0 == 'lender' %}
+                        </td>
+                    </tr>
+                    <tr height = "10%">
+                    <td class = "tr_title">목적 </td>
+                    <td>
+                        {% if feed.purpose.0 == 'lender' %}
                         <input type="checkbox" name="purpose" onclick="doOpenCheck(this);" id="purpose" value="keep" checked="checked">
                         <label for="purpose">보관할래요</label>
                         <input type="checkbox" name="purpose" onclick="doOpenCheck(this);" id="purpose" value="request">    
                         <label for="purpose">보관해줄래요</label><br> 
-                    {% else %}
+                        {% else %}
                         <input type="checkbox" name="purpose" onclick="doOpenCheck(this);" id="purpose" value="keep">
                         <label for="purpose">보관할래요</label>
                         <input type="checkbox" name="purpose" onclick="doOpenCheck(this);" id="purpose" value="request" checked="checked">    
                         <label for="purpose">보관해줄래요</label><br> 
-                    {% endif %}
-                </div> 
-                <div >
-                    보관료</br>
-                    <input name="reward" type="text" style="width:400px; height:50px;"
+                        {% endif %}
+                    </td>
+                    </tr>
+                
+                    <tr height = "10%" >
+                        <td class = "tr_title">보관료</td>
+                        <td><input name="reward" type="text" style="width:400px; height:50px;"
                     value={{feed.reward}} required>
-                </div></br>
-                <div style="display:flex;">
-                    시작일
-                    {% if feed.start_date|date:"Y.m.d" == '2020.01.01' %}
-                    <input name="start_date" id="startDate" type="date" disabled>
-                    <div>
-                        <input name="uncertain" type="checkbox" id="uncertain1" checked>
-                        <label for="uncertain1">미정</label>
-                    </div>
-                    {% else %}
-                    <input name="start_date" id="estartDate" value="{{feed.start_date|date:"Y-m-d"}}" type="date" required>
-                    <div>
-                        <input name="uncertain" type="checkbox" id="euncertain1">
-                        <label for="euncertain1">미정</label>
-                    </div>
-                    {% endif %}
-                </div></br>
-                <div style="display:flex;">
-                    마감일</br>
-                    {% if feed.end_date|date:"Y.m.d" == '2020.01.01' %}
-                    <input name="duedate" id="dueDate" type="date" disabled>
-                    <div>
-                        <input name="uncertain" type="checkbox" id="uncertain2" checked>
-                        <label for="uncertain2">미정</label>
-                    </div>
-                    {% else %}
-                    <input name="duedate" id="edueDate" value="{{feed.end_date|date:"Y-m-d"}}" type="date" required>
-                    <div>
-                        <input name="uncertain" type="checkbox" id="euncertain2">
-                        <label for="euncertain2">미정</label>
-                    </div>
-                    {% endif %}
-                </div></br>
-                <div>
-                    설명</br>
-                    <input name="content" type="text"  style="width:400px; height:50px;" 
-                             value="{{feed.content}}" required>
-                </div></br>
-                <div>
-                    사진</br>
-                    <input name="photo" type="file"/> 
-                    {% if feed.photo %} 
-                        <img src="{{ feed.photo.url }}" alt="" width:"30%" height="20%">
-                    {% endif %}
-                </div></br>
-                 {% if feed.status.0 == 'ongoing' %}
-                    <div>
-                        <input name="status" onclick="doStatCheck(this);" type="checkbox" value="진행중" id="status" checked>
-                        <label for="status">진행중</label>
-                        <input name="status" onclick="doStatCheck(this);" type="checkbox" value="완료" id="status">
-                        <label for="status">완료</label>
-                    </div></br>
-                {% else %}
-                    <div>
-                        <input name="status" onclick="doStatCheck(this);" type="checkbox" value="진행중" id="status">
-                        <label for="status">진행중</label>
-                        <input name="status" onclick="doStatCheck(this);" type="checkbox" value="완료" id="status" checked >
-                        <label for="status">완료</label>
-                    </div></br>
-                {% endif %}
-                <div class="option_noname">
-                    {% if feed.noname %}
-                        <input name="noname" type="checkbox" id="noname" checked>
-                        <label for="noname">익명</label>
-                    {% else %}
-                        <input name="noname" type="checkbox" id="noname">
-                        <label for="noname">익명</label>
-                    {% endif %}
-                </div></br>
-                <button type="submit">글쓰기</button>
+                        </td>
+                    </tr>
+                    <tr height = "10%">
+                        <td class = "tr_title">시작일</td>
+                        <td>
+                            {% if feed.start_date|date:"Y.m.d" == '2020.01.01' %}
+                            <input name="start_date" id="startDate" type="date" disabled>
+                            <span>
+                                <input name="uncertain" type="checkbox" id="uncertain1" checked>
+                                <label for="uncertain1">미정</label>
+                            </span>
+                            {% else %}
+                            <input name="start_date" id="estartDate" value="{{feed.start_date|date:"Y-m-d"}}" type="date" required>
+                            <span>
+                                <input name="uncertain" type="checkbox" id="euncertain1">
+                                <label for="euncertain1">미정</label>
+                            </span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                
+                    <tr height = "10%">
+                        <td class = "tr_title">마감일</td>
+                        <td>
+                            {% if feed.end_date|date:"Y.m.d" == '2020.01.01' %}
+                            <input name="duedate" id="dueDate" type="date" disabled>
+                            <span>
+                                <input name="uncertain" type="checkbox" id="uncertain2" checked>
+                                <label for="uncertain2">미정</label>
+                            </span>
+                            {% else %}
+                            <input name="duedate" id="edueDate" value="{{feed.end_date|date:"Y-m-d"}}" type="date" required>
+                            <span>
+                                <input name="uncertain" type="checkbox" id="euncertain2">
+                                <label for="euncertain2">미정</label>
+                            </span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class = "tr_title">설명</td>
+                        <td><input name="content" type="text"  style="width:400px; height:50px;" 
+                             value="{{feed.content}}" required></td>
+                    </tr>
+                    <tr height = "10%"><!-- 마지막 줄 시작 -->
+                         <td colspan ="2">
+                            <input name="photo" type="file"/> 
+                            {% if feed.photo %} 
+                                <img src="{{ feed.photo.url }}" alt="" width:"30%" height="20%">
+                            {% endif %}
+
+                            {% if feed.status.0 == 'ongoing' %}
+                                <span>
+                                    <input name="status" onclick="doStatCheck(this);" type="checkbox" value="진행중" id="status" checked>
+                                    <label for="status">진행중</label>
+                                    <input name="status" onclick="doStatCheck(this);" type="checkbox" value="완료" id="status">
+                                    <label for="status">완료</label>
+                                </span>
+                            {% else %}
+                                <span>
+                                    <input name="status" onclick="doStatCheck(this);" type="checkbox" value="진행중" id="status">
+                                    <label for="status">진행중</label>
+                                    <input name="status" onclick="doStatCheck(this);" type="checkbox" value="완료" id="status" checked >
+                                    <label for="status">완료</label>
+                                </span>
+                            {% endif %}
+                            <span class="option_noname">
+                                {% if feed.noname %}
+                                    <input name="noname" type="checkbox" id="noname" checked>
+                                    <label for="noname">익명</label>
+                                {% else %}
+                                    <input name="noname" type="checkbox" id="noname">
+                                    <label for="noname">익명</label>
+                                {% endif %}
+                            </span>
+                            <button type="submit">글쓰기</button>
+                         </td>
+                    </tr><!-- 마지막 줄 끝 -->
+                </table>
             </form>
         {% elif category == "resell" %}
         <!-- Resell 게시판 -->
         <div class="resell_board_new">
             <form method="POST" action="{% url 'editfeed' 'life' 'resell' fid %}">
                 {% csrf_token %}
-                <div>
-                    제목 </br>
-                    <input name="title" type="text" style="width:400px; height:50px;" 
+                <table border="1">
+                    <tr height = "10%">
+                        <td class = "tr_title">제목 </td>
+                        <td><input name="title" type="text" style="width:400px; height:50px;" 
                         value={{feed.title}} required>
-                </div></br>
-                <div>
-                    목적 </br>
-                    {% if feed.purpose.0 == 'seller' %}
+                        </td>
+                    </tr>
+                    <tr height = "10%">
+                        <td class = "tr_title">목적 </td>
+                        <td>
+                        {% if feed.purpose.0 == 'seller' %}
                         <input type="checkbox" name="purpose" onclick="doOpenCheck(this);" value="sell" id="purpose" checked>
                         <label for="purpose">판매</label>
                         <input type="checkbox" name="purpose" onclick="doOpenCheck(this);" value="buy" id="purpose">
                         <label for="purpose">구매</label><br> 
-                    {% else %}
+                        {% else %}
                         <input type="checkbox" name="purpose" onclick="doOpenCheck(this);" value="sell" id="purpose">
                         <label for="purpose">판매</label>
                         <input type="checkbox" name="purpose" onclick="doOpenCheck(this);" value="buy" id="purpose" checked>
                         <label for="purpose">구매</label><br> 
-                    {% endif %}
-                </div>
-                <div>
-                    가격</br>
-                    <input name="price" type="text" style="width:400px; height:50px;" 
-                    value={{feed.price}} required>
-                </div></br>
-                <div>
-                    설명</br>
-                    <input name="content" type="text" style="width:400px; height:50px;" 
-                             value={{feed.content}} required>
-                </div></br>
-                <div>
-                    사진</br>
-                    <input name="photo" type="file"/> 
-                    {% if feed.photo %} 
-                        <img src="{{ feed.photo.url }}" alt="" width:"30%" height="20%">
-                    {% endif %}
-                </div></br>
-                 {% if feed.status.0 == 'onsale' %}
-                    <div>
-                        <input name="status" onclick="doStatCheck(this);" type="checkbox" value="판매중" id="status" checked>
-                        <label for="status">판매중</label>
-                        <input name="status" onclick="doStatCheck(this);" type="checkbox" value="완료" id="status">
-                        <label for="status">완료</label>
-                    </div></br>
-                {% else %}
-                    <div>
-                        <input name="status" onclick="doStatCheck(this);" type="checkbox" value="판매중" id="status">
-                        <label for="status">판매중</label>
-                        <input name="status" onclick="doStatCheck(this);" type="checkbox" value="완료" id="status" checked>
-                        <label for="status">완료</label>
-                    </div></br>
-                {% endif %}
-                <div class="option_noname">
-                    {% if feed.noname %}
-                        <input name="noname" type="checkbox" id="noname" checked>
-                        <label for="noname">익명</label>
-                    {% else %}
-                        <input name="noname" type="checkbox" id="noname">
-                        <label for="noname">익명</label>
-                    {% endif %}
-                </div></br>
-                <button type="submit">글쓰기</button>
+                        {% endif %}
+                        </td>
+                    </tr>
+                    <tr height = "10%">
+                        <td class = "tr_title">가격</td>
+                        <td><input name="price" type="text" style="width:400px; height:50px;" 
+                    value={{feed.price}} required></td>
+                    </tr>
+                    <tr>
+                        <td class = "tr_title" height = "60%">설명</td>
+                        <td><input name="content" type="text" style="width:400px; height:50px;" 
+                             value={{feed.content}} required></td>
+                    </tr>
+                    <tr height = "10%"><!-- 마지막 줄 시작 -->
+                         <td colspan ="2">
+                            <input name="photo" type="file"/> 
+                            {% if feed.photo %} 
+                                <img src="{{ feed.photo.url }}" alt="" width:"30%" height="20%">
+                            {% endif %}
+
+                            {% if feed.status.0 == 'ongoing' %}
+                                <span>
+                                    <input name="status" onclick="doStatCheck(this);" type="checkbox" value="진행중" id="status" checked>
+                                    <label for="status">진행중</label>
+                                    <input name="status" onclick="doStatCheck(this);" type="checkbox" value="완료" id="status">
+                                    <label for="status">완료</label>
+                                </span>
+                            {% else %}
+                                <span>
+                                    <input name="status" onclick="doStatCheck(this);" type="checkbox" value="진행중" id="status">
+                                    <label for="status">진행중</label>
+                                    <input name="status" onclick="doStatCheck(this);" type="checkbox" value="완료" id="status" checked >
+                                    <label for="status">완료</label>
+                                </span>
+                            {% endif %}
+                            <span class="option_noname">
+                                {% if feed.noname %}
+                                    <input name="noname" type="checkbox" id="noname" checked>
+                                    <label for="noname">익명</label>
+                                {% else %}
+                                    <input name="noname" type="checkbox" id="noname">
+                                    <label for="noname">익명</label>
+                                {% endif %}
+                            </span>
+                            <button type="submit">글쓰기</button>
+                         </td>
+                    </tr><!-- 마지막 줄 끝 -->
+                </table>
             </form>
+        </div>
         {% endif %}
     {% endif %}
 </div>
