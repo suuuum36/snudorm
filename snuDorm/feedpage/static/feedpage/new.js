@@ -36,32 +36,35 @@ function startCheck(stat) {
     }
 }
 
+
 $('#startDate').val(new Date().toISOString().substring(0, 10));
+$('#estartDate.startDate_init').val(new Date().toISOString().substring(0, 10));
 
 $(document).on('click', '#uncertain1', ()=> {
     if($('#startDate').attr("required")) {
         $("#startDate").removeAttr('required');
         $("#startDate").attr('disabled', true);
-        console.log('hello')
+        console.log('hello uncertain1')
     } else {
         $("#startDate").removeAttr('disabled');
         $("#startDate").attr('required', true);   
-        console.log('bye')
+        console.log('bye uncertain1')
     }     
 })
 
 
 $('#dueDate').val(new Date().toISOString().substring(0, 10));
+$('#edueDate.dueDate_init').val(new Date().toISOString().substring(0, 10));
 
 $(document).on('click', '#uncertain2', ()=> {
     if($('#dueDate').attr("required")) {
         $("#dueDate").removeAttr('required');
         $("#dueDate").attr('disabled', true);
-        console.log('hello')
+        console.log('hello uncertain2')
     } else {
         $("#dueDate").removeAttr('disabled');
         $("#dueDate").attr('required', true);   
-        console.log('bye')
+        console.log('bye uncertain2')
     }     
 })
 
