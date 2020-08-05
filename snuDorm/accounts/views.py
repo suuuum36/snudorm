@@ -54,7 +54,7 @@ def signup(request):
             user.profile.email = email
             user.profile.building_category = building_category
             user.profile.building_dong = building_dong
-            user.is_active = False # 유저 비활성화
+            # user.is_active = False # 유저 비활성화
             user.save()
 
             # 이메일 인증을 위한 설정
@@ -68,10 +68,11 @@ def signup(request):
             mail_title = "계정 활성화 확인 이메일입니다"
             email_send = EmailMessage(mail_title, message, to=[email])
             email_send.send()
-            return redirect('showmain')
+            
 
-        # login_user = django_authenticate(username=user_id, password=password)
-        # django_login(request, login_user)
+        login_user = django_authenticate(username=user_id, password=password)
+        django_login(request, login_user)
+        return redirect('showmain')
         
     return render(request, 'accounts/signup.html')
 
