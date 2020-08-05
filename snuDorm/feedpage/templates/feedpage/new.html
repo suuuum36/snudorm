@@ -1,78 +1,85 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
+
+<head>
+    <link rel="stylesheet" href="{% static 'feedpage/new.css' %}">
+</head>
+
 <div class="info">
     {{ error }}<br>
     {% if user.is_authenticated %}
         <!-- 게시판 이름 -->
         <div class="board_name" > 
-            {{ board_name }}
+            {{ board_name }} 게시판 
         </div>
         {% if board == 'minwon' or board == 'freeboard' %}
         <!-- Minwon, freeboard 게시판 -->
         <div class="minwon_or_free_new">
             <form method="POST" class="new_form_create" enctype="multipart/form-data" action="{% url 'newfeed' board category %}">
                 {% csrf_token %}
-                <div>
-                    제목</br>
-                    <input name="title" type=" text" style="width:400px; height:50px;" 
-                            placeholder="제목" required>
-                </div></br>
-                <div>
-                    내용</br>
-                    <input name="content" type="text"  style="width:400px; height:50px;" 
-                            placeholder="글 내용을 입력해주세요..." required>
-                </div></br>
-                <div style="display:flex">
-                    <input class="photo" name = "photo[]" id="photo" accept=".jpg, .jpeg, .png" type="file" multiple>
-                </div></br>
-                <div>
-                    <input name="noname" type="checkbox" id="noname">
-                    <label for="noname">익명</label>
-                </div></br>
-                <button type="submit">글쓰기</button>
-            </form>
+                <table id = "minwon_table" border="1">
+                    <tr height = "10%"><!-- 첫번째 줄 시작 -->
+                        
+                        <td><input name="title" type=" text" style="width:400px; height:50px;" 
+                        placeholder="제목" required></td>
+                    </tr><!-- 첫번째 줄 끝 -->
+                    <tr><!-- 두번째 줄 시작 -->
+                        
+                        <td><input name="content" type="text"  style="width:400px; height:50px;" 
+                                    placeholder="글 내용을 입력해주세요..." required></td>
+                    </tr><!-- 두번째 줄 끝 -->
+                    <tr height = "10%"><!-- 마지막 줄 시작 -->
+                        <td><input class="photo" name = "photo[]" id="photo" accept=".jpg, .jpeg, .png" type="file" multiple>
+                        <input name="noname" type="checkbox" id="noname">
+                            <label for="noname">익명</label>
+                        <button type="submit">글쓰기</button></td>
+                    </tr><!-- 마지막 줄 끝 -->
+                </table>
+             </form>
+             
         </div>
+    
         {% elif category == 'cobuy' %}
         <!-- Cobuy 공구 게시판 -->
         <div class="cobuy_board_new">
             <form method="POST" enctype="multipart/form-data" action="{% url 'newfeed' 'life' 'cobuy' %}">
                 {% csrf_token %}
-                <div>
-                    제목 </br>
-                    <input name="title" type="text"  style="width:400px; height:50px;" 
-                            placeholder="글 제목을 입력하세요." required>
-                </div></br>
-                <div>
-                    가격</br>
-                    <input name="price" type="text"  style="width:400px; height:50px;" 
-                            placeholder="공구 품목의 가격을 입력하세요. ex) 425600" required>
-                </div></br>
-                <div>
-                    링크</br>
-                    <input name="url" type="text"  style="width:400px; height:50px;" 
-                            placeholder="공구 품목의 링크를 넣어주세요." required>
-                </div></br>
-                <div>
-                    마감일</br>
-                    <input name="duedate" id="dueDate" type="date" required>
-                    <div>
-                        <input name="uncertain" type="checkbox" id="uncertain2">
-                        <label for="uncertain2">미정</label>
-                    </div></br>
-                </div></br>
-                <div>
-                    설명</br>
-                    <input name="content" type="text"  style="width:400px; height:50px;" 
-                            placeholder="공구 내용과 연락수단을 적어주세요." required>
-                </div></br>
-                <div style="display:flex">
-                    <input class="photo" name = "photo[]" id="photo" style="display:none" accept=".jpg, .jpeg, .png" type="file" multiple>
-                </div></br>
-                <div>
-                    <input name="noname" type="checkbox" id="noname">
-                    <label for="noname">익명</label>
-                </div></br>
-                <button type="submit">글쓰기</button>
+                <table border="1">
+                    <tr height = "10%"><!-- 첫번째 줄 시작 -->
+                        <td class = "tr_title" width: "20%" >제목</td>
+                        <td width: "80%" ><input name="title" type="text"  style="width:400px; height:50px;" 
+                            placeholder="글 제목을 입력하세요." required></td>
+                    </tr><!-- 첫번째 줄 끝 -->
+                    <tr height = "10%"><!-- 두번째 줄 시작 -->
+                        <td class = "tr_title"> 가격</td>
+                        <td><input name="price" type="text"  style="width:400px; height:50px;" 
+                            placeholder="공구 품목의 가격을 입력하세요. ex) 425600" required></td>
+                    </tr ><!-- 두번째 줄 끝 -->
+                    <tr height = "10%">
+                        <td class = "tr_title">링크</td>
+                        <td><input name="url" type="text"  style="width:400px; height:50px;" 
+                            placeholder="공구 품목의 링크를 넣어주세요." required></td>
+                    </tr>
+                    <tr height = "10%">
+                        <td height = "10%" class = "tr_title">마감일</td>
+                        <td><input name="duedate" id="dueDate" type="date" required><input name="uncertain" type="checkbox" id="uncertain2">
+                        <label for="uncertain2">미정</label></td>
+                    </tr>
+                    <tr height = "50%">
+                        <td class = "tr_title">설명</td>
+                        <td><input name="content" type="text"  style="width:400px; height:50px;" 
+                            placeholder="공구 내용과 연락수단을 적어주세요." required></td>
+                    </tr>
+                    <tr height = "10%"><!-- 마지막 줄 시작 -->
+                        <td colspan ="2"><input class="photo" name = "photo[]" id="photo" style="display:none" accept=".jpg, .jpeg, .png" type="file" multiple>
+                        <input name="noname" type="checkbox" id="noname">
+                            <label for="noname">익명</label>
+                        <button type="submit">글쓰기</button>
+                        </td>
+                       
+                    </tr><!-- 마지막 줄 끝 -->
+                </table>
             </form>
         </div>
         {% elif category == 'rent' %}
@@ -80,52 +87,53 @@
         <div class="rent_board_new"> 
             <form method="POST" enctype="multipart/form-data" action="{% url 'newfeed' 'life' 'rent' %}">
                 {% csrf_token %}
-                <div>
-                    제목 </br>
-                    <input name="title" type="text"  style="width:400px; height:50px;" 
-                            placeholder="글 제목을 입력하세요." required>
-                </div></br>
-                <div style="display:flex;">
-                    목적 </br>
-                    <input name="purpose" type="checkbox" id="purpose" value="borrow" onclick="doOpenCheck(this);" required>
-                    <label for="purpose">빌려줄게요</label>
-                    <input name="purpose" type="checkbox" id="purpose" value="lend" onclick="doOpenCheck(this);">
-                    <label for="purpose">빌려주세요</label>
-                </div></br>
-                <div>
-                    대여료</br>
-                    <input name="deposit" type="text" style="width:400px; height:50px;" 
-                    placeholder="빌려줄/빌릴 대여품목의 사용료를 입력해주세요." required>
-                </div></br>
-                <div style="display:flex;">
-                    시작일</br>
-                    <input name="start_date" id="startDate" type="date" required>
-                    <div >
-                        <input name="uncertain" type="checkbox" id="uncertain1" onclick="startCheck(this);">
-                        <label for="uncertain1">미정</label>
-                    </div></br>
-                </div></br>
-                <div style="display:flex;">
-                    마감일</br>
-                    <input name="duedate" id="dueDate" type="date" required>
-                    <div>
-                        <input name="uncertain" type="checkbox" id="uncertain2" onclick="duedateCheck(this);">
-                        <label for="uncertain2">미정</label>
-                    </div></br>
-                </div></br>
-                <div>
-                    설명</br>
-                    <input name="content" type="text"  style="width:400px; height:50px;" 
-                            placeholder="대여 내용을 입력해 주세요." required>
-                </div></br>
-                <div style="display:flex">
-                    <input class="photo" name = "photo[]" id="photo" style="display:none" accept=".jpg, .jpeg, .png" type="file" multiple>
-                </div></br>
-                <div >
-                    <input name="noname" type="checkbox" id="noname">
-                    <label for="noname">익명</label>
-                </div></br>
-                <button type="submit">글쓰기</button>
+                <table border="1">
+                    <tr height = "10%"><!-- 첫번째 줄 시작 -->
+                        <td class = "tr_title" width: "20%"  >제목</td>
+                        <td width: "80%" ><input name="title" type="text"  style="width:400px; height:50px;" 
+                                placeholder="글 제목을 입력하세요." required>></td>
+                    </tr><!-- 첫번째 줄 끝 -->
+                    <tr height = "10%">
+                        <td class = "tr_title">목적</td>
+                        <td><input name="purpose" type="checkbox" id="purpose" value="borrow" onclick="doOpenCheck(this);" required>
+                        <label for="purpose">빌려줄게요</label>
+                        <input name="purpose" type="checkbox" id="purpose" value="lend" onclick="doOpenCheck(this);">
+                        <label for="purpose">빌려주세요</label></td>
+                    </tr height = "10%">
+                        <td class = "tr_title">대여료</td>
+                        <td> <input name="deposit" type="text" style="width:400px; height:50px;" 
+                            placeholder="빌려줄/빌릴 대여품목의 사용료를 입력해주세요." required></td>
+                    <tr>
+                    </tr>
+                    <tr height = "10%">
+                        <td class = "tr_title">시작일</td>
+                        <td><input name="start_date" id="startDate" type="date" required>
+                       
+                            <input name="uncertain" type="checkbox" id="uncertain1" onclick="startCheck(this);">
+                            <label for="uncertain1">미정</label>
+                        </td>
+                    </tr>
+                    <tr height = "10%">
+                        <td class = "tr_title">마감일</td>
+                        <td><input name="duedate" id="dueDate" type="date" required>
+                        
+                            <input name="uncertain" type="checkbox" id="uncertain2" onclick="duedateCheck(this);">
+                            <label for="uncertain2">미정</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class = "tr_title">설명</td>
+                        <td><input name="content" type="text"  style="width:400px; height:50px;" 
+                                placeholder="대여 내용을 입력해 주세요." required></td>
+                    </tr>
+                    <tr height = "10%"><!-- 마지막 줄 시작 -->
+                             <td colspan ="2"><input class="photo" name = "photo[]" id="photo" style="display:none" accept=".jpg, .jpeg, .png" type="file" multiple>
+                            <input name="noname" type="checkbox" id="noname">
+                                <label for="noname">익명</label>
+                            <button type="submit">글쓰기</button></td>
+                    </tr><!-- 마지막 줄 끝 -->
+                </table> 
+                
             </form>
         </div> 
         {% elif category == "keep" %}
@@ -133,88 +141,94 @@
         <div class="keep_board_new">
             <form method="POST" action="{% url 'newfeed' 'life' 'keep' %}">
                 {% csrf_token %}
-                <div>
-                    제목 </br>
-                    <input name="title" type="text" style="width:400px; height:50px;"
-                         placeholder="글 제목을 입력하세요." required>
-                </div></br>
-                <div>
-                    목적 </br>
-                    <input type="checkbox" name="purpose" value="keep" id="purpose" onclick="doOpenCheck(this);" required>                    
+                <table border="1">
+                    <tr height = "10%">
+                        <td class = "tr_title">제목</td>
+                        <td><input name="title" type="text" style="width:400px; height:50px;"
+                            placeholder="글 제목을 입력하세요." required>
+                        </td>
+                    </tr>
+                    <tr height = "10%">
+                    <td class = "tr_title">목적 </td>
+                    <td><input type="checkbox" name="purpose" value="keep" id="purpose" onclick="doOpenCheck(this);" required>                    
                     <label for="purpose">보관할게요</label>
                     <input type="checkbox" name="purpose" value="request" id="purpose" onclick="doOpenCheck(this);">
-                    <label for="purpose">보관해줄래요</label>
-                </div> 
-                <div >
-                    보관료</br>
-                    <input name="reward" type="text" style="width:400px; height:50px;"
-                    placeholder="보관할 품목 혹은 보관 해줄시의 사용료를 입력해주세요." required="required">
-                </div></br>
-                 <div style="display:flex;">
-                    시작일</br>
-                    <input name="start_date" id="startDate" type="date" required>
-                    <div >
-                        <input name="uncertain" type="checkbox" id="uncertain1" onclick="startCheck(this);">
-                        <label for="uncertain1">미정</label>
-                    </div></br>
-                </div></br>
-                <div style="display:flex;">
-                    마감일</br>
-                    <input name="duedate" id="dueDate" type="date" required>
-                    <div>
-                        <input name="uncertain" type="checkbox" id="uncertain2" onclick="duedateCheck(this);">
-                        <label for="uncertain2">미정</label>
-                    </div></br>
-                </div></br>
-                <div>
-                    설명</br>
-                    <input name="content" type="text"  style="width:400px; height:50px;" 
-                             placeholder="보관 내용을 입력해 주세요." required>
-                </div></br>
-                <div style="display:flex">
-                    <input class="photo" name = "photo[]" id="photo" style="display:none" accept=".jpg, .jpeg, .png" type="file" multiple>
-                </div></br>
-                <div>
-                    <input name="noname" type="checkbox" id="noname">
-                    <label for="noname">익명</label>
-                </div></br>
-                <button type="submit">글쓰기</button>
+                    <label for="purpose">보관해줄래요</label></td>
+                    </tr>
+                
+                    <tr height = "10%" >
+                        <td class = "tr_title">보관료</td>
+                        <td><input name="reward" type="text" style="width:400px; height:50px;"
+                        placeholder="보관할 품목 혹은 보관 해줄시의 사용료를 입력해주세요." required="required">
+                        </td>
+                    </tr>
+                    <tr height = "10%">
+                        <td class = "tr_title">시작일</td>
+                        <td><input name="start_date" id="startDate" type="date" required>
+                       
+                            <input name="uncertain" type="checkbox" id="uncertain1" onclick="startCheck(this);">
+                            <label for="uncertain1">미정</label>
+                        </td>
+                    </tr>
+                    <tr height = "10%">
+                        <td class = "tr_title">마감일</td>
+                        <td><input name="duedate" id="dueDate" type="date" required>
+                        
+                            <input name="uncertain" type="checkbox" id="uncertain2" onclick="duedateCheck(this);">
+                            <label for="uncertain2">미정</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class = "tr_title">설명</td>
+                        <td><input name="content" type="text"  style="width:400px; height:50px;" 
+                                placeholder="보관 내용을 입력해 주세요." required></td>
+                    </tr>
+                    <tr height = "10%"><!-- 마지막 줄 시작 -->
+                         <td colspan ="2"><input class="photo" name = "photo[]" id="photo" style="display:none" accept=".jpg, .jpeg, .png" type="file" multiple>
+                        <input name="noname" type="checkbox" id="noname">
+                            <label for="noname">익명</label>
+                        <button type="submit">글쓰기</button></td>
+                    </tr><!-- 마지막 줄 끝 -->
+                </table>
             </form>
         {% elif category == "resell" %}
         <!-- Resell 게시판 -->
         <div class="resell_board_new">
             <form method="POST" enctype="multipart/form-data" action="{% url 'newfeed' 'life' 'resell' %}">
                 {% csrf_token %}
-                <div>
-                    제목 </br>
-                    <input name="title" type="text" style="width:400px; height:50px;" 
-                        placeholder="글 제목을 입력하세요." required>
-                </div></br>
-                    목적 </br>
-                    <input type="checkbox" name="purpose" value="sell" onclick="doOpenCheck(this);" id="purpose" required>
-                    <label for="purpose">판매</label>
-                    <input type="checkbox" name="purpose" value="buy" onclick="doOpenCheck(this);" id ="purpose">
-                    <label for="purpose">구매</label></br>
-                </div>
-                <div>
-                    가격</br>
-                    <input name="price" type="text" style="width:400px; height:50px;" 
-                    placeholder="중고거래 제품의 가격을 입력하세요. ex) 425600" required>
-                </div></br>
-                <div>
-                    설명</br>
-                    <input name="content" type="text" style="width:400px; height:50px;" 
-                             placeholder="중고거래 내용을 입력해 주세요." required>
-                </div></br>
-                <div style="display:flex">
-                    <input class="photo" name = "photo[]" id="photo" style="display:none" accept=".jpg, .jpeg, .png" type="file" multiple>
-                </div></br>
-                <div>
-                    <input name="noname" type="checkbox" id="noname">
-                    <label for="noname">익명</label>
-                </div></br>
-                <button type="submit">글쓰기</button>
+                <table border="1">
+                    <tr height = "10%">
+                        <td class = "tr_title">제목 </td>
+                        <td><input name="title" type="text" style="width:400px; height:50px;" 
+                            placeholder="글 제목을 입력하세요." required>
+                        </td>
+                    </tr>
+                    <tr height = "10%">
+                        <td class = "tr_title">목적 </td>
+                        <td><input type="checkbox" name="purpose" value="sell" onclick="doOpenCheck(this);" id="purpose" required>
+                        <label for="purpose">판매</label>
+                        <input type="checkbox" name="purpose" value="buy" onclick="doOpenCheck(this);" id ="purpose">
+                        <label for="purpose">구매</label></td>
+                    </tr>
+                    <tr height = "10%">
+                        <td class = "tr_title">가격</td>
+                        <td><input name="price" type="text" style="width:400px; height:50px;" 
+                        placeholder="중고거래 제품의 가격을 입력하세요. ex) 425600" required></td>
+                    </tr>
+                    <tr>
+                        <td class = "tr_title" height = "60%">설명</td>
+                        <td><input name="content" type="text" style="width:400px; height:50px;" 
+                                placeholder="중고거래 내용을 입력해 주세요." required></td>
+                    </tr>
+                    <tr height = "10%"><!-- 마지막 줄 시작 -->
+                             <td colspan ="2"><input class="photo" name = "photo[]" id="photo" style="display:none" accept=".jpg, .jpeg, .png" type="file" multiple>
+                            <input name="noname" type="checkbox" id="noname">
+                                <label for="noname">익명</label>
+                            <button type="submit">글쓰기</button></td>
+                    </tr><!-- 마지막 줄 끝 -->
+                </table>
             </form>
+        </div>
         {% endif %}
     {% endif %}
 </div>
