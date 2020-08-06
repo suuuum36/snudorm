@@ -61,7 +61,7 @@ textarea:focus::-webkit-input-placeholder {
         }
 
         // 네이게이션 list:
-        // 내 정보 & 개인정보 변경 & 비밀번호 변경 & 게시글 알림 & 쪽지함
+        // 내 정보 & 개인정보 변경 & 비밀번호 변경 & 알림 & 쪽지함
         .nav-list {
             background-color: #ffffff;
             
@@ -105,6 +105,11 @@ textarea:focus::-webkit-input-placeholder {
 
             span {
                 padding-left: 30px;
+            }
+
+            .count {
+                font-size: 18px !important;
+                color: $blue_text !important;
             }
         }
 

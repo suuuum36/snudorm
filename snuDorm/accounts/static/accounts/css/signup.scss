@@ -2,6 +2,7 @@
 @import "variable.scss";
 // TODO:
 // 1) 기숙사/동 클릭시 글자 색상이 검은색이 되도록
+// 2) 다른 생활관 클릭시 다시 동일 생활관으로 돌아오면 초기화 되도록
 
 // base.html과 별개로 적용되는 css
 
@@ -284,7 +285,6 @@ input:focus::-webkit-input-placeholder {
                 display: flex;
                 align-items: center;
                 font-weight: bold;
-                color: $gray_border;
                 
                 // input type = "radio"
                 .radio {

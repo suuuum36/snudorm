@@ -1,64 +1,69 @@
 {% extends 'base.html' %}
+{% block content %}
 {% load static %}
 {% load sass_tags %}
-{% block content %}
-<div class="background">
-    <div class="form">
-        <div class="nav">
-            <div class="nav-title"><span>마이페이지</span></div>
-            <div class="nav-list"><a href="{% url 'userinfo' user.id %}">내 정보</a></div>
-            <div class="nav-list"><a href="{% url 'useredit' user.id %}">개인정보 변경</a></div>
-            <div class="nav-list"><a href="{% url 'passwordedit' user.id %}">비밀번호 변경</a></div>
-            <div class="nav-list"><a href="{% url 'usernotice' user.id %}">게시글 알림</a></div>
-            <div class="nav-list"><a href="{% url 'messagebox' user.id %}">쪽지함</a></div>
+<head>
+    <link rel="stylesheet" href="{% sass_src 'accounts/css/mypage.scss' %}">
+</head>
+<body>
+    <div class="background">
+        <div class="form">
+            <div class="nav">
+                <div class="nav-title"><span>마이페이지</span></div>
+                <div class="nav-list"><a href="{% url 'userinfo' user.id %}">내 정보</a></div>
+                <div class="nav-list"><a href="{% url 'useredit' user.id %}">개인정보 변경</a></div>
+                <div class="nav-list"><a href="{% url 'passwordedit' user.id %}">비밀번호 변경</a></div>
+                <div class="nav-list"><a href="{% url 'usernotice' user.id %}">알림</a></div>
+                <div class="nav-list"><a href="{% url 'messagebox' user.id %}">쪽지함</a></div>
+            </div>
+         
+            <div class="info">
+                <div class="title"><span>내 정보</span></div>
+                <div class="container">
+                    <div class="name">
+                        <div class="field">
+                            <span>이름</span>
+                        </div>
+                        <div class="value">
+                            <span>{{ user.profile.name }}</span>
+                        </div>
+                    </div>
+                    <div class="id">
+                        <div class="field">
+                            <span>아이디</span>
+                        </div>
+                        <div class="value">
+                            <span>{{ user.username }}</span>
+                        </div>
+                    </div>
+                    <div class="nk">
+                        <div class="field">
+                            <span>닉네임</span>
+                        </div>
+                        <div class="value">
+                            <span>{{ user.profile.nickname }}</span>
+                        </div>
+                    </div>
+                    <div class="email">
+                        <div class="field">
+                            <span>이메일</span>
+                        </div>
+                        <div class="value">
+                            <span>{{ user.profile.email }} @ snu.ac.kr</span>
+                        </div>
+                    </div>
+                    <div class="building">
+                        <div class="field">
+                            <span>기숙사 동</span>
+                        </div>  
+                        <div class="value">
+                            <span>{{ user.profile.building_category }} {{ user.profile.building_dong}}</span>
+                        </div>          
+                    </div>
+                </div>               
+            </div> 
         </div>
-    
-        <div class="info">
-            <div class="title"><span>내 정보</span></div>
-            <div class="container">
-                <div class="name">
-                    <div class="field">
-                        <span>이름</span>
-                    </div>
-                    <div class="value">
-                        <span>{{ user.profile.name }}</span>
-                    </div>
-                </div>
-                <div class="id">
-                    <div class="field">
-                        <span>아이디</span>
-                    </div>
-                    <div class="value">
-                        <span>{{ user.username }}</span>
-                    </div>
-                </div>
-                <div class="nk">
-                    <div class="field">
-                        <span>닉네임</span>
-                    </div>
-                    <div class="value">
-                        <span>{{ user.profile.nickname }}</span>
-                    </div>
-                </div>
-                <div class="email">
-                    <div class="field">
-                        <span>이메일</span>
-                    </div>
-                    <div class="value">
-                        <span>{{ user.profile.email }} @ snu.ac.kr</span>
-                    </div>
-                </div>
-                <div class="building">
-                    <div class="field">
-                        <span>기숙사 동</span>
-                    </div>  
-                    <div class="value">
-                        <span>{{ user.profile.building_category }} {{ user.profile.building_dong}}</span>
-                    </div>          
-                </div>
-            </div>               
-        </div> 
     </div>
-</div>
+</body>
 {% endblock content %}
     

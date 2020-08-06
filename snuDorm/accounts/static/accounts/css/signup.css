@@ -190,8 +190,7 @@ input:focus::-webkit-input-placeholder {
         background-color: #ffffff;
         display: flex;
         align-items: center;
-        font-weight: bold;
-        color: #b9b9b9; }
+        font-weight: bold; }
         .form .building .building-category .dropdown-option .radio, .form .building .building-default .dropdown-option .radio, .form .building .building-bachelor .dropdown-option .radio,
         .form .building .building-master .dropdown-option .radio, .form .building .building-family .dropdown-option .radio, .form .building .building-bk .dropdown-option .radio {
           display: none; }

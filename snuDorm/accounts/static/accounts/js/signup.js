@@ -201,7 +201,15 @@ categoryOptions.forEach(o => {
   o.addEventListener("click", () => {
     selected.innerHTML = o.querySelector("label").innerHTML;
     categoryContainer.classList.remove("active");
-    
+        
+    var opt = o.firstElementChild;
+    var cateName = document.getElementsByName("building_category");
+    if (cateName.length == 1) {
+      cateName[0].removeAttribute("name");
+    };
+    opt.setAttribute("name", "building_category");
+    console.log(cateName);
+   
     var dorm = document.getElementById("selected").innerHTML;
     var defaultOpt = document.getElementById("default-dong"); // 처음에 보여지는 default 옵션
     var bachelorOpt = document.getElementById("bachelor-dong"); // 학부생활관 동 옵션
@@ -319,7 +327,7 @@ bkOptions.forEach(d => {
 
 
 
-// name 값 지정
+// dong name 값 지정
 var choose = document.querySelectorAll(".dong-option");
 
 choose.forEach(x => {
@@ -332,4 +340,6 @@ choose.forEach(x => {
     ipt.setAttribute("name", "building_dong");
   });
 });
+
+
 

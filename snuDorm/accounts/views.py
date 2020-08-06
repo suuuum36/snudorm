@@ -32,7 +32,7 @@ def signup(request):
         
         # form 값 저장
         user_id = request.POST['user_id'] # User, 아이디
-        password = request.POST['password'] # User, 비밀번호 
+        password = request.POST['password'] # User, 비밀번호
         confirm_password = request.POST['confirm_password'] # 비밀번호 확인
         name = request.POST['name'] # Profile, 이름
         nickname = request.POST['nickname'] # Profile, 닉네임
@@ -233,7 +233,6 @@ def userInfo(request, id):
     return render(request, 'accounts/user_info.html', {'id': id})
 
 def userNotice(request, id):
-    user = User.objects.get(id = id)
     notices = Notice.objects.filter(user_to = request.user.id).order_by('-created_at')
     count = notices.filter(checked = False).count()
 
