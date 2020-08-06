@@ -3,6 +3,17 @@ $(document).on('change', '#photo', function(e) {
     console.log('clicked');
     let $this = $(e.currentTarget);
     $this.css('display', 'none')
+    
+    const len = e.target.files.length;
+    let i;
+    
+    for(i=0; i<len; i++){
+        const tmppath = URL.createObjectURL(e.target.files[i]);
+        const thumb = `
+            <img src='${tmppath}' width="100px" height="100px">
+            `
+        $('td#thumbnail').append($(thumb));        
+    }
 
     const str = `
         <input class="photo" name="photo[]" id="photo" accept=".jpg, .jpeg, .png"

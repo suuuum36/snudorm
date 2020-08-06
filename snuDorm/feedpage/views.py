@@ -314,8 +314,8 @@ def editFeed(request, board, category, fid):
 
         feed.title = request.POST['title']
         feed.content = request.POST['content']
-        feed.photo = feed.photo if request.FILES.get('photo') is None else\
-                    request.FILES.get('photo', False)        
+        # feed.photo = feed.photo if request.FILES.get('photo') is None else\
+        #             request.FILES.get('photo', False)        
         feed.noname = True if "noname" in request.POST else False
         
         if board == 'life':
@@ -347,6 +347,11 @@ def editFeed(request, board, category, fid):
                 feed.purpose = Resell.OPTION[0] if request.POST['purpose'] == 'sell' else Resell.OPTION[1]
                 feed.price = request.POST['price']
 
+        photos = request.FILES.getlist('photo[]')
+        print(photos)
+        for image in photos:
+            new_image = Image.objects.create(feed_id = feed.id, photo = image)
+            new_image.save()
         feed.save()
         return redirect('showfeed', board=board, category=category, fid=fid)
 
