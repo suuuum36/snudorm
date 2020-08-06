@@ -1,1 +1,1 @@
-web: gunicorn domitori.wsgi --log-file -
+web: gunicorn snuDorm.wsgi --log-file -
