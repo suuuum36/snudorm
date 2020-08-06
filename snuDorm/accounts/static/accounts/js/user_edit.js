@@ -53,7 +53,43 @@ function nk_db_check() {
     });
   }
 
-  // 기숙사 생활관 selected 표시 변경
+// edit 특별 기능 추가
+window.onload = function () {
+  var chk = document.getElementById("selected").innerHTML;
+  var a = document.getElementById("default-dong"); // 처음에 보여지는 default 옵션
+  var b = document.getElementById("bachelor-dong"); // 학부생활관 동 옵션
+  var c = document.getElementById("master-dong"); // 대학원생활관 동 옵션
+  var d = document.getElementById("family-dong"); // 가족생활관 동 옵션
+  var e = document.getElementById("bk-dong"); // BK생활관 동 옵션
+
+  if (chk.indexOf("학부생활관") != -1) {
+    a.className = "remove"
+    b.className = "building-bachelor"
+    c.className = "remove"
+    d.className = "remove"
+    e.className = "remove"
+  } else if (chk.indexOf("대학원생활관") != -1) {
+    a.className = "remove"
+    b.className = "remove"
+    c.className = "building-master"
+    d.className = "remove"
+    e.className = "remove"
+  } else if (chk.indexOf("가족생활관") != -1) {
+    a.className = "remove"
+    b.className = "remove"
+    c.className = "remove"
+    d.className = "building-family"
+    e.className = "remove"
+  } else if (chk.indexOf("BK생활관") != -1) {
+    a.className = "remove"
+    b.className = "remove"
+    c.className = "remove"
+    d.className = "remove"
+    e.className = "building-bk"
+  };
+};
+
+// 기숙사 생활관 selected 표시 변경
 var selected = document.querySelector(".selected");
 var categoryContainer = document.querySelector(".category-container");
 var categoryOptions = document.querySelectorAll(".category-option");

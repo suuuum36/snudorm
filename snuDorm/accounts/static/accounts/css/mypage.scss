@@ -367,9 +367,8 @@ textarea:focus::-webkit-input-placeholder {
     .building-category, .building-default, .building-bachelor,
     .building-master, .building-family, .building-bk {
         display: flex;
-        width: 240px;
+        width: 180px;
         flex-direction: column;
-        margin-top: 15px;
         position: relative;
             
         // '생활관을 선택하세요.' 옵션 선택 불가
@@ -389,7 +388,7 @@ textarea:focus::-webkit-input-placeholder {
             overflow: hidden;
             order: 1;
             position: absolute;
-            top: 50px;
+            top: 40px;
             z-index: 3;
             margin-top: -2px;
             background-color: #ffffff;
@@ -405,7 +404,7 @@ textarea:focus::-webkit-input-placeholder {
         // 화살표 역전
         .dropdown-container.active + .selected-common::after {
             transform: rotateX(180deg);
-            top: -6px;
+            top: -15px;
         }
 
         // option 스크롤바
@@ -424,32 +423,30 @@ textarea:focus::-webkit-input-placeholder {
 
         // 선택된 옵션 표시
         .selected-common {
-            color: $gray_border;
-            padding: 12px 20px;
+            display:flex;
+            align-items: center;
+            color: $gray_text;
             cursor: pointer;
-            border: 2px solid $gray_border;
-            border-radius: 7px;
-            margin-bottom: -2px;
             position: relative;
             order: 0;
-            height: 50px;
+            height: 40px;
             line-height: 22px;
-            font-weight: bold;
-            font-size: 14px;
+            font-size: 16px;
+            text-align: center;            
         }
 
         // dropdown 화살표
         .selected-common::after {
             content: "";
-            background: url("../img/arrow-down.png");
+            background: url("../img/down-arrow.png");
             background-size: contain;
             background-repeat: no-repeat;
             
             position: absolute;
             height: 100%;
-            width: 32px;
+            width: 20px;
             right: 18px;
-            top: 5px;
+            top: 13px;
             
             transition: all 0.4s;
         }
@@ -460,7 +457,6 @@ textarea:focus::-webkit-input-placeholder {
             background-color: #ffffff;
             display: flex;
             align-items: center;
-            font-weight: bold;
             
             // input type = "radio"
             .radio {
@@ -472,14 +468,19 @@ textarea:focus::-webkit-input-placeholder {
             color: $blue_text;
         }
         
+        .dong-option {
+        }
+
         // input type = "radio"와 연결
         label {
             display: flex;
+            justify-content: center;
+            text-align: center;
             align-items: center;
-            padding-left: 20px;
-            height: 50px;
+            height: 40px;
             width: 100%;
             cursor: pointer;
+            font-size: 16px;
         }
     }
 }

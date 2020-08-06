@@ -224,9 +224,8 @@ textarea:focus::-webkit-input-placeholder {
   .building .building-category, .building .building-default, .building .building-bachelor,
   .building .building-master, .building .building-family, .building .building-bk {
     display: flex;
-    width: 240px;
+    width: 180px;
     flex-direction: column;
-    margin-top: 15px;
     position: relative; }
     .building .building-category .default-container, .building .building-default .default-container, .building .building-bachelor .default-container,
     .building .building-master .default-container, .building .building-family .default-container, .building .building-bk .default-container {
@@ -243,7 +242,7 @@ textarea:focus::-webkit-input-placeholder {
       overflow: hidden;
       order: 1;
       position: absolute;
-      top: 50px;
+      top: 40px;
       z-index: 3;
       margin-top: -2px;
       background-color: #ffffff; }
@@ -255,7 +254,7 @@ textarea:focus::-webkit-input-placeholder {
     .building .building-category .dropdown-container.active + .selected-common::after, .building .building-default .dropdown-container.active + .selected-common::after, .building .building-bachelor .dropdown-container.active + .selected-common::after,
     .building .building-master .dropdown-container.active + .selected-common::after, .building .building-family .dropdown-container.active + .selected-common::after, .building .building-bk .dropdown-container.active + .selected-common::after {
       transform: rotateX(180deg);
-      top: -6px; }
+      top: -15px; }
     .building .building-category .dropdown-container::-webkit-scrollbar, .building .building-default .dropdown-container::-webkit-scrollbar, .building .building-bachelor .dropdown-container::-webkit-scrollbar,
     .building .building-master .dropdown-container::-webkit-scrollbar, .building .building-family .dropdown-container::-webkit-scrollbar, .building .building-bk .dropdown-container::-webkit-scrollbar {
       width: 8px;
@@ -268,37 +267,34 @@ textarea:focus::-webkit-input-placeholder {
       border-radius: 3px; }
     .building .building-category .selected-common, .building .building-default .selected-common, .building .building-bachelor .selected-common,
     .building .building-master .selected-common, .building .building-family .selected-common, .building .building-bk .selected-common {
-      color: #b9b9b9;
-      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      color: #7f7f7f;
       cursor: pointer;
-      border: 2px solid #b9b9b9;
-      border-radius: 7px;
-      margin-bottom: -2px;
       position: relative;
       order: 0;
-      height: 50px;
+      height: 40px;
       line-height: 22px;
-      font-weight: bold;
-      font-size: 14px; }
+      font-size: 16px;
+      text-align: center; }
     .building .building-category .selected-common::after, .building .building-default .selected-common::after, .building .building-bachelor .selected-common::after,
     .building .building-master .selected-common::after, .building .building-family .selected-common::after, .building .building-bk .selected-common::after {
       content: "";
-      background: url("../img/arrow-down.png");
+      background: url("../img/down-arrow.png");
       background-size: contain;
       background-repeat: no-repeat;
       position: absolute;
       height: 100%;
-      width: 32px;
+      width: 20px;
       right: 18px;
-      top: 5px;
+      top: 13px;
       transition: all 0.4s; }
     .building .building-category .dropdown-option, .building .building-default .dropdown-option, .building .building-bachelor .dropdown-option,
     .building .building-master .dropdown-option, .building .building-family .dropdown-option, .building .building-bk .dropdown-option {
       cursor: pointer;
       background-color: #ffffff;
       display: flex;
-      align-items: center;
-      font-weight: bold; }
+      align-items: center; }
       .building .building-category .dropdown-option .radio, .building .building-default .dropdown-option .radio, .building .building-bachelor .dropdown-option .radio,
       .building .building-master .dropdown-option .radio, .building .building-family .dropdown-option .radio, .building .building-bk .dropdown-option .radio {
         display: none; }
@@ -308,10 +304,12 @@ textarea:focus::-webkit-input-placeholder {
     .building .building-category label, .building .building-default label, .building .building-bachelor label,
     .building .building-master label, .building .building-family label, .building .building-bk label {
       display: flex;
+      justify-content: center;
+      text-align: center;
       align-items: center;
-      padding-left: 20px;
-      height: 50px;
+      height: 40px;
       width: 100%;
-      cursor: pointer; }
+      cursor: pointer;
+      font-size: 16px; }
 
 /*# sourceMappingURL=mypage.css.map */
