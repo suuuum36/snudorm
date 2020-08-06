@@ -122,8 +122,6 @@ class CommentLike(models.Model):
 class Recomment(models.Model):
     content = models.TextField()
     author = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
-    like_users = models.ManyToManyField(
-        User, blank=True, related_name='like_recomments', through='RecommentLike')
     comment = models.ForeignKey(FeedComment, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)
     noname = models.BooleanField(default=False)

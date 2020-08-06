@@ -15,7 +15,14 @@ from django.http import JsonResponse
 # 비밀번호 변경
 from django.contrib.auth.hashers import check_password
 
-from django.core.paginator import Paginator 
+# SMTP 관련 인증
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
+from django.core.mail import EmailMessage
+from django.utils.encoding import force_bytes, force_text
+from .tokens import account_activation_token
+
 
 # 회원가입
 def signup(request):
@@ -31,8 +38,8 @@ def signup(request):
         name = request.POST['name'] # Profile, 이름
         nickname = request.POST['nickname'] # Profile, 닉네임
         email = request.POST['email'] # User, 이메일
-        building_category = request.POST.get('building_category', False)  # Profile, 생활관
-        building_dong = request.POST.get('building_dong', False) # Profile, 동
+        building_category = request.POST['building_category'] # Profile, 생활관
+        building_dong = request.POST['building_dong'] # Profile, 동
 
         # 1차, 2차 비밀번호 일치여부 판단(js에서 1차 검증)
         if password == confirm_password:
@@ -47,7 +54,21 @@ def signup(request):
             user.profile.email = email
             user.profile.building_category = building_category
             user.profile.building_dong = building_dong
+            # user.is_active = False # 유저 비활성화
             user.save()
+
+            # 이메일 인증을 위한 설정
+            current_site = get_current_site(request)
+            message = render_to_string('accounts/activation_email.html', {
+                'user': user,
+                'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)), # .encode().decode()
+                'token': account_activation_token.make_token(user),
+            })
+            mail_title = "계정 활성화 확인 이메일입니다"
+            email_send = EmailMessage(mail_title, message, to=[email])
+            email_send.send()
+            
 
         login_user = django_authenticate(username=user_id, password=password)
         django_login(request, login_user)
@@ -72,7 +93,6 @@ def id_db_check(request):
         db_check = "fail"
 
     context = {'db_check': db_check}
-
     return JsonResponse(context)
 
 # 닉네임 중복 확인
@@ -84,22 +104,15 @@ def nk_db_check(request):
     except:
         user = None
 
-    try:        
-        if(request.user.profile == user):
-            db_check = "pass1"
-        else: 
-            db_check = "fail1" 
-            
-    except:
-        # 닉네임 중복 o (사용 불가능)
-        if user is None:
-            db_check = "pass"
-        # 닉네임 중복 x (사용 가능)
-        else:
-            db_check = "fail"
-    
-    context = {'db_check': db_check}
+    # 닉네임 중복 o (사용 불가능)
+    if user is None:
+        db_check = "pass"
 
+    # 닉네임 중복 x (사용 가능)
+    else:
+        db_check = "fail"
+
+    context = {'db_check': db_check}
     return JsonResponse(context)
 
 # 로그인 기능
@@ -179,7 +192,8 @@ def userEdit(request, id):
 
         # 현재 비밀번호와 입력한 비밀번호가 일치하지 않을 때
         else: 
-            return render(request, 'accounts/user_info.html') 
+            context = "입력한 비밀번호를 확인해주세요."
+            return render(request, 'accounts/error.html', {'context':context}) # argument 확인 필요, pop up도 생각  
 
 # 비밀번호 변경하기
 @login_required
@@ -205,14 +219,14 @@ def passwordEdit(request, id):
                 
             # 3) 새로운 비밀번호 두 개가 일치하지 않을 때 변경 실패
             else:
-                return redirect('pwerror', id=id)
+                context = "새로운 비밀번호를 확인해 주세요"
+                return render(request, 'accounts/error.html', {'context': context})
 
+        # 현재 비밀번호와 입력한 비밀번호가 일치하지 않을 때
         else:
-            return redirect('pwerror', id=id)
-
-def pwError(request, id):
-
-    return render(request, 'accounts/pw_error.html', {'id': id})
+            context = "현재 비밀번호를 확인해 주세요"
+            return redirect('error')
+        
 
 def userInfo(request, id):
 
@@ -222,24 +236,7 @@ def userNotice(request, id):
     notices = Notice.objects.filter(user_to = request.user.id).order_by('-created_at')
     count = notices.filter(checked = False).count()
 
-    paginator = Paginator(notices, 7)
-    page = request.GET.get('page')
-    posts = paginator.get_page(page)
-
-    page_numbers_range = 10
-    max_index = len(paginator.page_range)
-    current_page = int(page) if page else 1
-    start_index = int((current_page - 1) / page_numbers_range) * page_numbers_range
-    end_index = start_index + page_numbers_range
-    
-    if end_index >= max_index:
-        end_index = max_index
-
-    paginator_range = paginator.page_range[start_index:end_index]
-
-    return render(request, 'accounts/user_notice.html', {'id': id, 'notices':notices, 'count':count,
-                        'posts': posts, 'paginator_range': paginator_range })
-
+    return render(request, 'accounts/user_notice.html', {'id': id, 'notices':notices, 'count':count })
 
 def id_overlap_check(request):
     username = request.GET['username']
@@ -254,7 +251,6 @@ def id_overlap_check(request):
     else:
         overlap_check = "fail"
     context = {'overlap_check': overlap_check}
-
     return JsonResponse(context)
 
 def messageBox(request, id):
@@ -280,7 +276,6 @@ def chatRoom(request, id1, id2):
     messages = list()
     num = User.objects.latest('id').id
     lastmessages = list()
-    friend = User.objects.get(id = id2).profile.nickname
 
     notices = Notice.objects.filter(user_to = request.user, feed = None)
     for notice in notices:
@@ -303,11 +298,10 @@ def chatRoom(request, id1, id2):
     for message in Message.objects.filter(user_to_id = id1, user_from_id = id2):
         messages.append(message)
 
-    return render(request, 'accounts/chatroom.html', {'chat_from': id1, 'chat_to':id2, 'lastmessages':lastmessages, 'messages': messages, 'friend' :friend })
+    return render(request, 'accounts/chatroom.html', {'chat_from': id1, 'chat_to':id2, 'lastmessages':lastmessages, 'messages': messages })
 
 def sendMessage(request, id1, id2):
     content = request.POST['content']
     Message.objects.create(user_to_id = id2, user_from_id = id1, content =content)
     Notice.objects.create(user_to_id = id2, user_from_id = id1, type_info1='쪽지')
     return redirect('chatroom', id1=id1, id2=id2)
-

@@ -17,12 +17,10 @@
             <div id="best" style="color:#7f7f7f;">베스트</div>
 
             <!-- 전체글을 보는 게시판은 글쓰기 불가능하게! -->
-            {% if user.is_authenticated %}
-                {% if board == "freeboard" or board_name != "전체 게시판" %}
-                    <div class = "write">
-                        <a class = "write-button" href="{% url 'newfeed' board category %}">글쓰기</a>
-                    </div>
-                {% endif %}
+            {% if board == "freeboard" or board_name != "전체 게시판" %}
+                <div class = "write">
+                    <a class = "write-button" href="{% url 'newfeed' board category %}">글쓰기</a>
+                </div>
             {% endif %}
         {% endif %}   
     </div>
@@ -196,12 +194,10 @@
                     {% endif %}
                     {% if not search %}
                         <!-- 전체글을 보는 게시판은 글쓰기 불가능하게! -->
-                        {% if user.is_authenticated %}
-                            {% if board == "freeboard" or board_name != "전체 게시판" %}
-                                <div class = "write2">
-                                    <a class = "write-button" href="{% url 'newfeed' board category %}">글쓰기</a>
-                                </div>
-                            {% endif %}
+                        {% if board == "freeboard" or board_name != "전체 게시판" %}
+                            <div class = "write2">
+                                <a class = "write-button" href="{% url 'newfeed' board category %}">글쓰기</a>
+                            </div>
                         {% endif %}
                     {% endif %} 
                 </div>
@@ -398,12 +394,10 @@
                 {% endif %}
                 {% if search != 'all' and search != 'part' %}
                     <!-- 전체글을 보는 게시판은 글쓰기 불가능하게! -->
-                    {% if user.is_authenticated %}
-                        {% if board == "freeboard" or board_name != "전체 게시판" %}
-                            <div class = "write2">
-                                <a class = "write-button" href="{% url 'newfeed' board category %}">글쓰기</a>
-                            </div>
-                        {% endif %}
+                    {% if board == "freeboard" or board_name != "전체 게시판" %}
+                        <div class = "write2">
+                            <a class = "write-button" href="{% url 'newfeed' board category %}">글쓰기</a>
+                        </div>
                     {% endif %}
                 {% endif %} 
             </div>

@@ -1,0 +1,1 @@
+web: gunicorn snuDorm.wsgi --log-file -
