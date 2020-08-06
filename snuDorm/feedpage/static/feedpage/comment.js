@@ -314,22 +314,31 @@ $(document).on('click', '.comment-like', (e) => {
 
         success: function (response) {
             console.log(response);
-
+            
+            let str;
+            
             if(response.likecount > 0) {
                 count++;
+                str = `
+                <a class='comment-like' data-board="${board}" data-category="${category}" data-fid='${fid}' data-cid='${cid}' data-count="${count}" data-csrfmiddlewaretoken="${csrfmiddlewaretoken}">
+                    <div class = "like-img">
+                        <img class = "img1" src="/static/img/like2.png">
+                    </div>
+                    ${count}
+                </a>
+                `
             } else {
                 count--;
+                str = `
+                <a class='comment-like' data-board="${board}" data-category="${category}" data-fid='${fid}' data-cid='${cid}' data-count="${count}" data-csrfmiddlewaretoken="${csrfmiddlewaretoken}">
+                    <div class = "like-img">
+                        <img class = "img1" src="/static/img/like.png">
+                    </div>
+                    ${count}
+                </a>
+                `
             }  
             
-            console.log(count)
-            const str = `
-            <a class='comment-like' data-board="${board}" data-category="${category}" data-fid='${fid}' data-cid='${cid}' data-count="${count}" data-csrfmiddlewaretoken="${csrfmiddlewaretoken}">
-                <div class = "like-img">
-                    <img class = "img1" src="/static/img/like.png">
-                </div>
-                ${count}
-            </a>
-            `
             $(str).insertBefore($this);
             $this.remove();
             
@@ -368,21 +377,30 @@ $(document).on('click', '.recomment-like', (e) => {
 
         success: function (response) {
             console.log(response);
-
+            
+            let str;
             if(response.likecount > 0) {
                 count++;
+                str = `
+                <a class='recomment-like' data-board="${board}" data-category="${category}" data-fid='${fid}' data-cid='${cid}' data-did='${did}' data-count="${count}" data-csrfmiddlewaretoken="${csrfmiddlewaretoken}">
+                    <div class = "like-img">
+                        <img class = "img1" src="/static/img/like2.png">
+                    </div>
+                    ${count}
+                </a>
+                `
             } else {
                 count--;
+                str = `
+                <a class='recomment-like' data-board="${board}" data-category="${category}" data-fid='${fid}' data-cid='${cid}' data-did='${did}' data-count="${count}" data-csrfmiddlewaretoken="${csrfmiddlewaretoken}">
+                    <div class = "like-img">
+                        <img class = "img1" src="/static/img/like.png">
+                    </div>
+                    ${count}
+                </a>
+                `
             }  
 
-            const str = `
-            <a class='recomment-like' data-board="${board}" data-category="${category}" data-fid='${fid}' data-cid='${cid}' data-did='${did}' data-count="${count}" data-csrfmiddlewaretoken="${csrfmiddlewaretoken}">
-                <div class = "like-img">
-                    <img class = "img1" src="/static/img/like.png">
-                </div>
-                ${count}
-            </a>
-            `
             $(str).insertBefore($this);
             $this.remove();
             
@@ -614,23 +632,30 @@ $(document).on('click', '.feed-like', (e) => {
 
         success: function (response) {
             console.log(response);
-
+            
+            let str;
             if(response.likecount > 0) {
                 count++;
+                str = `
+                <a class="feed-like" data-board="${board}" data-category="${category}" data-fid='${fid}' data-count='${count}' data-csrfmiddlewaretoken="${csrfmiddlewaretoken}">
+                    <div class = "like-img">
+                        <img class = "img1" src="/static/img/like2.png">
+                    </div>
+                    ${count}
+                </a>
+                `
             } else {
                 count--;
+                str = `
+                <a class="feed-like" data-board="${board}" data-category="${category}" data-fid='${fid}' data-count='${count}' data-csrfmiddlewaretoken="${csrfmiddlewaretoken}">
+                    <div class = "like-img">
+                        <img class = "img1" src="/static/img/like.png">
+                    </div>
+                    ${count}
+                </a>
+                `
             }  
-
-            console.log(count)
-            const str = `
-            <a class="feed-like" data-board="${board}" data-category="${category}" data-fid='${fid}' data-count='${count}' data-csrfmiddlewaretoken="${csrfmiddlewaretoken}">
-                <div class = "like-img">
-                    <img class = "img1" src="/static/img/like.png">
-                </div>
-                ${count}
-            </a>
-            `
-
+            
             $(str).insertBefore($this);
             $this.remove();
             

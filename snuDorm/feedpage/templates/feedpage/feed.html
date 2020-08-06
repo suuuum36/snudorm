@@ -291,7 +291,7 @@
                         <div>
                             <a class='recomment-like' data-board="{{ board }}" data-category="{{ category }}" data-fid='{{ feed.id }}' data-cid='{{ c.id }}' data-did='{{ d.id }}' data-count='{{ d.recommentlike_set.count }}' data-csrfmiddlewaretoken="{{ csrf_token }}">
                                 <div class = "like-img">
-                                    {% if d in user.like_comments.all %}
+                                    {% if d in user.like_recomments.all %}
                                     <img class = "img1" src="/static/img/like2.png">
                                     {% else %}
                                     <img class = "img1" src="/static/img/like.png">
