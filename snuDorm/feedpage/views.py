@@ -394,20 +394,29 @@ def likeFeed(request, board, category, fid):
 # 댓글 달기
 def newComment(request, board, category, fid):
     content = request.POST['content']
+
+    if (len(content) > 50 or len(content) == 0):
+        context = {
+            'concount': len(content),
+        }
+        return JsonResponse(context)
+
     noname = True if "noname[]" in request.POST else False
-    # noname = request.POST['noname']
     new_comment = FeedComment.objects.create(feed_id=fid, content=content, author = request.user, noname = noname)
     like_count = new_comment.commentlike_set.filter(user_id = request.user.id)
     feed = Feed.objects.get(id = fid)
     if request.user.id != feed.author.id:
         Notice.objects.create(user_to_id = feed.author.id, user_from = request.user, feed_id = fid, type_info1='게시글', type_info2='댓글', noname=noname)
 
+
     context = {
         'cid': new_comment.id,
         'nickname': new_comment.author.profile.nickname,
         'content': new_comment.content,
+        'concount': len(new_comment.content),
         'like_count': like_count.count(),
         'noname': noname,
+        'date': new_comment.created_at.strftime("%y.%m.%d"),        
     }
 
     return JsonResponse(context)
@@ -424,6 +433,7 @@ def editComment(request, board, category, fid, cid):
             'nickname': edit_comment.author.profile.nickname,
             'content' : content,
             'noname' : edit_comment.noname,
+            'date': edit_comment.created_at.strftime("%y.%m.%d"), 
         }
 
         return JsonResponse(context)
@@ -462,6 +472,12 @@ def deleteComment(request, board, category, fid, cid):
 
 def newRecomment(request, board, category, fid, cid):
     content = request.POST['content']
+    if (len(content) > 50 or len(content) == 0):
+        context = {
+            'concount': len(content),
+        }
+        return JsonResponse(context)
+
     noname = True if "noname[]" in request.POST else False
     new_recomment = Recomment.objects.create(
         comment_id=cid, content=content, author=request.user, noname = noname)
@@ -478,6 +494,7 @@ def newRecomment(request, board, category, fid, cid):
         'content': new_recomment.content,
         'likecount': like_count.count(),
         'noname': noname,
+        'date': new_recomment.created_at.strftime("%y.%m.%d"),     
     }
 
     return JsonResponse(context)
@@ -496,6 +513,7 @@ def editRecomment(request, board, category, fid, cid, rcid):
             'nickname': edit_recomment.author.profile.nickname,
             'content' : content,
             'noname' : edit_recomment.noname,
+            'date': edit_recomment.created_at.strftime("%y.%m.%d"), 
         }
 
         return JsonResponse(context)
