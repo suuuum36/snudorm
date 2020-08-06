@@ -1,33 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
-<<<<<<< HEAD
-
-{% if user.is_authenticated %}
-<div class="info">
-    <div>{{ board_name }} </div>
-    {% if feed.author == request.user %}
-    <div style="margin: 10px; text-align: right;">
-        <a href="{% url 'editfeed' board category feed.id %}">수정</a>
-        <a href="{% url 'deletefeed' board category feed.id %}">삭제</a>
-    </div>
-    {% endif %}
-    <div style="display:flex; justify-content:space-around;">
-        <div style="display:flex"> 
-            <div>작성자</div>
-            <div class="feed_author_name">
-                {% if feed.noname %} 
-                    <div>익명</div>
-                {% else %}
-                    {% if feed.author != request.user %}
-                    <a href="{% url 'chatroom' request.user.id feed.author.id  %}">
-                        {{ feed.author.profile.nickname }}
-                    </a>
-                    {% else %}
-                        {{ feed.author.profile.nickname }}
-                    {% endif %}
-                {% endif %}
-=======
 
 <head>
     <link rel="stylesheet" href="{% static 'feedpage/feed.css' %}">
@@ -63,7 +36,6 @@
                         </div>
                     {% endif %}
                 </div> 
->>>>>>> 708bc717ffd7968e0537759ea3442529f24ac846
             </div> 
 
             <div class = "info-info" >
