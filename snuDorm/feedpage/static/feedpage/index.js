@@ -83,7 +83,3 @@ function cobuy() {
     $('#keep').attr("style", "color:#7f7f7f;");
     $('#rent').attr("style", "color:#7f7f7f;");
 }
-
-var list = $('.life-list').find('.list').children().length;
-console.log(list);
-
