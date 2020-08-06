@@ -41,13 +41,12 @@ table {
   border-spacing: 0; }
 
 * {
-<<<<<<< HEAD
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Noto Sans KR', sans-serif; }
-=======
-  box-sizing: border-box; }
+  font-family: 'Noto Sans KR', sans-serif;
+  box-sizing: border-box; 
+}
 
 a {
   text-decoration: none; }
@@ -68,7 +67,6 @@ input {
 
 select {
   outline-style: none; }
->>>>>>> 708bc717ffd7968e0537759ea3442529f24ac846
 
 body {
   line-height: 1; }

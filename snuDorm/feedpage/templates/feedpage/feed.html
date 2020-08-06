@@ -29,11 +29,13 @@
                         <div>익명</div>
                     {% else %}
                         {{ feed.author.profile.nickname }}
+                        {% if feed.author != request.user %}
                         <div class = "index-m" >
                             <a href="{% url 'chatroom' request.user.id feed.author.id  %}">
                                 <img class = "img-m" src="/static/img/message.png">
                             </a>
                         </div>
+                        {% endif %}
                     {% endif %}
                 </div> 
             </div> 

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 * {
   box-sizing: border-box; }
 
@@ -8,8 +7,6 @@ a {
 a:link, a:visited, a:hover, a:active {
   color: black; }
 
-=======
->>>>>>> 708bc717ffd7968e0537759ea3442529f24ac846
 input:focus::-webkit-input-placeholder,
 textarea:focus::-webkit-input-placeholder {
   color: transparent !important; }
