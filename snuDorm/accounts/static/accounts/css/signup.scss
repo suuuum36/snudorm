@@ -278,8 +278,6 @@ input:focus::-webkit-input-placeholder {
             
             // 옵션 설정
             .dropdown-option {
-                height: 50px;
-                padding: 12px 20px;
                 cursor: pointer;
                 background-color: #ffffff;
                 display: flex;
@@ -298,7 +296,10 @@ input:focus::-webkit-input-placeholder {
             
             // input type = "radio"와 연결
             label {
-                display: inline-block;
+                display: flex;
+                align-items: center;
+                padding-left: 20px;
+                height: 50px;
                 width: 100%;
                 cursor: pointer;
             }

@@ -184,8 +184,6 @@ input:focus::-webkit-input-placeholder {
         transition: all 0.4s; }
       .form .building .building-category .dropdown-option, .form .building .building-default .dropdown-option, .form .building .building-bachelor .dropdown-option,
       .form .building .building-master .dropdown-option, .form .building .building-family .dropdown-option, .form .building .building-bk .dropdown-option {
-        height: 50px;
-        padding: 12px 20px;
         cursor: pointer;
         background-color: #ffffff;
         display: flex;
@@ -199,7 +197,10 @@ input:focus::-webkit-input-placeholder {
         color: #016aff; }
       .form .building .building-category label, .form .building .building-default label, .form .building .building-bachelor label,
       .form .building .building-master label, .form .building .building-family label, .form .building .building-bk label {
-        display: inline-block;
+        display: flex;
+        align-items: center;
+        padding-left: 20px;
+        height: 50px;
         width: 100%;
         cursor: pointer; }
     .form .building .signup {

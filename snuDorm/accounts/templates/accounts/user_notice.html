@@ -25,15 +25,20 @@
                     </div>
                     <div class="list">
                         {% for notice in notices %}
-                        <a href="{% url 'showfeed' notice.feed.id %}">
+                        <a href="{% url 'showfeed' notice.feed.board notice.feed.category notice.feed.id %}">
                             <div class="notice-container">
                                 <div class="left-content">
                                     {% if notice.noname %}
                                         <span class="notice-nickname target">익명</span>
                                         <span class="explain">의 회원님이</span>
                                     {% else %}
-                                        <span class="notice-nickname">{{ notice.user_from.profile.nickname }}</span>
-                                        <span class="explain">님이 회원님의</span>
+                                        <span class="notice-nickname target">{{ notice.user_from.profile.nickname }}</span>
+                                        <span class="explain">님이 회원</span>
+                                        {% if notice.type_info1 == '쪽지' %}
+                                            <span class="explain">님에게</span>
+                                        {% else %}
+                                            <span class="explain">님의</span>
+                                        {% endif %}
                                     {% endif %}
                                         
                                     {% if notice.type_info1 == '게시글' %}
@@ -41,6 +46,9 @@
                                         <span class="explain">에</span>
                                     {% elif notice.type_info1 == '댓글' %}
                                         <span class="notice-object target">댓글</span>
+                                        <span class="explain">에</span>
+                                    {% elif notice.type_info1 == '쪽지' %}
+                                        <span class="notice-object target">쪽지</span>
                                         <span class="explain">에</span>
                                     {% else %} <!-- if 대댓글 -->
                                         <span class="notice-object target">대댓글</span>

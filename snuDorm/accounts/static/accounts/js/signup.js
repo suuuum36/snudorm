@@ -205,10 +205,10 @@ categoryOptions.forEach(o => {
     var opt = o.firstElementChild;
     var cateName = document.getElementsByName("building_category");
     if (cateName.length == 1) {
+      console.log(cateName);
       cateName[0].removeAttribute("name");
     };
     opt.setAttribute("name", "building_category");
-    console.log(cateName);
    
     var dorm = document.getElementById("selected").innerHTML;
     var defaultOpt = document.getElementById("default-dong"); // 처음에 보여지는 default 옵션

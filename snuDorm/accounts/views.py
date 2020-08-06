@@ -29,6 +29,7 @@ def signup(request):
 
     # POST 방식
     if request.method == "POST":
+        print(request.POST)
         
         # form 값 저장
         user_id = request.POST['user_id'] # User, 아이디
@@ -39,7 +40,6 @@ def signup(request):
         email = request.POST['email'] # User, 이메일
         building_category = request.POST['building_category'] # Profile, 생활관
         building_dong = request.POST['building_dong'] # Profile, 동
-
 
         # 1차, 2차 비밀번호 일치여부 판단(js에서 1차 검증)
         if password == confirm_password:
