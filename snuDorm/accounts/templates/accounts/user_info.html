@@ -2,6 +2,7 @@
 {% load static %}
 {% load sass_tags %}
 {% block content %}
+<div class="background">
     <div class="form">
         <div class="nav">
             <div class="nav-title"><span>마이페이지</span></div>
@@ -13,7 +14,7 @@
         </div>
     
         <div class="info">
-            <div class="title">내 정보</div>
+            <div class="title"><span>내 정보</span></div>
             <div class="container">
                 <div class="name">
                     <div class="field">
@@ -31,7 +32,7 @@
                         <span>{{ user.username }}</span>
                     </div>
                 </div>
-                <div class="nickname">
+                <div class="nk">
                     <div class="field">
                         <span>닉네임</span>
                     </div>
@@ -58,6 +59,6 @@
             </div>               
         </div> 
     </div>
-</body>
+</div>
 {% endblock content %}
     
