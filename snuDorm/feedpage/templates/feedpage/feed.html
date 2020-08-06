@@ -146,7 +146,7 @@
                 <div class = "content-div">
                     <div class = "content-title">{{ feed.title }} </div>
                     <div class = "content-purpose">목적 {{ feed.purpose.1 }} </div>
-                    <div clas = "content-rent">보관료 {{ feed.reward }} </div>
+                    <div class = "content-rent">보관료 {{ feed.reward }} </div>
                     <div class = "content-date">
                         {% if feed.start_date|date:"Y.m.d" == '2020.01.01' %}
                             시작일 미정 </br>
@@ -231,7 +231,11 @@
                     <div>
                         <a class='comment-like' data-board="{{ board }}" data-category="{{ category }}" data-fid='{{ feed.id }}' data-cid='{{ c.id }}' data-count='{{ c.commentlike_set.count }}' data-csrfmiddlewaretoken="{{ csrf_token }}">
                             <div class = "like-img">
+                                {% if c in user.like_comments.all %}
+                                <img class = "img1" src="/static/img/like2.png">
+                                {% else %}
                                 <img class = "img1" src="/static/img/like.png">
+                                {% endif %}
                             </div>
                             {{ c.commentlike_set.count }}
                         </a>
@@ -245,7 +249,7 @@
                 data-board="{{ board }}" data-category="{{ category }}" data-fid="{{ feed.id }}" data-cid="{{c.id}}" data-count = "{{ c.commentlike_set.count }}"
                 data-csrfmiddlewaretoken="{{ csrf_token }}">
                 {% csrf_token %}
-                <input id="{{ feed.id }}_{{ c.id }}" type="text" name="content" value="{{ c.content }}"/>
+                <input id="{{ feed.id }}_{{ c.id }}" size = "80" type="text" name="content" value="{{ c.content }}"/>
                 <button type="submit">댓글 수정</button>
                 </form>
             </div>
@@ -287,7 +291,11 @@
                         <div>
                             <a class='recomment-like' data-board="{{ board }}" data-category="{{ category }}" data-fid='{{ feed.id }}' data-cid='{{ c.id }}' data-did='{{ d.id }}' data-count='{{ d.recommentlike_set.count }}' data-csrfmiddlewaretoken="{{ csrf_token }}">
                                 <div class = "like-img">
+                                    {% if d in user.like_comments.all %}
+                                    <img class = "img1" src="/static/img/like2.png">
+                                    {% else %}
                                     <img class = "img1" src="/static/img/like.png">
+                                    {% endif %}
                                 </div>
                                 {{ d.recommentlike_set.count }}
                             </a>
@@ -300,7 +308,7 @@
                     data-board="{{ board }}" data-category="{{ category }}" data-fid="{{ feed.id }}" data-cid="{{c.id}}" data-did="{{ d.id }}" data-count = "{{ d.recommentlike_set.count }}"
                     data-csrfmiddlewaretoken="{{ csrf_token }}">
                     {% csrf_token %}
-                    <input id="c{{ c.id }}_d{{ d.id }}" type="text" name="content" value="{{ d.content }}"/>
+                    <input id="c{{ c.id }}_d{{ d.id }}" size = "80" type="text" name="content" value="{{ d.content }}"/>
                     <button type="submit">대댓글 수정</button>
                     </form>
                 </div>

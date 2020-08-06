@@ -646,19 +646,3 @@ $(document).on('click', '.feed-like', (e) => {
 
     });
 });
-
-
-$(document).on('click', '.recomment-button', function(e){
-    const $this = $(e.currentTarget);
-    $target = $this.parent().parent().siblings('.recomment-make');
-    if( $target.css('display') == 'none'){
-        $target.css('display', 'block')
-        $this.css('color', '#016aff')
-        console.log('yes')
-    } else {
-        $target.css('display', 'none')
-        $this.css('color', '#5A5A5A')
-        console.log('no')
-    }
-})
-

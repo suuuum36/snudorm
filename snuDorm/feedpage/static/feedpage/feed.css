@@ -135,6 +135,8 @@
 
 .content-content {
     font-size: 15px;
+    color: #5a5a5a;
+    margin-top: 15px;
 }
 
 
@@ -345,3 +347,61 @@
       width: 100%;
     }
   }
+
+.content-photo {
+    margin-top: 20px;
+}
+
+.content-url, .content-purpose, .content-rent, .content-date {
+    margin-bottom: 5px;
+}
+
+.content-url > a {
+    color: #5a5a5a;
+    text-decoration: underline;
+}
+
+/*댓글 수정*/
+
+.comment-edit, .recomment-edit {
+    height: 60px !important;
+    position: relative;
+    background-color: #f0f0f0;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.comment-edit > input {
+    border: 0px solid;
+    background-color: #f0f0f0;
+    font-size: 15px;
+}
+
+.recomment-edit > input {
+    border: 0px solid;
+    background-color: #f0f0f0;
+    font-size: 15px;
+}
+
+
+.comment-edit > button{
+    border: 0px solid;
+    font-size: 15px;
+    color: #016aff;
+}
+
+.recomment-edit > button {
+    border: 0px solid;
+    font-size: 15px;
+    color: #016aff;
+}
+
+.comment-edit > form {
+    display: flex;
+    justify-content: space-around;
+}
+
+.recomment-edit > form {
+    display: flex;
+    justify-content: space-around;
+}
