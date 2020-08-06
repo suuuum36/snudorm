@@ -50,6 +50,39 @@ $(document).on('click', '#euncertain2', ()=> {
     }     
 })
 
+
+$(document).on('click', '#photodelete', function(e) {
+    const $this = $(e.currentTarget)
+    $this.parent().css('display', 'none')
+})
+$('#startDate').val(new Date().toISOString().substring(0, 10));
+
+$(document).on('click', '#uncertain1', ()=> {
+    if($('#startDate').attr("required")) {
+        $("#startDate").removeAttr('required');
+        $("#startDate").attr('disabled', true);
+        console.log('hello uncertain1')
+    } else {
+        $("#startDate").removeAttr('disabled');
+        $("#startDate").attr('required', true);   
+        console.log('bye uncertain1')
+    }     
+})
+
+$('#dueDate').val(new Date().toISOString().substring(0, 10));
+
+$(document).on('click', '#uncertain2', ()=> {
+    if($('#dueDate').attr("required")) {
+        $("#dueDate").removeAttr('required');
+        $("#dueDate").attr('disabled', true);
+        console.log('hello uncertain2')
+    } else {
+        $("#dueDate").removeAttr('disabled');
+        $("#dueDate").attr('required', true);   
+        console.log('bye uncertain2')
+    }     
+})
+
 $(document).on('change', '#photo', function(e) {
     console.log('clicked');
     let $this = $(e.currentTarget);
@@ -87,8 +120,3 @@ $(document).on('change', '#photo', function(e) {
         }
     }
 })    
-
-$(document).on('click', '#photodelete', function(e) {
-    const $this = $(e.currentTarget)
-    $this.parent().css('display', 'none')
-})

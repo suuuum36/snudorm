@@ -42,7 +42,7 @@ var building2 = document.querySelector('.building-2');
 var building3 = document.querySelector('.building-3');
 var building4 = document.querySelector('.building-4');
 
-var category = ["bachelor", "graduate", "family", "bk"]
+var category = ["bachelor", "master", "family", "bk"]
 var building = [building1, building2, building3, building4]
 var idx;
 
@@ -57,7 +57,7 @@ for(idx = 0; idx < 12; idx++) {
 var mAll = document.querySelector('.minwon-all-text');
 var mGong = document.querySelector('.gong-text');
 var mB = document.querySelector('.bachelor-text');
-var mG = document.querySelector('.graduate-text');
+var mG = document.querySelector('.master-text');
 var mF = document.querySelector('.family-text');
 var mBK = document.querySelector('.bk-text');
 
@@ -68,7 +68,7 @@ var l2 = document.querySelector('.l2');
 var l3 = document.querySelector('.l3');
 var l4 = document.querySelector('.l4');
 
-var category2 = ["tori", "tori", "gong", "bachelor", "graduate", "family", "bk", "cobuy", "rent", "keep", "resell"]
+var category2 = ["tori", "tori", "gong", "bachelor", "master", "family", "bk", "cobuy", "rent", "keep", "resell"]
 var categoryText = [mAll, lAll, mGong, mB, mG, mF, mBK, l1, l2, l3, l4]
 
 for (idx=0; idx < 11; idx++) {

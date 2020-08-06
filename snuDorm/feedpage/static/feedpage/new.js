@@ -1,4 +1,3 @@
-
 $(document).on('change', '#photo', function(e) {
     console.log('clicked');
     const $this = $(e.currentTarget);
@@ -67,34 +66,32 @@ function startCheck(stat) {
     }
 }
 
-$('#startDate').val(new Date().toISOString().substring(0, 10));
 
-$(document).on('click', '#uncertain1', ()=> {
-    if($('#startDate').attr("required")) {
-        $("#startDate").removeAttr('required');
-        $("#startDate").attr('disabled', true);
-        console.log('hello')
+$('#estartDate').val(new Date().toISOString().substring(0, 10));
+
+$(document).on('click', '#euncertain1', ()=> {
+    if($('#estartDate').attr("required")) {
+        $("#estartDate").removeAttr('required');
+        $("#estartDate").attr('disabled', true);
+        console.log('hello uncertain1')
     } else {
-        $("#startDate").removeAttr('disabled');
-        $("#startDate").attr('required', true);   
-        console.log('bye')
+        $("#estartDate").removeAttr('disabled');
+        $("#estartDate").attr('required', true);   
+        console.log('bye euncertain1')
     }     
 })
 
 
-$('#dueDate').val(new Date().toISOString().substring(0, 10));
+$('#edueDate').val(new Date().toISOString().substring(0, 10));
 
-$(document).on('click', '#uncertain2', ()=> {
-    if($('#dueDate').attr("required")) {
-        $("#dueDate").removeAttr('required');
-        $("#dueDate").attr('disabled', true);
-        console.log('hello')
+$(document).on('click', '#euncertain2', ()=> {
+    if($('#edueDate').attr("required")) {
+        $("#edueDate").removeAttr('required');
+        $("#edueDate").attr('disabled', true);
+        console.log('hello euncertain2')
     } else {
-        $("#dueDate").removeAttr('disabled');
-        $("#dueDate").attr('required', true);   
-        console.log('bye')
+        $("#edueDate").removeAttr('disabled');
+        $("#edueDate").attr('required', true);   
+        console.log('bye euncertain2')
     }     
 })
-
-
-
