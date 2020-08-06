@@ -16,20 +16,20 @@
             {% if board == 'minwon' or board == 'freeboard' %}
             <!-- Minwon, freeboard 게시판 -->
             <div class="minwon_or_free_new every-div">
-                <form method="POST" action="{% url 'editfeed' board category fid %}" enctype="multipart/form-data">
+                <form method="POST" class="new_form_create" enctype="multipart/form-data" action="{% url 'newfeed' board category %}">
                     {% csrf_token %}
                     <div id = "minwon_table">
                         <div class = "title-row">
-                            <input value={{feed.title}} name="title" type="text" size = "80" placeholder="제목을 입력해주세요." required>
+                            <input value={{feed.title}} name="title" type="text" size = "80" required>
                         </div>
                         <div class = "content-row">
-                            <textarea value={{feed.content}} name="content" type="text" required>{{feed.content}}</textarea>
+                            <textarea value={{feed.content}} name="content" type="text"  required></textarea>
                         </div>
 
                         <div class = "photo-zone" id ="thumbnail">
                             {% for photo in feed.image_set.all %}
                             <div class="exphoto">
-                                <img src="{{ photo.photo.url }}" alt="" width="200px" height="200px">
+                                <img src="{{ photo.photo.url }}" alt="" width:"200px" height="200px">
                                 <input type="checkbox" id="photodelete" name="deletelist[]" value="{{ photo.id }}">
                                 <label for="photodelete">삭제</label>
                             </div>
@@ -47,13 +47,13 @@
                                 <span class="option_noname">
                                     {% if feed.noname == True %}
                                         <input name="noname" type="checkbox" id="noname" checked>
-                                        <label class ="noname" for="noname">익명</label>
+                                        <label for="noname">익명</label>
                                     {% else %}
                                         <input name="noname" type="checkbox" id="noname">
-                                        <label class ="noname" for="noname">익명</label>
+                                        <label for="noname">익명</label>
                                     {% endif %}
                                 </span>
-                                <button class ="write-comment" type="submit">글쓰기</button>
+                                <button type="submit">글쓰기</button>
                             </div>
                         </div>
                     </div>
@@ -65,7 +65,7 @@
             {% elif category == 'cobuy' %}
             <!-- Cobuy 공구 게시판 -->
             <div class="cobuy_board_new every-div">
-                <form method="POST" action="{% url 'editfeed' 'life' 'cobuy' fid %}" enctype="multipart/form-data">
+                <form method="POST" enctype="multipart/form-data" action="{% url 'newfeed' 'life' 'cobuy' %}">
                     {% csrf_token %}
                     <div id = "cobuy_table table_all">
                         <div class = "title-row lu">
@@ -104,14 +104,14 @@
                         <div class = "description-row lu">
                             <div class = "description de">설명</div>
                             <div>
-                                <textarea value={{feed.content}} class = "description-area" name="content" type="text" placeholder="공구 내용과 연락수단을 적어주세요." required>{{feed.content}}</textarea>
+                                <textarea value={{feed.content}} class = "description-area" name="content" type="text" placeholder="공구 내용과 연락수단을 적어주세요." required></textarea>
                             </div>
                         </div>
     
-                        <div class = "photo-zone" id ="thumbnail" >
+                        <div class = "photo-zone" id ="thumbnail">
                             {% for photo in feed.image_set.all %}
                             <div class="exphoto">
-                                <img src="{{ photo.photo.url }}" alt="" width="200px" height="200px">
+                                <img src="{{ photo.photo.url }}" alt="" width:"200px" height="200px">
                                 <input type="checkbox" id="photodelete" name="deletelist[]" value="{{ photo.id }}">
                                 <label for="photodelete">삭제</label>
                             </div>
@@ -144,13 +144,13 @@
                                 <span class="option_noname">
                                     {% if feed.noname == True %}
                                         <input name="noname" type="checkbox" id="noname" checked>
-                                        <label class ="noname" for="noname">익명</label>
+                                        <label for="noname">익명</label>
                                     {% else %}
                                         <input name="noname" type="checkbox" id="noname">
-                                        <label class ="noname" for="noname">익명</label>
+                                        <label for="noname">익명</label>
                                     {% endif %}
                                 </span>
-                                <button class ="write-comment" type="submit">글쓰기</button>
+                                <button type="submit">글쓰기</button>
                             </div>
                         </div>
                     </div>
@@ -160,7 +160,7 @@
             {% elif category == 'rent' %}
             <!-- Rent 게시판 -->
             <div class="rent_board_new every-div"> 
-                <form method="POST" action="{% url 'editfeed' 'life' 'rent' fid %}" enctype="multipart/form-data">
+                <form method="POST" enctype="multipart/form-data" action="{% url 'newfeed' 'life' 'rent' %}">
                     {% csrf_token %}
                     <div id = "rent_table table_all">
                         <div class = "title-row lu">
@@ -227,14 +227,14 @@
                         <div class = "description-row lu">
                             <div class = "description de">설명</div>
                             <div>
-                                <textarea value={{feed.content}} name="content" type="text" class = "description-area" placeholder="대여 내용과 연락처를 적어주세요." required>{{feed.content}}</textarea>
+                                <textarea value={{feed.content}} name="content" type="text" class = "description-area" placeholder="대여 내용과 연락처를 적어주세요." required></textarea>
                             </div>
                         </div>
 
-                        <div class = "photo-zone" id ="thumbnail" >
+                        <div class = "photo-zone" id ="thumbnail">
                             {% for photo in feed.image_set.all %}
                             <div class="exphoto">
-                                <img src="{{ photo.photo.url }}" alt="" width="200px" height="200px">
+                                <img src="{{ photo.photo.url }}" alt="" width:"200px" height="200px">
                                 <input type="checkbox" id="photodelete" name="deletelist[]" value="{{ photo.id }}">
                                 <label for="photodelete">삭제</label>
                             </div>
@@ -267,13 +267,13 @@
                                 <span class="option_noname">
                                     {% if feed.noname == True %}
                                         <input name="noname" type="checkbox" id="noname" checked>
-                                        <label class ="noname" for="noname">익명</label>
+                                        <label for="noname">익명</label>
                                     {% else %}
                                         <input name="noname" type="checkbox" id="noname">
-                                        <label class ="noname" for="noname">익명</label>
+                                        <label for="noname">익명</label>
                                     {% endif %}
                                 </span>
-                                <button class ="write-comment" type="submit">글쓰기</button>
+                                <button type="submit">글쓰기</button>
                             </div>
                         </div>
                     </div> 
@@ -283,7 +283,7 @@
             {% elif category == "keep" %}
             <!-- Keep 게시판 -->
             <div class="keep_board_new every-div">
-                <form method="POST" action="{% url 'editfeed' 'life' 'keep' fid %}" enctype="multipart/form-data">
+                <form method="POST" action="{% url 'newfeed' 'life' 'keep' %}">
                     {% csrf_token %}
                     <div id = "keep_table table_all">
                         <div class = "title-row lu">
@@ -349,14 +349,14 @@
                         <div class = "description-row lu">
                             <div class = "description de">설명</div>
                             <div>
-                                <textarea value={{feed.content}} name="content" type="text" class = "description-area" placeholder="대여 내용과 연락처를 적어주세요." required>{{feed.content}}</textarea>
+                                <textarea value="{{feed.content}}" name="content" type="text" class = "description-area" placeholder="대여 내용과 연락처를 적어주세요." required></textarea>
                             </div>
                         </div>
 
-                        <div class = "photo-zone" id ="thumbnail" style = "display:block;">
+                        <div class = "photo-zone" id ="thumbnail">
                             {% for photo in feed.image_set.all %}
                             <div class="exphoto">
-                                <img src="{{ photo.photo.url }}" alt="" width="200px" height="200px">
+                                <img src="{{ photo.photo.url }}" alt="" width:"200px" height="200px">
                                 <input type="checkbox" id="photodelete" name="deletelist[]" value="{{ photo.id }}">
                                 <label for="photodelete">삭제</label>
                             </div>
@@ -389,13 +389,13 @@
                                 <span class="option_noname">
                                     {% if feed.noname == True %}
                                         <input name="noname" type="checkbox" id="noname" checked>
-                                        <label class ="noname" for="noname">익명</label>
+                                        <label for="noname">익명</label>
                                     {% else %}
                                         <input name="noname" type="checkbox" id="noname">
-                                        <label class ="noname" for="noname">익명</label>
+                                        <label for="noname">익명</label>
                                     {% endif %}
                                 </span>
-                                <button class ="write-comment" type="submit">글쓰기</button>
+                                <button type="submit">글쓰기</button>
                             </div>
                         </div>
                     </div>
@@ -405,7 +405,7 @@
             {% elif category == "resell" %}
             <!-- Resell 게시판 -->
             <div class="resell_board_new every-div">
-                <form method="POST" action="{% url 'editfeed' 'life' 'resell' fid %}" enctype="multipart/form-data">
+                <form method="POST" enctype="multipart/form-data" action="{% url 'newfeed' 'life' 'resell' %}">
                     {% csrf_token %}
                     <div id = "resell_table table_all" >
                         <div class = "title-row lu">
@@ -442,14 +442,14 @@
                         <div class = "description-row lu">
                             <div class = "description de">설명</div>
                             <div>
-                                <textarea value={{feed.content}} name="content" type="text" class = "description-area" placeholder="중고거래 내용을 적어주세요." required>{{feed.content}}</textarea>
+                                <textarea value={{feed.content}} name="content" type="text" class = "description-area" placeholder="중고거래 내용을 적어주세요." required></textarea>
                             </div>
                         </div>
 
-                        <div class = "photo-zone" id ="thumbnail" style = "display:block;">
+                        <div class = "photo-zone" id ="thumbnail">
                             {% for photo in feed.image_set.all %}
                             <div class="exphoto">
-                                <img src="{{ photo.photo.url }}" alt="" width="200px" height="200px">
+                                <img src="{{ photo.photo.url }}" alt="" width:"200px" height="200px">
                                 <input type="checkbox" id="photodelete" name="deletelist[]" value="{{ photo.id }}">
                                 <label for="photodelete">삭제</label>
                             </div>
@@ -482,13 +482,13 @@
                                 <span class="option_noname">
                                     {% if feed.noname == True %}
                                         <input name="noname" type="checkbox" id="noname" checked>
-                                        <label class ="noname" for="noname">익명</label>
+                                        <label for="noname">익명</label>
                                     {% else %}
                                         <input name="noname" type="checkbox" id="noname">
-                                        <label class ="noname" for="noname">익명</label>
+                                        <label for="noname">익명</label>
                                     {% endif %}
                                 </span>
-                                <button class ="write-comment" type="submit">글쓰기</button>
+                                <button type="submit">글쓰기</button>
                             </div>
                         </div>
                     </div>
@@ -498,5 +498,5 @@
         {% endif %}
     {% endif %}
 </div>
-<script src="{% static 'feedpage/edit.js' %}"></script>
+<script src="{% static 'feedpage/new.js' %}"></script>
 {% endblock content %}

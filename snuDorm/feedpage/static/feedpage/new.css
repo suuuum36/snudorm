@@ -120,6 +120,7 @@ input[type=file]{
 
 .photo-zone {
     display: flex;
+    flex-wrap: wrap;
 }
 .photo-zone > div > img {
     margin: 10px;
@@ -168,4 +169,10 @@ input[type=file]{
 
 label {
     color: #7f7f7f;
+}
+
+.exphoto {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
 }
