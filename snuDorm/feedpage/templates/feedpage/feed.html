@@ -177,9 +177,9 @@
                             익명
                         {% else %}
                             {{ c.author.profile.nickname }}
+                        {% endif %}
                     </div>
                     <div class = "c-c">
-                        {% endif %}
                             {{ c.content }}
                     </div>
                 </div>
@@ -234,15 +234,15 @@
                                 익명
                             {% else %}
                                 {{ d.author.profile.nickname }}
+                            {% endif %}
                         </div>
                         <div class = "c-c">
-                            {% endif %}
                             {{ d.content }}
                         </div>
                     </div>
                     <div class = "c-button">
                         {% if request.user == d.author %}
-                        <a class="deletecommentform">
+                        <a class="editrecommentform">
                             수정
                         </a>
                         <form method="POST" class='deleterecomment' data-board="{{ board }}" data-category="{{ category }}" data-fid='{{ feed.id }}' data-cid='{{ c.id }}' data-did='{{ d.id }}' data-csrfmiddlewaretoken="{{ csrf_token }}">
@@ -302,7 +302,7 @@
             <div class = "comment-box">
                 <form method="POST" class="comment-submit"
                     data-board="{{ board }}" data-category="{{ category }}" data-fid="{{ feed.id }}"
-                    data-csrfmiddlewaretoken="{{ csrf_token }}">
+                    data-csrfmiddlewaretoken="{{ csrf_token }}" data-cdate="{{ c.created_at|date:"y.m.d" }}">
                     {% csrf_token %}
                     <input class = "comment-makebox" id="{{ feed.id }}" type="text" name="content" size="80" placeholder ="댓글을 입력해주세요."/>
                     <input class = "noname-checkbox" name="noname" type="checkbox" id="noname{{ feed.id }}">
