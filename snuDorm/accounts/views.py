@@ -38,8 +38,8 @@ def signup(request):
         name = request.POST['name'] # Profile, 이름
         nickname = request.POST['nickname'] # Profile, 닉네임
         email = request.POST['email'] # User, 이메일
-        building_category = request.POST['building_category'] # Profile, 생활관
-        building_dong = request.POST['building_dong'] # Profile, 동
+        building_category = request.POST.get('building_category', False)  # Profile, 생활관
+        building_dong = request.POST.get('building_dong', False) # Profile, 동
 
         # 1차, 2차 비밀번호 일치여부 판단(js에서 1차 검증)
         if password == confirm_password:
@@ -276,6 +276,7 @@ def chatRoom(request, id1, id2):
     messages = list()
     num = User.objects.latest('id').id
     lastmessages = list()
+    friend = User.objects.get(id = id2).profile.nickname
 
     notices = Notice.objects.filter(user_to = request.user, feed = None)
     for notice in notices:
@@ -298,7 +299,7 @@ def chatRoom(request, id1, id2):
     for message in Message.objects.filter(user_to_id = id1, user_from_id = id2):
         messages.append(message)
 
-    return render(request, 'accounts/chatroom.html', {'chat_from': id1, 'chat_to':id2, 'lastmessages':lastmessages, 'messages': messages })
+    return render(request, 'accounts/chatroom.html', {'chat_from': id1, 'chat_to':id2, 'lastmessages':lastmessages, 'messages': messages, 'friend' :friend })
 
 def sendMessage(request, id1, id2):
     content = request.POST['content']
