@@ -101,7 +101,7 @@ def showMain(request):
                             ("BK" if category.find("BK") != -1 else "학부")))
 
         dong = Minwon.objects.filter(board_info1=user_category, board_info2=user_building) 
-        dong_name = "(" + user_category + ")" + " " + user_building
+        dong_name = user_category + " " + user_building
 
         # 전체게시판 = [ 주간게시글, 일간게시글 ] - 좋아요 기준 정렬
         gong_feeds = [ Minwon.objects.filter(category='gong', created_at__gte=week_ago).order_by('-like_users', '-created_at')[:5],
