@@ -208,3 +208,19 @@ choose.forEach(x => {
     ipt.setAttribute("name", "building_dong");
   });
 });
+  function regexCheck(regex, what, message) {
+    if(regex.test(what.value)) {
+      return true;
+    };
+    alert(message);
+    what.value = "";
+    what.focus();
+  };
+  
+  // 공백 여부 판단을 위한 tool function
+  function blankCheck(field, message) {
+    if(field.vaule == "") {
+      alert(message);
+      field.focus();
+    };
+  };

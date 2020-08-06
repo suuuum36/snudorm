@@ -103,17 +103,17 @@ function nk_db_check() {
 // 회원가입 form 유효성 검사
 function validateForm() {
 
-  // input 변수 지정
-  var nameInput = document.getElementById("name");
-  var pw1Input = document.getElementById("pw1");
-  var pw2Input = document.getElementById("pw2");
-  var emailInput = document.getElementById("email");
+  // // input 변수 지정
+  // var nameInput = document.getElementById("name");
+  // var pw1Input = document.getElementById("pw1");
+  // var pw2Input = document.getElementById("pw2");
+  // var emailInput = document.getElementById("email");
 
-  // regex 변수 지정
-  // 4자 이내의 한글 이름(공백 불가능) 또는 15자 이내의 영어 이름(공백 가능)
-  var nameRegex = /^[가-힣]{1,4}|[\sa-zA-Z]{1,15}$/; 
-  // 영문, 숫자, 특수문자 최소 한 글자씩 포함 & 8자 이상
-  var pwRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
+  // // regex 변수 지정
+  // // 4자 이내의 한글 이름(공백 불가능) 또는 15자 이내의 영어 이름(공백 가능)
+  // var nameRegex = /^[가-힣]{1,4}|[\sa-zA-Z]{1,15}$/; 
+  // // 영문, 숫자, 특수문자 최소 한 글자씩 포함 & 8자 이상
+  // var pwRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
   
 
   // // 이름 확인

@@ -62,13 +62,12 @@ def get_pages(feeds, request):
     posts = paginator.get_page(page)
 
     # 베스트 버튼 
-    best_feeds = feeds.order_by('-like_users')
+    best_feeds = feeds.order_by('-like_users', '-created_at')
     paginator2 = Paginator(best_feeds, 11)
-    best_page = request.GET.get('best_page', 1)
+    best_page = request.GET.get('best_page')
     best_posts = paginator2.get_page(best_page)
     
     page_numbers_range = 10
-
     max_index = len(paginator.page_range)
     current_page = int(page) if page else 1
     start_index = int((current_page - 1) / page_numbers_range) * page_numbers_range
@@ -90,18 +89,26 @@ def showMain(request):
         week_ago = datetime.now()-timedelta(weeks=1)
         week_ago.strftime('%Y-%m-%d') 
 
-        # 기숙사 각 동별 게시판 
-        # dong = Minwon.objects.filter(category=request.user.profile.building_category, board=request.user.profile.building_dong) \
-        #         if request.user.is_authenticated else Minwon.objects.filter(board_info1="학부", board_info2="906")
-    
-        dong = Minwon.objects.filter(board_info1="학부", board_info2="906동")
+        user_category = "학부"
+        user_building = "906"
+
+        if request.user.is_authenticated:
+            category = request.user.profile.building_category
+            user_building = request.user.profile.building_dong
+            user_category = "학부" if category.find("학부") != -1 else \
+                            ("대학원" if category.find("대학원") != -1 else 
+                            ("가족" if category.find("가족") != -1 else 
+                            ("BK" if category.find("BK") != -1 else "학부")))
+
+        dong = Minwon.objects.filter(board_info1=user_category, board_info2=user_building) 
+        dong_name = "(" + user_category + ")" + " " + user_building
 
         # 전체게시판 = [ 주간게시글, 일간게시글 ] - 좋아요 기준 정렬
-        gong_feeds = [ Minwon.objects.filter(category='gong', created_at__gte=week_ago).order_by('-like_users')[:5],
-                        Minwon.objects.filter(category='gong', created_at__gte=yesterday).order_by('-like_users')[:5] ]
+        gong_feeds = [ Minwon.objects.filter(category='gong', created_at__gte=week_ago).order_by('-like_users', '-created_at')[:5],
+                        Minwon.objects.filter(category='gong', created_at__gte=yesterday).order_by('-like_users', '-created_at')[:5] ]
         # 동별게시판 = [ 주간게시글, 일간게시글 ] - 좋아요 기준 정렬
-        dong_feeds = [ dong.filter(created_at__gte=week_ago).order_by('-like_users')[:5],
-                        dong.filter(created_at__gte=yesterday).order_by('-like_users')[:5] ]
+        dong_feeds = [ dong.filter(created_at__gte=week_ago).order_by('-like_users', '-created_at')[:5],
+                        dong.filter(created_at__gte=yesterday).order_by('-like_users', '-created_at')[:5] ]
 
         cobuy_feeds = CoBuy.objects.filter(created_at__gte=yesterday).order_by('-created_at')
         keep_feeds = Keep.objects.filter(created_at__gte=yesterday).order_by('-created_at')
@@ -112,10 +119,10 @@ def showMain(request):
         life_feeds = [ [cobuy_feeds[:5], cobuy_feeds[5:10]], [keep_feeds[:5], keep_feeds[5:10]],
                         [rent_feeds[:5], rent_feeds[5:10]], [resell_feeds[:5], resell_feeds[5:10]] ]
         # 자유게시판 - 좋아요 정렬
-        free_feeds = FreeBoard.objects.filter(created_at__gte=yesterday).order_by('-like_users')[:17]
+        free_feeds = FreeBoard.objects.filter(created_at__gte=yesterday).order_by('-like_users', '-created_at')[:17]
 
         return render(request, 'feedpage/index.html', {'gong_feeds': gong_feeds, 'dong_feeds': dong_feeds,
-                                'life_feeds': life_feeds,'free_feeds': free_feeds})
+                                'life_feeds': life_feeds,'free_feeds': free_feeds, 'dong_name': dong_name })
 
     elif request.method == 'POST':
         return redirect('/feeds')
@@ -141,18 +148,6 @@ def showBoard(request, board, category):
         # 전체글 버튼
         feeds = get_feed(board, category).order_by('-created_at')
         pages = get_pages(feeds, request)
-        feeds = feeds.order_by('-created_at')
-        paginator = Paginator(feeds, 11)
-        page = request.GET.get('page')
-        posts = paginator.get_page(page)
-
-        # 베스트 버튼 
-        best_feeds = feeds.order_by('-like_users')
-        paginator2 = Paginator(best_feeds, 11)
-        best_page = request.GET.get('best_page', 1)
-        best_posts = paginator2.get_page(best_page)
-        
-        page_numbers_range = 10
 
         return render(request, 'feedpage/show.html', {'posts':pages[0], 'best_posts': pages[1], 
                             'board': board, 'category': category, 'board_name': board_info[2] + ' 게시판', 
@@ -305,6 +300,7 @@ def editFeed(request, board, category, fid):
                         'category': category, 'fid': fid, 'board_name': board_info[2] + ' 게시판' })
 
     elif request.method == 'POST':
+        print(request.POST)
         feed = Minwon.objects.get(id=fid) if board == 'minwon' else \
             (FreeBoard.objects.get(id=fid) if board == 'freeboard' else 
             (CoBuy.objects.get(id=fid) if category == 'cobuy' else 
@@ -313,9 +309,7 @@ def editFeed(request, board, category, fid):
             (Resell.objects.get(id=fid))))))
 
         feed.title = request.POST['title']
-        feed.content = request.POST['content']
-        feed.photo = feed.photo if request.FILES.get('photo') is None else\
-                    request.FILES.get('photo', False)        
+        feed.content = request.POST['content']      
         feed.noname = True if "noname" in request.POST else False
         
         if board == 'life':
@@ -347,7 +341,17 @@ def editFeed(request, board, category, fid):
                 feed.purpose = Resell.OPTION[0] if request.POST['purpose'] == 'sell' else Resell.OPTION[1]
                 feed.price = request.POST['price']
 
+        photos = request.FILES.getlist('photo[]')
+        for image in photos:
+            print(image)
+            new_image = Image.objects.create(feed_id = feed.id, photo = image)
+            new_image.save()
         feed.save()
+        delphoto = request.POST.getlist('deletelist[]')
+        for photo in delphoto:
+            print(photo)
+            Image.objects.get(id = photo).delete()
+    
         return redirect('showfeed', board=board, category=category, fid=fid)
 
 
@@ -390,20 +394,29 @@ def likeFeed(request, board, category, fid):
 # 댓글 달기
 def newComment(request, board, category, fid):
     content = request.POST['content']
+
+    if (len(content) > 50 or len(content) == 0):
+        context = {
+            'concount': len(content),
+        }
+        return JsonResponse(context)
+
     noname = True if "noname[]" in request.POST else False
-    # noname = request.POST['noname']
     new_comment = FeedComment.objects.create(feed_id=fid, content=content, author = request.user, noname = noname)
     like_count = new_comment.commentlike_set.filter(user_id = request.user.id)
     feed = Feed.objects.get(id = fid)
     if request.user.id != feed.author.id:
         Notice.objects.create(user_to_id = feed.author.id, user_from = request.user, feed_id = fid, type_info1='게시글', type_info2='댓글', noname=noname)
 
+
     context = {
         'cid': new_comment.id,
         'nickname': new_comment.author.profile.nickname,
         'content': new_comment.content,
+        'concount': len(new_comment.content),
         'like_count': like_count.count(),
         'noname': noname,
+        'date': new_comment.created_at.strftime("%y.%m.%d"),        
     }
 
     return JsonResponse(context)
@@ -420,6 +433,7 @@ def editComment(request, board, category, fid, cid):
             'nickname': edit_comment.author.profile.nickname,
             'content' : content,
             'noname' : edit_comment.noname,
+            'date': edit_comment.created_at.strftime("%y.%m.%d"), 
         }
 
         return JsonResponse(context)
@@ -458,6 +472,12 @@ def deleteComment(request, board, category, fid, cid):
 
 def newRecomment(request, board, category, fid, cid):
     content = request.POST['content']
+    if (len(content) > 50 or len(content) == 0):
+        context = {
+            'concount': len(content),
+        }
+        return JsonResponse(context)
+
     noname = True if "noname[]" in request.POST else False
     new_recomment = Recomment.objects.create(
         comment_id=cid, content=content, author=request.user, noname = noname)
@@ -474,6 +494,7 @@ def newRecomment(request, board, category, fid, cid):
         'content': new_recomment.content,
         'likecount': like_count.count(),
         'noname': noname,
+        'date': new_recomment.created_at.strftime("%y.%m.%d"),     
     }
 
     return JsonResponse(context)
@@ -492,6 +513,7 @@ def editRecomment(request, board, category, fid, cid, rcid):
             'nickname': edit_recomment.author.profile.nickname,
             'content' : content,
             'noname' : edit_recomment.noname,
+            'date': edit_recomment.created_at.strftime("%y.%m.%d"), 
         }
 
         return JsonResponse(context)
@@ -558,7 +580,7 @@ def searchMore(request, board, category):
     elif search_option == 'content':
         feeds = feeds.filter(content__contains = query).order_by('-created_at')
     elif search_option == 'title-and-content':
-        feeds = feeds.filter(title__contains = query, content__contains = query).order_by('-created_at')
+        feeds = feeds.filter(title__contains = query)|feeds.filter(content__contains = query).order_by('-created_at')
     
     board_name = '제목 검색 결과' if search_option == 'title' else \
                  ('내용 검색 결과' if search_option == 'content' else 

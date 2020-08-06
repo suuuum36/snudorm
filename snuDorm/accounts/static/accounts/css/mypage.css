@@ -7,6 +7,9 @@ a {
 a:link, a:visited, a:hover, a:active {
   color: black; }
 
+a:link, a:visited, a:hover, a:active {
+  color: black; }
+
 input:focus::-webkit-input-placeholder,
 textarea:focus::-webkit-input-placeholder {
   color: transparent !important; }

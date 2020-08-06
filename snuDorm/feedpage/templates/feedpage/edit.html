@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
-{% load static %}
 {% block content %}
+{% load static %}
+
 <head><link rel="stylesheet" href="{% static 'feedpage/new.css' %}"></head>
 
 <div class="info">
@@ -13,7 +14,7 @@
         {% if board == 'minwon' or board == 'freeboard' %}
         <!-- Minwon, freeboard 게시판 -->
         <div class="minwon_or_free_new">
-            <form method="POST" action="{% url 'editfeed' board category fid %}">
+            <form method="POST" action="{% url 'editfeed' board category fid %}" enctype="multipart/form-data">
                 {% csrf_token %}
                 <table id = "minwon_table" border="1">
                     <tr height = "10%"><!-- 첫번째 줄 시작 -->
@@ -26,18 +27,25 @@
                         <td><input name="content" type="text"  style="width:400px; height:50px;" 
                             value={{feed.content}} required></td>
                     </tr><!-- 두번째 줄 끝 -->
+                    <tr>
+                        <!-- 이미지 받을 공간 -->
+                        <td id ="thumbnail" style="display: flex;">
+                            {% for photo in feed.image_set.all %}
+                            <div class="exphoto">
+                                <img src="{{ photo.photo.url }}" alt="" width:"200px" height="200px">
+                                <input type="checkbox" id="photodelete" name="deletelist[]" value="{{ photo.id }}">
+                                <label for="photodelete">삭제</label>
+                            </div>
+                            {% endfor %}
+                        </td>
+                    </tr>
                     <tr height = "10%"><!-- 마지막 줄 시작 -->
                         <td>
                           <span>
-                          <input name="photo" type="file"/> 
-                          <div style="display: flex;">
-                          {% for photo in feed.image_set.all %} 
-                            <img src="{{ photo.photo.url }}" alt="" width:"200px" height="200px">
-                          {% endfor %}
-                          </div>
+                          <input class="photo" name ="photo[]" id="photo"  accept=".jpg, .jpeg, .png" type="file" multiple> 
                             </span>
                             <span class="option_noname">
-                                {% if feed.noname %}
+                                {% if feed.noname == True %}
                                     <input name="noname" type="checkbox" id="noname" checked>
                                     <label for="noname">익명</label>
                                 {% else %}
@@ -49,13 +57,13 @@
                         </td>
                     </tr><!-- 마지막 줄 끝 -->
                 </table>
-             </form>
+            </form>
         </div>
     
         {% elif category == 'cobuy' %}
         <!-- Cobuy 공구 게시판 -->
         <div class="cobuy_board_new">
-            <form method="POST" action="{% url 'editfeed' 'life' 'cobuy' fid %}">
+            <form method="POST" action="{% url 'editfeed' 'life' 'cobuy' fid %}" enctype="multipart/form-data">
                 {% csrf_token %}
                 <table border="1">
                     <tr height = "10%"><!-- 첫번째 줄 시작 -->
@@ -76,15 +84,15 @@
                     <tr height = "10%">
                         <td height = "10%" class = "tr_title">마감일</td>
                         <td>
-                         {% if feed.duedate|date:"Y.m.d" == '2020.01.01' %}
-                         <input name="duedate" id="dueDate" type="date" disabled>
-                         <input name="uncertain" type="checkbox" id="uncertain2" checked>
-                         <label for="uncertain2">미정</label>
-                         {% else %}
-                         <input name="duedate" id="edueDate" value="{{feed.duedate|date:"Y-m-d"}}" type="date" required>
-                         <input name="uncertain" type="checkbox" id="euncertain2">
-                         <label for="euncertain2">미정</label>
-                        {% endif %}
+                            {% if feed.duedate|date:"Y.m.d" == '2020.01.01' %}
+                                <input name="duedate" id="dueDate" type="date" disabled>
+                                <input name="uncertain" type="checkbox" id="uncertain2" checked>
+                                <label for="uncertain2">미정</label>
+                            {% else %}
+                                <input name="duedate" id="edueDate" value="{{feed.duedate|date:"Y-m-d"}}" type="date" required>
+                                <input name="uncertain" type="checkbox" id="euncertain2">
+                                <label for="euncertain2">미정</label>
+                            {% endif %}
                          </td>
                     </tr>
                     <tr height = "50%">
@@ -92,36 +100,46 @@
                         <td><input name="content" type="text"  style="width:400px; height:50px;" 
                             value={{feed.content}} required></td>
                     </tr>
+                    <tr>
+                        <!-- 이미지 받을 공간 -->
+                        <td class = "tr_title">사진</td>
+                        <td id ="thumbnail" style="display: flex;">
+                            {% for photo in feed.image_set.all %}
+                            <div class="exphoto">
+                                <img src="{{ photo.photo.url }}" alt="" width:"200px" height="200px">
+                                <input type="checkbox" id="photodelete" name="deletelist[]" value="{{ photo.id }}">
+                                <label for="photodelete">삭제</label>
+                            </div>
+                            {% endfor %}
+                        </td>
+                    </tr>
                     <tr height = "10%"><!-- 마지막 줄 시작 -->
                         <td colspan ="2">
-                            <input name="photo" type="file"/> 
-                            <div style="display: flex;">
-                            {% for photo in feed.image_set.all %} 
-                                <img src="{{ photo.photo.url }}" alt="" width:"200px" height="200px">
-                            {% endfor %}
-                            </div>
+                            <input class="photo" name = "photo[]" id="photo"  accept=".jpg, .jpeg, .png" type="file" multiple> 
 
                             {% if feed.status.0 == 'ongoing' %}
-                            
-                            <input name="status" onclick="doStatCheck(this);" type="checkbox" value="진행중" id="status" checked>
-                            <label for="status">진행중</label>
-                            <input name="status" onclick="doStatCheck(this);" type="checkbox" value="완료" id="status">
-                            <label for="status">완료</label>
-                            <label for="noname">익명</label><button type="submit">글쓰기</button>
+                            <span>
+                                <input name="status" onclick="doStatCheck(this);" type="checkbox" value="진행중" id="status" checked>
+                                <label for="status">진행중</label>
+                                <input name="status" onclick="doStatCheck(this);" type="checkbox" value="완료" id="status">
+                                <label for="status">완료</label>
+                            </span>
                             {% else %}
-                            <input name="status" onclick="doStatCheck(this);" type="checkbox" value="진행중" id="status">
-                            <label for="status">진행중</label>
-                            <input name="status" onclick="doStatCheck(this);" type="checkbox" value="완료" id="status" checked>
-                            <label for="status">완료</label>
+                            <span>
+                                <input name="status" onclick="doStatCheck(this);" type="checkbox" value="진행중" id="status">
+                                <label for="status">진행중</label>
+                                <input name="status" onclick="doStatCheck(this);" type="checkbox" value="완료" id="status" checked>
+                                <label for="status">완료</label>
+                            </span>
                             {% endif %}
                             <span class="option_noname">
-                            {% if feed.noname %}
-                                <input name="noname" type="checkbox" id="noname" checked>
-                                <label for="noname">익명</label>
-                            {% else %}
-                                <input name="noname" type="checkbox" id="noname">
-                                <label for="noname">익명</label>
-                            {% endif %}
+                                {% if feed.noname == True %}
+                                    <input name="noname" type="checkbox" id="noname" checked>
+                                    <label for="noname">익명</label>
+                                {% else %}
+                                    <input name="noname" type="checkbox" id="noname">
+                                    <label for="noname">익명</label>
+                                {% endif %}
                             </span>
                             <button type="submit">글쓰기</button>
                         </td>
@@ -132,7 +150,7 @@
         {% elif category == 'rent' %}
         <!-- Rent 게시판 -->
         <div class="rent_board_new"> 
-            <form method="POST" action="{% url 'editfeed' 'life' 'rent' fid %}">
+            <form method="POST" action="{% url 'editfeed' 'life' 'rent' fid %}" enctype="multipart/form-data">
                 {% csrf_token %}
                 <table border="1">
                     <tr height = "10%"><!-- 첫번째 줄 시작 -->
@@ -165,40 +183,52 @@
                     <tr height = "10%">
                         <td class = "tr_title">시작일</td>
                         <td>
-                             {% if feed.start_date|date:"Y.m.d" == '2020.01.01' %}
-                            <input name="start_date" id="startDate" type="date" disabled><input name="uncertain" type="checkbox" id="uncertain1" checked><label for="uncertain1">미정</label>
+                            {% if feed.start_date|date:"Y.m.d" == '2020.01.01' %}
+                                <input name="start_date" id="startDate" type="date" disabled>
+                                <input name="uncertain" type="checkbox" id="uncertain1" checked>
+                                <label for="uncertain1">미정</label>
                             {% else %}
-                            <input name="start_date" id="estartDate" value="{{feed.start_date|date:"Y-m-d"}}" type="date" required>
-                            <input name="uncertain" type="checkbox" id="euncertain1">
-                            <label for="euncertain1">미정</label>
+                                <input name="start_date" id="estartDate" value="{{feed.start_date|date:"Y-m-d"}}" type="date" required>
+                                <input name="uncertain" type="checkbox" id="euncertain1">
+                                <label for="euncertain1">미정</label>
                             {% endif %}
                         </td>
                     </tr>
                     <tr height = "10%">
                         <td class = "tr_title">마감일</td>
                         <td>
-                        {% if feed.end_date|date:"Y.m.d" == '2020.01.01' %}
-                        <input name="duedate" id="dueDate" type="date" disabled><input name="uncertain" type="checkbox" id="uncertain2" checked>
-                        <label for="uncertain2">미정</label>
-                        {% else %}
-                        <input name="duedate" id="edueDate" value="{{feed.end_date|date:"Y-m-d"}}" type="date" required><input name="uncertain" type="checkbox" id="euncertain2">
-                        <label for="euncertain2">미정</label>
-                        {% endif %}
-                        </td>
+                            {% if feed.end_date|date:"Y.m.d" == '2020.01.01' %}
+                                <input name="duedate" id="dueDate" type="date" disabled>
+                                <input name="uncertain" type="checkbox" id="uncertain2" checked>
+                                <label for="uncertain2">미정</label>
+                            {% else %}
+                                <input name="duedate" id="edueDate" value="{{feed.end_date|date:"Y-m-d"}}" type="date" required>
+                                <input name="uncertain" type="checkbox" id="euncertain2">
+                                <label for="euncertain2">미정</label>
+                            {% endif %}
+                         </td>
                     </tr>
                     <tr>
                         <td class = "tr_title">설명</td>
                         <td><input name="content" type="text"  style="width:400px; height:50px;" 
                             value={{feed.content}} required></td>
                     </tr>
+                    <tr>
+                        <!-- 이미지 받을 공간 -->
+                        <td class = "tr_title">사진</td>
+                        <td id ="thumbnail" style="display: flex;">
+                            {% for photo in feed.image_set.all %}
+                            <div class="exphoto">
+                                <img src="{{ photo.photo.url }}" alt="" width:"200px" height="200px">
+                                <input type="checkbox" id="photodelete" name="deletelist[]" value="{{ photo.id }}">
+                                <label for="photodelete">삭제</label>
+                            </div>
+                            {% endfor %}
+                        </td>
+                    </tr>
                     <tr height = "10%"><!-- 마지막 줄 시작 -->
                             <td colspan ="2">
-                            <input name="photo" type="file"/> 
-                            <div style="display: flex;">
-                            {% for photo in feed.image_set.all %} 
-                                <img src="{{ photo.photo.url }}" alt="" width:"200px" height="200px">
-                            {% endfor %}
-                            </div>
+                            <input class="photo" name = "photo[]" id="photo"  accept=".jpg, .jpeg, .png" type="file" multiple> 
                             {% if feed.status.0 == 'ongoing' %}
                             <span>
                                 <input name="status" onclick="doStatCheck(this);" type="checkbox" value="진행중" id="status" checked>
@@ -215,15 +245,15 @@
                             </span>
                             {% endif %}
                             <span class="option_noname">
-                                {% if feed.noname %}
-                                    <input name="noname" value="{{feed.start_date|date:"Y-m-d"}}" type="checkbox" id="noname" checked>
+                                {% if feed.noname == True %}
+                                    <input name="noname" type="checkbox" id="noname" checked>
                                     <label for="noname">익명</label>
                                 {% else %}
-                                    <input name="noname" value="{{feed.end_date|date:"Y-m-d"}}" type="checkbox" id="noname">
+                                    <input name="noname" type="checkbox" id="noname">
                                     <label for="noname">익명</label>
                                 {% endif %}
-                                <button type="submit">글쓰기</button>
                             </span>
+                            <button type="submit">글쓰기</button>
                             </td>
                     </tr><!-- 마지막 줄 끝 -->
                 </table> 
@@ -232,7 +262,7 @@
         {% elif category == "keep" %}
         <!-- Keep 게시판 -->
         <div class="keep_board_new">
-            <form method="POST" action="{% url 'editfeed' 'life' 'keep' fid %}">
+            <form method="POST" action="{% url 'editfeed' 'life' 'keep' fid %}" enctype="multipart/form-data">
                 {% csrf_token %}
                 <table border="1">
                     <tr height = "10%">
@@ -268,52 +298,51 @@
                         <td class = "tr_title">시작일</td>
                         <td>
                             {% if feed.start_date|date:"Y.m.d" == '2020.01.01' %}
-                            <input name="start_date" id="startDate" type="date" disabled>
-                            <span>
+                                <input name="start_date" id="startDate" type="date" disabled>
                                 <input name="uncertain" type="checkbox" id="uncertain1" checked>
                                 <label for="uncertain1">미정</label>
-                            </span>
                             {% else %}
-                            <input name="start_date" id="estartDate" value="{{feed.start_date|date:"Y-m-d"}}" type="date" required>
-                            <span>
+                                <input name="start_date" id="estartDate" value="{{feed.start_date|date:"Y-m-d"}}" type="date" required>
                                 <input name="uncertain" type="checkbox" id="euncertain1">
                                 <label for="euncertain1">미정</label>
-                            </span>
                             {% endif %}
                         </td>
                     </tr>
-                
                     <tr height = "10%">
                         <td class = "tr_title">마감일</td>
                         <td>
                             {% if feed.end_date|date:"Y.m.d" == '2020.01.01' %}
-                            <input name="duedate" id="dueDate" type="date" disabled>
-                            <span>
+                                <input name="duedate" id="dueDate" type="date" disabled>
                                 <input name="uncertain" type="checkbox" id="uncertain2" checked>
                                 <label for="uncertain2">미정</label>
-                            </span>
                             {% else %}
-                            <input name="duedate" id="edueDate" value="{{feed.end_date|date:"Y-m-d"}}" type="date" required>
-                            <span>
+                                <input name="duedate" id="edueDate" value="{{feed.end_date|date:"Y-m-d"}}" type="date" required>
                                 <input name="uncertain" type="checkbox" id="euncertain2">
                                 <label for="euncertain2">미정</label>
-                            </span>
                             {% endif %}
-                        </td>
+                         </td>
                     </tr>
                     <tr>
                         <td class = "tr_title">설명</td>
                         <td><input name="content" type="text"  style="width:400px; height:50px;" 
                              value="{{feed.content}}" required></td>
                     </tr>
+                    <tr>
+                        <!-- 이미지 받을 공간 -->
+                        <td class = "tr_title">사진</td>
+                        <td id ="thumbnail" style="display: flex;">
+                            {% for photo in feed.image_set.all %}
+                            <div class="exphoto">
+                                <img src="{{ photo.photo.url }}" alt="" width:"200px" height="200px">
+                                <input type="checkbox" id="photodelete" name="deletelist[]" value="{{ photo.id }}">
+                                <label for="photodelete">삭제</label>
+                            </div>
+                            {% endfor %}
+                        </td>
+                    </tr>
                     <tr height = "10%"><!-- 마지막 줄 시작 -->
                          <td colspan ="2">
-                            <input name="photo" type="file"/> 
-                            <div style="display: flex;">
-                            {% for photo in feed.image_set.all %} 
-                                <img src="{{ photo.photo.url }}" alt="" width:"200px" height="200px">
-                            {% endfor %}
-                            </div>
+                            <input class="photo" name = "photo[]" id="photo"  accept=".jpg, .jpeg, .png" type="file" multiple> 
                             {% if feed.status.0 == 'ongoing' %}
                                 <span>
                                     <input name="status" onclick="doStatCheck(this);" type="checkbox" value="진행중" id="status" checked>
@@ -330,7 +359,7 @@
                                 </span>
                             {% endif %}
                             <span class="option_noname">
-                                {% if feed.noname %}
+                                {% if feed.noname == True %}
                                     <input name="noname" type="checkbox" id="noname" checked>
                                     <label for="noname">익명</label>
                                 {% else %}
@@ -346,7 +375,7 @@
         {% elif category == "resell" %}
         <!-- Resell 게시판 -->
         <div class="resell_board_new">
-            <form method="POST" action="{% url 'editfeed' 'life' 'resell' fid %}">
+            <form method="POST" action="{% url 'editfeed' 'life' 'resell' fid %}" enctype="multipart/form-data">
                 {% csrf_token %}
                 <table border="1">
                     <tr height = "10%">
@@ -381,14 +410,22 @@
                         <td><input name="content" type="text" style="width:400px; height:50px;" 
                              value={{feed.content}} required></td>
                     </tr>
+                    <tr>
+                        <!-- 이미지 받을 공간 -->
+                        <td class = "tr_title">사진</td>
+                        <td id ="thumbnail" style="display: flex;">
+                            {% for photo in feed.image_set.all %}
+                            <div class="exphoto">
+                                <img src="{{ photo.photo.url }}" alt="" width:"200px" height="200px">
+                                <input type="checkbox" id="photodelete" name="deletelist[]" value="{{ photo.id }}">
+                                <label for="photodelete">삭제</label>
+                            </div>
+                            {% endfor %}
+                        </td>
+                    </tr>
                     <tr height = "10%"><!-- 마지막 줄 시작 -->
                          <td colspan ="2">
-                            <input name="photo" type="file"/> 
-                            <div style="display: flex;">
-                            {% for photo in feed.image_set.all %} 
-                                <img src="{{ photo.photo.url }}" alt="" width:"200px" height="200px">
-                            {% endfor %}
-                            </div>
+                            <input class="photo" name = "photo[]" id="photo"  accept=".jpg, .jpeg, .png" type="file" multiple> 
 
                             {% if feed.status.0 == 'ongoing' %}
                                 <span>
@@ -406,7 +443,7 @@
                                 </span>
                             {% endif %}
                             <span class="option_noname">
-                                {% if feed.noname %}
+                                {% if feed.noname == True %}
                                     <input name="noname" type="checkbox" id="noname" checked>
                                     <label for="noname">익명</label>
                                 {% else %}
@@ -423,4 +460,5 @@
         {% endif %}
     {% endif %}
 </div>
+<script src="{% static 'feedpage/edit.js' %}"></script>
 {% endblock content %}
