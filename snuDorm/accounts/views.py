@@ -72,6 +72,7 @@ def id_db_check(request):
         db_check = "fail"
 
     context = {'db_check': db_check}
+
     return JsonResponse(context)
 
 # 닉네임 중복 확인
@@ -204,11 +205,14 @@ def passwordEdit(request, id):
                 
             # 3) 새로운 비밀번호 두 개가 일치하지 않을 때 변경 실패
             else:
-                return render(request, 'accounts/pw_edit.html')
+                return redirect('pwerror', id=id)
 
-        return render(request, 'accounts/pw_edit.html')
+        else:
+            return redirect('pwerror', id=id)
 
-        
+def pwError(request, id):
+
+    return render(request, 'accounts/pw_error.html', {'id': id})
 
 def userInfo(request, id):
 
@@ -250,6 +254,7 @@ def id_overlap_check(request):
     else:
         overlap_check = "fail"
     context = {'overlap_check': overlap_check}
+
     return JsonResponse(context)
 
 def messageBox(request, id):
