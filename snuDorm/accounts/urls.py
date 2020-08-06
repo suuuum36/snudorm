@@ -4,7 +4,6 @@ from accounts import views
 
 urlpatterns = [
     path('signup/', views.signup, name="signup"),
-    path('activate/<str:uid64>/<str:token>/', views.activate, name="activate"),
     path('login/', views.login, name="login"),
     path('', include('allauth.urls')),
     path('logout/', views.logout, name="logout"),

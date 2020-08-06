@@ -38,7 +38,7 @@ function nk_db_check() {
       },
       datatype: 'json',
       success: function (data) {
-        if (data['db_check'] == "fail") {
+        if (data['db_check'] == "fail" && data['nk_origin'] ) {
           alert("이미 존재하는 닉네임 입니다.");
           nk_input.focus();
           return;
@@ -228,8 +228,6 @@ bkOptions.forEach(d => {
     bkContainer.classList.remove("active");
   });
 });
-
-
 
 // dong name 값 지정
 var choose = document.querySelectorAll(".dong-option");

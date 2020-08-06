@@ -56,7 +56,8 @@ textarea:focus::-webkit-input-placeholder {
     height: min-content;
     flex-direction: column;
     background-color: #ffffff;
-    border: 1px solid #d3d3d3; }
+    border: 1px solid #d3d3d3;
+    min-height: 370px; }
     .form .info .title {
       display: flex;
       align-items: center;
@@ -145,7 +146,7 @@ textarea:focus::-webkit-input-placeholder {
             border-color: #b9b9b9;
             height: 30px; }
     .form .info .edit button {
-      width: 585px;
+      width: 584px;
       border: 1px solid #016aff;
       background-color: #016aff;
       margin-bottom: -1px;
@@ -154,7 +155,8 @@ textarea:focus::-webkit-input-placeholder {
       color: #ffffff;
       font-weight: 500;
       font-size: 18px;
-      cursor: pointer; }
+      cursor: pointer;
+      margin-top: 10px; }
     .form .info .list {
       margin-left: -1px; }
       .form .info .list a {
@@ -311,5 +313,8 @@ textarea:focus::-webkit-input-placeholder {
       width: 100%;
       cursor: pointer;
       font-size: 16px; }
+
+.building.building-info {
+  flex-wrap: nowrap !important; }
 
 /*# sourceMappingURL=mypage.css.map */

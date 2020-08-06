@@ -28,7 +28,7 @@
                                 <span>현재 비밀번호</span>
                             </div>
                             <div class="pw-value">
-                                <input class="pw-input" name="origin_password" type="password" required>
+                                <input id="pw" class="pw-input" data-id="{{ user.id }}" name="origin_password" type="password" required>
                             </div>
                         </div>
                         <div class="password">
@@ -36,7 +36,7 @@
                                 <span>새로운 비밀번호</span>
                             </div>
                             <div class="pw-value">
-                                <input class="pw-input" name="new_password" type="password" required>
+                                <input id="pw1" class="pw-input" name="new_password" type="password" required>
                             </div>
                         </div>
                         <div class="password">
@@ -44,7 +44,7 @@
                                 <span>새로운 비밀번호 확인</span>
                             </div>
                             <div class="pw-value">
-                                <input class="pw-input" name="password_confirm" type="password" required>
+                                <input id="pw2" class="pw-input" name="password_confirm" type="password" required>
                             </div>
                         </div>
                     </div>
