@@ -288,12 +288,12 @@ textarea:focus::-webkit-input-placeholder {
                     }
 
                     .nk-checked {
-                        color: $whiteblue;
+                        color: $gray_text;
                     }
                 }
 
                 .content-checked {
-                    color: $blackgray !important;
+                    color: $gray_text !important;
                 }
                 
                 .right-content {
@@ -305,7 +305,7 @@ textarea:focus::-webkit-input-placeholder {
                 }
 
                 .date-checked {
-                    color: $deepgray !important;
+                    color: $gray_text !important;
                 }
 
                 .check-count {
@@ -493,4 +493,9 @@ textarea:focus::-webkit-input-placeholder {
 // user_info.html
 .building.building-info {
     flex-wrap: nowrap !important;
+}
+
+// pw_error.html
+.error-title {
+    background-color: #ffc2c2;
 }

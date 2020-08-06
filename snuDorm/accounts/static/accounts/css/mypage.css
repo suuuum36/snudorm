@@ -181,15 +181,15 @@ textarea:focus::-webkit-input-placeholder {
           .form .info .list .notice-container .left-content .notice-nickname {
             color: #016aff; }
           .form .info .list .notice-container .left-content .nk-checked {
-            color: #589eff; }
+            color: #7f7f7f; }
         .form .info .list .notice-container .content-checked {
-          color: #585858 !important; }
+          color: #7f7f7f !important; }
         .form .info .list .notice-container .right-content {
           padding-right: 30px; }
           .form .info .list .notice-container .right-content .date {
             color: #585858; }
         .form .info .list .notice-container .date-checked {
-          color: #a7a7a7 !important; }
+          color: #7f7f7f !important; }
         .form .info .list .notice-container .check-count {
           display: none; }
 
@@ -319,5 +319,8 @@ textarea:focus::-webkit-input-placeholder {
 
 .building.building-info {
   flex-wrap: nowrap !important; }
+
+.error-title {
+  background-color: #ffc2c2; }
 
 /*# sourceMappingURL=mypage.css.map */
