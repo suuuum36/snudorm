@@ -305,6 +305,7 @@ def editFeed(request, board, category, fid):
                         'category': category, 'fid': fid, 'board_name': board_info[2] + ' 게시판' })
 
     elif request.method == 'POST':
+        print(request.POST)
         feed = Minwon.objects.get(id=fid) if board == 'minwon' else \
             (FreeBoard.objects.get(id=fid) if board == 'freeboard' else 
             (CoBuy.objects.get(id=fid) if category == 'cobuy' else 
@@ -348,11 +349,16 @@ def editFeed(request, board, category, fid):
                 feed.price = request.POST['price']
 
         photos = request.FILES.getlist('photo[]')
-        print(photos)
         for image in photos:
+            print(image)
             new_image = Image.objects.create(feed_id = feed.id, photo = image)
             new_image.save()
         feed.save()
+        delphoto = request.POST.getlist('deletelist[]')
+        for photo in delphoto:
+            print(photo)
+            Image.objects.get(id = photo).delete()
+    
         return redirect('showfeed', board=board, category=category, fid=fid)
 
 
