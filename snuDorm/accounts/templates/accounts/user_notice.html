@@ -26,7 +26,7 @@
                         <span class="count">{{ count }}</span>
                     </div>
                     <div class="list">
-                        {% for notice in notices %}
+                        {% for notice in posts %}
                             {% if notice.type_info1 == '쪽지' %}
                             <a href="{% url 'chatroom' notice.user_to.id notice.user_from.id%}">
                             {% else %}
@@ -72,7 +72,28 @@
                             </a>                   
                         {% endfor %}
                     </div>
-                </div>      
+                </div> 
+                <div class="page_numbers" >
+                    {% if posts.has_previous %}
+                        <div class = "previous">
+                            <a href="?page={{posts.previous_page_number}}"> 이전 </a>
+                        </div> 
+                    {% endif %}
+                    {% for num in paginator_range %} 
+                        {% if posts.number == num %}
+                            <div class = "num1" >{{ num }}</div> 
+                        {% else %}
+                            <a href="?page={{num}}">
+                                <div class = "num2" >{{ num }}</div>
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                    {% if posts.has_next %}
+                        <div class = "next">
+                            <a href="?page={{posts.next_page_number}}"> 다음</a> 
+                        </div>
+                    {% endif %}
+                </div>     
             </div>
         </div>
     </div>

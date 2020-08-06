@@ -24,6 +24,8 @@ from django.utils.encoding import force_bytes, force_text
 from .tokens import account_activation_token
 
 
+from django.core.paginator import Paginator 
+
 # 회원가입
 def signup(request):
 
@@ -236,7 +238,24 @@ def userNotice(request, id):
     notices = Notice.objects.filter(user_to = request.user.id).order_by('-created_at')
     count = notices.filter(checked = False).count()
 
-    return render(request, 'accounts/user_notice.html', {'id': id, 'notices':notices, 'count':count })
+    paginator = Paginator(notices, 7)
+    page = request.GET.get('page')
+    posts = paginator.get_page(page)
+
+    page_numbers_range = 10
+    max_index = len(paginator.page_range)
+    current_page = int(page) if page else 1
+    start_index = int((current_page - 1) / page_numbers_range) * page_numbers_range
+    end_index = start_index + page_numbers_range
+    
+    if end_index >= max_index:
+        end_index = max_index
+
+    paginator_range = paginator.page_range[start_index:end_index]
+
+    return render(request, 'accounts/user_notice.html', {'id': id, 'notices':notices, 'count':count,
+                        'posts': posts, 'paginator_range': paginator_range })
+
 
 def id_overlap_check(request):
     username = request.GET['username']

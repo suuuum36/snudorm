@@ -174,6 +174,7 @@ textarea:focus::-webkit-input-placeholder {
                     cursor: pointer;
                     font-weight: 500;
                     font-size: 16px;
+                    outline-style: none;
                 }
 
                 .nk-check:hover {
@@ -200,18 +201,6 @@ textarea:focus::-webkit-input-placeholder {
                         transform: translate(-50%, -50%);
                         white-space: nowrap;
                         font-size: 14px;
-                    }
-                }
-
-                // user_edit.html 기숙사 동
-                #building-item {
-
-                    #category {
-                        width: 180px;
-                        margin-right: 20px;
-                    }
-                    #dong {
-                        width: 180px;
                     }
                 }
 
@@ -250,11 +239,8 @@ textarea:focus::-webkit-input-placeholder {
         }
 
         // 알림
-
         .list {
             margin-left: -1px;
-            min-height: 500px;
-
 
             a {
                 display: inline-block;
@@ -310,5 +296,180 @@ textarea:focus::-webkit-input-placeholder {
                 }
             }
         }        
+    }
+}
+
+// 페이지 넘기기
+.page_numbers {
+    display: flex;
+    width: fit-content;
+    margin-top: 45px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 50px;
+
+    a {
+    color: $gray_text;
+
+    }
+}
+
+.num1, .num2 {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.previous, .next {
+    a {
+        color: black;
+    }
+}
+
+.previous {
+    margin-right: 20px;
+}
+
+.next {
+    margin-left: 20px;
+}
+
+// 기숙사 동 선택
+.building {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+
+    span {
+        width: 500px !important;
+    }
+
+    // 생활관 input box의 우측 마진 설정
+    .building-category {
+        margin-right: 20px;
+    }
+
+    // 선택되지 않은 동 옵션 숨기기
+    .remove {
+        display: none !important;
+    }
+
+    // 생활관 분류 및 동 분류 dropdown
+    .building-category, .building-default, .building-bachelor,
+    .building-master, .building-family, .building-bk {
+        display: flex;
+        width: 240px;
+        flex-direction: column;
+        margin-top: 15px;
+        position: relative;
+            
+        // '생활관을 선택하세요.' 옵션 선택 불가
+        .default-container {
+            position: absolute !important;
+            z-index: -1 !important;
+        }
+        
+        // 생활관 및 동의 옵션을 갖는 container
+        .dropdown-container {
+            border: 2px solid $gray_border;
+            max-height: 0;
+            width: 100%;
+            opacity: 0;
+            transition: all 0.4s;
+            border-radius: 7px;
+            overflow: hidden;
+            order: 1;
+            position: absolute;
+            top: 50px;
+            z-index: 3;
+            margin-top: -2px;
+            background-color: #ffffff;
+        }
+
+        // dropdown 작동
+        .dropdown-container.active {
+            max-height: 162px;
+            opacity: 1;
+            overflow-y: scroll;
+        }
+
+        // 화살표 역전
+        .dropdown-container.active + .selected-common::after {
+            transform: rotateX(180deg);
+            top: -6px;
+        }
+
+        // option 스크롤바
+        .dropdown-container::-webkit-scrollbar {
+            width: 8px;
+            border-radius: 0 3px 3px 0;
+            background-color: #ffffff;
+            visibility: hidden;
+        }
+        
+        // option 스크롤
+        .dropdown-container::-webkit-scrollbar-thumb {
+            background-color: $gray_border;
+            border-radius: 3px;
+        }
+
+        // 선택된 옵션 표시
+        .selected-common {
+            color: $gray_border;
+            padding: 12px 20px;
+            cursor: pointer;
+            border: 2px solid $gray_border;
+            border-radius: 7px;
+            margin-bottom: -2px;
+            position: relative;
+            order: 0;
+            height: 50px;
+            line-height: 22px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        // dropdown 화살표
+        .selected-common::after {
+            content: "";
+            background: url("../img/arrow-down.png");
+            background-size: contain;
+            background-repeat: no-repeat;
+            
+            position: absolute;
+            height: 100%;
+            width: 32px;
+            right: 18px;
+            top: 5px;
+            
+            transition: all 0.4s;
+        }
+        
+        // 옵션 설정
+        .dropdown-option {
+            cursor: pointer;
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            
+            // input type = "radio"
+            .radio {
+                display:none;
+            }
+        }
+
+        .dropdown-option:hover {
+            color: $blue_text;
+        }
+        
+        // input type = "radio"와 연결
+        label {
+            display: flex;
+            align-items: center;
+            padding-left: 20px;
+            height: 50px;
+            width: 100%;
+            cursor: pointer;
+        }
     }
 }
