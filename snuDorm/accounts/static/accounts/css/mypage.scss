@@ -37,13 +37,13 @@ textarea:focus::-webkit-input-placeholder {
     display: flex;
     justify-content: center;
     padding: 50px 0;
-    font-weight: bold;
 
     // 좌측 nav (mypage 공통 적용)
     .nav {
         width: 300px;
         margin-right: 10px;
         height: min-content;
+        font-weight: 500;
 
         // nav title: 마이페이지
         .nav-title {
@@ -91,7 +91,7 @@ textarea:focus::-webkit-input-placeholder {
         height: min-content;
         flex-direction: column;
         background-color: #ffffff;
-        border: 1px solid $gray_border;
+        border: 1px solid $whitegray;
     
 
         // user_info, edit, pwedit 공통 title & container
@@ -99,8 +99,9 @@ textarea:focus::-webkit-input-placeholder {
             display: flex;
             align-items: center;
             height: 60px;
-            width: 585px;
+            width: 584px;
             font-size: 20px;
+            font-weight: 500;
             border-bottom: 1px solid $mypage_under;
             margin-left: -1px;
 
@@ -110,7 +111,9 @@ textarea:focus::-webkit-input-placeholder {
 
             .count {
                 font-size: 18px !important;
+                padding-left: 20px !important;
                 color: $blue_text !important;
+                cursor: pointer;
             }
         }
 
@@ -130,6 +133,7 @@ textarea:focus::-webkit-input-placeholder {
                     align-items: center;
                     width: 180px;
                     padding: 0 30px;
+                    font-weight: 500;
                 }
 
                 // 우측 input
@@ -140,7 +144,7 @@ textarea:focus::-webkit-input-placeholder {
                     
                     .input-box {
                         font-size: 18px;
-                        font-weight: bold;
+                        font-weight: 400;
                         border-style: none none solid none;
                         border-color: $gray_border;
                         color: $gray_text;
@@ -151,7 +155,6 @@ textarea:focus::-webkit-input-placeholder {
                     }
 
                     .input-box::placeholder {
-                        font-weight: bold;
                         color: $gray_text;
                     }
 
@@ -169,7 +172,7 @@ textarea:focus::-webkit-input-placeholder {
                     background-color: $gray_button;
                     color: #ffffff;
                     cursor: pointer;
-                    font-weight: bold;
+                    font-weight: 500;
                     font-size: 16px;
                 }
 
@@ -187,7 +190,7 @@ textarea:focus::-webkit-input-placeholder {
                     border-radius: 30px;
                     background-color: $blue_text;
                     color: #ffffff;
-                    font-weight: bold;
+                    font-weight: 500;
                     margin-top: 15px;
                     
                     span {
@@ -240,10 +243,72 @@ textarea:focus::-webkit-input-placeholder {
                 margin-left: -1px;
                 height: 60px;
                 color: #ffffff;
-                font-weight: bold;
+                font-weight: 500;
                 font-size: 18px;
                 cursor: pointer;
             }
         }
+
+        // 알림
+
+        .list {
+            margin-left: -1px;
+            min-height: 500px;
+
+
+            a {
+                display: inline-block;
+                width: 584px;
+                border-bottom: 1px solid $whitegray;
+            }
+
+            a:last-child {
+                border-bottom: none;
+            }
+
+            a:hover {
+                background-color: $lightgray;
+            }
+
+            .notice-container {
+                display: flex;
+                justify-content: space-between;
+                width: 584px;
+                height: 60px;
+                align-items: center;
+
+                .left-content {
+                    padding-left: 30px;
+    
+                    .notice-nickname {
+                        color: $blue_text;
+                    }
+
+                    .nk-checked {
+                        color: $whiteblue;
+                    }
+                }
+
+                .content-checked {
+                    color: $blackgray !important;
+                }
+                
+                .right-content {
+                    padding-right: 30px;
+    
+                    .date {
+                        color: $blackgray;
+                    }
+                }
+
+                .date-checked {
+                    color: $deepgray !important;
+                }
+
+                .check-count {
+                    display: none;
+                }
+            }
+        }        
     }
 }
