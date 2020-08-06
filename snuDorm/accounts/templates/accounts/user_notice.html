@@ -1,43 +1,84 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div>
-        <a href="{% url 'userinfo' user.id %}">내 정보</a>
-        <a href="{% url 'useredit' user.id %}">개인정보 변경</a>
-        <a href="{% url 'usernotice' user.id %}">게시글 알림</a>
-        <a href="{% url 'messagebox' user.id %}">쪽지함</a>
+{% load static %}
+{% load sass_tags %}
+<head>
+    <link rel="stylesheet" href="{% sass_src 'accounts/css/mypage.scss' %}">
+</head>
+<body>
+    <div class="background">
+        <div class="form">
+            <div class="nav">
+                <div class="nav-title"><span>마이페이지</span></div>
+                <div class="nav-list"><a href="{% url 'userinfo' user.id %}">내 정보</a></div>
+                <div class="nav-list"><a href="{% url 'useredit' user.id %}">개인정보 변경</a></div>
+                <div class="nav-list"><a href="{% url 'passwordedit' user.id %}">비밀번호 변경</a></div>
+                <div class="nav-list"><a href="{% url 'usernotice' user.id %}">알림</a></div>
+                <div class="nav-list"><a href="{% url 'messagebox' user.id %}">쪽지함</a></div>
+            </div>
+            
+            <div class="notice-contents">
+                <div class="info">
+                    <div class="title">
+                        <span>알림</span>
+                        <span class="count">{{ count }}</span>      
+                    </div>
+                    <div class="list">
+                        {% for notice in notices %}
+                        <a href="{% url 'showfeed' notice.feed.board notice.feed.category notice.feed.id %}">
+                            <div class="notice-container">
+                                <div class="left-content">
+                                    {% if notice.noname %}
+                                        <span class="notice-nickname target">익명</span>
+                                        <span class="explain">의 회원님이</span>
+                                    {% else %}
+                                        <span class="notice-nickname target">{{ notice.user_from.profile.nickname }}</span>
+                                        <span class="explain">님이 회원</span>
+                                        {% if notice.type_info1 == '쪽지' %}
+                                            <span class="explain">님에게</span>
+                                        {% else %}
+                                            <span class="explain">님의</span>
+                                        {% endif %}
+                                    {% endif %}
+                                        
+                                    {% if notice.type_info1 == '게시글' %}
+                                        <span class="notice-object target">게시글</span>
+                                        <span class="explain">에</span>
+                                    {% elif notice.type_info1 == '댓글' %}
+                                        <span class="notice-object target">댓글</span>
+                                        <span class="explain">에</span>
+                                    {% elif notice.type_info1 == '쪽지' %}
+                                        <span class="notice-object target">쪽지</span>
+                                        <span class="explain">에</span>
+                                    {% else %} <!-- if 대댓글 -->
+                                        <span class="notice-object target">대댓글</span>
+                                        <span class="explain">에</span>
+                                    {% endif %}
+
+                                    {% if notice.type_info2 == '공감' %}
+                                        <span class="notice-expession target">공감</span>
+                                        <span class="explain">을 눌렀습니다.</span>
+                                    {% elif notice.type_info2 == '댓글' %}
+                                        <span class="notice-expession target">댓글</span>
+                                        <span class="explain">을 달았습니다.</span>
+                                    {% else %} <!-- if 대댓글-->
+                                        <span class="notice-expession target">대댓글</span>
+                                        <span class="explain">을 달았습니다.</span>
+                                    {% endif %}
+                                </div>
+                                <div class="right-content">
+                                    <span class="date">{{ notice.created_at|date:'y.m.d' }}</span>
+                                    <!-- notice.checked = True면 읽은것, False면 안읽은것 -->
+                                </div>
+                                <input id="notice-check" type="hidden" value="{{ notice.checked }}">
+                            </div>
+                        </a>                   
+                        {% endfor %}
+                    </div>
+                </div>      
+            </div>
+        </div>
     </div>
-    
-    <!-- '게시글 알림' 옆에 들어갈 count는 아래와 같이 {{count}}로 받음 -->
-    <div> 확인하지 않은 알림 개수 : {{ count }}</div>
-
-    
-    {% for notice in notices %}
-        {% if notice.type_info1 == '쪽지' %}
-            <a href="{% url 'chatroom' notice.user_to.id notice.user_from.id%}">
-        {% else %}
-            <a href="{% url 'showfeed' notice.feed.board notice.feed.category notice.feed.id %}">
-        {% endif %}
-        {% if notice.noname %}
-            익명의 회원님이
-        {% else %}
-            {{ notice.user_from.profile.nickname }}님이
-        {% endif %}
-        {% if notice.type_info1 == '쪽지' %}
-            회원님에게 쪽지를 보냈습니다.
-        {% else %}
-            회원님의 {{ notice.type_info1 }}에
-            {% if notice.type_info2 == '공감' %}
-                {{ notice.type_info2 }}을 눌렀습니다.
-            {% else %}
-                {{ notice.type_info2 }}을 달았습니다.
-            {% endif %}
-        {% endif %}
-
-        {{ notice.created_at|date:'y.m.d' }}
-        <!-- notice.checked = True면 읽은것, False면 안읽은것 -->
-        {{ notice.checked }}
-        </br>
-    </a>
-    {% endfor %}
-
+    <script src="{% static 'accounts/js/user_notice.js' %}"></script> 
+</body>
 {% endblock content %}

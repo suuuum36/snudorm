@@ -83,11 +83,7 @@
             <div class = "list">
                 <div class = "title">
                     <div class = "panel-body">
-                        {% if user.building_dong %}
-                            {{ user.building_dong }}게시판
-                        {% else %}
-                            906동 게시판 
-                        {% endif %}
+                        {{dong_name}} 게시판
                     </div>
                     <div class = "button">
                         <div id="week_gong" class = "week_dong" onclick="dongWeek()">주간</div>
@@ -313,6 +309,5 @@
         </div>
     </div>
 </div>    
-
-
+<script src="{% static 'feedpage/index.js' %}"></script>
 {% endblock content %}

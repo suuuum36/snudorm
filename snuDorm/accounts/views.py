@@ -29,17 +29,17 @@ def signup(request):
 
     # POST 방식
     if request.method == "POST":
+        print(request.POST)
         
         # form 값 저장
         user_id = request.POST['user_id'] # User, 아이디
-        password = request.POST['password'] # User, 비밀번호 
+        password = request.POST['password'] # User, 비밀번호
         confirm_password = request.POST['confirm_password'] # 비밀번호 확인
         name = request.POST['name'] # Profile, 이름
         nickname = request.POST['nickname'] # Profile, 닉네임
         email = request.POST['email'] # User, 이메일
         building_category = request.POST['building_category'] # Profile, 생활관
         building_dong = request.POST['building_dong'] # Profile, 동
-
 
         # 1차, 2차 비밀번호 일치여부 판단(js에서 1차 검증)
         if password == confirm_password:
@@ -54,7 +54,7 @@ def signup(request):
             user.profile.email = email
             user.profile.building_category = building_category
             user.profile.building_dong = building_dong
-            user.is_active = False # 유저 비활성화
+            # user.is_active = False # 유저 비활성화
             user.save()
 
             # 이메일 인증을 위한 설정
@@ -68,10 +68,11 @@ def signup(request):
             mail_title = "계정 활성화 확인 이메일입니다"
             email_send = EmailMessage(mail_title, message, to=[email])
             email_send.send()
-            return redirect('showmain')
+            
 
-        # login_user = django_authenticate(username=user_id, password=password)
-        # django_login(request, login_user)
+        login_user = django_authenticate(username=user_id, password=password)
+        django_login(request, login_user)
+        return redirect('showmain')
         
     return render(request, 'accounts/signup.html')
 
@@ -232,7 +233,6 @@ def userInfo(request, id):
     return render(request, 'accounts/user_info.html', {'id': id})
 
 def userNotice(request, id):
-    user = User.objects.get(id = id)
     notices = Notice.objects.filter(user_to = request.user.id).order_by('-created_at')
     count = notices.filter(checked = False).count()
 
