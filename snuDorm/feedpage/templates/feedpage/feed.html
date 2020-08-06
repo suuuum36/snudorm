@@ -74,8 +74,13 @@
                 <div class ="content-content">{{ feed.content }} </div>
                 <div class = "content-photo">
                     {% for photo in feed.image_set.all %} 
-                        <img class = "photo" src="{{ photo.photo.url }}" alt="" width:"200px" height="200px">
+                        <img class = "photo" id="myImg" src="{{ photo.photo.url }}" width="200px" height="200px" onclick="modal(this);">
                     {% endfor %}
+                </div>
+                <div id="myModal" class="modal">
+                    <span class="close">&times;</span>
+                    <img class="modal-content" id="img01">
+                    <div id="caption"></div>
                 </div>
             </div>
 
@@ -97,8 +102,13 @@
                     <div class ="content-content">{{ feed.content }} </div>
                     <div class = "content-photo">
                         {% for photo in feed.image_set.all %} 
-                            <img class = "photo" src="{{ photo.photo.url }}" alt="" width:"200px" height="200px">
+                            <img class = "photo" id="myImg" src="{{ photo.photo.url }}" width="200px" height="200px" onclick="modal(this);">
                         {% endfor %} 
+                    </div>
+                    <div id="myModal" class="modal">
+                        <span class="close">&times;</span>
+                        <img class="modal-content" id="img01">
+                        <div id="caption"></div>
                     </div>
                 </div>
 
@@ -122,8 +132,13 @@
                     <div class ="content-content">{{ feed.content }} </div>
                     <div class = "content-photo">
                         {% for photo in feed.image_set.all %} 
-                            <img class = "photo" src="{{ photo.photo.url }}" alt="" width:"200px" height="200px">
+                            <img class = "photo" id="myImg" src="{{ photo.photo.url }}" width="200px" height="200px" onclick="modal(this);">
                         {% endfor %} 
+                    </div>
+                    <div id="myModal" class="modal">
+                        <span class="close">&times;</span>
+                        <img class="modal-content" id="img01">
+                        <div id="caption"></div>
                     </div>  
                 </div>
 
@@ -147,8 +162,13 @@
                     <div class ="content-content">{{ feed.content }} </div>
                     <div class = "content-photo">
                         {% for photo in feed.image_set.all %} 
-                            <img class = "photo" src="{{ photo.photo.url }}" alt="" width:"200px" height="200px">
+                            <img class = "photo" id="myImg" src="{{ photo.photo.url }}" width="200px" height="200px" onclick="modal(this);">
                         {% endfor %}
+                    </div>
+                    <div id="myModal" class="modal">
+                        <span class="close">&times;</span>
+                        <img class="modal-content" id="img01">
+                        <div id="caption"></div>
                     </div>
                 </div>  
             {% elif category == "resell" %}
@@ -159,8 +179,13 @@
                     <div class ="content-content">{{ feed.content }} </div>
                     <div class = "content-photo">
                         {% for photo in feed.image_set.all %} 
-                            <img class = "photo" src="{{ photo.photo.url }}" alt="" width:"200px" height="200px">
+                            <img class = "photo" id="myImg" src="{{ photo.photo.url }}" width="200px" height="200px">
                         {% endfor %} 
+                    </div>
+                    <div id="myModal" class="modal">
+                        <span class="close">&times;</span>
+                        <img class="modal-content" id="img01">
+                        <div id="caption"></div>
                     </div>
                 </div>
             {% endif %}
@@ -320,7 +345,7 @@
     <a href="{% url 'login' %}">로그인</a>
 </div>
 
-<script src="{% static 'feedpage/comment.js' %}"></script>
 {% endif %}
+<script src="{% static 'feedpage/feed.js' %}"></script>
 <script src="{% static 'feedpage/comment.js' %}"></script>
 {% endblock content %}
