@@ -38,9 +38,16 @@ function nk_db_check() {
       },
       datatype: 'json',
       success: function (data) {
-        if (data['db_check'] == "fail" && data['nk_origin'] ) {
+        console.log(data)
+        if (data['db_check'] == "fail") {
           alert("이미 존재하는 닉네임 입니다.");
           nk_input.focus();
+          return;
+        } else if(data['db_check'] == "pass1"){
+          alert("기존 닉네임을 사용합니다.")
+          $('.nickname').attr("check_result", "success");
+          $('#nk-confirm').show();
+          $('.nk-check').hide();
           return;
         } else {
           alert("사용가능한 닉네임 입니다.");
@@ -258,3 +265,39 @@ choose.forEach(x => {
       field.focus();
     };
   };
+
+  function validateForm() {
+
+    // input 변수 지정
+    var nameInput = document.getElementById("name");
+    var emailInput = document.getElementById("email");
+ 
+    // regex 변수 지정
+    // 4자 이내의 한글 이름(공백 불가능) 또는 15자 이내의 영어 이름(공백 가능)
+    var nameRegex = /^[가-힣]{1,4}|[\sa-zA-Z]{1,15}$/;    
+ 
+    // 이름 확인
+    if(blankCheck(nameInput, "이름을 입력해주세요.")) {
+      return false;
+    };
+   
+    if (!regexCheck(nameRegex, nameInput, "이름을 확인해주세요.")) {
+      return false;
+    };
+ 
+    // 닉네임 중복확인 여부
+    if ($('.nickname').attr("check_result") == "fail"){
+      alert("닉네임 중복체크를 해주시기 바랍니다.");
+      $('.nickname').focus();
+      return false;
+    };
+ 
+    // 이메일 
+    if (blankCheck(emailInput, "이메일을 입력해주세요.")) {
+      return false;
+    };
+   
+ 
+   // 모든 유효성 검사 통과 시 form 제출
+   document.getElementById("submit").submit();
+ };

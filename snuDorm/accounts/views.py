@@ -83,14 +83,22 @@ def nk_db_check(request):
     except:
         user = None
 
-    # 닉네임 중복 o (사용 불가능)
-    if user is None:
-        db_check = "pass"
-    # 닉네임 중복 x (사용 가능)
-    else:
-        db_check = "fail"
+    try:        
+        if(request.user.profile == user):
+            db_check = "pass1"
+        else: 
+            db_check = "fail1" 
+            
+    except:
+        # 닉네임 중복 o (사용 불가능)
+        if user is None:
+            db_check = "pass"
+        # 닉네임 중복 x (사용 가능)
+        else:
+            db_check = "fail"
+    
+    context = {'db_check': db_check}
 
-    context = {'db_check': db_check, 'nk_origin': nickname}
     return JsonResponse(context)
 
 # 로그인 기능
@@ -299,4 +307,3 @@ def sendMessage(request, id1, id2):
 
 def pwCheck(request, id):
     password = request.GET['password']
-    
