@@ -46,29 +46,34 @@
                 </form>
             </div>
         
+
+
             {% elif category == 'cobuy' %}
             <!-- Cobuy 공구 게시판 -->
             <div class="cobuy_board_new every-div">
                 <form method="POST" enctype="multipart/form-data" action="{% url 'newfeed' 'life' 'cobuy' %}">
                     {% csrf_token %}
-                    <div id = "cobuy_table">
-                        <div class = "title-row">
-                            <input name="title" type="text" placeholder="제목을 입력해주세요." required>
+                    <div id = "cobuy_table table_all">
+                        <div class = "title-row lu">
+                            <div class = "title-title de">제목</div>
+                            <div>
+                                <input name="title" type="text" placeholder="제목을 입력해주세요." required>
+                            </div>
                         </div>
-                        <div class = "price-row" >
-                            <div class = "tr_title"> 가격</div>
+                        <div class = "price-row lu" >
+                            <div class = "tr_title de"> 가격</div>
                             <div>
                                 <input name="price" type="text" placeholder="공구 품목의 가격을 입력하세요. ex) 425600" required>
                             </div>
                         </div>
-                        <div class = "link-row">
-                            <div class = "tr_title">링크</div>
+                        <div class = "link-row lu">
+                            <div class = "tr_title de">링크</div>
                             <div>
                                 <input name="url" type="text" placeholder="공구 품목의 링크를 넣어주세요." required>
                             </div>
                         </div>
-                        <div class ="duedate-row" >
-                            <div class = "tr_title">마감일</div>
+                        <div class ="duedate-row lu" >
+                            <div class = "tr_title de">마감일</div>
                             <div>
                                 <input name="duedate" id="edueDate" type="date" required>
                                 <input name="uncertain" type="checkbox" id="euncertain2">
@@ -76,8 +81,8 @@
                             </div>
                         </div>
 
-                        <div class = "description-row">
-                            <div class = "description">설명</div>
+                        <div class = "description-row lu">
+                            <div class = "description de">설명</div>
                             <div>
                                 <input name="content" type="text" placeholder="공구 내용과 연락수단을 적어주세요." required>
                             </div>
@@ -108,13 +113,16 @@
             <div class="rent_board_new every-div"> 
                 <form method="POST" enctype="multipart/form-data" action="{% url 'newfeed' 'life' 'rent' %}">
                     {% csrf_token %}
-                    <div id = "rent_table">
-                        <div class = "title-row">
-                            <input name="title" type="text" placeholder="제목을 입력해주세요." required>
+                    <div id = "rent_table table_all">
+                        <div class = "title-row lu">
+                            <div class = "title-title de">제목</div>
+                            <div>
+                                <input name="title" type="text" placeholder="제목을 입력해주세요." required>
+                            </div>
                         </div>
                 
-                        <div class = "purpose-row">
-                            <div class = "purpose-title">목적</div>
+                        <div class = "purpose-row lu">
+                            <div class = "purpose-title de">목적</div>
                             <div class = "purpose-select">
                                 <input name="purpose" type="checkbox" id="purpose" value="borrow" onclick="doOpenCheck(this);" required>
                                 <label for="purpose">빌려줄게요</label>
@@ -123,15 +131,15 @@
                             </div>
                         </div>
 
-                        <div class = "price-row" >
-                            <div class = "tr_title"> 대여료</div>
+                        <div class = "price-row lu" >
+                            <div class = "tr_title de"> 대여료</div>
                             <div>
                                 <input name="deposit" type="text" placeholder="빌려줄/빌릴 대여품목의 사용료를 입력해주세요." required>
                             </div>
                         </div>
 
-                        <div class = "startdate-row" >
-                            <div class = "tr_title">시작일</div>
+                        <div class = "startdate-row lu" >
+                            <div class = "tr_title de">시작일</div>
                             <div>
                                 <input name="start_date" id="estartDate" type="date" required>
                                 <input name="uncertain" type="checkbox" id="euncertain1">
@@ -139,8 +147,8 @@
                             </div>
                         </div>
 
-                        <div class ="duedate-row" >
-                            <div class = "tr_title">마감일</div>
+                        <div class ="duedate-row lu" >
+                            <div class = "tr_title de">마감일</div>
                             <div>
                                 <input name="duedate" id="edueDate" type="date" required>
                                 <input name="uncertain" type="checkbox" id="euncertain2">
@@ -148,8 +156,8 @@
                             </div>
                         </div>
 
-                        <div class = "description-row">
-                            <div class = "description">설명</div>
+                        <div class = "description-row lu">
+                            <div class = "description de">설명</div>
                             <div>
                                 <input name="content" type="text" placeholder="대여 내용과 연락처를 적어주세요." required>
                             </div>
@@ -180,14 +188,17 @@
             <div class="keep_board_new every-div">
                 <form method="POST" action="{% url 'newfeed' 'life' 'keep' %}">
                     {% csrf_token %}
-                    <div id = "keep_table">
-                        <div class = "title-row">
-                            <input name="title" type="text" placeholder="제목을 입력해주세요." required>
+                    <div id = "keep_table table_all">
+                        <div class = "title-row lu">
+                            <div class = "title-title de">제목</div>
+                            <div>
+                                <input name="title" type="text" placeholder="제목을 입력해주세요." required>
+                            </div>
                         </div>
 
-                        <div class = "purpose-row">
-                            <div class = "purpose-title">목적</div>
-                            <div class = "purpose-select">
+                        <div class = "purpose-row lu">
+                            <div class = "purpose-title de">목적</div>
+                            <div>
                                 <input type="checkbox" name="purpose" value="keep" id="purpose" onclick="doOpenCheck(this);" required>                    
                                 <label for="purpose">보관할게요</label>
                                 <input type="checkbox" name="purpose" value="request" id="purpose" onclick="doOpenCheck(this);">
@@ -196,31 +207,31 @@
                         </div>
 
                     
-                        <div class ="price-row" >
-                            <div class = "tr_title">보관료</div>
+                        <div class ="price-row lu">
+                            <div class = "tr_title de">보관료</div>
                             <div>
                                 <input name="reward" type="text" placeholder="보관할 품목 혹은 보관 해줄시의 사용료를 입력해주세요." required="required">
                             </div>
                         </div>
 
-                        <div class = "startdate-row" >
-                            <div class = "tr_title">시작일</div>
+                        <div class = "startdate-row lu" >
+                            <div class = "tr_title de">시작일</div>
                             <div>
                                 <input name="start_date" id="estartDate" type="date" required>
                                 <input name="uncertain" type="checkbox" id="euncertain1">
                                 <label for="euncertain1">미정</label>
                             </div>
                         </div>
-                        <div class ="duedate-row">
-                            <div class = "tr_title">마감일</div>
+                        <div class ="duedate-row lu">
+                            <div class = "tr_title de">마감일</div>
                             <div>
                                 <input name="duedate" id="edueDate" type="date" required>
                                 <input name="uncertain" type="checkbox" id="euncertain2">
                                 <label for="euncertain2">미정</label>
                             </div>
                         </div>
-                        <div class = "description-row">
-                            <div class = "description">설명</div>
+                        <div class = "description-row lu">
+                            <div class = "description de">설명</div>
                             <div>
                                 <input name="content" type="text" placeholder="대여 내용과 연락처를 적어주세요." required>
                             </div>
@@ -251,13 +262,16 @@
             <div class="resell_board_new every-div">
                 <form method="POST" enctype="multipart/form-data" action="{% url 'newfeed' 'life' 'resell' %}">
                     {% csrf_token %}
-                    <div id = "resell_table" >
-                        <div class = "title-row">
-                            <input name="title" type="text" placeholder="제목을 입력해주세요." required>
+                    <div id = "resell_table table_all" >
+                        <div class = "title-row lu">
+                            <div class = "title-title de">제목</div>
+                            <div>
+                                <input name="title" type="text" placeholder="제목을 입력해주세요." required>
+                            </div>
                         </div>
 
-                        <div class = "purpose-row">
-                            <div class = "purpose-title">목적</div>
+                        <div class = "purpose-row lu">
+                            <div class = "purpose-title de">목적</div>
                             <div>
                                 <input type="checkbox" name="purpose" value="sell" onclick="doOpenCheck(this);" id="purpose" required>
                                 <label for="purpose">판매</label>
@@ -266,15 +280,15 @@
                             </div>
                         </div>
 
-                        <div class = "price-row" >
-                            <div class = "tr_title"> 가격</div>
+                        <div class = "price-row lu" >
+                            <div class = "tr_title de"> 가격</div>
                             <div>
                                 <input name="price" type="text" placeholder="중고거래 제품의 가격을 입력하세요. ex) 425600" required>
                             </div>
                         </div> 
 
-                        <div class = "description-row">
-                            <div class = "description">설명</div>
+                        <div class = "description-row lu">
+                            <div class = "description de">설명</div>
                             <div>
                                 <input name="content" type="text" placeholder="중고거래 내용을 적어주세요." required>
                             </div>

@@ -124,3 +124,37 @@ input[type=file]{
 .photo-zone > div > img {
     margin: 10px;
 }
+
+/*life 게시판*/
+
+.lu {
+    display: flex;
+    min-height: 50px !important;
+    border-bottom: 1px solid #c4c4c4 !important;
+}
+
+.lu > div {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.de {
+    border-right: 1px solid #c4c4c4;
+    padding: 20px;
+    text-align: center;
+    width: 48px;
+    border-right: 1px solid #c4c4c4;
+    padding: 20px;
+}
+.lu > div > input {
+    border: 0px solid;
+    margin-left: 20px;
+    font-size: 16px;
+}
+
+/*생활게시판 제목*/
+/* .lu >  input {
+    border: 0px solid !important;
+    margin-left: 20px !important;
+    font-size: 16px !important;
+} */
