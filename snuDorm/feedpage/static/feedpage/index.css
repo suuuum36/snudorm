@@ -164,7 +164,9 @@
     top: 50%;
     transform:translate(0,-50%);
     font-size: 14px;
+    cursor: pointer;
 }
+
 
 #week_gong {
     margin-right: 10px;
