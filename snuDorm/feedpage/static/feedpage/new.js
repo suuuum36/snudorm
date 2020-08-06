@@ -28,7 +28,7 @@ $(document).on('change', '#photo', function(e) {
                 <img src='${tmppath}' alt="" width="100px" height="100px">
             </div>
                 `
-            $('td#thumbnail').append($(thumb));        
+            $('div#thumbnail').append($(thumb));        
         }
     }
 })    
@@ -47,6 +47,19 @@ function doOpenCheck(purpose){
     
     for(var i=0; i<option.length; i++){
         if(option[i] != purpose){
+            option[i].checked = false;
+            option[i].required = false;
+        } else {
+            option[i].required = true;
+        }
+    }
+}
+
+function doStatCheck(status){
+    var option = document.getElementsByName("status");
+
+    for(var i=0; i<option.length; i++){
+        if(option[i] != status){
             option[i].checked = false;
             option[i].required = false;
         } else {
