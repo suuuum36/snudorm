@@ -79,6 +79,19 @@ function startCheck(stat) {
     }
 }
 
+function doStatCheck(status){
+    var option = document.getElementsByName("status");
+
+    for(var i=0; i<option.length; i++){
+        if(option[i] != status){
+            option[i].checked = false;
+            option[i].required = false;
+        } else {
+            option[i].required = true;
+        }
+    }
+}
+
 
 $('#estartDate').val(new Date().toISOString().substring(0, 10));
 

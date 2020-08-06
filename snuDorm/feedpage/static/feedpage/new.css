@@ -120,6 +120,7 @@ input[type=file]{
 
 .photo-zone {
     display: flex;
+    flex-wrap: wrap;
 }
 .photo-zone > div > img {
     margin: 10px;
@@ -133,7 +134,7 @@ input[type=file]{
     border-bottom: 1px solid #c4c4c4 !important;
 }
 
-.lu > div {
+.lu > input {
     margin-top: auto;
     margin-bottom: auto;
 }
@@ -142,9 +143,13 @@ input[type=file]{
     border-right: 1px solid #c4c4c4;
     padding: 20px;
     text-align: center;
-    width: 48px;
+    width: 47px;
     border-right: 1px solid #c4c4c4;
     padding: 20px;
+}
+.de + div {
+    margin-top: auto;
+    margin-bottom: auto;
 }
 .lu > div > input {
     border: 0px solid;
@@ -152,9 +157,22 @@ input[type=file]{
     font-size: 16px;
 }
 
-/*생활게시판 제목*/
-/* .lu >  input {
-    border: 0px solid !important;
-    margin-left: 20px !important;
-    font-size: 16px !important;
-} */
+.description-area {
+    margin: 20px;
+    border: 0px solid;
+    width: 670px;
+    min-height: 350px;
+    color: black;
+    font-size: 16px;
+    z-index: 100000;
+}
+
+label {
+    color: #7f7f7f;
+}
+
+.exphoto {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+}
