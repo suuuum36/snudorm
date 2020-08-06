@@ -1,109 +1,52 @@
 @charset "utf-8";
 @import "variable.scss";
-
 // TODO:
-// 1) 중복확인 버튼과 input 높이 조정
-// 2) 여백 조정
-// 3) 글씨체
-// 4) 셀렉트박스 화살표 이미지 변경 및 수정
+// 1) 기숙사/동 클릭시 글자 색상이 검은색이 되도록
+// 2) 다른 생활관 클릭시 다시 동일 생활관으로 돌아오면 초기화 되도록
 
-// reset. css
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
-}
+// base.html과 별개로 적용되는 css
 
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
-	display: block;
-}
+// 공통 값 적용
+* {
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Sans KR', sans-serif;
+ }
 
 body {
 	line-height: 1;
-}
-
-ol, ul {
-	list-style: none;
-}
-
-blockquote, q {
-	quotes: none;
-}
-
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
-}
-
-table {
-	border-collapse: collapse;
-	border-spacing: 0;
-}
-
-// 추가한 코드
-* {
-	box-sizing: border-box;
 }
 
 a {
    text-decoration: none;
 }
 
-a:link, a:visited, a:hover, a:active {
-	color: black;
-}
-
-button {
-	padding: 0;
-	margin: 0;
-	border: none;
+input, button {
 	outline-style: none;
 }
-
-input {
-	padding: 0;
-	margin: 0;
-	outline-style: none;
-}
-
-select {
-	outline-style: none;
-}
-// reset.css 끝
 
 // input 태그 focus 시 글자 사라지도록
-input:focus::-webkit-input-placeholder, 
-textarea:focus::-webkit-input-placeholder {
+input:focus::-webkit-input-placeholder {
     color: transparent;
 }
+
 
 // 전체 구조
 .form {
     width: 500px;
     margin: 100px auto;
     height: 1100px;
-
+   
     // 로고 및 headline
     .headline {
         font-size: 20px;
         font-weight: bold;
+        
+        a {
+            display: flex;
+            align-items: flex-end;
+        }
         img {
             width: 30px;
         }
@@ -112,17 +55,115 @@ textarea:focus::-webkit-input-placeholder {
         }
     }
 
-    // 각 입력 항목 마진 값 적용
-    .signup-margin {
-        margin-top: 15px;
-    }
+    // 각 입력 section
+    .input-section {
+        display: inline-block;
+        width: 500px;
+        margin-top: 30px;
 
-    // 이메일 입력
-    .email-input {
-        span {
+        // head
+        .head {
+            display: inline-block;
+            width: 400px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        // section description
+        .description { 
+            display: inline-block;
+            width: 400px;
+            font-size: 12px;
+            color: $gray_text;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        // 항목별 input
+        .input-value {
+            height: 50px;
+            border: 2px solid $gray_border;
+            border-radius: 7px;
+            padding-left: 20px;
+            font-weight: bold;
+            font-size: 14px;
+            margin-top: 15px;
+        }
+
+        // 이메일을 제외한 input
+        .input-value.long {
+            width: 400px;
+        }
+
+        // 이메일 input
+        .input-value.short {
+            width: 240px;
+        }
+
+        .input-value:hover, .input-value:focus {
+            box-shadow: $gray_shadow;
+        }
+
+        .input-value::placeholder {
+            color: $gray_border;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        // input box와 중복확인 버튼 높이 조정
+        .with-button {
+            display: flex;
+            justify-content: space-between;
+
+            // 중복확인 버튼
+            .id-check, .nk-check {
+                width: 90px;
+                height: 50px;
+                border-radius: 30px;
+                background-color: $gray_button;
+                color: #ffffff;
+                cursor: pointer;
+                font-weight: bold;
+                font-size: 14px;
+                margin-top: 15px;
+                border: none;
+            }
+
+            .id-check:hover, .nk-check:hover {
+                background-color: $gray_hover;
+                box-shadow: $gray_under_shadow;
+            }
+
+            // 사용가능 div
+            #id-confirm, #nk-confirm {
+                display: none;
+                position: relative;
+                width: 90px;
+                height: 50px;
+                border-radius: 30px;
+                background-color: $blue_text;
+                color: #ffffff;
+                font-weight: bold;
+                margin-top: 15px;
+                border: none;
+                
+                span {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    white-space: nowrap;
+                    font-size: 14px;
+                }
+            }
+        }
+
+        // @ snu.ac.kr
+        .snumail {
             font-weight: bold;
         }
     }
+   
     
     // 기숙사 생활관 및 동 선택
     .building {
@@ -131,32 +172,36 @@ textarea:focus::-webkit-input-placeholder {
         position: relative;
 
         span {
-            width: 500px;
+            width: 500px !important;
         }
 
-        .building-category{
+        // 생활관 input box의 우측 마진 설정
+        .building-category {
             margin-right: 20px;
-            position: relative;
         }
 
-        .building-category, .building-bachelor, 
-        .building-master, .building-family,
-        .building-bk, .building-default {
+        // 선택되지 않은 동 옵션 숨기기
+        .remove {
+            display: none !important;
+        }
+
+        // 생활관 분류 및 동 분류 dropdown
+        .building-category, .building-default, .building-bachelor,
+        .building-master, .building-family, .building-bk {
             display: flex;
             width: 240px;
             flex-direction: column;
             margin-top: 15px;
             position: relative;
-
-            // '생활관을 선택하세요.'는 선택 불가능
+                
+            // '생활관을 선택하세요.' 옵션 선택 불가
             .default-container {
                 position: absolute !important;
                 z-index: -1 !important;
             }
-
-            .category-container, .bachelor-container,
-            .master-container, .family-container,
-            .bk-container, .default-container {
+            
+            // 생활관 및 동의 옵션을 갖는 container
+            .dropdown-container {
                 border: 2px solid $gray_border;
                 max-height: 0;
                 width: 100%;
@@ -166,56 +211,42 @@ textarea:focus::-webkit-input-placeholder {
                 overflow: hidden;
                 order: 1;
                 position: absolute;
-                top: 44px;
+                top: 50px;
                 z-index: 3;
                 margin-top: -2px;
                 background-color: #ffffff;
             }
 
-            .category-container.active, .bachelor-container.active, 
-            .master-container.active, .family-container.active,
-            .bk-container.active, .default-container.active {
+            // dropdown 작동
+            .dropdown-container.active {
                 max-height: 162px;
                 opacity: 1;
                 overflow-y: scroll;
             }
 
-            .category-container.active + .selected::after, 
-            .bachelor-container.active + .selected-bachelor::after,
-            .master-container.active + .selected-master::after, 
-            .family-container.active + .selected-family::after,
-            .bk-container.active + .selected-bk::after,
-            .default-container.active + .selected-default::after {
+            // 화살표 역전
+            .dropdown-container.active + .selected-common::after {
                 transform: rotateX(180deg);
                 top: -6px;
             }
 
-            .category-container::-webkit-scrollbar,
-            .bachelor-container::-webkit-scrollbar, 
-            .master-container::-webkit-scrollbar,
-            .family-container::-webkit-scrollbar,
-            .bk-container::-webkit-scrollbar,
-            .default-container::-webkit-scrollbar {
+            // option 스크롤바
+            .dropdown-container::-webkit-scrollbar {
                 width: 8px;
                 border-radius: 0 3px 3px 0;
                 background-color: #ffffff;
                 visibility: hidden;
             }
             
-            .category-container::-webkit-scrollbar-thumb, 
-            .bachelor-container::-webkit-scrollbar-thumb, 
-            .master-container::-webkit-scrollbar-thumb,
-            .family-container::-webkit-scrollbar-thumb,
-            .bk-container::-webkit-scrollbar-thumb,
-            .default-container::-webkit-scrollbar-thumb {
+            // option 스크롤
+            .dropdown-container::-webkit-scrollbar-thumb {
                 background-color: $gray_border;
                 border-radius: 3px;
-                border: 2px 2px 2px 0 solid $gray_border;
             }
 
-            .selected, .selected-bachelor, .selected-master,
-            .selected-family, .selected-bk, .selected-default {
-                color: $gray_text;
+            // 선택된 옵션 표시
+            .selected-common {
+                color: $gray_border;
                 padding: 12px 20px;
                 cursor: pointer;
                 border: 2px solid $gray_border;
@@ -223,11 +254,14 @@ textarea:focus::-webkit-input-placeholder {
                 margin-bottom: -2px;
                 position: relative;
                 order: 0;
+                height: 50px;
+                line-height: 22px;
+                font-weight: bold;
+                font-size: 14px;
             }
 
-            .selected::after, .selected-bachelor::after, 
-            .selected-master::after, .selected-family::after,
-            .selected-bk::after, .selected-default::after {
+            // dropdown 화살표
+            .selected-common::after {
                 content: "";
                 background: url("../img/arrow-down.png");
                 background-size: contain;
@@ -242,151 +276,57 @@ textarea:focus::-webkit-input-placeholder {
                 transition: all 0.4s;
             }
             
-            .category-option, .bachelor-option, .master-option,
-            .family-option, .bk-option, .default-option {
-                padding: 12px 20px;
+            // 옵션 설정
+            .dropdown-option {
                 cursor: pointer;
                 background-color: #ffffff;
-
+                display: flex;
+                align-items: center;
+                font-weight: bold;
+                
+                // input type = "radio"
                 .radio {
                     display:none;
                 }
             }
 
-
-
-            .category-option:hover, .bachelor-option:hover, 
-            .master-option:hover, .family-option:hover,
-            .bk-option:hover, .default-option:hover {
+            .dropdown-option:hover {
                 color: $blue_text;
             }
-
+            
+            // input type = "radio"와 연결
             label {
-                display: inline-block;
-                width: 188px;
-                height: 16px;
-                line-height: 16px;
+                display: flex;
+                align-items: center;
+                padding-left: 20px;
+                height: 50px;
+                width: 100%;
                 cursor: pointer;
             }
         }
-    }
 
-    // 회원가입 버튼
-    .signup {
-        position: absolute;
-        top: 150px;
-        width: 500px;
-        height: 70px;
-        background-color: $yellow_main;
-        color: #ffffff;
-        font-weight: bold;
-        border-radius: 7px;
-        cursor: pointer;
-        border: none;
-        font-size: 16px;
-    }
-
-    .signup.z {
-        z-index: -1;
-    }
-}
-
-.remove {
-    display: none !important;
-}
-
-// 공통 항목
-// 항목별 head
-.head {
-    display: inline-block;
-    width: 500px;
-    margin-top: 15px;
-    font-weight: bold;
-}
-
-// 항목별 description
-.description { 
-    display: inline-block;
-    width: 500px;
-    font-size: 12px;
-    color: $gray_text;
-    font-weight: bold;
-    margin-top: 15px;
-}
-
-// 항목별 input
-.input-value {
-    height: 50px;
-    border: 2px solid $gray_border;
-    border-radius: 7px;
-    padding-left: 20px;
-    font-weight: bold;
-    margin-top: 15px;
-}
-
-.input-value:hover, .input-value:focus {
-    box-shadow: $gray_shadow;
-}
-
-.input-value::placeholder {
-    color: $gray_border;
-    font-weight: bold;
-    font-size: 14px;
-}
-
-// 이메일 input
-.short {
-    width: 240px;
-}
-
-// 이메일을 제외한 input
-.long {
-    width: 400px;
-}
-
-// input box와 버튼 높이 조정
-.signup-container {
-    display: flex;
-    justify-content: space-between;
-}
-
-// 중복확인 버튼
-.id-check, .nk-check {
-    width: 90px;
-    height: 50px;
-    border-radius: 30px;
-    background-color: $gray_button;
-    color: #ffffff;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 14px;
-    margin-top: 15px;
-}
-
-.id-check:hover, .nk-check:hover {
-    background-color: $gray_hover;
-    box-shadow: $gray_under_shadow;
-}
-
-// 사용가능 div
-#id-confirm, #nk-confirm {
-    display: none;
-    position: relative;
-    width: 90px;
-    height: 50px;
-    border-radius: 30px;
-    background-color: $blue_text;
-    color: #ffffff;
-    font-weight: bold;
-    margin-top: 15px;
+        // 회원가입 input type = "button"
+        .signup {
+            position: absolute;
+            top: 150px;
+            width: 500px;
+            height: 70px;
+            background-color: $yellow_main;
+            color: #ffffff;
+            font-weight: bold;
+            border-radius: 7px;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+        }
     
-    span {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        white-space: nowrap;
-        font-size: 14px;
-    }
+        .signup.z {
+            z-index: -1;
+        }
+    }       
 }
+
+
+
+
 

@@ -10,6 +10,7 @@ urlpatterns = [
     path('logout/', views.logout, name="logout"),
     path('signup/iddbcheck/', views.id_db_check, name="iddbcheck"),
     path('signup/nkdbcheck/', views.nk_db_check, name="nkdbcheck"),
+    path('useredit/<int:id>/nkdbcheck/', views.nk_db_check, name="nkedit"),
     path('useredit/<int:id>/', views.userEdit, name="useredit"),
     path('passwordedit/<int:id>/', views.passwordEdit, name="passwordedit"),
     path('userinfo/<int:id>/', views.userInfo, name="userinfo"),

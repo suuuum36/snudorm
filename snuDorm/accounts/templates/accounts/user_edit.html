@@ -2,77 +2,93 @@
 {% block content %}
 {% load static %}
 {% load sass_tags %}
-
-<div class="form">
-    <div class="nav">
-        <div class="nav-title"><span>마이페이지</span></div>
-        <div class="nav-list"><a href="{% url 'userinfo' user.id %}">내 정보</a></div>
-        <div class="nav-list"><a href="{% url 'useredit' user.id %}">개인정보 변경</a></div>
-        <div class="nav-list"><a href="{% url 'passwordedit' user.id %}">비밀번호 변경</a></div>
-        <div class="nav-list"><a href="{% url 'usernotice' user.id %}">게시글 알림</a></div>
-        <div class="nav-list"><a href="{% url 'messagebox' user.id %}">쪽지함</a></div>
-    </div>
-    <div class="info">
-        <div class="title">개인정보 변경</div>
-        <form method="POST" action="{% url 'useredit' user.id %}">
-            {% csrf_token %}
-            <div class="container">
-                <div class="name">
-                    <div class="field">
-                        <span>이름</span>
-                    </div>
-                    <div class="value">
-                        <input class="input-box" name="name" type="text" value="{{ user.profile.name }}" required>
-                    </div>
+<head>
+    <link rel="stylesheet" href="{% sass_src 'accounts/css/mypage.scss' %}">
+</head>
+<body>
+    <div class="background">
+        <div class="form">
+            <div class="nav">
+                <div class="nav-title"><span>마이페이지</span></div>
+                <div class="nav-list"><a href="{% url 'userinfo' user.id %}">내 정보</a></div>
+                <div class="nav-list"><a href="{% url 'useredit' user.id %}">개인정보 변경</a></div>
+                <div class="nav-list"><a href="{% url 'passwordedit' user.id %}">비밀번호 변경</a></div>
+                <div class="nav-list"><a href="{% url 'usernotice' user.id %}">알림</a></div>
+                <div class="nav-list"><a href="{% url 'messagebox' user.id %}">쪽지함</a></div>
+            </div>
+            <div class="info">
+                <div class="title">
+                    <span>개인정보 변경</span>
                 </div>
-                <div class="id">
-                    <div class="field">
-                        <span>아이디</span>
-                    </div>
-                    <div class="value">
-                        <input class="input-box" id="no" name="user_id" type="text" placeholder="{{ user.username }}" readonly>
-                    </div>
-                </div>
-                <div class="nickname">
-                    <div class="field">
-                        <span>닉네임</span>
-                    </div>
-                    <div class="value">
-                        <input class="input-box" name="nickname" type="text" value="{{ user.profile.nickname }}" required>
-                    </div>
-                    <!-- <button class="id-check" type="button" onclick="id_db_check()">중복확인</button> -->
-                </div>
-                <div class="email">
-                    <div class="field">
-                        <span>이메일</span>
-                    </div>
-                    <div class="value">
-                        <input class="input-box" name="email" type="text" value="{{ user.profile.email }}" spellcheck="false" required> @ snu.ac.kr
-                    </div>
-                </div>
-                <div class="building">
-                    <div class="field">
-                        <span>기숙사 동</span>
+                <form method="POST" action="{% url 'useredit' user.id %}">
+                    {% csrf_token %}
+                    <div class="container">
+                        <div class="name">
+                            <div class="field">
+                                <span>이름</span>
+                            </div>
+                            <div class="value">
+                                <input class="input-box" name="name" type="text" value="{{ user.profile.name }}" required>
+                            </div>
+                        </div>
+                        <div class="id">
+                            <div class="field">
+                                <span>아이디</span>
+                            </div>
+                            <div class="value">
+                                <input class="input-box" id="no" name="user_id" type="text" placeholder="{{ user.username }}" readonly>
+                            </div>
+                        </div>
+                        <div class="nk">
+                            <div class="field">
+                                <span>닉네임</span>
+                            </div>
+                            <div class="value">
+                                <input id="nickname" class="input-box nickname" name="nickname" type="text" value="{{ user.profile.nickname }}" check_result="fail" required>
+                            </div>
+                            <button class="nk-check" type="button" onclick="nk_db_check()">중복확인</button>
+                            <div id="nk-confirm" class="available-2 check-confirm">
+                                <span>사용가능</span>
+                            </div>
+                        </div>
+                        <div class="email">
+                            <div class="field">
+                                <span>이메일</span>
+                            </div>
+                            <div class="value">
+                                <input class="input-box" name="email" type="text" value="{{ user.profile.email }}" spellcheck="false" required>
+                                <span>@ snu.ac.kr</span>
+                            </div>
+                        </div>
+                        <div class="building">
+                            <div class="field">
+                                <span>기숙사 동</span>
+                            </div>  
+                            <div class="value" id="building-item">
+                                <input id="category" class="input-box" name="building_category" type="text" value="{{ user.profile.building_category }}" required>
+                                <input id="dong" class="input-box" name="building_dong" type="text" value="{{ user.profile.building_dong }}" required>
+                            </div>
+                        </div>
+                        <div class="password">
+                            <div class="field">
+                                <span>현재 비밀번호</span>
+                            </div>  
+                            <div class="value">
+                                <input class="input-box" name="origin_password" type="password" required>
+                            </div>
+                        </div>
                     </div>  
-                    <div class="value" id="building-item">
-                        <input id="category" class="input-box" name="building_category" type="text" value="{{ user.profile.building_category }}" required>
-                        <input id="dong" class="input-box" name="building_dong" type="text" value="{{ user.profile.building_dong }}" required>
-                    </div>
-                </div>
-                <div class="password">
-                    <div class="field">
-                        <span>비밀번호</span>
-                    </div>  
-                    <div class="value">
-                        <input class="input-box" name="origin_password" type="password" required>
-                    </div>
-                </div>
-            </div>  
-            <div class="edit">
-                <button type="submit">개인정보 변경</button>
-            </div>   
-        </form>
+                    <div class="edit">
+                        <button type="submit">개인정보 변경</button>
+                    </div>   
+                </form>
+            </div>
+        </div>
     </div>
+<<<<<<< HEAD
 </div>
  <script src="{% static 'accounts/js/user_edit.js' %}"></script>
+=======
+</body>
+>>>>>>> be3d5142c0abed4978123dc128596de01f42ca12
 {% endblock content %}

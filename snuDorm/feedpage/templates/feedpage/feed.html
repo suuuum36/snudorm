@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load static %}
 
 {% if user.is_authenticated %}
 <div class="info">
@@ -9,14 +10,6 @@
         <a href="{% url 'editfeed' board category feed.id %}">수정</a>
         <a href="{% url 'deletefeed' board category feed.id %}">삭제</a>
     </div>
-    {% else %}
-    {% if not feed.noname %}
-        <div style="margin: 10px; text-align: right;">
-            <a href="{% url 'chatroom' request.user.id feed.author.id  %}">
-                쪽지보내기
-            </a>
-        </div>
-    {% endif %}
     {% endif %}
     <div style="display:flex; justify-content:space-around;">
         <div style="display:flex"> 
@@ -25,7 +18,13 @@
                 {% if feed.noname %} 
                     <div>익명</div>
                 {% else %}
-                    {{ feed.author.profile.nickname }}
+                    {% if feed.author != request.user %}
+                    <a href="{% url 'chatroom' request.user.id feed.author.id  %}">
+                        {{ feed.author.profile.nickname }}
+                    </a>
+                    {% else %}
+                        {{ feed.author.profile.nickname }}
+                    {% endif %}
                 {% endif %}
             </div> 
         </div> 
@@ -222,4 +221,5 @@
 </div>
 
 {% endif %}
+<script src="{% static 'feedpage/comment.js' %}"></script>
 {% endblock content %}
