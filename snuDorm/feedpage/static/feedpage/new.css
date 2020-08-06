@@ -1,35 +1,126 @@
-/* 모든 제목 스타일 */
-.board_name {
-    margin-left: 15%;
-    font-size: larger;
 
-}
 
-/* 민원게시판 */
-table {
-    width: 60%;
-    height: 60%;
-    position: absolute;
-    margin-left:15% ;
+.whole {
+    width: 800px;
+    min-height: 800px;
     margin-right: auto;
-    margin-top: 30px;
-    border: 1px solid gray;
-    border-collapse: collapse;
+    margin-left: auto;
+    margin-bottom: 100px;
 }
 
-input {
-    border: none;
-    padding: 10px 10px; 
+.board_name {
+    position: relative;
+    display: flex;
+    height: 70px;
+    padding-right: 20px;
+    padding-left: 20px;
 }
 
-label {
-    padding: 10px 10px;
+.name {
+    margin-top: auto;
+    margin-bottom: auto;
+    color: black;
+    font-size: 19px;
+    font-weight: 500;
 }
 
-.tr_title {
+.every-div {
+    border: 1px solid #c4c4c4;
+}
+
+.title-row {
+    position: relative;
+    min-height: 55px;
+    border-bottom: 1px solid #c4c4c4;
+}
+
+.title-row > input {
+    border: 0px solid;
+    position: absolute;
+    top: 50%;
+    transform: translate(0,-50%);
+    margin-left: 20px;
+    font-size: 16px;
+}
+
+.content-row {
+    position: relative;
+    min-height: 600px;
+    border-bottom: 1px solid #c4c4c4;
+}
+
+.content-row > textarea {
+    margin: 20px;
+    border: 0px solid;
+    width: 750px;
+    min-height: 560px;
+    color: black;
+    font-size: 16px;
+    z-index: 100000;
+}
+
+.write-row {
+    height: 60px;
+    position: relative;
+    background-color: #f0f0f0;
+
+}
+
+.write-comment {
+    border: 0px solid;
+    font-size: 16px;
+    color: #016aff;
+}
+
+.noname {
+    color: #7f7f7f;
+    margin-right: 10px;
     
-    align-self: center;
-    text-align: center;
 }
 
+.photo-button {
+    display: flex;
+    height: 100%;
+    width: 62px;
+    background-color: #016aff;
+    cursor: pointer;
+}
 
+input[type=file]{
+    border: 1px solid;
+    opacity: 0;
+    width: 62px;
+    vertical-align: middle;
+    z-index: 10000;
+    cursor: pointer;
+}
+
+.submit-button{
+    position: absolute;
+    height: fit-content;
+    width: fit-content;
+    right: 20px;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+.real-button{
+    position: absolute;
+    width: 60%;
+    height: 62px;
+    cursor: pointer;
+}
+
+.img-photo {
+    width: 35px;
+    height: auto;
+    margin-left: 13px;
+    margin-top: 13px;
+    cursor: pointer;
+}
+
+.photo-zone {
+    display: flex;
+}
+.photo-zone > div > img {
+    margin: 10px;
+}

@@ -28,7 +28,7 @@ $(document).on('change', '#photo', function(e) {
                 <img src='${tmppath}' alt="" width="100px" height="100px">
             </div>
                 `
-            $('td#thumbnail').append($(thumb));        
+            $('div#thumbnail').append($(thumb));        
         }
     }
 })    
