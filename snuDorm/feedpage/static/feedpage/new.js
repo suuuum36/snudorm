@@ -55,6 +55,19 @@ function doOpenCheck(purpose){
     }
 }
 
+function doStatCheck(status){
+    var option = document.getElementsByName("status");
+
+    for(var i=0; i<option.length; i++){
+        if(option[i] != status){
+            option[i].checked = false;
+            option[i].required = false;
+        } else {
+            option[i].required = true;
+        }
+    }
+}
+
 function startCheck(stat) {
     var start_date = document.getElementByName("start_date");
 
