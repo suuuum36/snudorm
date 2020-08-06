@@ -36,11 +36,15 @@
                                 <div class = "feed-date">
                                     {{ feed.created_at|date:"y/m/d" }} 
                                 </div>
-                                <div class = "feed-likes"> 
-                                    {{ feed.like_users.count }} 
-                                </div>
-                                <div class = "feed-comments"> 
-                                    {{ feed.feedcomment_set.count }} 
+                                <div class ="count-div">
+                                    <div class = "feed-likes">
+                                        <div class ="img"><img class ="img1" src="{% static 'img/like.png' %}"></div>
+                                        <div class ="count">{{ feed.like_users.count }}</div>
+                                    </div>
+                                    <div class = "feed-comments"> 
+                                        <div class ="img"><img class = "img2" src="{% static 'img/comment.png' %}"></div>
+                                        <div >{{ feed.feedcomment_set.count }}</div>
+                                    </div>
                                 </div>
                             </div>
                         </a>
@@ -58,11 +62,15 @@
                                 <div class = "feed-date">
                                     {{ feed.created_at|date:"y/m/d" }} 
                                 </div>
-                                <div class = "feed-likes"> 
-                                    {{ feed.like_users.count }} 
-                                </div>
-                                <div class = "feed-comments"> 
-                                    {{ feed.feedcomment_set.count }} 
+                                <div class ="count-div">
+                                    <div class = "feed-likes">
+                                        <div class ="img"><img class ="img1" src="{% static 'img/like.png' %}"></div>
+                                        <div class ="count">{{ feed.like_users.count }}</div>
+                                    </div>
+                                    <div class = "feed-comments"> 
+                                        <div class ="img"><img class = "img2" src="{% static 'img/comment.png' %}"></div>
+                                        <div >{{ feed.feedcomment_set.count }}</div>
+                                    </div>
                                 </div>
                             </div>
                         </a>
@@ -92,11 +100,15 @@
                                     <div class = "feed-date">
                                         {{ feed.created_at|date:"y/m/d" }} 
                                     </div>
-                                    <div class = "feed-likes"> 
-                                        {{ feed.like_users.count }} 
-                                    </div>
-                                    <div class = "feed-comments"> 
-                                        {{ feed.feedcomment_set.count }} 
+                                    <div class ="count-div">
+                                        <div class = "feed-likes">
+                                            <div class ="img"><img class ="img1" src="{% static 'img/like.png' %}"></div>
+                                            <div class ="count">{{ feed.like_users.count }}</div>
+                                        </div>
+                                        <div class = "feed-comments"> 
+                                            <div class ="img"><img class = "img2" src="{% static 'img/comment.png' %}"></div>
+                                            <div >{{ feed.feedcomment_set.count }}</div>
+                                        </div>
                                     </div>
                                 </div>
                             </a>
@@ -113,11 +125,15 @@
                                     <div class = "feed-date">
                                         {{ feed.created_at|date:"y/m/d" }} 
                                     </div>
-                                    <div class = "feed-likes"> 
-                                        {{ feed.like_users.count }} 
-                                    </div>
-                                    <div class = "feed-comments"> 
-                                        {{ feed.feedcomment_set.count }} 
+                                    <div class ="count-div">
+                                        <div class = "feed-likes">
+                                            <div class ="img"><img class ="img1" src="{% static 'img/like.png' %}"></div>
+                                            <div class ="count">{{ feed.like_users.count }}</div>
+                                        </div>
+                                        <div class = "feed-comments"> 
+                                            <div class ="img"><img class = "img2" src="{% static 'img/comment.png' %}"></div>
+                                            <div >{{ feed.feedcomment_set.count }}</div>
+                                        </div>
                                     </div>
                                 </div>
                             </a>
@@ -138,7 +154,7 @@
             </div>
         </div>
 
-        <div class = "board">
+        <div class = "board" id = "life-board">
             <!-- 공구 게시판 -->
             <div id = "cobuy_lists">
                 <div class = "life-list">
@@ -153,11 +169,15 @@
                                             <div class = "feed-date">
                                                 {{ feed.created_at|date:"y/m/d" }} 
                                             </div>
-                                            <div class = "feed-likes"> 
-                                                {{ feed.like_users.count }} 
-                                            </div>
-                                            <div class = "feed-comments"> 
-                                                {{ feed.feedcomment_set.count }} 
+                                            <div class ="count-div">
+                                                <div class = "feed-likes">
+                                                    <div class ="img"><img class ="img1" src="{% static 'img/like.png' %}"></div>
+                                                    <div class ="count">{{ feed.like_users.count }}</div>
+                                                </div>
+                                                <div class = "feed-comments"> 
+                                                    <div class ="img"><img class = "img2" src="{% static 'img/comment.png' %}"></div>
+                                                    <div >{{ feed.feedcomment_set.count }}</div>
+                                                </div>
                                             </div>
                                         </div>     
                                     </a>
@@ -182,11 +202,15 @@
                                             <div class = "feed-date">
                                                 {{ feed.created_at|date:"y/m/d" }} 
                                             </div>
-                                            <div class = "feed-likes"> 
-                                                {{ feed.like_users.count }} 
-                                            </div>
-                                            <div class = "feed-comments"> 
-                                                {{ feed.feedcomment_set.count }} 
+                                            <div class ="count-div">
+                                                <div class = "feed-likes">
+                                                    <div class ="img"><img class ="img1" src="{% static 'img/like.png' %}"></div>
+                                                    <div class ="count">{{ feed.like_users.count }}</div>
+                                                </div>
+                                                <div class = "feed-comments"> 
+                                                    <div class ="img"><img class = "img2" src="{% static 'img/comment.png' %}"></div>
+                                                    <div >{{ feed.feedcomment_set.count }}</div>
+                                                </div>
                                             </div>
                                         </div>
                                     </a>
@@ -203,18 +227,22 @@
                         <div class = "list"> <!-- feed 5개 -->
                             {% for feed in list%}
                                 <div class = "one-feed">
-                                    <a class = "one-feed" href="{% url 'showfeed' 'life' 'keep' feed.id %}">
+                                    <a href="{% url 'showfeed' 'life' 'keep' feed.id %}">
                                         <div class = "feed-title">{{ feed.title |truncatechars:15}}</div>
                                         <div class = "feed-content">{{ feed.content |truncatechars:25}}</div>
                                         <div class = "feed-detail">
                                             <div class = "feed-date">
                                                 {{ feed.created_at|date:"y/m/d" }} 
                                             </div>
-                                            <div class = "feed-likes"> 
-                                                {{ feed.like_users.count }} 
-                                            </div>
-                                            <div class = "feed-comments"> 
-                                                {{ feed.feedcomment_set.count }} 
+                                            <div class ="count-div">
+                                                <div class = "feed-likes">
+                                                    <div class ="img"><img class ="img1" src="{% static 'img/like.png' %}"></div>
+                                                    <div class ="count">{{ feed.like_users.count }}</div>
+                                                </div>
+                                                <div class = "feed-comments"> 
+                                                    <div class ="img"><img class = "img2" src="{% static 'img/comment.png' %}"></div>
+                                                    <div >{{ feed.feedcomment_set.count }}</div>
+                                                </div>
                                             </div>
                                         </div>
                                     </a>
@@ -231,18 +259,22 @@
                         <div class = "list"> <!-- feed 5개 -->
                             {% for feed in list %}
                                 <div class = "one-feed">
-                                    <a class = "one-feed" href="{% url 'showfeed' 'life' 'resell' feed.id %}">
+                                    <a href="{% url 'showfeed' 'life' 'resell' feed.id %}">
                                         <div class = "feed-title">{{ feed.title |truncatechars:15}}</div>
                                         <div class = "feed-content">{{ feed.content |truncatechars:25}}</div>
                                         <div class = "feed-detail">
                                             <div class = "feed-date">
                                                 {{ feed.created_at|date:"y/m/d" }} 
                                             </div>
-                                            <div class = "feed-likes"> 
-                                                {{ feed.like_users.count }} 
-                                            </div>
-                                            <div class = "feed-comments"> 
-                                                {{ feed.feedcomment_set.count }} 
+                                            <div class ="count-div">
+                                                <div class = "feed-likes">
+                                                    <div class ="img"><img class ="img1" src="{% static 'img/like.png' %}"></div>
+                                                    <div class ="count">{{ feed.like_users.count }}</div>
+                                                </div>
+                                                <div class = "feed-comments"> 
+                                                    <div class ="img"><img class = "img2" src="{% static 'img/comment.png' %}"></div>
+                                                    <div >{{ feed.feedcomment_set.count }}</div>
+                                                </div>
                                             </div>
                                         </div>
                                     </a>

@@ -19,7 +19,11 @@ class Profile(models.Model):
     email = models.CharField(max_length=20, verbose_name='이메일')
 
     def __str__(self):
+<<<<<<< HEAD
         return f'user={self.user}, name={self.name}, nickname={self.nickname},\
+=======
+        return f'user={self.user}, name={self.name}, nickname={self.nickname}, \
+>>>>>>> 708bc717ffd7968e0537759ea3442529f24ac846
             building_category={self.building_category}, building_dong={self.building_dong}'
 
 class Message(models.Model):

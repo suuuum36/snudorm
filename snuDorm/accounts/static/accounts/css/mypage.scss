@@ -14,9 +14,16 @@ a {
     text-decoration: none;
 }
 
+<<<<<<< HEAD
 a:link, a:visited, a:hover, a:active {
 	color: black;
 }
+=======
+// base.html의 헤더 배경 !important 적용 필요
+// html {
+//     background-color: #e9e9e9;
+// }
+>>>>>>> 708bc717ffd7968e0537759ea3442529f24ac846
 
 // input 태그 focus 시 글자 사라지도록
 input:focus::-webkit-input-placeholder, 
