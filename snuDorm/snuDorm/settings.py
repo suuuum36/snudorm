@@ -19,10 +19,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'cgak8bt84s^3x+4v7g08tg((6&3qjg@p^b*rdo-h4f_xdnac)o'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'cgak8bt84s^3x+4v7g08tg((6&3qjg@p^b*rdo-h4f_xdnac)o')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool( os.environ.get('DJANGO_DEBUG', True) )
 
 ALLOWED_HOSTS = []
 
@@ -56,6 +56,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -166,3 +167,7 @@ EMAIL_HOST_USER = '' 	 # 발신할 이메일
 EMAIL_HOST_PASSWORD = ''		 # 발신할 메일의 비밀번호
 EMAIL_USE_TLS = True			 # TLS 보안 설정
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER	 # 사이트와 관련한 자동응답을 받을 이메일 주소
+
+import dj_database_url
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)

@@ -1,7 +1,6 @@
-
 $(document).on('change', '#photo', function(e) {
     console.log('clicked');
-    let $this = $(e.currentTarget);
+    const $this = $(e.currentTarget);
     $this.css('display', 'none')
 
     const str = `
@@ -9,7 +8,38 @@ $(document).on('change', '#photo', function(e) {
         type="file"  multiple>
     `
     $(str).insertAfter($this);
+    
+    const len = e.target.files.length;
+    
+    let totallen = len;
+    $(e.target).siblings('#photo').each(function(){
+        totallen = totallen + this.files.length
+    })
+    
+    if(totallen > 5){
+        alert('사진은 5개까지 업로드 가능합니다.');
+        $this.remove()
+        
+    } else {
+        for(let i=0; i<len; i++){
+            const tmppath = URL.createObjectURL(e.target.files[i]);
+            const thumb = `
+            <div>
+                <img src='${tmppath}' alt="" width="100px" height="100px">
+            </div>
+                `
+            $('td#thumbnail').append($(thumb));        
+        }
+    }
 })    
+
+$(document).on('click', '#photodelete', function(e) {
+    const $this = $(e.currentTarget)
+    console.log($this)
+    
+    $this.parent().remove()
+
+})
 
 
 function doOpenCheck(purpose){
@@ -36,34 +66,32 @@ function startCheck(stat) {
     }
 }
 
-$('#startDate').val(new Date().toISOString().substring(0, 10));
 
-$(document).on('click', '#uncertain1', ()=> {
-    if($('#startDate').attr("required")) {
-        $("#startDate").removeAttr('required');
-        $("#startDate").attr('disabled', true);
-        console.log('hello')
+$('#estartDate').val(new Date().toISOString().substring(0, 10));
+
+$(document).on('click', '#euncertain1', ()=> {
+    if($('#estartDate').attr("required")) {
+        $("#estartDate").removeAttr('required');
+        $("#estartDate").attr('disabled', true);
+        console.log('hello uncertain1')
     } else {
-        $("#startDate").removeAttr('disabled');
-        $("#startDate").attr('required', true);   
-        console.log('bye')
+        $("#estartDate").removeAttr('disabled');
+        $("#estartDate").attr('required', true);   
+        console.log('bye euncertain1')
     }     
 })
 
 
-$('#dueDate').val(new Date().toISOString().substring(0, 10));
+$('#edueDate').val(new Date().toISOString().substring(0, 10));
 
-$(document).on('click', '#uncertain2', ()=> {
-    if($('#dueDate').attr("required")) {
-        $("#dueDate").removeAttr('required');
-        $("#dueDate").attr('disabled', true);
-        console.log('hello')
+$(document).on('click', '#euncertain2', ()=> {
+    if($('#edueDate').attr("required")) {
+        $("#edueDate").removeAttr('required');
+        $("#edueDate").attr('disabled', true);
+        console.log('hello euncertain2')
     } else {
-        $("#dueDate").removeAttr('disabled');
-        $("#dueDate").attr('required', true);   
-        console.log('bye')
+        $("#edueDate").removeAttr('disabled');
+        $("#edueDate").attr('required', true);   
+        console.log('bye euncertain2')
     }     
 })
-
-
-

@@ -1,91 +1,33 @@
 @charset "utf-8";
 @import "variable.scss";
 
-// TODO:
-// 1) 색상 수정
-// 2) 반응형 구현
-// 3) 여백 수정
+// base.html과 별개로 적용되는 css
 
-// reset. css
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
-}
-
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
-	display: block;
-}
+// 공통 값 적용
+* {
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Sans KR', sans-serif;
+ }
 
 body {
 	line-height: 1;
-}
-
-ol, ul {
-	list-style: none;
-}
-
-blockquote, q {
-	quotes: none;
-}
-
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
-}
-
-table {
-	border-collapse: collapse;
-	border-spacing: 0;
-}
-
-// 추가한 코드
-* {
-	box-sizing: border-box;
 }
 
 a {
    text-decoration: none;
 }
 
-a:link, a:visited, a:hover, a:active {
-	color: black;
-}
-
-button {
-	padding: 0;
-	margin: 0;
-	border: none;
+input, button {
 	outline-style: none;
 }
 
-input {
-	padding: 0;
-	margin: 0;
-	outline-style: none;
+// input 태그 focus 시 글자 사라지도록
+input:focus::-webkit-input-placeholder {
+    color: transparent;
 }
 
-select {
-	outline-style: none;
-}
-// reset.css 끝
 
 // 로그인 전체 폼
 .form {
@@ -95,17 +37,20 @@ select {
     
     // 로고
     .logo {
-        width: 300px;
-        margin: 0 auto 100px auto;
+        a {
+            display: block;
+        }
 
         img {
-            max-width: 100%;
+            display: block;
+            width: 300px;
+            margin: 0 50px;
         }
     }
 
-    // 아이디, 비밀번호 input & 로그인 버튼
+    // 아이디, 비밀번호 input box & 로그인 버튼
     .input {
-        margin-top: 20px;
+        margin-top: 50px;
 
         // 아이디/비밀번호 input
         .id-pw {
@@ -126,7 +71,7 @@ select {
                 width: 400px;
                 height: 50px;
                 padding-left: 20px;
-                margin-top: -1px; // 아이디 입력칸과 외곽선 겹치도록 설정
+                margin-top: -2px; // 아이디 입력칸과 외곽선 겹치도록 설정
                 border: 1px solid $gray_border;
                 border-radius: 0 0 7px 7px;
                 font-weight: bold;
@@ -143,11 +88,12 @@ select {
             margin-top: 40px;
             color: $gray_text;
             background-color: $gray_button; // 색상 수정
-            border-radius: 5px;
+            border-radius: 7px;
             width: 400px;
             height: 50px;
             cursor: pointer;
             font-weight: bold;
+            border: none;
         }
 
         button:hover {
@@ -165,33 +111,25 @@ select {
     // 소셜 로그인
     .social {
         width: 400px;
-        .naver {
+
+        .naver, .google {
             position: relative;
-            img {
-                max-width: 400px;
-            }
-            span {
-                position: absolute;
-                color: #ffffff;
-                font-weight: bold;
-                top: 40%;
-                left: 33%;
-            }
-        }
-        .google {
-            position: relative;
-            margin-top: 10px;
 
             img {
                 max-width: 400px;
+                display: block;
             }
             span {
                 position: absolute;
                 color: #ffffff;
                 font-weight: bold;
-                top: 40%;
+                top: 37%;
                 left: 33%;
             }
+        }
+
+        .google {
+            margin-top: 10px;
         }
     }
 

@@ -103,63 +103,63 @@ function nk_db_check() {
 // 회원가입 form 유효성 검사
 function validateForm() {
 
-  // input 변수 지정
-  var nameInput = document.getElementById("name");
-  var pw1Input = document.getElementById("pw1");
-  var pw2Input = document.getElementById("pw2");
-  var emailInput = document.getElementById("email");
+  // // input 변수 지정
+  // var nameInput = document.getElementById("name");
+  // var pw1Input = document.getElementById("pw1");
+  // var pw2Input = document.getElementById("pw2");
+  // var emailInput = document.getElementById("email");
 
-  // regex 변수 지정
-  // 4자 이내의 한글 이름(공백 불가능) 또는 15자 이내의 영어 이름(공백 가능)
-  var nameRegex = /^[가-힣]{1,4}|[\sa-zA-Z]{1,15}$/; 
-  // 영문, 숫자, 특수문자 최소 한 글자씩 포함 & 8자 이상
-  var pwRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
+  // // regex 변수 지정
+  // // 4자 이내의 한글 이름(공백 불가능) 또는 15자 이내의 영어 이름(공백 가능)
+  // var nameRegex = /^[가-힣]{1,4}|[\sa-zA-Z]{1,15}$/; 
+  // // 영문, 숫자, 특수문자 최소 한 글자씩 포함 & 8자 이상
+  // var pwRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
   
 
-  // 이름 확인
-  if(blankCheck(nameInput, "이름을 입력해주세요.")) {
-    return false;
-  };
+  // // 이름 확인
+  // if(blankCheck(nameInput, "이름을 입력해주세요.")) {
+  //   return false;
+  // };
   
-  if (!regexCheck(nameRegex, nameInput, "이름을 확인해주세요.")) {
-    return false;
-  };
+  // if (!regexCheck(nameRegex, nameInput, "이름을 확인해주세요.")) {
+  //   return false;
+  // };
   
-  // 아이디 중복확인 여부
-  if ($('.user-id').attr("check_result") == "fail"){
-    alert("아이디 중복체크를 해주시기 바랍니다.");
-    $('.user-id').focus();
-    return false;
-  };
+  // // 아이디 중복확인 여부
+  // if ($('.user-id').attr("check_result") == "fail"){
+  //   alert("아이디 중복체크를 해주시기 바랍니다.");
+  //   $('.user-id').focus();
+  //   return false;
+  // };
 
-  // 비밀번호 확인
-  // 1) 비밀번호 regex 확인
-  // 2) 비밀번호 일치여부 확인
-  if (!regexCheck(pwRegex, pw1Input, "비밀번호를 확인해주세요.")) {
-    return false;
-  }; // 1차 비밀번호 확인
+  // // 비밀번호 확인
+  // // 1) 비밀번호 regex 확인
+  // // 2) 비밀번호 일치여부 확인
+  // if (!regexCheck(pwRegex, pw1Input, "비밀번호를 확인해주세요.")) {
+  //   return false;
+  // }; // 1차 비밀번호 확인
 
-  if (!regexCheck(pwRegex, pw2Input, "비밀번호를 확인해주세요.")) {
-    return false;
-  }; // 2차 비밀번호 확인
+  // if (!regexCheck(pwRegex, pw2Input, "비밀번호를 확인해주세요.")) {
+  //   return false;
+  // }; // 2차 비밀번호 확인
   
-  if (pw1Input.value != pw2Input.value) {
-    alert("비밀번호가 일치하지 않습니다.");
-    pw1Input.focus();
-    return false;
-  };
+  // if (pw1Input.value != pw2Input.value) {
+  //   alert("비밀번호가 일치하지 않습니다.");
+  //   pw1Input.focus();
+  //   return false;
+  // };
 
-  // 닉네임 중복확인 여부
-  if ($('.nickname').attr("check_result") == "fail"){
-    alert("닉네임 중복체크를 해주시기 바랍니다.");
-    $('.nickname').focus();
-    return false;
-  };
+  // // 닉네임 중복확인 여부
+  // if ($('.nickname').attr("check_result") == "fail"){
+  //   alert("닉네임 중복체크를 해주시기 바랍니다.");
+  //   $('.nickname').focus();
+  //   return false;
+  // };
 
-  // 이메일 
-  if (blankCheck(emailInput, "이메일을 입력해주세요.")) {
-    return false;
-  };
+  // // 이메일 
+  // if (blankCheck(emailInput, "이메일을 입력해주세요.")) {
+  //   return false;
+  // };
   
 
   // 모든 유효성 검사 통과 시 form 제출
@@ -185,9 +185,6 @@ function blankCheck(field, message) {
 };
 
 
-
-
-
 // 기숙사 생활관 selected 표시 변경
 var selected = document.querySelector(".selected");
 var categoryContainer = document.querySelector(".category-container");
@@ -204,32 +201,46 @@ categoryOptions.forEach(o => {
   o.addEventListener("click", () => {
     selected.innerHTML = o.querySelector("label").innerHTML;
     categoryContainer.classList.remove("active");
-    
+        
+    var opt = o.firstElementChild;
+    var cateName = document.getElementsByName("building_category");
+    if (cateName.length == 1) {
+      console.log(cateName);
+      cateName[0].removeAttribute("name");
+    };
+    opt.setAttribute("name", "building_category");
+   
     var dorm = document.getElementById("selected").innerHTML;
+    var defaultOpt = document.getElementById("default-dong"); // 처음에 보여지는 default 옵션
+    var bachelorOpt = document.getElementById("bachelor-dong"); // 학부생활관 동 옵션
+    var masterOpt = document.getElementById("master-dong"); // 대학원생활관 동 옵션
+    var familyOpt = document.getElementById("family-dong"); // 가족생활관 동 옵션
+    var bkOpt = document.getElementById("bk-dong"); // BK생활관 동 옵션
+
     if (dorm == "학부생활관") {
-      document.getElementById("default-dong").className='remove';
-      document.getElementById("bachelor-dong").className='building-bachelor';
-      document.getElementById("master-dong").className='remove';
-      document.getElementById("family-dong").className='remove';
-      document.getElementById("bk-dong").className='remove';
+      defaultOpt.className='remove';
+      bachelorOpt.className='building-bachelor';
+      masterOpt.className='remove';
+      familyOpt.className='remove';
+      bkOpt.className='remove';
     } else if (dorm == "대학원생활관") {
-      document.getElementById("default-dong").className='remove';
-      document.getElementById("bachelor-dong").className='remove';
-      document.getElementById("master-dong").className='building-master';
-      document.getElementById("family-dong").className='remove';
-      document.getElementById("bk-dong").className='remove';
+      defaultOpt.className='remove';
+      bachelorOpt.className='remove';
+      masterOpt.className='building-master';
+      familyOpt.className='remove';
+      bkOpt.className='remove';
     } else if (dorm == "가족생활관") {
-      document.getElementById("default-dong").className='remove';
-      document.getElementById("bachelor-dong").className='remove';
-      document.getElementById("master-dong").className='remove';
-      document.getElementById("family-dong").className='building-family';
-      document.getElementById("bk-dong").className='remove';
+      defaultOpt.className='remove';
+      bachelorOpt.className='remove';
+      masterOpt.className='remove';
+      familyOpt.className='building-family';
+      bkOpt.className='remove';
     } else if (dorm == "BK생활관") {
-      document.getElementById("default-dong").className='remove';
-      document.getElementById("bachelor-dong").className='remove';
-      document.getElementById("master-dong").className='remove';
-      document.getElementById("family-dong").className='remove';
-      document.getElementById("bk-dong").className='building-bk';
+      defaultOpt.className='remove';
+      bachelorOpt.className='remove';
+      masterOpt.className='remove';
+      familyOpt.className='remove';
+      bkOpt.className='building-bk';
     };
   });
 });
@@ -313,3 +324,22 @@ bkOptions.forEach(d => {
     bkContainer.classList.remove("active");
   });
 });
+
+
+
+// dong name 값 지정
+var choose = document.querySelectorAll(".dong-option");
+
+choose.forEach(x => {
+  x.addEventListener("click", () => {
+    var ipt = x.firstElementChild;
+    var beforeName = document.getElementsByName("building_dong");
+    if (beforeName.length == 1) {
+      beforeName[0].removeAttribute("name");
+    };
+    ipt.setAttribute("name", "building_dong");
+  });
+});
+
+
+

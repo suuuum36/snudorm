@@ -1,91 +1,32 @@
 @charset "utf-8";
 @import "variable.scss";
 
-// // reset. css
-// html, body, div, span, applet, object, iframe,
-// h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-// a, abbr, acronym, address, big, cite, code,
-// del, dfn, em, img, ins, kbd, q, s, samp,
-// small, strike, strong, sub, sup, tt, var,
-// b, u, i, center,
-// dl, dt, dd, ol, ul, li,
-// fieldset, form, label, legend,
-// table, caption, tbody, tfoot, thead, tr, th, td,
-// article, aside, canvas, details, embed, 
-// figure, figcaption, footer, header, hgroup, 
-// menu, nav, output, ruby, section, summary,
-// time, mark, audio, video {
-// 	margin: 0;
-// 	padding: 0;
-// 	border: 0;
-// 	font-size: 100%;
-// 	font: inherit;
-// 	vertical-align: baseline;
-// }
+// TODO:
+// 1) 아이디 input 색깔 다르게
 
-// article, aside, details, figcaption, figure, 
-// footer, header, hgroup, menu, nav, section {
-// 	display: block;
-// }
+// 공통 적용
 
-// body {
-// 	line-height: 1;
-// }
+* {
+    box-sizing: border-box;
+}
 
-// ol, ul {
-// 	list-style: none;
-// }
+a {
+    text-decoration: none;
+}
 
-// blockquote, q {
-// 	quotes: none;
-// }
-
-// blockquote:before, blockquote:after,
-// q:before, q:after {
-// 	content: '';
-// 	content: none;
-// }
-
-// table {
-// 	border-collapse: collapse;
-// 	border-spacing: 0;
-// }
-
-// // 추가한 코드
-// * {
-// 	box-sizing: border-box;
-// }
-
-// a {
-//    text-decoration: none;
-// }
-
-// a:link, a:visited, a:hover, a:active {
-// 	color: black;
-// }
-
-// button {
-// 	padding: 0;
-// 	margin: 0;
-// 	border: none;
-// 	outline-style: none;
-// }
-
-// input {
-// 	padding: 0;
-// 	margin: 0;
-// 	outline-style: none;
-// }
-
-// select {
-// 	outline-style: none;
-// }
-// // reset.css 끝
+a:link, a:visited, a:hover, a:active {
+	color: black;
+}
 
 // base.html의 헤더 배경 !important 적용 필요
-html {
-    background-color: #e9e9e9;
+// html {
+//     background-color: #e9e9e9;
+// }
+
+a:link, a:visited, a:hover, a:active {
+	color: black;
 }
+
 
 // input 태그 focus 시 글자 사라지도록
 input:focus::-webkit-input-placeholder, 
@@ -93,55 +34,59 @@ textarea:focus::-webkit-input-placeholder {
     color: transparent !important;
 }
 
+// mypage 배경색 설정
+.background {
+    width: 100vw;
+    height: 100vh;
+    margin: -100px auto 0 auto;
+    background-color: $gray_background;
+}
+
 // 전체 구조
 .form {
-    background-color: $gray_background;
     display: flex;
-    width: 910px;
-    margin: 50px auto 50px auto;
+    justify-content: center;
+    padding: 50px 0;
+    font-weight: bold;
 
-    // 좌측 네비게이션
+    // 좌측 nav (mypage 공통 적용)
     .nav {
         width: 300px;
-        font-weight: bold;
         margin-right: 10px;
-        line-height: 60px;
+        height: min-content;
 
-        // 네비게이션 title: 마이페이지
+        // nav title: 마이페이지
         .nav-title {
-            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
             height: 60px;
+            margin-bottom: 10px;
             background-color: #ffffff;
-            border: 2px solid $gray_border;
+            border: 1px solid $whitegray;
             padding-left: 30px;
             
             span {
-                display: inline-block;
                 font-size: 20px;
             }
         }
 
         // 네이게이션 list:
-        // 내 정보 & 개인정보 변경 & 비밀번호 변경 & 게시글 알림 & 쪽지함
+        // 내 정보 & 개인정보 변경 & 비밀번호 변경 & 알림 & 쪽지함
         .nav-list {
-            height: 60px;
             background-color: #ffffff;
-            padding-left: 30px;
-
+            
             a {
-                display: inline-block;
-                width: 270px;
+                display: flex;
+                align-items: center;
+                width: 300px;
                 height: 60px;
+                padding-left: 30px;
             }
 
             a:hover {
                 color: $blue_text;
+                background-color: $blue_background;
             }
-        }
-
-        .nav-list:hover {
-            background-color: $blue_background;
-            cursor: pointer;
         }
     }
 
@@ -151,42 +96,56 @@ textarea:focus::-webkit-input-placeholder {
     // pw-edit : 현재 비밀번호 & 새로운 비밀번호 & 비밀번호 확인
 
     .info {
-        background-color: #ffffff;
         display: flex;
+        width: 585px;
+        height: min-content;
         flex-direction: column;
-        width: 600px;
-        font-weight: bold;
-        border: 2px solid $gray_border;
+        background-color: #ffffff;
+        border: 1px solid $gray_border;
+    
 
-        // 정보 title: 내 정보 or 개인정보 변경
+        // user_info, edit, pwedit 공통 title & container
         .title {
-            width: 596px;
+            display: flex;
+            align-items: center;
             height: 60px;
+            width: 585px;
             font-size: 20px;
-            border-bottom: 2px solid #000000;
-            padding-left: 30px;
-            line-height: 60px;
+            border-bottom: 1px solid $mypage_under;
+            margin-left: -1px;
+
+            span {
+                padding-left: 30px;
+            }
+
+            .count {
+                font-size: 18px !important;
+                color: $blue_text !important;
+            }
         }
 
         .container {
             margin: 30px 0;
             
-            .name, .id, .nickname, .email, .building, .password {
+            .name, .id, .nk, .email, .building, .password {
                 display: flex;
+                align-items: center;
                 height: 60px;
                 font-size: 18px;
-                line-height: 60px;
                 
                 // 내 정보 & 개인정보 변경
                 // 좌측 field
                 .field {
-                    width: 150px;
-                    padding-left: 30px;
+                    display: flex;
+                    align-items: center;
+                    width: 180px;
+                    padding: 0 30px;
                 }
 
                 // 우측 input
                 .value {
-                    width: 400px;
+                    display: flex;
+                    align-items: center;
                     color: $gray_text;
                     
                     .input-box {
@@ -195,8 +154,10 @@ textarea:focus::-webkit-input-placeholder {
                         border-style: none none solid none;
                         border-color: $gray_border;
                         color: $gray_text;
-                        height: 50px;
-                        line-height: 50px;
+                        height: 40px;
+                        width: 180px;
+                        margin-right: 15px;
+                        margin-bottom: -2px;
                     }
 
                     .input-box::placeholder {
@@ -206,27 +167,62 @@ textarea:focus::-webkit-input-placeholder {
 
                     // 아이디 input은 수정 불가능
                     #no::placeholder {
-                        color: $gray_text !important;
+                        color: #000000 !important;
                     }
                 }
 
-                // 기숙사 동 나열
+                .nk-check {
+                    width: 90px;
+                    height: 50px;
+                    border: none;
+                    border-radius: 30px;
+                    background-color: $gray_button;
+                    color: #ffffff;
+                    cursor: pointer;
+                    font-weight: bold;
+                    font-size: 16px;
+                }
+
+                .nk-check:hover {
+                    background-color: $gray_hover;
+                    box-shadow: $gray_under_shadow;
+                }
+                
+                // 사용가능 div
+                #id-confirm, #nk-confirm {
+                    display: none;
+                    position: relative;
+                    width: 90px;
+                    height: 50px;
+                    border-radius: 30px;
+                    background-color: $blue_text;
+                    color: #ffffff;
+                    font-weight: bold;
+                    margin-top: 15px;
+                    
+                    span {
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        white-space: nowrap;
+                        font-size: 14px;
+                    }
+                }
+
+                // user_edit.html 기숙사 동
                 #building-item {
-                    display: flex;
-                    align-items: center;
 
                     #category {
-                        width: 170px;
+                        width: 180px;
                         margin-right: 20px;
-                        margin-bottom: -2px;
                     }
                     #dong {
-                        width: 170px;
-                        margin-bottom: -2px;
+                        width: 180px;
                     }
                 }
 
-                // 비밀번호 변경
+                // pw_edit.html
                 .pw-field {
                     width: 250px;
                     padding-left: 30px;
@@ -238,20 +234,20 @@ textarea:focus::-webkit-input-placeholder {
                         border-style: none none solid none;
                         border-color: $gray_border;
                         height: 30px;
-                        line-height: 30px;
                     }
                 }
             }
         }
         
-        // 개인정보 변경 버튼
+        // 개인정보 & 비밀번호 변경 버튼
         .edit {
             
             button {
-                width: 600px;
+                width: 585px;
+                border: 1px solid $blue_text;
                 background-color: $blue_text;
-                margin-bottom: -2px;
-                margin-left: -2px;
+                margin-bottom: -1px;
+                margin-left: -1px;
                 height: 60px;
                 color: #ffffff;
                 font-weight: bold;
@@ -260,10 +256,4 @@ textarea:focus::-webkit-input-placeholder {
             }
         }
     }
-
-    // 비밀번호 변경 info 별도 지정
-    #pw-info {
-        height: 360px;
-    }
-
 }

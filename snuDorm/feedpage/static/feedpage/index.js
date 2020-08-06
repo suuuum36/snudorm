@@ -40,6 +40,8 @@ function keep() {
     $('#rent_lists').attr("style", "display:none;");
     $('#resell_lists').attr("style", "display:none;");
     $('#keep').attr("style", "color:black;");
+    $('#rent').attr("style", "color:#7f7f7f;");
+    $('#resell').attr("style", "color:#7f7f7f;");
     $('#cobuy').attr("style", "color:#7f7f7f;");
 }
 
@@ -52,6 +54,8 @@ function rent() {
     $('#resell_lists').attr("style", "display:none;");
     $('#rent').attr("style", "color:black;");
     $('#keep').attr("style", "color:#7f7f7f;");
+    $('#resell').attr("style", "color:#7f7f7f;");
+    $('#cobuy').attr("style", "color:#7f7f7f;");
 }
 
 // 생활게시판 - 중고
@@ -63,6 +67,8 @@ function resell() {
     $('#resell_lists').attr("style", "display:;");
     $('#resell').attr("style", "color:black;");
     $('#rent').attr("style", "color:#7f7f7f;");
+    $('#keep').attr("style", "color:#7f7f7f;");
+    $('#cobuy').attr("style", "color:#7f7f7f;");
 }
 
 // 생활게시판 - 공구
@@ -74,6 +80,6 @@ function cobuy() {
     $('#resell_lists').attr("style", "display:none;");
     $('#cobuy').attr("style", "color:black;");
     $('#resell').attr("style", "color:#7f7f7f;");
+    $('#keep').attr("style", "color:#7f7f7f;");
+    $('#rent').attr("style", "color:#7f7f7f;");
 }
-
-
