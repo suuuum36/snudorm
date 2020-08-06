@@ -1,26 +1,35 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load static %}
+
+<head>
+    <link rel="stylesheet" href="{% static 'feedpage/feed.css' %}">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+</head>
 
 {% if user.is_authenticated %}
 <div class="info">
-    <div>{{ board_name }} </div>
-    {% if feed.author == request.user %}
-    <div style="margin: 10px; text-align: right;">
-        <a href="{% url 'editfeed' board category feed.id %}">수정</a>
-        <a href="{% url 'deletefeed' board category feed.id %}">삭제</a>
-    </div>
-    {% else %}
-    {% if not feed.noname %}
-        <div style="margin: 10px; text-align: right;">
-            <a href="{% url 'chatroom' request.user.id feed.author.id  %}">
-                쪽지보내기
-            </a>
+    <div class = "index-div">
+        <div class = "index-board">{{ board_name }} </div>
+        {% if feed.author == request.user %}
+        <div class = "index-modify ">
+            <a href="{% url 'editfeed' board category feed.id %}">수정</a>
+            <a href="{% url 'deletefeed' board category feed.id %}">삭제</a>
         </div>
-    {% endif %}
-    {% endif %}
-    <div style="display:flex; justify-content:space-around;">
-        <div style="display:flex"> 
-            <div>작성자</div>
+        {% else %}
+        {% if not feed.noname %}
+            <div class = "index-m" >
+                <a href="{% url 'chatroom' request.user.id feed.author.id  %}">
+                    쪽지보내기
+                </a>
+            </div>
+        {% endif %}
+        {% endif %}
+    </div>
+
+    <div class = "info-div">
+        <div class = "info-author" > 
+            <div class = "author">작성자</div>
             <div class="feed_author_name">
                 {% if feed.noname %} 
                     <div>익명</div>
@@ -29,10 +38,13 @@
                 {% endif %}
             </div> 
         </div> 
-        <div style="display:flex; align-items: right;">
-            <div> {{ feed.status.1 }} </div>
-            <div>
-                <a class='feed-like' data-board="{{ board }}" data-category="{{ category }}" data-fid='{{ feed.id }}' data-count='{{ feed.feedlike.count }}' data-csrfmiddlewaretoken="{{ csrf_token }}">{{ feed.like_users.count }} 좋아요</a>
+
+        <div class = "info-info" >
+            <div class ="feed_status"> {{ feed.status.1 }} </div>
+            <div class="feed_like_count">
+                <a class='feed-like' data-board="{{ board }}" data-category="{{ category }}" data-fid='{{ feed.id }}' data-count='{{ feed.feedlike.count }}' data-csrfmiddlewaretoken="{{ csrf_token }}">
+                    {{ feed.like_users.count }} 좋아요
+                </a>
             </div>
             <div class="feed_comment_count">
                 {{ feed.feedcomment_set.count }} 댓글 수 
@@ -42,111 +54,144 @@
             </div>
         </div> 
     </div> 
+
     {% if board == "minwon" or board == 'freeboard' %}
-        <div>
-            {{ feed.title }} </br>
-            {{ feed.content }} </br>
-            {% for photo in feed.image_set.all %} 
-                <img src="{{ photo.photo.url }}" alt="" width:"200px" height="200px">
-            {% endfor %} <br/>
+        <div class = "content-div">
+            <div class = "content-title">{{ feed.title }} </div>
+            <div class ="content-content">{{ feed.content }} </div>
+            <div class = "content-photo">
+                {% for photo in feed.image_set.all %} 
+                    <img class = "photo" src="{{ photo.photo.url }}" alt="" width:"200px" height="200px">
+                {% endfor %}
+            </div>
         </div>
+
     {% elif board == "life" %}
+
         {% if category == "cobuy" %}
-            <div>
-                {{ feed.title }} </br>
-                링크  <a href="https://{{ feed.url }}"> {{ feed.url }}</a> </br>
-                {% if feed.duedate|date:"Y.m.d" == '2020.01.01' %}
-                    마감일 미정</br>
-                {% else %}
-                    마감일 {{ feed.duedate|date:"Y.m.d" }} </br>
-                {% endif %}
-                {{ feed.content }} </br>
-                {% for photo in feed.image_set.all %} 
-                    <img src="{{ photo.photo.url }}" alt="" width:"200px" height="200px">
-                {% endfor %} <br/>
+            <div class = "content-div">
+                <div class = "content-title">{{ feed.title }} </div>
+                <div class = "content-url"> 
+                    링크 <a href="https://{{ feed.url }}"> {{ feed.url }}</a>
+                </div>
+                <div class = "content-date">
+                    {% if feed.duedate|date:"Y.m.d" == '2020.01.01' %}
+                        마감일 미정
+                    {% else %}
+                        마감일 {{ feed.duedate|date:"Y.m.d" }} 
+                    {% endif %}
+                </div>
+                <div class ="content-content">{{ feed.content }} </div>
+                <div class = "content-photo">
+                    {% for photo in feed.image_set.all %} 
+                        <img class = "photo" src="{{ photo.photo.url }}" alt="" width:"200px" height="200px">
+                    {% endfor %} 
+                </div>
             </div>
+
         {% elif category == "rent" %}
-            <div>
-                {{ feed.title }} </br>
-                목적 {{ feed.purpose.1 }} </br>
-                대여료 {{ feed.deposit }} </br>
-                 {% if feed.start_date|date:"Y.m.d" == '2020.01.01' %}
-                    시작일 미정 </br>
-                {% else %}
-                    시작일 {{ feed.start_date|date:"Y.m.d" }} </br>
-                {% endif %}
-                {% if feed.end_date|date:"Y.m.d" == '2020.01.01' %}
-                    마감일 미정</br>
-                {% else %}
-                    마감일 {{ feed.end_date|date:"Y.m.d" }} </br>
-                {% endif %}
-                {{ feed.content }} </br>
-                {% for photo in feed.image_set.all %} 
-                    <img src="{{ photo.photo.url }}" alt="" width:"200px" height="200px">
-                {% endfor %} <br/>   
+            <div class = "content-div">
+                <div class = "content-title">{{ feed.title }} </div>
+                <div class = "content-purpose"> 목적 {{ feed.purpose.1 }} </div>
+                <div class = "content-rent"> 대여료 {{ feed.deposit }} </div>
+                <div class = "content-date">
+                    {% if feed.start_date|date:"Y.m.d" == '2020.01.01' %}
+                        시작일 미정
+                    {% else %}
+                        시작일 {{ feed.start_date|date:"Y.m.d" }} 
+                    {% endif %}
+                    {% if feed.end_date|date:"Y.m.d" == '2020.01.01' %}
+                        마감일 미정
+                    {% else %}
+                        마감일 {{ feed.end_date|date:"Y.m.d" }} </br>
+                    {% endif %}
+                </div>
+                <div class ="content-content">{{ feed.content }} </div>
+                <div class = "content-photo">
+                    {% for photo in feed.image_set.all %} 
+                        <img class = "photo" src="{{ photo.photo.url }}" alt="" width:"200px" height="200px">
+                    {% endfor %} 
+                </div>  
             </div>
+
         {% elif category == "keep" %}
-            <div>
-                {{ feed.title }} </br>
-                목적 {{ feed.purpose.1 }} </br>
-                보관료 {{ feed.reward }} </br>
-                {% if feed.start_date|date:"Y.m.d" == '2020.01.01' %}
-                    시작일 미정 </br>
-                {% else %}
-                    시작일 {{ feed.start_date|date:"Y.m.d" }} </br>
-                {% endif %}
-                {% if feed.end_date|date:"Y.m.d" == '2020.01.01' %}
-                    마감일 미정</br>
-                {% else %}
-                    마감일 {{ feed.end_date|date:"Y.m.d" }} </br>
-                {% endif %}
-                {{ endif }}
-                {{ feed.content }} </br>
-                {% for photo in feed.image_set.all %} 
-                    <img src="{{ photo.photo.url }}" alt="" width:"200px" height="200px">
-                {% endfor %} <br/>
+            <div class = "content-div">
+                <div class = "content-title">{{ feed.title }} </div>
+                <div class = "content-purpose">목적 {{ feed.purpose.1 }} </div>
+                <div clas = "content-rent">보관료 {{ feed.reward }} </div>
+                <div class = "content-date">
+                    {% if feed.start_date|date:"Y.m.d" == '2020.01.01' %}
+                        시작일 미정 </br>
+                    {% else %}
+                        시작일 {{ feed.start_date|date:"Y.m.d" }} </br>
+                    {% endif %}
+                    {% if feed.end_date|date:"Y.m.d" == '2020.01.01' %}
+                        마감일 미정</br>
+                    {% else %}
+                        마감일 {{ feed.end_date|date:"Y.m.d" }} </br>
+                    {% endif %}
+                </div>
+                <div class ="content-content">{{ feed.content }} </div>
+                <div class = "content-photo">
+                    {% for photo in feed.image_set.all %} 
+                        <img class = "photo" src="{{ photo.photo.url }}" alt="" width:"200px" height="200px">
+                    {% endfor %}
+                </div>
             </div>  
         {% elif category == "resell" %}
-            <div>
-                {{ feed.title }} </br>
-                목적 {{ feed.purpose.1 }} </br>
-                가격 {{ feed.price }} </br>
-                {{ feed.content }} </br>
-               {% for photo in feed.image_set.all %} 
-                    <img src="{{ photo.photo.url }}" alt="" width:"200px" height="200px">
-                {% endfor %} <br/>
+            <div class = "content-div">
+                <div class = "content-title">{{ feed.title }} </div>
+                <div class = "content-purpose">목적 {{ feed.purpose.1 }} </div>
+                <div class ="content-rent">가격 {{ feed.price }}</div>
+                <div class ="content-content">{{ feed.content }} </div>
+                <div class = "content-photo">
+                    {% for photo in feed.image_set.all %} 
+                        <img class = "photo" src="{{ photo.photo.url }}" alt="" width:"200px" height="200px">
+                    {% endfor %} 
+                </div>
             </div>
         {% endif %}
     {% endif %}
-
 </div>
 
 
 {% for c in feed.feedcomment_set.all %}
-<div>
-    <div>
-        {% if c.noname %} 
-        <p>익명
-        {% else %}
-        <p>{{ c.author.profile.nickname }}
-        {% endif %}
-        : {{ c.content }}</p>
-        {% if request.user == c.author %}
-        <a class='editcommentform'>
-            <button>수정</button>
-        </a>
-        <form method="POST" class='deletecomment' data-board="{{ board }}" data-category="{{ category }}" data-fid='{{ feed.id }}' data-cid='{{ c.id }}' data-csrfmiddlewaretoken="{{ csrf_token }}">
-            {% csrf_token %}
-            <button>삭제</button>
-        </form>
-        {% endif %}
-        {% if user.is_authenticated %}
-        <div>
-            <a class='comment-like' data-board="{{ board }}" data-category="{{ category }}" data-fid='{{ feed.id }}' data-cid='{{ c.id }}' data-count='{{ c.commentlike_set.count }}' data-csrfmiddlewaretoken="{{ csrf_token }}">댓글 좋아요: [{{ c.commentlike_set.count }}]</a>
+<div class= "comment">
+    <div class = "comment-show">
+        <div class = "c">
+            <div class = "c.a">
+                {% if c.noname %} 
+                    익명
+                {% else %}
+                    {{ c.author.profile.nickname }}
+            </div>
+            <div class = "c.c">
+                {% endif %}
+                    {{ c.content }}
+            </div>
         </div>
-        {% endif %}
+
+        <div class = "b">
+            {% if request.user == c.author %}
+            <a class='editcommentform'>
+                <button>수정</button>
+            </a>
+            <form method="POST" class='deletecomment' data-board="{{ board }}" data-category="{{ category }}" data-fid='{{ feed.id }}' data-cid='{{ c.id }}' data-csrfmiddlewaretoken="{{ csrf_token }}">
+                {% csrf_token %}
+                <button>삭제</button>
+            </form>
+            {% endif %}
+        </div>
+        <div class = "l">
+            {% if user.is_authenticated %}
+            <div>
+                <a class='comment-like' data-board="{{ board }}" data-category="{{ category }}" data-fid='{{ feed.id }}' data-cid='{{ c.id }}' data-count='{{ c.commentlike_set.count }}' data-csrfmiddlewaretoken="{{ csrf_token }}">댓글 좋아요: [{{ c.commentlike_set.count }}]</a>
+            </div>
+            {% endif %}
+        </div>
     </div>
-    <div id='editcommentsubmit' style="display: none">
+
+    <div class = "comment-edit" id='editcommentsubmit' style="display: none">
         <form method="POST" class="comment-edit"
         data-board="{{ board }}" data-category="{{ category }}" data-fid="{{ feed.id }}" data-cid="{{c.id}}" data-count = "{{ c.commentlike_set.count }}"
         data-csrfmiddlewaretoken="{{ csrf_token }}">
@@ -155,9 +200,10 @@
         <button type="submit">댓글 수정</button>
         </form>
     </div>
+
     {% for d in c.recomment_set.all %}
-    <div>
-        <div>
+    <div class = "recomment">
+        <div class = "recomment-show">
             {% if d.noname %} 
             <p>익명
             {% else %}
@@ -179,7 +225,7 @@
             </div>
             {% endif %}
         </div>
-        <div id='editrecommentsubmit' style="display: none">
+        <div class = "recomment-edit" id='editrecommentsubmit' style="display: none">
             <form method="POST" class="recomment-edit"
             data-board="{{ board }}" data-category="{{ category }}" data-fid="{{ feed.id }}" data-cid="{{c.id}}" data-did="{{ d.id }}" data-count = "{{ d.recommentlike_set.count }}"
             data-csrfmiddlewaretoken="{{ csrf_token }}">
@@ -190,20 +236,22 @@
         </div>
     </div>
     {% endfor %}
-    <div>
-    {% if user.is_authenticated %}
-    <form method="POST" class="recomment-submit" data-board="{{ board }}" data-category="{{ category }}" data-fid="{{ feed.id }}" data-cid="{{ c.id }}"data-csrfmiddlewaretoken="{{ csrf_token }}">
-        {% csrf_token %}
-        <input id ="c{{ c.id }}" type="text" name="content" />
-        <button type="submit">대댓글 달기</button>
-        <input name="noname" type="checkbox" id="nonamec{{ c.id }}">
-        <label for="nonamec{{ c.id }}">익명</label>
-    </form>
-    {% endif %}
+
+    <div class = "recomment-make">
+        {% if user.is_authenticated %}
+        <form method="POST" class="recomment-submit" data-board="{{ board }}" data-category="{{ category }}" data-fid="{{ feed.id }}" data-cid="{{ c.id }}"data-csrfmiddlewaretoken="{{ csrf_token }}">
+            {% csrf_token %}
+            <input id ="c{{ c.id }}" type="text" name="content" />
+            <button type="submit">대댓글 달기</button>
+            <input name="noname" type="checkbox" id="nonamec{{ c.id }}">
+            <label for="nonamec{{ c.id }}">익명</label>
+        </form>
+        {% endif %}
     </div>
 </div>
-
 {% endfor %}
+
+<div class = "comment-make">
     <form method="POST" class="comment-submit"
         data-board="{{ board }}" data-category="{{ category }}" data-fid="{{ feed.id }}"
         data-csrfmiddlewaretoken="{{ csrf_token }}">
@@ -214,6 +262,7 @@
         <label for="noname{{ feed.id }}">익명</label>  
     </form>
 {% else %}
+</div>
 
 
 <div>
