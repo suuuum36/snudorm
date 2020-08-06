@@ -245,6 +245,9 @@ def showFeed(request, board, category, fid): # board, category 필요없음.
     # 조회수 count 본인 게시글 조회 제외!
     feed = Feed.objects.filter(board=board, category=category, id=fid)
 
+    if not request.user.is_authenticated:
+        return render(request, 'accounts/login.html')
+
     if board == "minwon":
         feed = Minwon.objects.get(id=fid)
 
