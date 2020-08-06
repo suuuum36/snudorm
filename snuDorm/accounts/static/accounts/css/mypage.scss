@@ -47,13 +47,13 @@ textarea:focus::-webkit-input-placeholder {
     display: flex;
     justify-content: center;
     padding: 50px 0;
-    font-weight: bold;
 
     // 좌측 nav (mypage 공통 적용)
     .nav {
         width: 300px;
         margin-right: 10px;
         height: min-content;
+        font-weight: 500;
 
         // nav title: 마이페이지
         .nav-title {
@@ -81,6 +81,7 @@ textarea:focus::-webkit-input-placeholder {
                 width: 300px;
                 height: 60px;
                 padding-left: 30px;
+                font-size: 18px;
             }
 
             a:hover {
@@ -101,7 +102,8 @@ textarea:focus::-webkit-input-placeholder {
         height: min-content;
         flex-direction: column;
         background-color: #ffffff;
-        border: 1px solid $gray_border;
+        border: 1px solid $whitegray;
+        min-height: 370px;
     
 
         // user_info, edit, pwedit 공통 title & container
@@ -109,8 +111,9 @@ textarea:focus::-webkit-input-placeholder {
             display: flex;
             align-items: center;
             height: 60px;
-            width: 585px;
+            width: 584px;
             font-size: 20px;
+            font-weight: 500;
             border-bottom: 1px solid $mypage_under;
             margin-left: -1px;
 
@@ -120,7 +123,9 @@ textarea:focus::-webkit-input-placeholder {
 
             .count {
                 font-size: 18px !important;
+                padding-left: 20px !important;
                 color: $blue_text !important;
+                cursor: pointer;
             }
         }
 
@@ -140,6 +145,7 @@ textarea:focus::-webkit-input-placeholder {
                     align-items: center;
                     width: 180px;
                     padding: 0 30px;
+                    font-weight: 500;
                 }
 
                 // 우측 input
@@ -150,7 +156,7 @@ textarea:focus::-webkit-input-placeholder {
                     
                     .input-box {
                         font-size: 18px;
-                        font-weight: bold;
+                        font-weight: 400;
                         border-style: none none solid none;
                         border-color: $gray_border;
                         color: $gray_text;
@@ -161,13 +167,16 @@ textarea:focus::-webkit-input-placeholder {
                     }
 
                     .input-box::placeholder {
-                        font-weight: bold;
                         color: $gray_text;
                     }
 
                     // 아이디 input은 수정 불가능
                     #no::placeholder {
                         color: #000000 !important;
+                    }
+
+                    .mail {
+                        color: #000000;
                     }
                 }
 
@@ -179,8 +188,9 @@ textarea:focus::-webkit-input-placeholder {
                     background-color: $gray_button;
                     color: #ffffff;
                     cursor: pointer;
-                    font-weight: bold;
+                    font-weight: 500;
                     font-size: 16px;
+                    outline-style: none;
                 }
 
                 .nk-check:hover {
@@ -197,8 +207,7 @@ textarea:focus::-webkit-input-placeholder {
                     border-radius: 30px;
                     background-color: $blue_text;
                     color: #ffffff;
-                    font-weight: bold;
-                    margin-top: 15px;
+                    font-weight: 500;
                     
                     span {
                         position: absolute;
@@ -207,18 +216,6 @@ textarea:focus::-webkit-input-placeholder {
                         transform: translate(-50%, -50%);
                         white-space: nowrap;
                         font-size: 14px;
-                    }
-                }
-
-                // user_edit.html 기숙사 동
-                #building-item {
-
-                    #category {
-                        width: 180px;
-                        margin-right: 20px;
-                    }
-                    #dong {
-                        width: 180px;
                     }
                 }
 
@@ -243,17 +240,257 @@ textarea:focus::-webkit-input-placeholder {
         .edit {
             
             button {
-                width: 585px;
+                width: 584px;
                 border: 1px solid $blue_text;
                 background-color: $blue_text;
                 margin-bottom: -1px;
                 margin-left: -1px;
                 height: 60px;
                 color: #ffffff;
-                font-weight: bold;
+                font-weight: 500;
                 font-size: 18px;
                 cursor: pointer;
+                margin-top: 10px;
+                outline-style: none;
             }
         }
+
+        // 알림
+        .list {
+            margin-left: -1px;
+
+            a {
+                display: inline-block;
+                width: 584px;
+                border-bottom: 1px solid $whitegray;
+            }
+
+            a:last-child {
+                border-bottom: none;
+            }
+
+            a:hover {
+                background-color: $lightgray;
+            }
+
+            .notice-container {
+                display: flex;
+                justify-content: space-between;
+                width: 584px;
+                height: 60px;
+                align-items: center;
+
+                .left-content {
+                    padding-left: 30px;
+    
+                    .notice-nickname {
+                        color: $blue_text;
+                    }
+
+                    .nk-checked {
+                        color: $whiteblue;
+                    }
+                }
+
+                .content-checked {
+                    color: $blackgray !important;
+                }
+                
+                .right-content {
+                    padding-right: 30px;
+    
+                    .date {
+                        color: $blackgray;
+                    }
+                }
+
+                .date-checked {
+                    color: $deepgray !important;
+                }
+
+                .check-count {
+                    display: none;
+                }
+            }
+        }        
     }
+}
+
+// 페이지 넘기기
+.page_numbers {
+    display: flex;
+    width: fit-content;
+    margin-top: 45px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 50px;
+
+    a {
+    color: $gray_text;
+
+    }
+}
+
+.num1, .num2 {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.previous, .next {
+    a {
+        color: black;
+    }
+}
+
+.previous {
+    margin-right: 20px;
+}
+
+.next {
+    margin-left: 20px;
+}
+
+// 기숙사 동 선택
+.building {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+
+    span {
+        width: 500px !important;
+    }
+
+    // 생활관 input box의 우측 마진 설정
+    .building-category {
+        margin-right: 20px;
+    }
+
+    // 선택되지 않은 동 옵션 숨기기
+    .remove {
+        display: none !important;
+    }
+
+    // 생활관 분류 및 동 분류 dropdown
+    .building-category, .building-default, .building-bachelor,
+    .building-master, .building-family, .building-bk {
+        display: flex;
+        width: 180px;
+        flex-direction: column;
+        position: relative;
+            
+        // '생활관을 선택하세요.' 옵션 선택 불가
+        .default-container {
+            position: absolute !important;
+            z-index: -1 !important;
+        }
+        
+        // 생활관 및 동의 옵션을 갖는 container
+        .dropdown-container {
+            border: 2px solid $gray_border;
+            max-height: 0;
+            width: 100%;
+            opacity: 0;
+            transition: all 0.4s;
+            border-radius: 7px;
+            overflow: hidden;
+            order: 1;
+            position: absolute;
+            top: 40px;
+            z-index: 3;
+            margin-top: -2px;
+            background-color: #ffffff;
+        }
+
+        // dropdown 작동
+        .dropdown-container.active {
+            max-height: 162px;
+            opacity: 1;
+            overflow-y: scroll;
+        }
+
+        // 화살표 역전
+        .dropdown-container.active + .selected-common::after {
+            transform: rotateX(180deg);
+            top: -15px;
+        }
+
+        // option 스크롤바
+        .dropdown-container::-webkit-scrollbar {
+            width: 8px;
+            border-radius: 0 3px 3px 0;
+            background-color: #ffffff;
+            visibility: hidden;
+        }
+        
+        // option 스크롤
+        .dropdown-container::-webkit-scrollbar-thumb {
+            background-color: $gray_border;
+            border-radius: 3px;
+        }
+
+        // 선택된 옵션 표시
+        .selected-common {
+            display:flex;
+            align-items: center;
+            color: $gray_text;
+            cursor: pointer;
+            position: relative;
+            order: 0;
+            height: 40px;
+            line-height: 22px;
+            font-size: 16px;
+            text-align: center;            
+        }
+
+        // dropdown 화살표
+        .selected-common::after {
+            content: "";
+            background: url("../img/down-arrow.png");
+            background-size: contain;
+            background-repeat: no-repeat;
+            
+            position: absolute;
+            height: 100%;
+            width: 20px;
+            right: 18px;
+            top: 13px;
+            
+            transition: all 0.4s;
+        }
+        
+        // 옵션 설정
+        .dropdown-option {
+            cursor: pointer;
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            
+            // input type = "radio"
+            .radio {
+                display:none;
+            }
+        }
+
+        .dropdown-option:hover {
+            color: $blue_text;
+        }
+        
+
+        // input type = "radio"와 연결
+        label {
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            align-items: center;
+            height: 40px;
+            width: 100%;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    }
+}
+
+// user_info.html
+.building.building-info {
+    flex-wrap: nowrap !important;
 }

@@ -227,7 +227,7 @@ input:focus::-webkit-input-placeholder {
             // 화살표 역전
             .dropdown-container.active + .selected-common::after {
                 transform: rotateX(180deg);
-                top: -6px;
+                top: -16px;
             }
 
             // option 스크롤바
@@ -263,7 +263,7 @@ input:focus::-webkit-input-placeholder {
             // dropdown 화살표
             .selected-common::after {
                 content: "";
-                background: url("../img/arrow-down.png");
+                background: url("../img/down-arrow.png");
                 background-size: contain;
                 background-repeat: no-repeat;
                 
@@ -271,7 +271,7 @@ input:focus::-webkit-input-placeholder {
                 height: 100%;
                 width: 32px;
                 right: 18px;
-                top: 5px;
+                top: 15px;
                 
                 transition: all 0.4s;
             }
