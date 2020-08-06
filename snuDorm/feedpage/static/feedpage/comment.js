@@ -528,5 +528,7 @@ $(document).on('click', '.feed-like', (e) => {
 
 $(document).on('click', '.recomment-button', function(e){
     const $this = $(e.currentTarget);
-    $this.parent().parent().siblings('.recomment-make').css('display', 'block')
+        $this.parent().parent().siblings('.recomment-make').css('display', 'block')
+        $this.css('color', '#016aff')
 })
+

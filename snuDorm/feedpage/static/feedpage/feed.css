@@ -38,6 +38,7 @@
 }
 
 .info {
+    border-bottom: 0px solid !important;
     border : 1px solid #c4c4c4;
     padding: 20px;
 }
@@ -70,7 +71,18 @@
 }
 
 .feed_author_name {
-    color: #016aff;;
+    color: #016aff;
+    display: flex;
+}
+
+.index-m {
+    margin-left: 8px;
+    color: #016aff;
+}
+
+.img-m {
+    width: 20px;
+    height: auto;
 }
 .info-info {
     display: flex;
@@ -128,8 +140,8 @@
 
 .comment {
     padding-top: 10px;
-    padding-bottom: 10px;
     border-top: 1px solid #c4c4c4;
+    margin-bottom: 10px;
 }
 .recomment {
     margin-right: auto;
@@ -208,4 +220,47 @@
 
 .editcommentform:hover {
     color: #016aff;
+}
+
+.comment-make {
+    height: 60px;
+    position: relative;
+    background-color: #f0f0f0;
+    border-left : 1px solid #c4c4c4;
+    border-right : 1px solid #c4c4c4;
+    border-bottom : 1px solid #c4c4c4;
+}
+
+.comment-box {
+    width: max-content;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    display: flex;
+}
+
+.comment-makebox {
+    border: 0px solid;
+    background-color: #f0f0f0;
+    font-size: 15px;
+}
+
+.noname {
+    color: #7f7f7f;
+    margin-right: 10px;
+}
+
+.noname-checkbox {
+    border: 1px #7f7f7f;
+}
+
+.write-comment {
+    border: 0px solid;
+    font-size: 15px;
+    color: #016aff;
+}
+
+.recomment-make {
+    border: 0px solid !important;
 }

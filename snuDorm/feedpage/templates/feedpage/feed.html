@@ -17,13 +17,6 @@
             <a href="{% url 'deletefeed' board category feed.id %}">삭제</a>
         </div>
         {% else %}
-        {% if not feed.noname %}
-            <div class = "index-m" >
-                <a href="{% url 'chatroom' request.user.id feed.author.id  %}">
-                    쪽지보내기
-                </a>
-            </div>
-        {% endif %}
         {% endif %}
     </div>
     <div class = "info">
@@ -36,6 +29,11 @@
                         <div>익명</div>
                     {% else %}
                         {{ feed.author.profile.nickname }}
+                        <div class = "index-m" >
+                            <a href="{% url 'chatroom' request.user.id feed.author.id  %}">
+                                <img class = "img-m" src="/static/img/message.png">
+                            </a>
+                        </div>
                     {% endif %}
                 </div> 
             </div> 
@@ -282,33 +280,36 @@
             </div>
             {% endfor %}
 
-            <div class = "recomment-make">
-                {% if user.is_authenticated %}
-                <form method="POST" class="recomment-submit" data-board="{{ board }}" data-category="{{ category }}" data-fid="{{ feed.id }}" data-cid="{{ c.id }}"data-csrfmiddlewaretoken="{{ csrf_token }}">
-                    {% csrf_token %}
-                    <input class = "recomment-makebox" id ="c{{ c.id }}" type="text" name="content"/>
-                    <input class = "noname-checkbox" name="noname" type="checkbox" id="nonamec{{ c.id }}">
-                    <label class = "noname" for="nonamec{{ c.id }}">익명</label>
-                    <button type="submit">대댓글 달기</button>
-                </form>
-                {% endif %}
+            <div class = "recomment-make comment-make">
+                <div class = "comment-box">
+                    {% if user.is_authenticated %}
+                    <form method="POST" class="recomment-submit" data-board="{{ board }}" data-category="{{ category }}" data-fid="{{ feed.id }}" data-cid="{{ c.id }}"data-csrfmiddlewaretoken="{{ csrf_token }}">
+                        {% csrf_token %}
+                        <input class = "recomment-makebox comment-makebox" id ="c{{ c.id }}" type="text" name="content" size="73" placeholder ="댓글을 입력해주세요."/>
+                        <input class = "noname-checkbox" name="noname" type="checkbox" id="nonamec{{ c.id }}">
+                        <label class = "noname" for="nonamec{{ c.id }}">익명</label>
+                        <button class = "write-comment" type="submit">대댓글 쓰기</button>
+                    </form>
+                    {% endif %}
+                </div>
             </div>
         </div>
         {% endfor %}
-
-        <div class = "comment-make">
-            <form method="POST" class="comment-submit"
-                data-board="{{ board }}" data-category="{{ category }}" data-fid="{{ feed.id }}"
-                data-csrfmiddlewaretoken="{{ csrf_token }}">
-                {% csrf_token %}
-                <input class = "comment-makebox" id="{{ feed.id }}" type="text" name="content" />
-                <input class = "noname-checkbox" name="noname" type="checkbox" id="noname{{ feed.id }}">
-                <label class = "noname" for="noname{{ feed.id }}">익명</label> 
-                <button type="submit">댓글 달기</button> 
-            </form>
+    </div>
+    <div class = "comment-make">
+            <div class = "comment-box">
+                <form method="POST" class="comment-submit"
+                    data-board="{{ board }}" data-category="{{ category }}" data-fid="{{ feed.id }}"
+                    data-csrfmiddlewaretoken="{{ csrf_token }}">
+                    {% csrf_token %}
+                    <input class = "comment-makebox" id="{{ feed.id }}" type="text" name="content" size="80" placeholder ="댓글을 입력해주세요."/>
+                    <input class = "noname-checkbox" name="noname" type="checkbox" id="noname{{ feed.id }}">
+                    <label class = "noname" for="noname{{ feed.id }}">익명</label> 
+                    <button class = "write-comment" type="submit">댓글 쓰기</button>
+                </form>
+            </div>
         {% else %}
         </div>
-    </div>
 </div>
 
 
