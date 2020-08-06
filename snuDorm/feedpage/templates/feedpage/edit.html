@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
-{% load static %}
 {% block content %}
+{% load static %}
+
 <head><link rel="stylesheet" href="{% static 'feedpage/new.css' %}"></head>
 
 <div class="info">
@@ -420,4 +421,5 @@
         {% endif %}
     {% endif %}
 </div>
+<script src="{% static 'feedpage/edit.js' %}"></script>
 {% endblock content %}

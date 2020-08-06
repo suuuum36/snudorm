@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
-{% load static %}
 {% block content %}
+{% load static %}
 
 <head>
     <link rel="stylesheet" href="{% static 'feedpage/new.css' %}">
@@ -77,7 +77,7 @@
                     <tr height = "10%">
                         <td height = "10%" class = "tr_title">마감일</td>
                         <td>
-                            <input name="duedate" id="edueDate" class="dueDate_init" type="date" required>
+                            <input name="duedate" id="edueDate" type="date" required>
                             <input name="uncertain" type="checkbox" id="euncertain2">
                             <label for="euncertain2">미정</label>
                         </td>
@@ -135,7 +135,7 @@
                     <tr height = "10%">
                         <td class = "tr_title">시작일</td>
                         <td>
-                            <input name="start_date" id="estartDate" class="startDate_init" type="date" required>
+                            <input name="start_date" id="estartDate" type="date" required>
                             <input name="uncertain" type="checkbox" id="euncertain1">
                             <label for="euncertain1">미정</label>
                         </td>
@@ -143,7 +143,7 @@
                     <tr height = "10%">
                         <td class = "tr_title">마감일</td>
                         <td>
-                            <input name="duedate" id="edueDate" class="dueDate_init" type="date" required>
+                            <input name="duedate" id="edueDate" type="date" required>
                             <input name="uncertain" type="checkbox" id="euncertain2">
                             <label for="euncertain2">미정</label>
                         </td>
@@ -205,7 +205,7 @@
                     <tr height = "10%">
                         <td class = "tr_title">시작일</td>
                         <td>
-                            <input name="start_date" id="estartDate" class="startDate_init" type="date" required>
+                            <input name="start_date" id="estartDate" type="date" required>
                             <input name="uncertain" type="checkbox" id="euncertain1">
                             <label for="euncertain1">미정</label>
                         </td>
@@ -213,7 +213,7 @@
                     <tr height = "10%">
                         <td class = "tr_title">마감일</td>
                         <td>
-                            <input name="duedate" id="edueDate" class="dueDate_init" type="date" required>
+                            <input name="duedate" id="edueDate" type="date" required>
                             <input name="uncertain" type="checkbox" id="euncertain2">
                             <label for="euncertain2">미정</label>
                         </td>
@@ -293,4 +293,5 @@
         {% endif %}
     {% endif %}
 </div>
+<script src="{% static 'feedpage/new.js' %}"></script>
 {% endblock content %}

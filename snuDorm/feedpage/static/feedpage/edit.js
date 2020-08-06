@@ -1,3 +1,15 @@
+$(document).on('change', '#photo', function(e) {
+    console.log('clicked');
+    let $this = $(e.currentTarget);
+    $this.css('display', 'none')
+
+    const str = `
+        <input class="photo" name="photo[]" id="photo" accept=".jpg, .jpeg, .png"
+        type="file"  multiple>
+    `
+    $(str).insertAfter($this);
+})  
+
 function doOpenCheck(purpose){
     var option = document.getElementsByName("purpose");
 
@@ -47,5 +59,33 @@ $(document).on('click', '#euncertain2', ()=> {
         $("#edueDate").removeAttr('disabled');
         $("#edueDate").attr('required', true);   
         console.log('bye')
+    }     
+})
+
+$('#startDate').val(new Date().toISOString().substring(0, 10));
+
+$(document).on('click', '#uncertain1', ()=> {
+    if($('#startDate').attr("required")) {
+        $("#startDate").removeAttr('required');
+        $("#startDate").attr('disabled', true);
+        console.log('hello uncertain1')
+    } else {
+        $("#startDate").removeAttr('disabled');
+        $("#startDate").attr('required', true);   
+        console.log('bye uncertain1')
+    }     
+})
+
+$('#dueDate').val(new Date().toISOString().substring(0, 10));
+
+$(document).on('click', '#uncertain2', ()=> {
+    if($('#dueDate').attr("required")) {
+        $("#dueDate").removeAttr('required');
+        $("#dueDate").attr('disabled', true);
+        console.log('hello uncertain2')
+    } else {
+        $("#dueDate").removeAttr('disabled');
+        $("#dueDate").attr('required', true);   
+        console.log('bye uncertain2')
     }     
 })

@@ -46,7 +46,7 @@
         <div id="show_normal_lists" >
             {% for feed in posts %}
                 <!-- 공지사항 list  -->
-                {% if feed.notice %}
+                {% if feed.notice is True %}
                     <a href="{% url 'showfeed' feed.board feed.category feed.id %}">
                         <div class = "whole-feed notice" style="background-color: #f9f9f9;">
                             {% if board == "search" %}
@@ -84,9 +84,9 @@
                             </div> 
 
                             <div class = "feed-a"> 
-                                    {% if feed.noname %} 익명 
-                                    {% else %} {{ feed.author.profile.nickname }}
-                                    {% endif %}
+                                {% if feed.noname %} 익명 
+                                {% else %} 관리자
+                                {% endif %}
                             </div> 
 
                             <div class = "date">{{ feed.created_at|date:"y.m.d" }}</div> 
@@ -100,7 +100,7 @@
 
             <!-- 공지사항 아닌 Feed List -->
             {% for feed in posts %} 
-                {% if not feed.notice  %}
+                {% if feed.notice is False %}
                     <div class = "one-feed">
                         <a href="{% url 'showfeed' feed.board feed.category feed.id %}">
                             <div class = "whole-feed">
@@ -253,7 +253,7 @@
         <div id="show_best_lists"> 
             {% for feed in best_posts %}  
             <!-- 공지사항 list  -->
-                {% if feed.notice %}
+                {% if feed.notice is True %}
                     <a href="{% url 'showfeed' feed.board feed.category feed.id %}">
                         <div class = "whole-feed notice" style="background-color: #f9f9f9;">
                             {% if board == "search" %}
@@ -293,7 +293,7 @@
 
                             <div class = "feed-a"> 
                                     {% if feed.noname %} 익명 
-                                    {% else %} {{ feed.author.profile.nickname }}
+                                    {% else %} 관리자
                                     {% endif %}
                             </div> 
 
@@ -308,7 +308,7 @@
 
             <!-- 공지사항 아닌 Feed List -->
             {% for feed in best_posts %} 
-                {% if feed.notice == False %}
+                {% if feed.notice is False %}
                     <div class = "one-feed">
                         <a href="{% url 'showfeed' board category feed.id %}">
                             <div class = "whole-feed" id="whole-feed">

@@ -6,7 +6,6 @@
 
 <head>
     <meta charset="utf-8">
-    <!-- TODO: Web Page Name -->
     <title>도미토리</title>
     <!-- Main Page -->
     <link rel="stylesheet" href="{% sass_src 'accounts/css/mypage.scss' %}">
@@ -23,8 +22,6 @@
                 <div class = "logo">
                     <a href="{% url 'showmain' %}"><img src="{% static 'img/main-logo.png' %}"></a>
                 </div>
-
-
                 <div class = "first-header-text">
                     <a href="/" class="home-text">홈</a>
                     <a href="{% url 'showboard' "minwon" "tori" %}" class="minwon-text"> 민원게시판</a>
@@ -69,12 +66,8 @@
 
                 <div class = "first-header-user">
                     {% if user.is_authenticated %}
-                        <a class = "alarm-div" href="{% url 'usernotice' user.id %}"> 알람
-                            {% comment %} <img class = "alarm" src="{% static 'img/alarm.png' %}">  {% endcomment %}
-                        </a>
-                        <a class = "profile-div" href="{% url 'userinfo' user.id %}"> 마이페이지
-                            {% comment %} <img class = "profile" src="{% static 'img/profile.png' %}">    {% endcomment %}
-                        </a>
+                        <a class = "alarm-div" href="{% url 'usernotice' user.id %}"> 알람</a>
+                        <a class = "profile-div" href="{% url 'userinfo' user.id %}"> 마이페이지</a>
                         <a class = 'logout' href="{% url 'logout' %}">
                             로그아웃
                         </a>
@@ -149,21 +142,13 @@
                     </div>
                 </div>
             </div>
-
     </header>
-
     <main>
         <div class="page-content">
             {% block content %}
             {% endblock %}
         </div>
     </main>
-    <script src="{% static 'feedpage/comment.js' %}"></script>
-    <script src="{% static 'feedpage/new.js' %}"></script>
-    <script src="{% static 'feedpage/edit.js' %}"></script>
     <script src="{% static 'feedpage/main.js' %}"></script>
-    <script src="{% static 'feedpage/index.js' %}"></script>
-    <script src="{% static 'accounts/js/user_edit.js' %}"></script>
 </body>
-
 </html>
