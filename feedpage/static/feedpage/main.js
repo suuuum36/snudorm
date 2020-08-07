@@ -149,12 +149,11 @@ var header3 = document.querySelector('.building')
 
 if (url.indexOf("freeboard")!= -1 || urlPath == "" || urlPath == "feeds" || url.indexOf("select-option")!= -1)  {
         headerWhole.style.height = 0;
-} else if (url.indexOf("bachelor")!= -1 || url.indexOf("master")!= -1 || url.indexOf("family")!= -1 || url.indexOf("bk")!= -1 || url.indexOf("accounts") ) {
+} else if (url.indexOf("bachelor")!= -1 || url.indexOf("master")!= -1 || url.indexOf("family")!= -1 || url.indexOf("bk")!= -1 || url.indexOf("accounts") != -1) {
         header3.style.height ='60px';
-        console.log(url);
 } else if (url.indexOf("tori")!= -1 || url.indexOf("gong")!= -1 || url.indexOf("life")!= -1 ) {
         header3.style.height = 0;
-        console.log(urlPath);
+        console.log('hello');
 } else {
 
 }
