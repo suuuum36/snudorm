@@ -31,8 +31,8 @@ def signup(request):
         name = request.POST['name'] # Profile, 이름
         nickname = request.POST['nickname'] # Profile, 닉네임
         email = request.POST['email'] # User, 이메일
-        building_category = request.POST.get('building_category', False)  # Profile, 생활관
-        building_dong = request.POST.get('building_dong', False) # Profile, 동
+        building_category = request.POST['building_category']  # Profile, 생활관
+        building_dong = request.POST['building_dong'] # Profile, 동
 
         # 1차, 2차 비밀번호 일치여부 판단(js에서 1차 검증)
         if password == confirm_password:

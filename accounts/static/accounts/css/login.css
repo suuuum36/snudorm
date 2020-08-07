@@ -10,6 +10,9 @@ body {
 a {
   text-decoration: none; }
 
+a:link, a:visited, a:hover, a:active {
+  color: black; }
+
 input, button {
   outline-style: none; }
 
@@ -38,7 +41,7 @@ input:focus::-webkit-input-placeholder {
         padding-left: 20px;
         border: 1px solid #b9b9b9;
         border-radius: 7px 7px 0 0;
-        font-weight: bold; }
+        font-weight: 500; }
       .form .input .id-pw .pw {
         width: 400px;
         height: 50px;
@@ -46,7 +49,7 @@ input:focus::-webkit-input-placeholder {
         margin-top: -2px;
         border: 1px solid #b9b9b9;
         border-radius: 0 0 7px 7px;
-        font-weight: bold; }
+        font-weight: 500; }
     .form .input .id-pw:hover, .form .input .id-pw:focus {
       box-shadow: 0 0 7px 0 #bfbfbf;
       border-radius: 7px; }
@@ -58,7 +61,8 @@ input:focus::-webkit-input-placeholder {
       width: 400px;
       height: 50px;
       cursor: pointer;
-      font-weight: bold;
+      font-weight: 500;
+      font-size: 16px;
       border: none; }
     .form .input button:hover {
       background-color: #cecece;
@@ -79,7 +83,7 @@ input:focus::-webkit-input-placeholder {
       .form .social .naver span, .form .social .google span {
         position: absolute;
         color: #ffffff;
-        font-weight: bold;
+        font-weight: 500;
         top: 37%;
         left: 33%; }
     .form .social .google {
@@ -88,7 +92,7 @@ input:focus::-webkit-input-placeholder {
     display: flex;
     justify-content: center;
     margin-top: 30px;
-    font-weight: bold; }
+    font-weight: 500; }
     .form .find-signup .find {
       margin-right: 20px; }
     .form .find-signup .find:hover {
