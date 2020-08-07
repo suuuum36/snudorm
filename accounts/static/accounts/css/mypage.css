@@ -14,7 +14,8 @@ textarea:focus::-webkit-input-placeholder {
 .background {
   width: 100vw;
   margin: -100px auto 0 auto;
-  background-color: #ececec; }
+  background-color: #ececec;
+  height: 100vh; }
 
 .form {
   display: flex;
@@ -135,6 +136,8 @@ textarea:focus::-webkit-input-placeholder {
             white-space: nowrap;
             font-size: 14px; }
         .form .info .container .name .pw-field, .form .info .container .id .pw-field, .form .info .container .nk .pw-field, .form .info .container .email .pw-field, .form .info .container .building .pw-field, .form .info .container .password .pw-field {
+          display: flex;
+          align-items: center;
           width: 250px;
           padding-left: 30px; }
         .form .info .container .name .pw-value, .form .info .container .id .pw-value, .form .info .container .nk .pw-value, .form .info .container .email .pw-value, .form .info .container .building .pw-value, .form .info .container .password .pw-value {
@@ -329,13 +332,18 @@ textarea:focus::-webkit-input-placeholder {
   background-color: #ffc2c2; }
 
 .infor {
+  position: relative;
   margin-left: 10px;
-  font-size: 7px;
   cursor: pointer;
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  border: 1px solid #000000;
-  border-radius: 10px; }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  margin-bottom: -1px; }
+  .infor span {
+    font-size: 12px; }
 
 /*# sourceMappingURL=mypage.css.map */

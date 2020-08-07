@@ -29,6 +29,7 @@ textarea:focus::-webkit-input-placeholder {
     width: 100vw;
     margin: -100px auto 0 auto;
     background-color: $gray_background;
+    height: 100vh;
 }
 
 // 전체 구조
@@ -210,6 +211,8 @@ textarea:focus::-webkit-input-placeholder {
 
                 // pw_edit.html
                 .pw-field {
+                    display: flex;
+                    align-items: center;
                     width: 250px;
                     padding-left: 30px;
                 }
@@ -508,12 +511,19 @@ textarea:focus::-webkit-input-placeholder {
 
 // information 버튼
 .infor {
+    position: relative;
     margin-left: 10px;
-    font-size: 7px;
     cursor: pointer;
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    border: 1px solid #000000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #000000;
     border-radius: 10px;
+    margin-bottom: -1px;
+
+    span {
+        font-size: 12px;
+    }
 }
