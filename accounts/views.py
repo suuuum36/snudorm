@@ -133,22 +133,6 @@ def logout(request):
     auth.logout(request)
     return redirect('showmain')
 
-# 계정 활성화 함수(토큰을 통해 인증)
-def activate(request, uid64, token):
-    try:
-        uid = force_text(urlsafe_base64_decode(uid64))
-        user = User.objects.get(pk=uid)
-
-    except(TypeError, ValueError, OverflowError, User.DoesNotExsit):
-        user = None
-
-    if user is not None and account_activation_token.check_token(user, token):
-        user.is_active = True
-        user.save()
-        auth.login(request, user)
-        return redirect("showmain")
-    else:
-        return render(request, 'feedpage/index.html', {'error' : '계정 활성화 오류'})
 
 # 개인정보 변경하기
 @login_required
@@ -161,7 +145,7 @@ def userEdit(request, id):
     # 개인정보 변경하기 버튼을 클릭할 때
     elif request.method == 'POST': 
         current_user = request.user
-        current_password = request.POST.get('origin_password', 'False')
+        current_password = request.POST['origin_password']
 
         # 현재 비밀번호와 입력한 비밀번호가 일치할 때
         if check_password(current_password, current_user.password): 
@@ -178,8 +162,9 @@ def userEdit(request, id):
             return redirect('userinfo', id=id)
 
         # 현재 비밀번호와 입력한 비밀번호가 일치하지 않을 때
-        else: 
-            return render(request, 'accounts/user_info.html') 
+        else:
+            error = "현재 비밀번호가 일치하지 않습니다."
+            return render(request, 'accounts/pw_error.html', {'id': id, 'error': error})
 
 # 비밀번호 변경하기
 @login_required
@@ -203,12 +188,9 @@ def passwordEdit(request, id):
                 update_session_auth_hash(request, current_user)  # 변경된 비밀번호로 로그인 시켜주기
                 return redirect('userinfo', id=id)
                 
-            # 3) 새로운 비밀번호 두 개가 일치하지 않을 때 변경 실패
-            else:
-                return redirect('pwerror', id=id)
-
         else:
-            return redirect('pwerror', id=id)
+            error = "현재 비밀번호가 일치하지 않습니다."
+            return render(request, 'accounts/pw_error.html', {'id': id, 'error': error})
 
 def pwError(request, id):
 
@@ -253,6 +235,7 @@ def id_overlap_check(request):
         overlap_check = "pass"
     else:
         overlap_check = "fail"
+
     context = {'overlap_check': overlap_check}
 
     return JsonResponse(context)

@@ -68,14 +68,14 @@ var l2 = document.querySelector('.l2');
 var l3 = document.querySelector('.l3');
 var l4 = document.querySelector('.l4');
 
-var category2 = ["tori", "tori", "gong", "bachelor", "master", "family", "bk", "cobuy", "rent", "keep", "resell"]
-var categoryText = [mAll, lAll, mGong, mB, mG, mF, mBK, l1, l2, l3, l4]
+var category2 = ["tori", "gong", "bachelor", "master", "family", "bk", "cobuy", "rent", "keep", "resell"]
+var categoryText = [mAll, mGong, mB, mG, mF, mBK, l1, l2, l3, l4]
 
 for (idx=0; idx < 11; idx++) {
     if(url.indexOf(category2[idx])!= -1) {
         categoryText[idx].style.color = '#016aff';
     } else {
-
+        categoryText[idx].style.color = '#7f7f7f';
     }
 }
 
@@ -149,10 +149,14 @@ for(idx = 0; idx < 12; idx++) {
 var headerWhole = document.querySelector('.category-bar')
 var header3 = document.querySelector('.building')
 
-if (url.indexOf("freeboard")!= -1 || urlPath == "" || urlPath == "feeds" )  {
+if (url.indexOf("freeboard")!= -1 || urlPath == "" || urlPath == "feeds" || url.indexOf("select-option")!= -1)  {
         headerWhole.style.height ='0';
-} else if (url.indexOf("tori")!= -1 || url.indexOf("gong")!= -1 || url.indexOf("life")!= -1) {
+} else if (url.indexOf("bachelor")!= -1 || url.indexOf("master")!= -1 || url.indexOf("family")!= -1 || url.indexOf("bk")!= -1 || url.indexOf("accounts") ) {
+        header3.style.height ='60px';
+        console.log(url);
+} else if (url.indexOf("tori")!= -1 || url.indexOf("gong")!= -1 || url.indexOf("life")!= -1 ) {
         header3.style.height = '0';
-} else if (url.indexOf("select-option")!= -1 ) {
-        headerWhole.style.height ='0';
+        console.log(urlPath);
+} else {
+
 }

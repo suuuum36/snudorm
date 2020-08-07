@@ -238,3 +238,7 @@ a {text-decoration-line:none}
     margin-top: auto;
     margin-bottom: auto;
 } */
+
+button, input[type="button"] {
+    outline: none;
+}

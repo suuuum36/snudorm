@@ -52,7 +52,7 @@ def get_feed(board, category):
                 (Resell.objects.all() if category == "resell" else 
                 (Life.objecst.all()))))
     else:
-        feeds = []
+        feeds = Feeds.objects.all()
     return feeds
 
 def get_pages(feeds, request):
@@ -69,16 +69,28 @@ def get_pages(feeds, request):
     best_posts = paginator2.get_page(best_page)
     
     page_numbers_range = 10
+
     max_index = len(paginator.page_range)
     current_page = int(page) if page else 1
+    start_index = int((current_page - 1) / page_numbers_range) * page_numbers_range
+    end_index = start_index + page_numbers_range
+
+    if end_index >= max_index:
+        end_index = max_index
+
+    paginator_range = paginator.page_range[start_index:end_index]
+
+    max_index = len(paginator2.page_range)
+    current_page = int(best_page) if best_page else 1
     start_index = int((current_page - 1) / page_numbers_range) * page_numbers_range
     end_index = start_index + page_numbers_range
     
     if end_index >= max_index:
         end_index = max_index
 
-    paginator_range = paginator.page_range[start_index:end_index]
-    return [posts, best_posts, paginator_range]
+    paginator_range2 = paginator2.page_range[start_index:end_index]
+    
+    return [posts, best_posts, paginator_range, paginator_range2]
 
 # 기본 PAGE
 def showMain(request):
@@ -152,7 +164,7 @@ def showBoard(request, board, category):
 
         return render(request, 'feedpage/show.html', {'posts':pages[0], 'best_posts': pages[1], 
                             'board': board, 'category': category, 'board_name': board_info[2] + ' 게시판', 
-                            'paginator_range':pages[2] })
+                            'paginator_range':pages[2], 'paginator_range2':pages[3] })
 
     elif request.method == 'POST':
         return redirect('showboard', board=board, category=category)

@@ -37,12 +37,14 @@ textarea {
 }
 
 .title-row > input {
+    width: 750px;
     border: 0px solid;
     position: absolute;
     top: 50%;
     transform: translate(0,-50%);
     margin-left: 20px;
     font-size: 16px;
+    width: 650px;
 }
 
 .content-row {
@@ -178,4 +180,9 @@ label {
     margin-bottom: 10px;
     display: flex;
     flex-direction: column;
+}
+
+button, input[type="button"] {
+    outline: none;
+    background: none;
 }
