@@ -37,11 +37,11 @@ function id_db_check() {
     datatype: 'json',
     success: function (data) {
       if (data['db_check'] == "fail") {
-        alert("이미 존재하는 아이디 입니다.");
+        alert("이미 존재하는 아이디입니다.");
         id_input.focus();
         return;
       } else {
-        alert("사용가능한 아이디 입니다.");
+        alert("사용가능한 아이디입니다.");
         $('.user-id').attr("check_result", "success");
         $('#id-confirm').show();
         $('.id-check').hide();

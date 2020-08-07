@@ -239,12 +239,10 @@ textarea:focus::-webkit-input-placeholder {
         // 개인정보 & 비밀번호 변경 버튼
         .edit {
             
-            button {
-                width: 584px;
+            input, button {
+                width: 583px;
                 border: 1px solid $blue_text;
                 background-color: $blue_text;
-                margin-bottom: -1px;
-                margin-left: -1px;
                 height: 60px;
                 color: #ffffff;
                 font-weight: 500;
@@ -252,6 +250,11 @@ textarea:focus::-webkit-input-placeholder {
                 cursor: pointer;
                 margin-top: 10px;
                 outline-style: none;
+                border-radius: 0px !important;
+            }
+
+            .pw-button {
+                margin-top: 40px !important;
             }
         }
 
@@ -288,12 +291,12 @@ textarea:focus::-webkit-input-placeholder {
                     }
 
                     .nk-checked {
-                        color: $whiteblue;
+                        color: $gray_text;
                     }
                 }
 
                 .content-checked {
-                    color: $blackgray !important;
+                    color: $gray_text !important;
                 }
                 
                 .right-content {
@@ -305,14 +308,22 @@ textarea:focus::-webkit-input-placeholder {
                 }
 
                 .date-checked {
-                    color: $deepgray !important;
+                    color: $gray_text !important;
                 }
 
                 .check-count {
                     display: none;
                 }
             }
-        }        
+        }
+        
+        // 비밀번호 오류
+        .pw-error {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 180px;
+        }
     }
 }
 
@@ -411,7 +422,7 @@ textarea:focus::-webkit-input-placeholder {
         // 화살표 역전
         .dropdown-container.active + .selected-common::after {
             transform: rotateX(180deg);
-            top: -15px;
+            top: -17px;
         }
 
         // option 스크롤바
@@ -453,7 +464,7 @@ textarea:focus::-webkit-input-placeholder {
             height: 100%;
             width: 20px;
             right: 18px;
-            top: 13px;
+            top: 15px;
             
             transition: all 0.4s;
         }
@@ -493,4 +504,15 @@ textarea:focus::-webkit-input-placeholder {
 // user_info.html
 .building.building-info {
     flex-wrap: nowrap !important;
+}
+
+// user_edit.html
+.building-edit {
+    width: 168px !important;
+}
+
+
+// pw_error.html
+.error-title {
+    background-color: #ffc2c2;
 }
