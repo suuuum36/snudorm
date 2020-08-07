@@ -200,7 +200,7 @@ def newFeed(request, board, category):
             # cobuy 게시판 - (제목, 설명, 사진, 익명) + 가격, 링크, 마감일(+ 미정)
             if category == "cobuy":
                 price = request.POST['price']
-                url = request.POST['url']
+                url = request.POST['url'].replace("https://", "").replace("http://", "")
                 duedate = request.POST.get('duedate', '2020-01-01')
                 status = STAT_OPTION[0]
                 feed = CoBuy.objects.create(title=title, content=content,  noname=noname, views=0,
