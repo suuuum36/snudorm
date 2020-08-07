@@ -16,7 +16,9 @@ function blankCheck(field, message) {
     };
 };
 
-function validateForm() {
+function validateForm(data) {
+    const $this = data;
+    const csrfmiddlewaretoken = $this.dataset.csrfmiddlewaretoken;
 
     // input 변수 지정
     var pwInput = document.getElementById("pw");
@@ -29,6 +31,26 @@ function validateForm() {
     if(blankCheck(pwInput, "현재 비밀번호를 입력해주세요.")) {
       return false;
     };
+
+    $.ajax({
+      type: 'POST',
+      url: "/accounts/passwordcheck/",
+      data: {
+        'csrfmiddlewaretoken': csrfmiddlewaretoken,
+        'origin_password' : pwInput.value
+      },
+      datatype: 'json',
+      success: function (data) {
+        console.log(data)
+        if (data['pwcheck'] == "false") {
+          alert("현재 비밀번호를 확인해 주세요!");
+          pwInput.focus();
+          return false;
+        } else {
+          return true;
+        }
+      }
+    })
 
     if(blankCheck(pw1Input, "새로운 비밀번호를 입력해주세요.")) {
         return false;

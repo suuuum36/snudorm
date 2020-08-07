@@ -49,7 +49,7 @@
                         </div>
                     </div>
                     <div class="edit">
-                        <input type="button" class="signup pw-button" onclick="validateForm()" value="비밀번호 변경">
+                        <input type="button" class="signup pw-button" onclick="validateForm(this)" data-csrfmiddlewaretoken="{{ csrf_token }}" value="비밀번호 변경">
                     </div>   
                 </form>
             </div>
