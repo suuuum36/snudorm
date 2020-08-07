@@ -25,52 +25,34 @@
                         <span>알림</span>
                         <span class="count">{{ count }}</span>
                     </div>
-                    <div class="list">
-                        {% for notice in posts %}
-                            {% if notice.type_info1 == '쪽지' %}
-                            <a href="{% url 'chatroom' notice.user_to.id notice.user_from.id%}">
-                            {% else %}
-                            <a href="{% url 'showfeed' notice.feed.board notice.feed.category notice.feed.id %}">
-                            {% endif %}
-                                <div class="notice-container">
-                                    <div class="left-content">
-                                        {% if notice.noname %}
-                                            <span class="notice-nickname target">익명</span>의 회원님이
-                                        {% else %}
-                                            <span class="notice-nickname target">{{ notice.user_from.profile.nickname }}</span>님이 회원
-                                            {% if notice.type_info1 == '쪽지' %}
-                                                님에게
+                        <div class="list">
+                            {% for notice in notices %}
+                                {% if notice.type_info1 == '쪽지' %}
+                                    <a href="{% url 'chatroom' notice.user_to.id notice.user_from.id%}">
+                                {% else %}
+                                    <a href="{% url 'showfeed' notice.feed.board notice.feed.category notice.feed.id %}">
+                                {% endif %}
+                                    <div class="notice-container">
+                                        <div class="left-content">
+                                            {% if notice.noname %}
+                                                익명의 회원님이
                                             {% else %}
-                                                님의
+                                                <span>{{ notice.user_from.profile.nickname }}</span>님이
                                             {% endif %}
-                                        {% endif %}
-                                            
-                                        {% if notice.type_info1 == '게시글' %}
-                                            <span class="notice-object target">게시글</span>에
-                                        {% elif notice.type_info1 == '댓글' %}
-                                            <span class="notice-object target">댓글</span>에
-                                        {% elif notice.type_info1 == '쪽지' %}
-                                            <span class="notice-object target">쪽지</span>에
-                                        {% else %} <!-- if 대댓글 -->
-                                            <span class="notice-object target">대댓글</span>에
-                                        {% endif %}
-
-                                        {% if notice.type_info2 == '공감' %}
-                                            <span class="notice-expession target">공감</span>을 눌렀습니다.
-                                        {% elif notice.type_info2 == '댓글' %}
-                                            <span class="notice-expession target">댓글</span>을 달았습니다.
-                                        {% else %} <!-- if 대댓글-->
-                                            <span class="notice-expession target">대댓글</span>을 달았습니다.
-                                        {% endif %}
-                                    </div>
-                                    <div class="right-content">
-                                        <span class="date">{{ notice.created_at|date:'y.m.d' }}</span>
-                                        <!-- notice.checked = True면 읽은것, False면 안읽은것 -->
-                                    </div>
-                                    <div name="read" class="check-count">{{ notice.checked }}</div>
-                                </div>
-                            </a>                   
-                        {% endfor %}
+                                            {% if notice.type_info1 == '쪽지' %}
+                                                회원님에게 쪽지를 보냈습니다.
+                                            {% else %}
+                                                회원님의 {{ notice.type_info1 }}에
+                                                {% if notice.type_info2 == '공감' %}
+                                                    {{ notice.type_info2 }}을 눌렀습니다.
+                                                {% else %}
+                                                    {{ notice.type_info2 }}을 달았습니다.
+                                                {% endif %}
+                                                </a>
+                                            {% endif %}
+                                        </div>
+                                    </div>               
+                            {% endfor %}
                     </div>
                 </div> 
                 <div class="page_numbers" >
