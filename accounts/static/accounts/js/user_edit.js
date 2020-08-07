@@ -41,9 +41,10 @@ function nk_db_check() {
 
   // 한글 & 영문 & 숫자 조합의 닉네임 입력
   var nkRegex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9]{2,8}$/;
+
   var nkInput = document.getElementById("nickname");
 
-  if (!regexCheck(nkRegex, nkInput, "닉네임은 한글, 영문, 숫자만 포함 가능합니다.")) {
+  if (!regexCheck(nkRegex, nkInput, "한글, 영문, 숫자를 포함한 닉네임을 입력해 주세요.")) {
     return false;
   }
   
@@ -87,13 +88,14 @@ function validateForm() {
   // regex 변수 지정
   // 4자 이내의 한글 이름(공백 불가능) 또는 15자 이내의 영어 이름(공백 가능)
   var nameRegex = /^[가-힣]{1,4}|[\sa-zA-Z]{1,15}$/;    
- 
+  var emailRegex = /^[0-9|A-Z|a-z|~@^$!%*#?&]{2,}$/;
+
   // 이름 확인
   if(blankCheck(nameInput, "이름을 입력해주세요.")) {
     return false;
   };
    
-  if (!regexCheck(nameRegex, nameInput, "이름을 확인해주세요.")) {
+  if (!regexCheck(nameRegex, nameInput, "4자 이내의 한글이름 또는 공백을 포함한 15자 이내의 영어이름을 입력해주세요.")) {
     return false;
   };
  
@@ -109,11 +111,16 @@ function validateForm() {
     return false;
   };
 
+  if (!regexCheck(emailRegex, emailInput, "영문, 숫자 또는 특수문자(~@^$!%*#?&)를 포함한 2자 이상의 스누메일을 입력해주세요.")) {
+    return false;
+  };
+
   // 비밀번호 공백 확인
   if (blankCheck(pwInput, "비밀번호를 입력해주세요.")) {
     return false;
   };
     
+  
   // 모든 유효성 검사 통과 시 form 제출
   document.getElementById("submit").submit();
 };
