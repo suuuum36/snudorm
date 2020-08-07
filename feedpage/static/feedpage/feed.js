@@ -43,3 +43,9 @@ $(document).on('click', '.recomment-button', function(e){
     }
 })
 
+
+$(document).on('click', '.editrecommentform', function(e){
+    const $this = $(e.currentTarget);
+    $target = $this.parent().parent().siblings('.recomment-edit');
+    $target.css('heigth', '34px')
+})
