@@ -13,7 +13,6 @@ textarea:focus::-webkit-input-placeholder {
 
 .background {
   width: 100vw;
-  height: 100vh;
   margin: -100px auto 0 auto;
   background-color: #ececec; }
 
@@ -328,5 +327,15 @@ textarea:focus::-webkit-input-placeholder {
 
 .error-title {
   background-color: #ffc2c2; }
+
+.infor {
+  margin-left: 10px;
+  font-size: 7px;
+  cursor: pointer;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border: 1px solid #000000;
+  border-radius: 10px; }
 
 /*# sourceMappingURL=mypage.css.map */

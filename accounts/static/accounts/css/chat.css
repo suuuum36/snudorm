@@ -21,7 +21,6 @@ input:focus::-webkit-input-placeholder {
 
 .background {
   width: 100vw;
-  height: 100vh;
   margin: -100px auto 0 auto;
   background-color: #ececec; }
 
