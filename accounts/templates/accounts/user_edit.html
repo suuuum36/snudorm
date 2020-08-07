@@ -250,7 +250,7 @@
                         </div>
                     </div>  
                     <div class="edit">
-                        <input type="button" class="signup" onclick="validateForm()" value="개인정보 변경">
+                        <input type="button" class="signup" onclick="validateForm(this)" data-csrfmiddlewaretoken="{{ csrf_token }}" value="개인정보 변경">
                     </div>   
                 </form>
             </div>

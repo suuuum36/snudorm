@@ -119,7 +119,26 @@ function validateForm() {
   if (blankCheck(pwInput, "비밀번호를 입력해주세요.")) {
     return false;
   };
-    
+
+  $.ajax({
+    type: 'POST',
+    url: "/accounts/passwordcheck/",
+    data: {
+      'csrfmiddlewaretoken': csrfmiddlewaretoken,
+      'origin_password' : pwInput.value
+    },
+    datatype: 'json',
+    success: function (data) {
+      console.log(data)
+      if (data['pwcheck'] == "false") {
+        alert("현재 비밀번호를 확인해 주세요!");
+        pwInput.focus();
+        return false;
+      } else {
+        return true;
+      }
+    }
+  })    
   
   // 모든 유효성 검사 통과 시 form 제출
   document.getElementById("submit").submit();
