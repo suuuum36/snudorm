@@ -1,0 +1,496 @@
+@charset "utf-8";
+@import "variable.scss";
+
+// TODO:
+// 1) 아이디 input 색깔 다르게
+
+// 공통 적용
+
+* {
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:link, a:visited, a:hover, a:active {
+	color: black;
+}
+
+// base.html의 헤더 배경 !important 적용 필요
+// html {
+//     background-color: #e9e9e9;
+// }
+
+a:link, a:visited, a:hover, a:active {
+	color: black;
+}
+
+
+// input 태그 focus 시 글자 사라지도록
+input:focus::-webkit-input-placeholder, 
+textarea:focus::-webkit-input-placeholder {
+    color: transparent !important;
+}
+
+// mypage 배경색 설정
+.background {
+    width: 100vw;
+    height: 100vh;
+    margin: -100px auto 0 auto;
+    background-color: $gray_background;
+}
+
+// 전체 구조
+.form {
+    display: flex;
+    justify-content: center;
+    padding: 50px 0;
+
+    // 좌측 nav (mypage 공통 적용)
+    .nav {
+        width: 300px;
+        margin-right: 10px;
+        height: min-content;
+        font-weight: 500;
+
+        // nav title: 마이페이지
+        .nav-title {
+            display: flex;
+            align-items: center;
+            height: 60px;
+            margin-bottom: 10px;
+            background-color: #ffffff;
+            border: 1px solid $whitegray;
+            padding-left: 30px;
+            
+            span {
+                font-size: 20px;
+            }
+        }
+
+        // 네이게이션 list:
+        // 내 정보 & 개인정보 변경 & 비밀번호 변경 & 알림 & 쪽지함
+        .nav-list {
+            background-color: #ffffff;
+            
+            a {
+                display: flex;
+                align-items: center;
+                width: 300px;
+                height: 60px;
+                padding-left: 30px;
+                font-size: 18px;
+            }
+
+            a:hover {
+                color: $blue_text;
+                background-color: $blue_background;
+            }
+        }
+    }
+
+    // 우측 정보
+    // info : 이름 & 아이디 & 닉네임 & 이메일 & 기숙사 동
+    // edit : 이름 & 아이디 & 닉네임 & 이메일 & 기숙사 동 & 비밀번호
+    // pw-edit : 현재 비밀번호 & 새로운 비밀번호 & 비밀번호 확인
+
+    .info {
+        display: flex;
+        width: 585px;
+        height: min-content;
+        flex-direction: column;
+        background-color: #ffffff;
+        border: 1px solid $whitegray;
+        min-height: 370px;
+    
+
+        // user_info, edit, pwedit 공통 title & container
+        .title {
+            display: flex;
+            align-items: center;
+            height: 60px;
+            width: 584px;
+            font-size: 20px;
+            font-weight: 500;
+            border-bottom: 1px solid $mypage_under;
+            margin-left: -1px;
+
+            span {
+                padding-left: 30px;
+            }
+
+            .count {
+                font-size: 18px !important;
+                padding-left: 20px !important;
+                color: $blue_text !important;
+                cursor: pointer;
+            }
+        }
+
+        .container {
+            margin: 30px 0;
+            
+            .name, .id, .nk, .email, .building, .password {
+                display: flex;
+                align-items: center;
+                height: 60px;
+                font-size: 18px;
+                
+                // 내 정보 & 개인정보 변경
+                // 좌측 field
+                .field {
+                    display: flex;
+                    align-items: center;
+                    width: 180px;
+                    padding: 0 30px;
+                    font-weight: 500;
+                }
+
+                // 우측 input
+                .value {
+                    display: flex;
+                    align-items: center;
+                    color: $gray_text;
+                    
+                    .input-box {
+                        font-size: 18px;
+                        font-weight: 400;
+                        border-style: none none solid none;
+                        border-color: $gray_border;
+                        color: $gray_text;
+                        height: 40px;
+                        width: 180px;
+                        margin-right: 15px;
+                        margin-bottom: -2px;
+                    }
+
+                    .input-box::placeholder {
+                        color: $gray_text;
+                    }
+
+                    // 아이디 input은 수정 불가능
+                    #no::placeholder {
+                        color: #000000 !important;
+                    }
+
+                    .mail {
+                        color: #000000;
+                    }
+                }
+
+                .nk-check {
+                    width: 90px;
+                    height: 50px;
+                    border: none;
+                    border-radius: 30px;
+                    background-color: $gray_button;
+                    color: #ffffff;
+                    cursor: pointer;
+                    font-weight: 500;
+                    font-size: 16px;
+                    outline-style: none;
+                }
+
+                .nk-check:hover {
+                    background-color: $gray_hover;
+                    box-shadow: $gray_under_shadow;
+                }
+                
+                // 사용가능 div
+                #id-confirm, #nk-confirm {
+                    display: none;
+                    position: relative;
+                    width: 90px;
+                    height: 50px;
+                    border-radius: 30px;
+                    background-color: $blue_text;
+                    color: #ffffff;
+                    font-weight: 500;
+                    
+                    span {
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        white-space: nowrap;
+                        font-size: 14px;
+                    }
+                }
+
+                // pw_edit.html
+                .pw-field {
+                    width: 250px;
+                    padding-left: 30px;
+                }
+                .pw-value {
+                    width: 350px;
+
+                    .pw-input {
+                        border-style: none none solid none;
+                        border-color: $gray_border;
+                        height: 30px;
+                    }
+                }
+            }
+        }
+        
+        // 개인정보 & 비밀번호 변경 버튼
+        .edit {
+            
+            button {
+                width: 584px;
+                border: 1px solid $blue_text;
+                background-color: $blue_text;
+                margin-bottom: -1px;
+                margin-left: -1px;
+                height: 60px;
+                color: #ffffff;
+                font-weight: 500;
+                font-size: 18px;
+                cursor: pointer;
+                margin-top: 10px;
+                outline-style: none;
+            }
+        }
+
+        // 알림
+        .list {
+            margin-left: -1px;
+
+            a {
+                display: inline-block;
+                width: 584px;
+                border-bottom: 1px solid $whitegray;
+            }
+
+            a:last-child {
+                border-bottom: none;
+            }
+
+            a:hover {
+                background-color: $lightgray;
+            }
+
+            .notice-container {
+                display: flex;
+                justify-content: space-between;
+                width: 584px;
+                height: 60px;
+                align-items: center;
+
+                .left-content {
+                    padding-left: 30px;
+    
+                    .notice-nickname {
+                        color: $blue_text;
+                    }
+
+                    .nk-checked {
+                        color: $whiteblue;
+                    }
+                }
+
+                .content-checked {
+                    color: $blackgray !important;
+                }
+                
+                .right-content {
+                    padding-right: 30px;
+    
+                    .date {
+                        color: $blackgray;
+                    }
+                }
+
+                .date-checked {
+                    color: $deepgray !important;
+                }
+
+                .check-count {
+                    display: none;
+                }
+            }
+        }        
+    }
+}
+
+// 페이지 넘기기
+.page_numbers {
+    display: flex;
+    width: fit-content;
+    margin-top: 45px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 50px;
+
+    a {
+    color: $gray_text;
+
+    }
+}
+
+.num1, .num2 {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.previous, .next {
+    a {
+        color: black;
+    }
+}
+
+.previous {
+    margin-right: 20px;
+}
+
+.next {
+    margin-left: 20px;
+}
+
+// 기숙사 동 선택
+.building {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+
+    span {
+        width: 500px !important;
+    }
+
+    // 생활관 input box의 우측 마진 설정
+    .building-category {
+        margin-right: 20px;
+    }
+
+    // 선택되지 않은 동 옵션 숨기기
+    .remove {
+        display: none !important;
+    }
+
+    // 생활관 분류 및 동 분류 dropdown
+    .building-category, .building-default, .building-bachelor,
+    .building-master, .building-family, .building-bk {
+        display: flex;
+        width: 180px;
+        flex-direction: column;
+        position: relative;
+            
+        // '생활관을 선택하세요.' 옵션 선택 불가
+        .default-container {
+            position: absolute !important;
+            z-index: -1 !important;
+        }
+        
+        // 생활관 및 동의 옵션을 갖는 container
+        .dropdown-container {
+            border: 2px solid $gray_border;
+            max-height: 0;
+            width: 100%;
+            opacity: 0;
+            transition: all 0.4s;
+            border-radius: 7px;
+            overflow: hidden;
+            order: 1;
+            position: absolute;
+            top: 40px;
+            z-index: 3;
+            margin-top: -2px;
+            background-color: #ffffff;
+        }
+
+        // dropdown 작동
+        .dropdown-container.active {
+            max-height: 162px;
+            opacity: 1;
+            overflow-y: scroll;
+        }
+
+        // 화살표 역전
+        .dropdown-container.active + .selected-common::after {
+            transform: rotateX(180deg);
+            top: -15px;
+        }
+
+        // option 스크롤바
+        .dropdown-container::-webkit-scrollbar {
+            width: 8px;
+            border-radius: 0 3px 3px 0;
+            background-color: #ffffff;
+            visibility: hidden;
+        }
+        
+        // option 스크롤
+        .dropdown-container::-webkit-scrollbar-thumb {
+            background-color: $gray_border;
+            border-radius: 3px;
+        }
+
+        // 선택된 옵션 표시
+        .selected-common {
+            display:flex;
+            align-items: center;
+            color: $gray_text;
+            cursor: pointer;
+            position: relative;
+            order: 0;
+            height: 40px;
+            line-height: 22px;
+            font-size: 16px;
+            text-align: center;            
+        }
+
+        // dropdown 화살표
+        .selected-common::after {
+            content: "";
+            background: url("../img/down-arrow.png");
+            background-size: contain;
+            background-repeat: no-repeat;
+            
+            position: absolute;
+            height: 100%;
+            width: 20px;
+            right: 18px;
+            top: 13px;
+            
+            transition: all 0.4s;
+        }
+        
+        // 옵션 설정
+        .dropdown-option {
+            cursor: pointer;
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            
+            // input type = "radio"
+            .radio {
+                display:none;
+            }
+        }
+
+        .dropdown-option:hover {
+            color: $blue_text;
+        }
+        
+
+        // input type = "radio"와 연결
+        label {
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            align-items: center;
+            height: 40px;
+            width: 100%;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    }
+}
+
+// user_info.html
+.building.building-info {
+    flex-wrap: nowrap !important;
+}
