@@ -72,6 +72,10 @@ var category2 = ["tori", "tori", "gong", "bachelor", "master", "family", "bk", "
 var categoryText = [mAll, lAll, mGong, mB, mG, mF, mBK, l1, l2, l3, l4]
 
 for (idx=0; idx < 11; idx++) {
+    if(url.indexOf("tori") == -1) {
+        mAll.style.color = 'gray';
+        lAll.style.color = 'gray';
+    }
     if(url.indexOf(category2[idx])!= -1) {
         categoryText[idx].style.color = '#016aff';
     } else {
@@ -155,7 +159,6 @@ if (url.indexOf("freeboard")!= -1 || urlPath == "" || urlPath == "feeds" || url.
         header3.style.height ='60px';
 } else if (url.indexOf("tori")!= -1 || url.indexOf("gong")!= -1 || url.indexOf("life")!= -1 ) {
         header3.style.height = 0;
-        console.log('hello');
 } else {
 
 }
