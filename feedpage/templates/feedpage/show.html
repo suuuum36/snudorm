@@ -39,8 +39,8 @@
         <div class = "i-title">제목</div>
         <div class = "i-author">작성자</div> 
         <div class = "i-date">날짜</div> 
-        <div class = "i-views">조회수</div> 
         <div class = "i-likes">추천수</div> 
+        <div class = "i-views">조회수</div> 
     </div> 
 
     <div class = "just-content">
@@ -418,7 +418,6 @@
                     {% if best_posts.number == num %}
                         <div class = "num3">{{ num }}</div> 
                     {% else %}
-                        <!-- 수민님 a href를 빼면 css 잘 작동합니다. -->
                         <a href="?best_page={{num}}">
                             <div class = "num4">{{ num }}</div>
                         </a>
