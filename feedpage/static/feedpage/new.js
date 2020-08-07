@@ -68,31 +68,6 @@ function doStatCheck(status){
     }
 }
 
-function startCheck(stat) {
-    var start_date = document.getElementByName("start_date");
-
-    if(stat.checked) {
-        start_date.required = false;
-        start_date.value = null;
-    } else {
-        start_date.required = true;
-    }
-}
-
-function doStatCheck(status){
-    var option = document.getElementsByName("status");
-
-    for(var i=0; i<option.length; i++){
-        if(option[i] != status){
-            option[i].checked = false;
-            option[i].required = false;
-        } else {
-            option[i].required = true;
-        }
-    }
-}
-
-
 $('#estartDate').val(new Date().toISOString().substring(0, 10));
 
 $(document).on('click', '#euncertain1', ()=> {
