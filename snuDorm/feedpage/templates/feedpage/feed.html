@@ -337,7 +337,7 @@
                     data-board="{{ board }}" data-category="{{ category }}" data-fid="{{ feed.id }}"
                     data-csrfmiddlewaretoken="{{ csrf_token }}" data-cdate="{{ c.created_at|date:"y.m.d" }}">
                     {% csrf_token %}
-                    <input class = "comment-makebox" id="{{ feed.id }}" type="text" name="content" size="80" placeholder ="댓글을 입력해주세요."/>
+                    <input class = "comment-makebox" id="{{ feed.id }}" type="text" name="content" size="90" placeholder ="댓글을 입력해주세요."/>
                     <input class = "noname-checkbox" name="noname" type="checkbox" id="noname{{ feed.id }}">
                     <label class = "noname" for="noname{{ feed.id }}">익명</label> 
                     <button class = "write-comment" type="submit">댓글 쓰기</button>
