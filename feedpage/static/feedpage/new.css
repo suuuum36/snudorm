@@ -179,3 +179,7 @@ label {
     display: flex;
     flex-direction: column;
 }
+
+button, input[type="button"] {
+    outline: none;
+}
