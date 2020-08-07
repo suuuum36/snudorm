@@ -120,25 +120,6 @@ function validateForm() {
     return false;
   };
 
-  $.ajax({
-    type: 'POST',
-    url: "/accounts/passwordcheck/",
-    data: {
-      'csrfmiddlewaretoken': csrfmiddlewaretoken,
-      'origin_password' : pwInput.value
-    },
-    datatype: 'json',
-    success: function (data) {
-      if (data['pwcheck'] == "false") {
-        alert("현재 비밀번호를 확인해 주세요!");
-        pwInput.focus();
-        return false;
-      } else {
-        return true;
-      }
-    }
-  })
-
   var cateWhere = document.getElementsByName("building_category").length
   var dongWhere = document.getElementsByName("building_dong").length
   if (cateWhere != 1 || dongWhere !=1) {
@@ -153,6 +134,9 @@ function validateForm() {
 
 // edit 특별 기능 추가
 window.onload = function () {
+  var findId = document.getElementsByClassName("selected-bachelor")[0].innerHTML.replace("동", "") 
+  document.getElementById(findId.trim()).setAttribute("name", "building_dong"); // 동 name 부여
+
   var chk = document.getElementById("selected").innerHTML;
   var a = document.getElementById("default-dong"); // 처음에 보여지는 default 옵션
   var b = document.getElementById("bachelor-dong"); // 학부생활관 동 옵션
@@ -161,24 +145,28 @@ window.onload = function () {
   var e = document.getElementById("bk-dong"); // BK생활관 동 옵션
 
   if (chk.indexOf("학부생활관") != -1) {
+    document.getElementById("bachelor").setAttribute("name", "building_category");
     a.className = "remove";
     b.className = "building-bachelor";
     c.className = "remove";
     d.className = "remove";
     e.className = "remove";
   } else if (chk.indexOf("대학원생활관") != -1) {
+    document.getElementById("master").setAttribute("name", "building_category");
     a.className = "remove";
     b.className = "remove";
     c.className = "building-master";
     d.className = "remove";
     e.className = "remove";
   } else if (chk.indexOf("가족생활관") != -1) {
+    document.getElementById("family").setAttribute("name", "building_category");
     a.className = "remove";
     b.className = "remove";
     c.className = "remove";
     d.className = "building-family";
     e.className = "remove";
   } else if (chk.indexOf("BK생활관") != -1) {
+    document.getElementById("bk").setAttribute("name", "building_category");
     a.className = "remove";
     b.className = "remove";
     c.className = "remove";
@@ -283,7 +271,12 @@ categoryOptions.forEach(o => {
       cateName[0].removeAttribute("name");
     };
     opt.setAttribute("name", "building_category");
-   
+    
+    var dongName = document.getElementsByName("building_dong");
+    if (dongName.length == 1) {
+      dongName[0].removeAttribute("name");
+    }
+
     var dorm = document.getElementById("selected").innerHTML;
     var defaultOpt = document.getElementById("default-dong"); // 처음에 보여지는 default 옵션
     var bachelorOpt = document.getElementById("bachelor-dong"); // 학부생활관 동 옵션

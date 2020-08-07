@@ -18,13 +18,13 @@
             </div>
             <div class="info" id="pw-info">
                 <div class="title error-title">
-                    <span>입력 오류</span>
+                    <span>비밀번호 입력 오류</span>
                 </div>
                 <div class="container pw-error">
                     <span>{{ error }}</span>
                 </div>
                 <div class="edit">
-                    <input type="button" value="돌아가기"></input>
+                    <a href="{% url 'useredit' user.id %}"><input type="button" value="돌아가기"></input></a>
                 </div>   
                 
             </div>
