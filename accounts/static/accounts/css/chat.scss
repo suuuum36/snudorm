@@ -1,0 +1,214 @@
+@charset "utf-8";
+@import "variable.scss";
+
+// 공통 값 적용
+* {
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Sans KR', sans-serif;
+ }
+
+body {
+	line-height: 1;
+}
+
+a {
+   text-decoration: none;
+}
+
+a:link, a:visited, a:hover, a:active {
+	color: black;
+}
+
+input, button {
+	outline-style: none;
+}
+
+// input 태그 focus 시 글자 사라지도록
+input:focus::-webkit-input-placeholder {
+    color: transparent;
+}
+
+// mypage 배경색 설정
+.background {
+    width: 100vw;
+    height: 100vh;
+    margin: -100px auto 0 auto;
+    background-color: $gray_background;
+}
+
+.form {
+    display: flex;
+    justify-content: center;
+    padding: 50px 0;
+    
+    .nav {
+        width: 300px;
+        border: 1px solid $whitegray;
+        min-height: 660px;
+        background-color: #ffffff;
+
+        .title {
+            display: flex;
+            align-items: center;
+            height: 60px;
+            padding-left: 30px;
+            font-size: 20px;
+            font-weight: 500;
+            border-bottom: 2px solid $mypage_under;
+        }
+        
+        .list {
+            a {
+                display: inline-block;
+                width: 300px;
+                height: 90px;
+            }
+
+            a:hover {
+                background-color: $blue_background;
+            }
+
+            .msg {
+                height: 90px;
+                width: 300px;
+                padding: 20px 20px 20px 20px;
+                .top {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    height: 25px;
+                    .nickname {
+                        font-size: 16px;
+                        font-weight: 500;
+                    }
+                    .date {
+                        font-size: 13px;
+                        color: $gray_text;
+                    }
+                }
+                .contents {
+                    display: flex;
+                    align-items: center;
+                    height: 25px;
+                    font-size: 15px;
+                    
+                    span {
+                        display: inline-block;
+                        width: 260px;
+                        color: $blackgray;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        overflow: hidden;
+                    }
+                }
+            }
+        }
+    }
+    .chatroom {
+        width: 595px;
+        border: 1px solid $whitegray;
+        margin-left: -1px;
+        min-height: 660px;
+        background-color: #ffffff;
+
+        .container {
+            height: 600px;
+        }
+
+        .headline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            height: 60px;
+            font-size: 20px;
+            font-weight: 500;
+
+            button {
+                background-color: #ffffff;
+                border: none;
+                color: $blackgray;
+            }
+        }
+        .chat {
+            height: 540px;
+            overflow-y: scroll;
+
+            .send, .receive {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                min-height: 60px;
+                max-height: 250px;
+                padding: 0 30px;
+                border-bottom: 1px solid $whitegray;
+            }
+            .send:last-child {
+                border-bottom: none;
+            }
+
+            .chat_date {
+                font-size: 13px;
+                color: $gray_text;
+            }
+            .chat_con {
+                font-size: 15px;
+                font-weight: 500;
+
+                span {
+                    display: inline-block;
+                    max-width: 400px;
+                    line-height: 2;
+                }
+            }
+
+            .chat_con.re {
+                color: $blue_text;
+            }
+        }
+
+        .chat::-webkit-scrollbar {
+            background-color: #ffffff;
+            margin-right: -1px;
+        }
+
+        .chat::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            background-color: $whitegray;
+            height: 5px;
+            margin-right: -1px;
+        }
+
+        .sending {
+            display: flex;
+            align-items: center;
+            height: 60px;
+            border-top: 1px solid $whitegray;
+
+            .typing {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 595px;
+
+                .sendbox {
+                    width: 530px;
+                    padding-left: 20px;
+                    height: 59px;
+                    border: none;
+                    font-size: 15px;
+                }
+                button {
+                    color: $blue_text;
+                    border: none;
+                    background: none;
+                    padding: 0 20px;
+                    cursor: pointer;            
+                }
+            }
+        }
+        
+    }
+}
