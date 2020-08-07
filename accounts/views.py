@@ -187,14 +187,19 @@ def passwordEdit(request, id):
                 current_user.save()                
                 update_session_auth_hash(request, current_user)  # 변경된 비밀번호로 로그인 시켜주기
                 return redirect('userinfo', id=id)
-                
+        return redirect('passwordedit', id=id)
+
+def pwCheck(request):
+    if request.method == 'POST':
+        current_user = request.user
+        current_password = request.POST['origin_password']
+
+        if check_password(current_password, current_user.password):
+            return JsonResponse({'pwcheck': 'true'})
         else:
-            error = "현재 비밀번호가 일치하지 않습니다."
-            return render(request, 'accounts/pw_error.html', {'id': id, 'error': error})
-
-def pwError(request, id):
-
-    return render(request, 'accounts/pw_error.html', {'id': id})
+            return JsonResponse({'pwcheck': 'false'})
+    elif request.method == 'GET':
+        return redirect('showmain')
 
 def userInfo(request, id):
 
