@@ -35,32 +35,19 @@
                                 <div class="notice-container">
                                     <div class="left-content">
                                         {% if notice.noname %}
-                                            <span class="notice-nickname target">익명</span>의 회원님이
+                                            <span class="no-name">익명</span>의 회원님이
                                         {% else %}
-                                            <span class="notice-nickname target">{{ notice.user_from.profile.nickname }}</span>님이 회원
-                                            {% if notice.type_info1 == '쪽지' %}
-                                                님에게
+                                            <span class="notice-nickname">{{ notice.user_from.profile.nickname }}</span>님이
+                                        {% endif %}
+                                        {% if notice.type_info1 == '쪽지' %}
+                                            회원님에게 쪽지를 보냈습니다.
+                                        {% else %}
+                                            회원님의 {{ notice.type_info1 }}에
+                                            {% if notice.type_info2 == '공감' %}
+                                                {{ notice.type_info2 }}을 눌렀습니다.
                                             {% else %}
-                                                님의
+                                                {{ notice.type_info2 }}을 달았습니다.
                                             {% endif %}
-                                        {% endif %}
-                                            
-                                        {% if notice.type_info1 == '게시글' %}
-                                            <span class="notice-object target">게시글</span>에
-                                        {% elif notice.type_info1 == '댓글' %}
-                                            <span class="notice-object target">댓글</span>에
-                                        {% elif notice.type_info1 == '쪽지' %}
-                                            <span class="notice-object target">쪽지</span>에
-                                        {% else %} <!-- if 대댓글 -->
-                                            <span class="notice-object target">대댓글</span>에
-                                        {% endif %}
-
-                                        {% if notice.type_info2 == '공감' %}
-                                            <span class="notice-expession target">공감</span>을 눌렀습니다.
-                                        {% elif notice.type_info2 == '댓글' %}
-                                            <span class="notice-expession target">댓글</span>을 달았습니다.
-                                        {% else %} <!-- if 대댓글-->
-                                            <span class="notice-expession target">대댓글</span>을 달았습니다.
                                         {% endif %}
                                     </div>
                                     <div class="right-content">

@@ -133,22 +133,6 @@ def logout(request):
     auth.logout(request)
     return redirect('showmain')
 
-# 계정 활성화 함수(토큰을 통해 인증)
-def activate(request, uid64, token):
-    try:
-        uid = force_text(urlsafe_base64_decode(uid64))
-        user = User.objects.get(pk=uid)
-
-    except(TypeError, ValueError, OverflowError, User.DoesNotExsit):
-        user = None
-
-    if user is not None and account_activation_token.check_token(user, token):
-        user.is_active = True
-        user.save()
-        auth.login(request, user)
-        return redirect("showmain")
-    else:
-        return render(request, 'feedpage/index.html', {'error' : '계정 활성화 오류'})
 
 # 개인정보 변경하기
 @login_required
@@ -182,7 +166,6 @@ def userEdit(request, id):
             return render(request, 'accounts/user_info.html') 
 
 # 비밀번호 변경하기
-@login_required
 def passwordEdit(request, id):
     if request.method == 'GET':
         return render(request, 'accounts/pw_edit.html', {'id': id})
