@@ -148,7 +148,7 @@ input[type=file]{
     border-right: 1px solid #c4c4c4;
     padding: 20px;
     text-align: center;
-    width: 47px;
+    min-width: 53px;
     border-right: 1px solid #c4c4c4;
     padding: 20px;
 }

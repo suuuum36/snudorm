@@ -126,6 +126,7 @@
 /*본문*/
 .content-div {
     margin-bottom: 30px;
+    word-break: break-all;
 }
 .content-title {
     font-size: 19px;
