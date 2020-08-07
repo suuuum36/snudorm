@@ -68,8 +68,8 @@ var l2 = document.querySelector('.l2');
 var l3 = document.querySelector('.l3');
 var l4 = document.querySelector('.l4');
 
-var category2 = ["tori", "gong", "bachelor", "master", "family", "bk", "cobuy", "rent", "keep", "resell", "tori"]
-var categoryText = [mAll, mGong, mB, mG, mF, mBK, l1, l2, l3, l4, lAll]
+var category2 = ["tori", "gong", "bachelor", "master", "family", "bk", "cobuy", "rent", "keep", "resell"]
+var categoryText = [mAll, mGong, mB, mG, mF, mBK, l1, l2, l3, l4]
 
 for (idx=0; idx < 11; idx++) {
     if(url.indexOf(category2[idx])!= -1) {
