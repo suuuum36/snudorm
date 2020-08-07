@@ -23,7 +23,7 @@ function id_db_check() {
   var userIdRegex = /^[a-zA-Z0-9]{5,}$/;
   var idInput = document.getElementById("user-id");
 
-  if (!regexCheck(userIdRegex, idInput, "아이디를 확인해주세요.")) {
+  if (!regexCheck(userIdRegex, idInput, "영문과 숫자 조합의 아이디를 입력해주세요.")) {
     return false;
   }
   
@@ -72,7 +72,7 @@ function nk_db_check() {
   var nkRegex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9]{2,8}$/;
   var nkInput = document.getElementById("nickname");
 
-  if (!regexCheck(nkRegex, nkInput, "닉네임을 확인해주세요.")) {
+  if (!regexCheck(nkRegex, nkInput, "한글, 영문 또는 숫자를 포함한 2-8자의 닉네임을 입력해 주세요.")) {
     return false;
   }
   
@@ -86,11 +86,11 @@ function nk_db_check() {
     datatype: 'json',
     success: function (data) {
       if (data['db_check'] == "fail") {
-        alert("이미 존재하는 닉네임 입니다.");
+        alert("이미 존재하는 닉네임입니다.");
         nk_input.focus();
         return;
       } else {
-        alert("사용가능한 닉네임 입니다.");
+        alert("사용가능한 닉네임입니다.");
         $('.nickname').attr("check_result", "success");
         $('#nk-confirm').show();
         $('.nk-check').hide();
@@ -113,15 +113,16 @@ function validateForm() {
    // 4자 이내의 한글 이름(공백 불가능) 또는 15자 이내의 영어 이름(공백 가능)
    var nameRegex = /^[가-힣]{1,4}|[\sa-zA-Z]{1,15}$/; 
    // 영문, 숫자, 특수문자 최소 한 글자씩 포함 & 8자 이상
-   var pwRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@^$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
-  
+   var pwRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[~@^$!%*#?&])[A-Za-z\d~@^$!%*#?&]{8,}$/;
+   var emailRegex = /^[0-9|A-Z|a-z|~$@^$!%*#?&]{2,}$/;
+
 
    // 이름 확인
    if(blankCheck(nameInput, "이름을 입력해주세요.")) {
      return false;
    };
   
-   if (!regexCheck(nameRegex, nameInput, "이름을 확인해주세요.")) {
+   if (!regexCheck(nameRegex, nameInput, "4자 이내의 한글이름 또는 공백을 포함한 15자 이내의 영어이름을 입력해주세요.")) {
      return false;
    };
   
@@ -135,19 +136,17 @@ function validateForm() {
    // 비밀번호 확인
    // 1) 비밀번호 regex 확인
    // 2) 비밀번호 일치여부 확인
-   if (!regexCheck(pwRegex, pw1Input, "비밀번호를 확인해주세요.")) {
-     return false;
-   }; // 1차 비밀번호 확인
 
-   if (!regexCheck(pwRegex, pw2Input, "비밀번호를 확인해주세요.")) {
-     return false;
-   }; // 2차 비밀번호 확인
-  
-   if (pw1Input.value != pw2Input.value) {
-     alert("비밀번호가 일치하지 않습니다.");
-     pw1Input.focus();
-     return false;
-   };
+  if (!regexCheck(pwRegex, pw1Input, "영문, 숫자, 특수문자(~@^$!%*#?&)를 최소 한글자씩 포함한 8자 이상의 비밀번호를 입력해주세요.")) {
+    return false;
+  }; // 1차 비밀번호 확인
+
+  if (pw1Input.value != pw2Input.value) {
+    alert("비밀번호가 일치하지 않습니다.");
+    pw1Input.focus();
+    return false;
+  };
+
 
    // 닉네임 중복확인 여부
    if ($('.nickname').attr("check_result") == "fail"){
@@ -160,7 +159,10 @@ function validateForm() {
    if (blankCheck(emailInput, "이메일을 입력해주세요.")) {
      return false;
    };
-  
+
+   if (!regexCheck(emailRegex, emailInput, "영문, 숫자 또는 특수문자(~@^$!%*#?&)를 포함한 2자 이상의 스누메일을 입력해주세요.")) {
+    return false;
+  };
 
   // 모든 유효성 검사 통과 시 form 제출
   document.getElementById("submit").submit();
