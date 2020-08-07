@@ -196,7 +196,8 @@ textarea:focus::-webkit-input-placeholder {
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 180px; }
+      min-height: 180px;
+      color: red; }
 
 .page_numbers {
   display: flex;
@@ -327,9 +328,6 @@ textarea:focus::-webkit-input-placeholder {
 
 .building-edit {
   width: 168px !important; }
-
-.error-title {
-  background-color: #ffc2c2; }
 
 .infor {
   position: relative;

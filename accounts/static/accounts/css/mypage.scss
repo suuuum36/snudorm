@@ -315,6 +315,7 @@ textarea:focus::-webkit-input-placeholder {
             align-items: center;
             justify-content: center;
             min-height: 180px;
+            color: red;
         }
     }
 }
@@ -501,12 +502,6 @@ textarea:focus::-webkit-input-placeholder {
 // user_edit.html
 .building-edit {
     width: 168px !important;
-}
-
-
-// pw_error.html
-.error-title {
-    background-color: #ffc2c2;
 }
 
 // information 버튼
