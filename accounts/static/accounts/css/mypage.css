@@ -7,9 +7,6 @@ a {
 a:link, a:visited, a:hover, a:active {
   color: black; }
 
-a:link, a:visited, a:hover, a:active {
-  color: black; }
-
 input:focus::-webkit-input-placeholder,
 textarea:focus::-webkit-input-placeholder {
   color: transparent !important; }
@@ -66,7 +63,7 @@ textarea:focus::-webkit-input-placeholder {
       width: 584px;
       font-size: 20px;
       font-weight: 500;
-      border-bottom: 1px solid #919191;
+      border-bottom: 2px solid #919191;
       margin-left: -1px; }
       .form .info .title span {
         padding-left: 30px; }
