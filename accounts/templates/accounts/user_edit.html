@@ -25,7 +25,7 @@
                     <div class="container">
                         <div class="name">
                             <div class="field">
-                                <span>이름</span>
+                                <span>이름</span><span class="infor">i</span>
                             </div>
                             <div class="value">
                                 <input id="name" class="input-box" name="name" type="text" value="{{ user.profile.name }}" required>
@@ -33,7 +33,7 @@
                         </div>
                         <div class="id">
                             <div class="field">
-                                <span>아이디</span>
+                                <span>아이디</span><span class="infor">i</span>
                             </div>
                             <div class="value">
                                 <input class="input-box" id="no" name="user_id" type="text" placeholder="{{ user.username }}" readonly>
@@ -41,7 +41,7 @@
                         </div>
                         <div class="nk">
                             <div class="field">
-                                <span>닉네임</span>
+                                <span>닉네임</span><span class="infor">i</span>
                             </div>
                             <div class="value">
                                 <input id="nickname" class="input-box nickname" name="nickname" type="text" value="{{ user.profile.nickname }}" check_result="fail" required spellcheck="false">
@@ -53,7 +53,7 @@
                         </div>
                         <div class="email">
                             <div class="field">
-                                <span>이메일</span>
+                                <span>이메일</span><span class="infor">i</span>
                             </div>
                             <div class="value">
                                 <input id="email" class="input-box" name="email" type="text" value="{{ user.profile.email }}" spellcheck="false" required>

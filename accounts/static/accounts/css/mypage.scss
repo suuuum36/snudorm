@@ -27,7 +27,6 @@ textarea:focus::-webkit-input-placeholder {
 // mypage 배경색 설정
 .background {
     width: 100vw;
-    height: 100vh;
     margin: -100px auto 0 auto;
     background-color: $gray_background;
 }
@@ -505,4 +504,16 @@ textarea:focus::-webkit-input-placeholder {
 // pw_error.html
 .error-title {
     background-color: #ffc2c2;
+}
+
+// information 버튼
+.infor {
+    margin-left: 10px;
+    font-size: 7px;
+    cursor: pointer;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border: 1px solid #000000;
+    border-radius: 10px;
 }
