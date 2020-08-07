@@ -75,3 +75,10 @@ function validateForm(data) {
     // 모든 유효성 검사 통과 시 form 제출
     document.getElementById("submit").submit();
   };
+
+// information
+var infoPw = document.getElementById("alert-pw");
+
+infoPw.addEventListener("click", () => {
+  alert("영문, 숫자, 특수문자(~@^$!%*#?&)를 최소 한글자씩 포함한 8자 이상의 비밀번호를 입력해주세요.") 
+});

@@ -316,4 +316,18 @@ choose.forEach(x => {
 });
 
 
+// information alert
+var infoName = document.getElementById("alert-name");
+var infoNk = document.getElementById("alert-nk");
+var infoEmail = document.getElementById("alert-email");
+
+infoName.addEventListener("click", () => {
+  alert("4자 이내의 한글이름 또는 공백을 포함한 15자 이내의 영어이름을 입력해주세요.") 
+});
+infoNk.addEventListener("click", () => {
+  alert("한글, 영문 또는 숫자를 포함한 2-8자의 닉네임을 입력해 주세요.") 
+});
+infoEmail.addEventListener("click", () => {
+  alert("영문, 숫자 또는 특수문자(~@^$!%*#?&)를 포함한 2자 이상의 스누메일을 입력해주세요.") 
+});
 
