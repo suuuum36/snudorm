@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+{% load sass_tags %}
+<head>
+    <link rel="stylesheet" href="{% sass_src 'accounts/css/mypage.scss' %}">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="background">
+        <div class="form">
+            <div class="nav">
+                <div class="nav-title"><span>마이페이지</span></div>
+                <div class="nav-list"><a href="{% url 'userinfo' user.id %}">내 정보</a></div>
+                <div class="nav-list"><a href="{% url 'useredit' user.id %}">개인정보 변경</a></div>
+                <div class="nav-list"><a href="{% url 'passwordedit' user.id %}">비밀번호 변경</a></div>
+                <div class="nav-list"><a href="{% url 'usernotice' user.id %}">알림</a></div>
+                <div class="nav-list"><a href="{% url 'messagebox' user.id %}">쪽지함</a></div>
+            </div>
+            
+            <div class="notice-contents">
+                <div class="info">
+                    <div class="title">
+                        <span>알림</span>
+                        <span class="count">{{ count }}</span>
+                    </div>
+                        <div class="list">
+                            {% for notice in notices %}
+                                {% if notice.type_info1 == '쪽지' %}
+                                    <a href="{% url 'chatroom' notice.user_to.id notice.user_from.id%}">
+                                {% else %}
+                                    <a href="{% url 'showfeed' notice.feed.board notice.feed.category notice.feed.id %}">
+                                {% endif %}
+                                    <div class="notice-container">
+                                        <div class="left-content">
+                                            {% if notice.noname %}
+                                                익명의 회원님이
+                                            {% else %}
+                                                <span>{{ notice.user_from.profile.nickname }}</span>님이
+                                            {% endif %}
+                                            {% if notice.type_info1 == '쪽지' %}
+                                                회원님에게 쪽지를 보냈습니다.
+                                            {% else %}
+                                                회원님의 {{ notice.type_info1 }}에
+                                                {% if notice.type_info2 == '공감' %}
+                                                    {{ notice.type_info2 }}을 눌렀습니다.
+                                                {% else %}
+                                                    {{ notice.type_info2 }}을 달았습니다.
+                                                {% endif %}
+                                                </a>
+                                            {% endif %}
+                                        </div>
+                                    </div>               
+                            {% endfor %}
+                    </div>
+                </div> 
+                <div class="page_numbers" >
+                    {% if posts.has_previous %}
+                        <div class = "previous">
+                            <a href="?page={{posts.previous_page_number}}"> 이전 </a>
+                        </div> 
+                    {% endif %}
+                    {% for num in paginator_range %} 
+                        {% if posts.number == num %}
+                            <div class = "num1" >{{ num }}</div> 
+                        {% else %}
+                            <a href="?page={{num}}">
+                                <div class = "num2" >{{ num }}</div>
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                    {% if posts.has_next %}
+                        <div class = "next">
+                            <a href="?page={{posts.next_page_number}}"> 다음</a> 
+                        </div>
+                    {% endif %}
+                </div>     
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'accounts/js/user_notice.js' %}"></script> 
+</body>
+{% endblock content %}
