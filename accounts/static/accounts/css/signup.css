@@ -37,21 +37,21 @@ input:focus::-webkit-input-placeholder {
     .form .input-section .head {
       display: inline-block;
       width: 400px;
-      font-weight: bold;
+      font-weight: 600;
       font-size: 16px; }
     .form .input-section .description {
       display: inline-block;
       width: 400px;
       font-size: 12px;
       color: #7f7f7f;
-      font-weight: bold;
+      font-weight: 500;
       margin-top: 15px; }
     .form .input-section .input-value {
       height: 50px;
       border: 2px solid #b9b9b9;
       border-radius: 7px;
       padding-left: 20px;
-      font-weight: bold;
+      font-weight: 500;
       font-size: 14px;
       margin-top: 15px; }
     .form .input-section .input-value.long {
@@ -62,7 +62,7 @@ input:focus::-webkit-input-placeholder {
       box-shadow: 0 0 7px 0 #bfbfbf; }
     .form .input-section .input-value::placeholder {
       color: #b9b9b9;
-      font-weight: bold;
+      font-weight: 500;
       font-size: 14px; }
     .form .input-section .with-button {
       display: flex;
@@ -74,7 +74,7 @@ input:focus::-webkit-input-placeholder {
         background-color: #d6d6d6;
         color: #ffffff;
         cursor: pointer;
-        font-weight: bold;
+        font-weight: 600;
         font-size: 14px;
         margin-top: 15px;
         border: none; }
@@ -89,7 +89,7 @@ input:focus::-webkit-input-placeholder {
         border-radius: 30px;
         background-color: #016aff;
         color: #ffffff;
-        font-weight: bold;
+        font-weight: 600;
         margin-top: 15px;
         border: none; }
         .form .input-section .with-button #id-confirm span, .form .input-section .with-button #nk-confirm span {
@@ -100,7 +100,7 @@ input:focus::-webkit-input-placeholder {
           white-space: nowrap;
           font-size: 14px; }
     .form .input-section .snumail {
-      font-weight: bold; }
+      font-weight: 500; }
   .form .building {
     display: flex;
     flex-wrap: wrap;
@@ -168,7 +168,7 @@ input:focus::-webkit-input-placeholder {
         order: 0;
         height: 50px;
         line-height: 22px;
-        font-weight: bold;
+        font-weight: 500;
         font-size: 14px; }
       .form .building .building-category .selected-common::after, .form .building .building-default .selected-common::after, .form .building .building-bachelor .selected-common::after,
       .form .building .building-master .selected-common::after, .form .building .building-family .selected-common::after, .form .building .building-bk .selected-common::after {
@@ -188,7 +188,7 @@ input:focus::-webkit-input-placeholder {
         background-color: #ffffff;
         display: flex;
         align-items: center;
-        font-weight: bold; }
+        font-weight: 500; }
         .form .building .building-category .dropdown-option .radio, .form .building .building-default .dropdown-option .radio, .form .building .building-bachelor .dropdown-option .radio,
         .form .building .building-master .dropdown-option .radio, .form .building .building-family .dropdown-option .radio, .form .building .building-bk .dropdown-option .radio {
           display: none; }
@@ -210,7 +210,7 @@ input:focus::-webkit-input-placeholder {
       height: 70px;
       background-color: #ffca00;
       color: #ffffff;
-      font-weight: bold;
+      font-weight: 500;
       border-radius: 7px;
       cursor: pointer;
       border: none;

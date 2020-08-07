@@ -63,20 +63,20 @@
                         {% for message in messages|dictsort:'created_at' %}
                             {% if message.user_from.id == chat_from %}
                                 <div class = "send">
-                                    <div class = "chat_con">
-                                        <span>{{ message.content }}</span>
-                                    </div>
-                                    <div class = "chat_date">
+                                    <div class = "chat_date left-margin">
                                         <span>{{ message.created_at|date:"y.m.d f" }}</span>
+                                    </div>
+                                    <div class = "chat_con se right-margin">
+                                        <span>{{ message.content }}</span>
                                     </div>
                                 </div>
                             {% else %}
                                 <div class = "receive">
-                                    <div class = "chat_date">
-                                        <span>{{ message.created_at|date:"y.m.d f" }}</span>
-                                    </div>
-                                    <div class = "chat_con re">    
+                                    <div class = "chat_con left-margin">    
                                         <span>{{ message.content }}</span>
+                                    </div>
+                                    <div class = "chat_date right-margin">
+                                        <span>{{ message.created_at|date:"y.m.d f" }}</span>
                                     </div>
                                 </div>
                             {% endif %}

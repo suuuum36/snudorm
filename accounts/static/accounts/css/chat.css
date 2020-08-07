@@ -103,8 +103,8 @@ input:focus::-webkit-input-placeholder {
         justify-content: space-between;
         min-height: 60px;
         max-height: 250px;
-        padding: 0 30px;
-        border-bottom: 1px solid #d3d3d3; }
+        border-bottom: 1px solid #d3d3d3;
+        margin-left: 18px; }
       .form .chatroom .chat .send:last-child {
         border-bottom: none; }
       .form .chatroom .chat .chat_date {
@@ -117,7 +117,11 @@ input:focus::-webkit-input-placeholder {
           display: inline-block;
           max-width: 400px;
           line-height: 2; }
-      .form .chatroom .chat .chat_con.re {
+      .form .chatroom .chat .left-margin {
+        margin-left: 15px; }
+      .form .chatroom .chat .right-margin {
+        margin-right: 15px; }
+      .form .chatroom .chat .chat_con.se {
         color: #016aff; }
     .form .chatroom .chat::-webkit-scrollbar {
       background-color: #ffffff;
@@ -143,11 +147,14 @@ input:focus::-webkit-input-placeholder {
           height: 59px;
           border: none;
           font-size: 15px; }
+        .form .chatroom .sending .typing .sendbox::placeholder {
+          font-weight: 500; }
         .form .chatroom .sending .typing button {
           color: #016aff;
           border: none;
           background: none;
           padding: 0 20px;
-          cursor: pointer; }
+          cursor: pointer;
+          font-weight: 500; }
 
 /*# sourceMappingURL=chat.css.map */
