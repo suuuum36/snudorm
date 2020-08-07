@@ -22,6 +22,10 @@ a {
    text-decoration: none;
 }
 
+a:link, a:visited, a:hover, a:active {
+	color: black;
+}
+
 input, button {
 	outline-style: none;
 }
