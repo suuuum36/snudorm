@@ -57,6 +57,7 @@ def get_feed(board, category):
 
 def get_pages(feeds, request):
     # 전체글 버튼
+    feeds = feeds.order_by('-created_at')
     paginator = Paginator(feeds, 11)
     page = request.GET.get('page')
     posts = paginator.get_page(page)
@@ -559,7 +560,8 @@ def search(request):
         elif search_option == 'content':
             feeds = Feed.objects.all().filter(content__contains = query).order_by('-created_at')
         elif search_option == 'title-and-content':
-            feeds = Feed.objects.all().filter(title__contains = query, content__contains = query).order_by('-created_at')
+            feeds = (Feed.objects.filter(title__contains = query)|
+                    Feed.objects.filter(content__contains = query)).order_by('-created_at')
         
         board_name = '제목 검색 결과' if search_option == 'title' else \
                     ('내용 검색 결과' if search_option == 'content' else 
@@ -583,7 +585,8 @@ def searchMore(request, board, category):
     elif search_option == 'content':
         feeds = feeds.filter(content__contains = query).order_by('-created_at')
     elif search_option == 'title-and-content':
-        feeds = feeds.filter(title__contains = query)|feeds.filter(content__contains = query).order_by('-created_at')
+        feeds = (feeds.filter(title__contains = query)|
+                feeds.filter(content__contains = query)).order_by('-created_at')
     
     board_name = '제목 검색 결과' if search_option == 'title' else \
                  ('내용 검색 결과' if search_option == 'content' else 
