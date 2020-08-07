@@ -129,7 +129,6 @@ function validateForm() {
     },
     datatype: 'json',
     success: function (data) {
-      console.log(data)
       if (data['pwcheck'] == "false") {
         alert("현재 비밀번호를 확인해 주세요!");
         pwInput.focus();
@@ -138,7 +137,14 @@ function validateForm() {
         return true;
       }
     }
-  })    
+  })
+
+  var cateWhere = document.getElementsByName("building_category").length
+  var dongWhere = document.getElementsByName("building_dong").length
+  if (cateWhere != 1 || dongWhere !=1) {
+    alert("생활관 및 동을 선택해주세요.")
+    return false;
+  }
   
   // 모든 유효성 검사 통과 시 form 제출
   document.getElementById("submit").submit();
@@ -218,7 +224,6 @@ bachelorSelected.addEventListener("click", () => {
 
 bachelorOptions.forEach(d => {
   d.addEventListener("click", () => {
-    bachelorSelected.style.color = "#000";
     bachelorSelected.innerHTML = d.querySelector("label").innerHTML;
     bachelorContainer.classList.remove("active");
   });
@@ -235,7 +240,6 @@ masterSelected.addEventListener("click", () => {
 
 masterOptions.forEach(d => {
   d.addEventListener("click", () => {
-    masterSelected.style.color = "#000";
     masterSelected.innerHTML = d.querySelector("label").innerHTML;
     masterContainer.classList.remove("active");
   });
@@ -261,7 +265,6 @@ bkSelected.addEventListener("click", () => {
 
 bkOptions.forEach(d => {
   d.addEventListener("click", () => {
-    bkSelected.style.color = "#000";
     bkSelected.innerHTML = d.querySelector("label").innerHTML;
     bkContainer.classList.remove("active");
   });
@@ -271,14 +274,12 @@ bkOptions.forEach(d => {
 // 옵션 선택시 toggle을 통해 옵션 숨기기
 categoryOptions.forEach(o => {
   o.addEventListener("click", () => {
-    selected.style.color = "#000";
     selected.innerHTML = o.querySelector("label").innerHTML;
     categoryContainer.classList.remove("active");
         
     var opt = o.firstElementChild;
     var cateName = document.getElementsByName("building_category");
     if (cateName.length == 1) {
-      console.log(cateName);
       cateName[0].removeAttribute("name");
     };
     opt.setAttribute("name", "building_category");
@@ -294,7 +295,6 @@ categoryOptions.forEach(o => {
       defaultOpt.className='remove';
       bachelorOpt.className='building-bachelor';
       bachelorSelected.innerHTML='동';
-      bachelorSelected.style.color='#b9b9b9'
       masterOpt.className='remove';
       familyOpt.className='remove';
       bkOpt.className='remove';
@@ -303,7 +303,6 @@ categoryOptions.forEach(o => {
       bachelorOpt.className='remove';
       masterOpt.className='building-master';
       masterSelected.innerHTML='동';
-      masterSelected.style.color='#b9b9b9'
       familyOpt.className='remove';
       bkOpt.className='remove';
     } else if (dorm == "가족생활관") {
@@ -312,7 +311,6 @@ categoryOptions.forEach(o => {
       masterOpt.className='remove';
       familyOpt.className='building-family';
       familySelected.innerHTML='동';
-      familySelected.style.color='#b9b9b9'
       bkOpt.className='remove';
     } else if (dorm == "BK생활관") {
       defaultOpt.className='remove';
@@ -321,7 +319,6 @@ categoryOptions.forEach(o => {
       familyOpt.className='remove';
       bkOpt.className='building-bk';
       bkSelected.innerHTML='동';
-      bkSelected.style.color='#b9b9b9'
     };
   });
 });

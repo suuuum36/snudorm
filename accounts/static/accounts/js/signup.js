@@ -164,9 +164,17 @@ function validateForm() {
     return false;
   };
 
+  var cateWhere = document.getElementsByName("building_category").length
+  var dongWhere = document.getElementsByName("building_dong").length
+  if (cateWhere != 1 || dongWhere !=1) {
+    alert("생활관 및 동을 선택해주세요.")
+    return false;
+  }
+
   // 모든 유효성 검사 통과 시 form 제출
   document.getElementById("submit").submit();
 };
+
 
 // regex 검증을 위한 tool fucntion
 function regexCheck(regex, what, message) {
@@ -292,7 +300,6 @@ categoryOptions.forEach(o => {
     var opt = o.firstElementChild;
     var cateName = document.getElementsByName("building_category");
     if (cateName.length == 1) {
-      console.log(cateName);
       cateName[0].removeAttribute("name");
     };
     opt.setAttribute("name", "building_category");
