@@ -147,19 +147,20 @@ textarea:focus::-webkit-input-placeholder {
             border-style: none none solid none;
             border-color: #b9b9b9;
             height: 30px; }
-    .form .info .edit button {
-      width: 584px;
+    .form .info .edit input, .form .info .edit button {
+      width: 583px;
       border: 1px solid #016aff;
       background-color: #016aff;
-      margin-bottom: -1px;
-      margin-left: -1px;
       height: 60px;
       color: #ffffff;
       font-weight: 500;
       font-size: 18px;
       cursor: pointer;
       margin-top: 10px;
-      outline-style: none; }
+      outline-style: none;
+      border-radius: 0px !important; }
+    .form .info .edit .pw-button {
+      margin-top: 40px !important; }
     .form .info .list {
       margin-left: -1px; }
       .form .info .list a {
@@ -192,6 +193,11 @@ textarea:focus::-webkit-input-placeholder {
           color: #7f7f7f !important; }
         .form .info .list .notice-container .check-count {
           display: none; }
+    .form .info .pw-error {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 180px; }
 
 .page_numbers {
   display: flex;
@@ -259,7 +265,7 @@ textarea:focus::-webkit-input-placeholder {
     .building .building-category .dropdown-container.active + .selected-common::after, .building .building-default .dropdown-container.active + .selected-common::after, .building .building-bachelor .dropdown-container.active + .selected-common::after,
     .building .building-master .dropdown-container.active + .selected-common::after, .building .building-family .dropdown-container.active + .selected-common::after, .building .building-bk .dropdown-container.active + .selected-common::after {
       transform: rotateX(180deg);
-      top: -15px; }
+      top: -17px; }
     .building .building-category .dropdown-container::-webkit-scrollbar, .building .building-default .dropdown-container::-webkit-scrollbar, .building .building-bachelor .dropdown-container::-webkit-scrollbar,
     .building .building-master .dropdown-container::-webkit-scrollbar, .building .building-family .dropdown-container::-webkit-scrollbar, .building .building-bk .dropdown-container::-webkit-scrollbar {
       width: 8px;
@@ -292,7 +298,7 @@ textarea:focus::-webkit-input-placeholder {
       height: 100%;
       width: 20px;
       right: 18px;
-      top: 13px;
+      top: 15px;
       transition: all 0.4s; }
     .building .building-category .dropdown-option, .building .building-default .dropdown-option, .building .building-bachelor .dropdown-option,
     .building .building-master .dropdown-option, .building .building-family .dropdown-option, .building .building-bk .dropdown-option {
@@ -319,6 +325,9 @@ textarea:focus::-webkit-input-placeholder {
 
 .building.building-info {
   flex-wrap: nowrap !important; }
+
+.building-edit {
+  width: 168px !important; }
 
 .error-title {
   background-color: #ffc2c2; }

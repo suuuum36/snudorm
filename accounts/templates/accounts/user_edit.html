@@ -20,7 +20,7 @@
                 <div class="title">
                     <span>개인정보 변경</span>
                 </div>
-                <form method="POST" action="{% url 'useredit' user.id %}">
+                <form method="POST" action="{% url 'useredit' user.id %}" id="submit">
                     {% csrf_token %}
                     <div class="container">
                         <div class="name">
@@ -28,7 +28,7 @@
                                 <span>이름</span>
                             </div>
                             <div class="value">
-                                <input class="input-box" name="name" type="text" value="{{ user.profile.name }}" required>
+                                <input id="name" class="input-box" name="name" type="text" value="{{ user.profile.name }}" required>
                             </div>
                         </div>
                         <div class="id">
@@ -44,7 +44,7 @@
                                 <span>닉네임</span>
                             </div>
                             <div class="value">
-                                <input id="nickname" class="input-box nickname" name="nickname" type="text" value="{{ user.profile.nickname }}" check_result="fail" required>
+                                <input id="nickname" class="input-box nickname" name="nickname" type="text" value="{{ user.profile.nickname }}" check_result="fail" required spellcheck="false">
                             </div>
                             <button class="nk-check" type="button" onclick="nk_db_check()">중복확인</button>
                             <div id="nk-confirm" class="available-2 check-confirm">
@@ -56,7 +56,7 @@
                                 <span>이메일</span>
                             </div>
                             <div class="value">
-                                <input class="input-box" name="email" type="text" value="{{ user.profile.email }}" spellcheck="false" required>
+                                <input id="email" class="input-box" name="email" type="text" value="{{ user.profile.email }}" spellcheck="false" required>
                                 <span class="mail">@ snu.ac.kr</span>
                             </div>
                         </div>
@@ -70,19 +70,19 @@
                                         <div class="category-container dropdown-container">
                                             <div class="category-option dropdown-option">
                                                 <input type="radio" class="radio" id="bachelor" value="학부생활관">
-                                                <label for="bachelor">학부생활관</label>
+                                                <label class="building-edit" for="bachelor">학부생활관</label>
                                             </div>
                                             <div class="category-option dropdown-option">
                                                 <input type="radio" class="radio" id="master" value="대학원생활관">
-                                                <label for="master">대학원생활관</label>
+                                                <label class="building-edit" for="master">대학원생활관</label>
                                             </div>
                                             <div class="category-option dropdown-option">
                                                 <input type="radio" class="radio" id="family" value="가족생활관">
-                                                <label for="family">가족생활관</label>
+                                                <label class="building-edit" for="family">가족생활관</label>
                                             </div>
                                             <div class="category-option dropdown-option">
                                                 <input type="radio" class="radio" id="bk" value="BK생활관">
-                                                <label for="bk">BK생활관</label>
+                                                <label class="building-edit" for="bk">BK생활관</label>
                                             </div>
                                             
                                         </div>
@@ -94,7 +94,7 @@
                                         <div class="default-container dropdown-container">
                                             <div class="default-option dropdown-option">
                                                 <input type="radio" class="radio" id="default" value="default">
-                                                <label for="default">생활관을 선택해주세요</label>
+                                                <label class="building-edit" for="default">생활관을 선택해주세요</label>
                                             </div>
                                         </div>
                                         <div class="selected-default selected-common">
@@ -105,51 +105,51 @@
                                         <div class="bachelor-container dropdown-container">
                                             <div class="bachelor-option dropdown-option dong-option">
                                                 <input type="radio" class="radio" id="906" value="906동">
-                                                <label for="906">906동</label>
+                                                <label class="building-edit" for="906">906동</label>
                                             </div>
                                             <div class="bachelor-option dropdown-option dong-option">
                                                 <input type="radio" class="radio" id="915" value="915동">
-                                                <label for="915">915동</label>
+                                                <label class="building-edit" for="915">915동</label>
                                             </div>
                                             <div class="bachelor-option dropdown-option dong-option">
                                                 <input type="radio" class="radio" id="919A" value="919A동">
-                                                <label for="919A">919A동</label>
+                                                <label class="building-edit" for="919A">919A동</label>
                                             </div>
                                             <div class="bachelor-option dropdown-option dong-option">
                                                 <input type="radio" class="radio" id="919B" value="919B동">
-                                                <label for="919B">919B동</label>
+                                                <label class="building-edit" for="919B">919B동</label>
                                             </div>
                                             <div class="bachelor-option dropdown-option dong-option">
                                                 <input type="radio" class="radio" id="919C" value="919C동">
-                                                <label for="919C">919C동</label>
+                                                <label class="building-edit" for="919C">919C동</label>
                                             </div>
                                             <div class="bachelor-option dropdown-option dong-option">
                                                 <input type="radio" class="radio" id="919D" value="919D동">
-                                                <label for="919D">919D동</label>
+                                                <label class="building-edit" for="919D">919D동</label>
                                             </div>
                                             <div class="bachelor-option dropdown-option dong-option">
                                                 <input type="radio" class="radio" id="921" value="921동">
-                                                <label for="921">921동</label>
+                                                <label class="building-edit" for="921">921동</label>
                                             </div>
                                             <div class="bachelor-option dropdown-option dong-option">
                                                 <input type="radio" class="radio" id="922" value="922동">
-                                                <label for="922">922동</label>
+                                                <label class="building-edit" for="922">922동</label>
                                             </div>
                                             <div class="bachelor-option dropdown-option dong-option">
                                                 <input type="radio" class="radio" id="923" value="923동">
-                                                <label for="923">923동</label>
+                                                <label class="building-edit" for="923">923동</label>
                                             </div>
                                             <div class="bachelor-option dropdown-option dong-option">
                                                 <input type="radio" class="radio" id="924" value="924동">
-                                                <label for="924">924동</label>
+                                                <label class="building-edit" for="924">924동</label>
                                             </div>
                                             <div class="bachelor-option dropdown-option dong-option">
                                                 <input type="radio" class="radio" id="925" value="925동">
-                                                <label for="925">925동</label>
+                                                <label class="building-edit" for="925">925동</label>
                                             </div>
                                             <div class="bachelor-option dropdown-option dong-option">
                                                 <input type="radio" class="radio" id="926" value="926동">
-                                                <label for="926">926동</label>
+                                                <label class="building-edit" for="926">926동</label>
                                             </div>
                                         </div>
                                         <div class="selected-bachelor selected-common">
@@ -160,35 +160,35 @@
                                         <div class="master-container dropdown-container">
                                             <div class="master-option dropdown-option dong-option">
                                                 <input type="radio" class="radio" id="900" value="900동">
-                                                <label for="900">900동</label>
+                                                <label class="building-edit" for="900">900동</label>
                                             </div>
                                             <div class="master-option dropdown-option dong-option">
                                                 <input type="radio" class="radio" id="901" value="901동">
-                                                <label for="901">901동</label>
+                                                <label class="building-edit" for="901">901동</label>
                                             </div>
                                             <div class="master-option dropdown-option dong-option">
                                                 <input type="radio" class="radio" id="902" value="902동">
-                                                <label for="902">902동</label>
+                                                <label class="building-edit" for="902">902동</label>
                                             </div>
                                             <div class="master-option dropdown-option dong-option">
                                                 <input type="radio" class="radio" id="903" value="903동">
-                                                <label for="903">903동</label>
+                                                <label class="building-edit" for="903">903동</label>
                                             </div>
                                             <div class="master-option dropdown-option dong-option">
                                                 <input type="radio" class="radio" id="904" value="904동">
-                                                <label for="904">904동</label>
+                                                <label class="building-edit" for="904">904동</label>
                                             </div>
                                             <div class="master-option dropdown-option dong-option">
                                                 <input type="radio" class="radio" id="905" value="905동">
-                                                <label for="905">905동</label>
+                                                <label class="building-edit" for="905">905동</label>
                                             </div>
                                             <div class="master-option dropdown-option dong-option">
                                                 <input type="radio" class="radio" id="917" value="917동">
-                                                <label for="917">917동</label>
+                                                <label class="building-edit" for="917">917동</label>
                                             </div>
                                             <div class="master-option dropdown-option dong-option">
                                                 <input type="radio" class="radio" id="918" value="918동">
-                                                <label for="918">918동</label>
+                                                <label class="building-edit" for="918">918동</label>
                                             </div>
                                         </div>
                                         <div class="selected-master selected-common">
@@ -199,23 +199,23 @@
                                         <div class="family-container dropdown-container">
                                             <div class="family-option dropdown-option dong-option">
                                                 <input type="radio" class="radio" id="931" value="931동">
-                                                <label for="931">931동</label>
+                                                <label class="building-edit" for="931">931동</label>
                                             </div>
                                             <div class="family-option dropdown-option dong-option">
                                                 <input type="radio" class="radio" id="932" value="932동">
-                                                <label for="932">932동</label>
+                                                <label class="building-edit" for="932">932동</label>
                                             </div>
                                             <div class="family-option dropdown-option dong-option">
                                                 <input type="radio" class="radio" id="933" value="933동">
-                                                <label for="933">933동</label>
+                                                <label class="building-edit" for="933">933동</label>
                                             </div>
                                             <div class="family-option dropdown-option dong-option">
                                                 <input type="radio" class="radio" id="934" value="934동">
-                                                <label for="934">934동</label>
+                                                <label class="building-edit" for="934">934동</label>
                                             </div>
                                             <div class="family-option dropdown-option dong-option">
                                                 <input type="radio" class="radio" id="935" value="935동">
-                                                <label for="935">935동</label>
+                                                <label class="building-edit" for="935">935동</label>
                                             </div>
                                         </div>
                                         <div class="selected-family selected-common">
@@ -226,11 +226,11 @@
                                         <div class="bk-container dropdown-container">
                                             <div class="bk-option dropdown-option dong-option">
                                                 <input type="radio" class="radio" id="946A" value="946A동">
-                                                <label for="946A">946A동</label>
+                                                <label class="building-edit" for="946A">946A동</label>
                                             </div>
                                             <div class="bk-option dropdown-option dong-option">
                                                 <input type="radio" class="radio" id="946B" value="946B동">
-                                                <label for="946B">946B동</label>
+                                                <label class="building-edit" for="946B">946B동</label>
                                             </div>
                                         </div>
                                         <div class="selected-bk selected-common">
@@ -245,12 +245,12 @@
                                 <span>현재 비밀번호</span>
                             </div>  
                             <div class="value">
-                                <input class="input-box" name="origin_password" type="password" required>
+                                <input id="pw" class="input-box" name="origin_password" type="password" required>
                             </div>
                         </div>
                     </div>  
                     <div class="edit">
-                        <button type="submit">개인정보 변경</button>
+                        <input type="button" class="signup" onclick="validateForm()" value="개인정보 변경">
                     </div>   
                 </form>
             </div>
