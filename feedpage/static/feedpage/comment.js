@@ -427,6 +427,7 @@ $(document).on('click', '.editcommentform', function(e) {
 $(document).on('click', '.editrecommentform', function(e) {
     console.log('form submitted')
     const $this = $(e.currentTarget);
+    $this.parent().parent().parent().css('background-color','#F2F6FE');
     $this.parent().parent().siblings('.recomment-edit').removeAttr('style');
     $this.parent().parent().remove();
 })
@@ -597,7 +598,7 @@ $(document).on('submit', '.recomment-edit', function(e) {
                     </form>
                 </div>
                     `;
-
+            $this.parent().parent().css('background-color','')
             $(str).insertBefore($this.parent());
             $this.parent().remove();
             

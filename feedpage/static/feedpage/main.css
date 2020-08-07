@@ -141,7 +141,7 @@ a {text-decoration-line:none}
     justify-content: center;
 }
 
-.signup > a {
+.signup > div {
     font-size: 15px;
     color: white;
     margin-top: auto;
