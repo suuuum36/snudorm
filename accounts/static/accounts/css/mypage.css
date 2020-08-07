@@ -7,18 +7,15 @@ a {
 a:link, a:visited, a:hover, a:active {
   color: black; }
 
-a:link, a:visited, a:hover, a:active {
-  color: black; }
-
 input:focus::-webkit-input-placeholder,
 textarea:focus::-webkit-input-placeholder {
   color: transparent !important; }
 
 .background {
   width: 100vw;
-  height: 100vh;
   margin: -100px auto 0 auto;
-  background-color: #ececec; }
+  background-color: #ececec;
+  height: 100vh; }
 
 .form {
   display: flex;
@@ -66,7 +63,7 @@ textarea:focus::-webkit-input-placeholder {
       width: 584px;
       font-size: 20px;
       font-weight: 500;
-      border-bottom: 1px solid #919191;
+      border-bottom: 2px solid #919191;
       margin-left: -1px; }
       .form .info .title span {
         padding-left: 30px; }
@@ -139,6 +136,8 @@ textarea:focus::-webkit-input-placeholder {
             white-space: nowrap;
             font-size: 14px; }
         .form .info .container .name .pw-field, .form .info .container .id .pw-field, .form .info .container .nk .pw-field, .form .info .container .email .pw-field, .form .info .container .building .pw-field, .form .info .container .password .pw-field {
+          display: flex;
+          align-items: center;
           width: 250px;
           padding-left: 30px; }
         .form .info .container .name .pw-value, .form .info .container .id .pw-value, .form .info .container .nk .pw-value, .form .info .container .email .pw-value, .form .info .container .building .pw-value, .form .info .container .password .pw-value {
@@ -331,5 +330,20 @@ textarea:focus::-webkit-input-placeholder {
 
 .error-title {
   background-color: #ffc2c2; }
+
+.infor {
+  position: relative;
+  margin-left: 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  margin-bottom: -1px; }
+  .infor span {
+    font-size: 12px; }
 
 /*# sourceMappingURL=mypage.css.map */

@@ -38,13 +38,13 @@
         {% endif %}
         <div class = "i-title">제목</div>
         <div class = "i-author">작성자</div> 
-        <div class = "i-date">날짜</div> 
-        <div class = "i-views">조회수</div> 
+        <div class = "i-date">날짜</div>
+        <div class = "i-views">조회수</div>  
         <div class = "i-likes">추천수</div> 
     </div> 
 
     <div class = "just-content">
-    <!-- All 리스트 -->
+        <!-- All 리스트 -->
         <div id="show_normal_lists" >
             {% for feed in posts %}
                 <!-- 공지사항 list  -->
@@ -223,7 +223,6 @@
                     {% if posts.number == num %}
                         <div class = "num1" >{{ num }}</div> 
                     {% else %}
-                        <!-- 수민님 a href를 빼면 css 잘 작동합니다. -->
                         {% if search == 'all' %}
                             <a href="?page={{num}}&select-option={{option}}&query={{query}}">
                                 <div class = "num2" >{{ num }}</div>
@@ -415,11 +414,10 @@
                         <a href="?best_page={{best_posts.previous_page_number}}">이전</a> 
                     </div>
                 {% endif %}
-                {% for num in paginator_range %} 
+                {% for num in paginator_range2 %} 
                     {% if best_posts.number == num %}
                         <div class = "num3">{{ num }}</div> 
                     {% else %}
-                        <!-- 수민님 a href를 빼면 css 잘 작동합니다. -->
                         <a href="?best_page={{num}}">
                             <div class = "num4">{{ num }}</div>
                         </a>
@@ -434,5 +432,5 @@
         </div>
     </div>
 </div>
-<script src="{% static 'feedpage/showboard.js' %}"></script>
+    <script src="{% static 'feedpage/show.js' %}"></script>
 {% endblock content %}

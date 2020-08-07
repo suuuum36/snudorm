@@ -1,142 +1,153 @@
-.main_message {
-    display: flex;
-    width: 70%;
-    height: 600px;
-    margin: auto;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Noto Sans KR', sans-serif; }
 
+body {
+  line-height: 1; }
 
-    
+a {
+  text-decoration: none; }
 
-    
+a:link, a:visited, a:hover, a:active {
+  color: black; }
 
-}
+input, button {
+  outline-style: none; }
 
-.left-side, .right-side {
-    align-items: stretch;
+input:focus::-webkit-input-placeholder {
+  color: transparent; }
 
-    
-}
+.background {
+  width: 100vw;
+  margin: -100px auto 0 auto;
+  background-color: #ececec; }
 
-.left-side {
-    width: 40%;
-}
+.form {
+  display: flex;
+  justify-content: center;
+  padding: 50px 0; }
+  .form .nav {
+    width: 300px;
+    border: 1px solid #d3d3d3;
+    min-height: 660px;
+    background-color: #ffffff; }
+    .form .nav .title {
+      display: flex;
+      align-items: center;
+      height: 60px;
+      padding-left: 30px;
+      font-size: 20px;
+      font-weight: 500;
+      border-bottom: 2px solid #919191; }
+    .form .nav .list a {
+      display: inline-block;
+      width: 300px;
+      height: 90px; }
+    .form .nav .list a:hover {
+      background-color: #ebf6ff; }
+    .form .nav .list .msg {
+      height: 90px;
+      width: 300px;
+      padding: 20px 20px 20px 20px; }
+      .form .nav .list .msg .top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 25px; }
+        .form .nav .list .msg .top .nickname {
+          font-size: 16px;
+          font-weight: 500; }
+        .form .nav .list .msg .top .date {
+          font-size: 13px;
+          color: #7f7f7f; }
+      .form .nav .list .msg .contents {
+        display: flex;
+        align-items: center;
+        height: 25px;
+        font-size: 15px; }
+        .form .nav .list .msg .contents span {
+          display: inline-block;
+          width: 260px;
+          color: #585858;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden; }
+  .form .chatroom {
+    width: 595px;
+    border: 1px solid #d3d3d3;
+    margin-left: -1px;
+    min-height: 660px;
+    background-color: #ffffff; }
+    .form .chatroom .container {
+      height: 600px; }
+    .form .chatroom .headline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 30px;
+      height: 60px;
+      font-size: 20px;
+      font-weight: 500; }
+      .form .chatroom .headline button {
+        background-color: #ffffff;
+        border: none;
+        color: #585858; }
+    .form .chatroom .chat {
+      height: 540px;
+      overflow-y: scroll; }
+      .form .chatroom .chat .send, .form .chatroom .chat .receive {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 60px;
+        max-height: 250px;
+        padding: 0 30px;
+        border-bottom: 1px solid #d3d3d3; }
+      .form .chatroom .chat .send:last-child {
+        border-bottom: none; }
+      .form .chatroom .chat .chat_date {
+        font-size: 13px;
+        color: #7f7f7f; }
+      .form .chatroom .chat .chat_con {
+        font-size: 15px;
+        font-weight: 500; }
+        .form .chatroom .chat .chat_con span {
+          display: inline-block;
+          max-width: 400px;
+          line-height: 2; }
+      .form .chatroom .chat .chat_con.re {
+        color: #016aff; }
+    .form .chatroom .chat::-webkit-scrollbar {
+      background-color: #ffffff;
+      margin-right: -1px; }
+    .form .chatroom .chat::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background-color: #d3d3d3;
+      height: 5px;
+      margin-right: -1px; }
+    .form .chatroom .sending {
+      display: flex;
+      align-items: center;
+      height: 60px;
+      border-top: 1px solid #d3d3d3; }
+      .form .chatroom .sending .typing {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 595px; }
+        .form .chatroom .sending .typing .sendbox {
+          width: 530px;
+          padding-left: 20px;
+          height: 59px;
+          border: none;
+          font-size: 15px; }
+        .form .chatroom .sending .typing button {
+          color: #016aff;
+          border: none;
+          background: none;
+          padding: 0 20px;
+          cursor: pointer; }
 
-.right-side {
-    width: 60%;
-}
-
-.msg_main {
-    text-align: center;
-    border-bottom: solid 1px lightgray;
-    height: 10%;
-  
-}
-
-.text{
-    font-size: large;
-    text-align: center;
-    margin-top: 20%;
-    margin-bottom: 20%;
-
-}
-
-.message_lists {
-    height: 90%;
-}
-
-.message {
-    
-    height: 15%;
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-start;
-    
-}
-
-
-
-.dates {
-    font-size: smaller;
-}
-
-.border_needed {
-    border: solid 1px lightgray;
-    border-collapse: collapse;
-
-}
-
-
-
-.nickname {
-    color: black;
-}
-
-.contents {
-    color: gray;
-
-}
-
-.dates {
-    color: lightgray;
-}
-
-/* 이곳부터는 chatroom.html을 위한 css 입니다. */
-.sender_id{
-    height: 15%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    
-}
-
-.friendname {
-    font-size: large;
-}
-
-.chat_date{
-    font-size: x-small;
-    color: gray;
-}
-.send{
-    text-align: left ;
-    height: 10%;
-    display: flex;
-    justify-content: space-around;
-    border-bottom: solid 0.7px lightgray;
-    align-items: center;
-
-}
-
-.recieve {
-    text-align: right ;
-    justify-content: space-around;
-    height: 10%;
-    display: flex;
-    border-bottom: solid 0.7px lightgray;
-    align-items: center;
-
-}
-
-.sending {
-    height: 15%;
-
-
-}
-
-.typing {
-    display: flex;
-    justify-content: space-between;
-}
-
-.chatroom {
-    height: 70%;
-   
-}
-
-.send .chat_con {
-    color: #008cff;
-}
- 
-.sendbox {
-    border: none;
-}
+/*# sourceMappingURL=chat.css.map */

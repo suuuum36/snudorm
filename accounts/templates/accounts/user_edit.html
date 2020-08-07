@@ -25,7 +25,7 @@
                     <div class="container">
                         <div class="name">
                             <div class="field">
-                                <span>이름</span>
+                                <span>이름</span><div id="alert-name" class="infor"><span>i</span></div>
                             </div>
                             <div class="value">
                                 <input id="name" class="input-box" name="name" type="text" value="{{ user.profile.name }}" required>
@@ -41,7 +41,7 @@
                         </div>
                         <div class="nk">
                             <div class="field">
-                                <span>닉네임</span>
+                                <span>닉네임</span><div id="alert-nk" class="infor"><span>i</span></div>
                             </div>
                             <div class="value">
                                 <input id="nickname" class="input-box nickname" name="nickname" type="text" value="{{ user.profile.nickname }}" check_result="fail" required spellcheck="false">
@@ -53,7 +53,7 @@
                         </div>
                         <div class="email">
                             <div class="field">
-                                <span>이메일</span>
+                                <span>이메일</span><div id="alert-email" class="infor"><span>i</span></div>
                             </div>
                             <div class="value">
                                 <input id="email" class="input-box" name="email" type="text" value="{{ user.profile.email }}" spellcheck="false" required>
@@ -250,7 +250,7 @@
                         </div>
                     </div>  
                     <div class="edit">
-                        <input type="button" class="signup" onclick="validateForm()" value="개인정보 변경">
+                        <input type="button" class="signup" onclick="validateForm(this)" data-csrfmiddlewaretoken="{{ csrf_token }}" value="개인정보 변경">
                     </div>   
                 </form>
             </div>

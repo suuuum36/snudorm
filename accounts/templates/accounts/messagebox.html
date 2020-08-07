@@ -1,38 +1,62 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
+{% load sass_tags %}
 
-<head><link rel="stylesheet" href="{% static 'accounts/css/chat.css' %}"></head>
-    <div class = "main_message">
-        <div class = "border_needed left-side">
+<head>
+    <link rel="stylesheet" href="{% sass_src 'accounts/css/chat.scss' %}">
+</head>
+<body> 
+    <div class="background">
+        <div class="form">
+            <div class="nav"> <!-- 페이지 좌측에 현재 대화중인 목록 나타내는 부분-->
+                <div class="title">
+                    <span>쪽지함</span>
+                </div>
+                <div class="list">
+                    {% for lastmessage in lastmessages %}
+                        {% if lastmessage.user_to.id == id %}
+                            <a  href="{% url 'chatroom' id lastmessage.user_from.id %}">
+                                <div  class = "msg">
+                                    <div class="top">
+                                        <div class = "nickname">
+                                            <span>{{ lastmessage.user_from.profile.nickname }}</span>
+                                        </div>
+                                        <div class = "date">
+                                            <span>{{ lastmessage.created_at|date:"y.m.d" }}</span>
+                                        </div>
+                                    </div>
+                                    <div class = "contents">
+                                        <span>{{ lastmessage.content }}</span>
+                                    </div>
+                                </div>
+                            </a>
+                        {% else %}
+                            <a  href="{% url 'chatroom' id lastmessage.user_to.id %}">
+                                <div  class = "msg">
+                                    <div class="top">
+                                        <div class = "nickname">
+                                            <span>{{ lastmessage.user_to.profile.nickname }}</span>
+                                        </div>
+                                        <div class = "date">
+                                            <span>{{ lastmessage.created_at|date:"y.m.d" }}</span>
+                                        </div>
+                                    </div>
+                                    <div class = "contents">
+                                        <span>{{ lastmessage.content }}</span>
+                                    </div>
+                                </div>
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="chatroom"> <!-- 페이지 우측 메시지 내용 -->
 
-            <div class = "msg_main"><span class ='text'>쪽지함</div>
-            <div class = "message_lists">
-            <!-- 페이지 좌측에 현재 대화중인 목록 나타내는 부분-->
-            {% for lastmessage in lastmessages %}
-                {% if lastmessage.user_to.id == id %}
-                    <a  href="{% url 'chatroom' id lastmessage.user_from.id %}">
-                        <div  class = "message">
-                            <div>
-                            <div class = "nickname">{{ lastmessage.user_from.profile.nickname }}</div><div class = "contents">{{ lastmessage.content }}</div></div>
-                            <div class = "dates">{{ lastmessage.created_at|date:"y.m.d" }}</div>
-                        </div>
-                    </a>
-                {% else %}
-                    <a  href="{% url 'chatroom' id lastmessage.user_to.id %}">
-                        <div  class = "message">
-                            <div>
-                            <div class = "nickname">{{ lastmessage.user_to.profile.nickname }}</div><div class = "contents">{{ lastmessage.content }}</div></div>
-                            <div class = "dates">{{ lastmessage.created_at|date:"y.m.d" }}</div>
-                        </div>
-                    </a>
-                {% endif %}
-            {% endfor %}
             </div>
         </div>
-        <div class = "border_needed right-side"></div>
-    
     </div>
+</body>
 
 
 

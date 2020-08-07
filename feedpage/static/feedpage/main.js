@@ -1,5 +1,7 @@
 //설정
-var url = window.location.href
+
+// var url = window.location.href
+var url = window.location.href.split('.com/')[1]
 var urlPath = window.location.pathname.split('/').reverse()[1]
 var urlPath2 = window.location.pathname.split('/').reverse()[2]
 
@@ -75,7 +77,7 @@ for (idx=0; idx < 11; idx++) {
     if(url.indexOf(category2[idx])!= -1) {
         categoryText[idx].style.color = '#016aff';
     } else {
-
+        categoryText[idx].style.color = 'gray';
     }
 }
 
@@ -149,10 +151,12 @@ for(idx = 0; idx < 12; idx++) {
 var headerWhole = document.querySelector('.category-bar')
 var header3 = document.querySelector('.building')
 
-if (url.indexOf("freeboard")!= -1 || urlPath == "" || urlPath == "feeds" )  {
-        headerWhole.style.height ='0';
-} else if (url.indexOf("tori")!= -1 || url.indexOf("gong")!= -1 || url.indexOf("life")!= -1) {
-        header3.style.height = '0';
-} else if (url.indexOf("select-option")!= -1 ) {
-        headerWhole.style.height ='0';
+if (url.indexOf("freeboard")!= -1 || urlPath == "" || urlPath == "feeds" || url.indexOf("select-option")!= -1)  {
+        headerWhole.style.height = 0;
+} else if (url.indexOf("bachelor")!= -1 || url.indexOf("master")!= -1 || url.indexOf("family")!= -1 || url.indexOf("bk")!= -1 || url.indexOf("accounts") != -1) {
+        header3.style.height ='60px';
+} else if (url.indexOf("tori")!= -1 || url.indexOf("gong")!= -1 || url.indexOf("life")!= -1 ) {
+        header3.style.height = 0;
+} else {
+
 }

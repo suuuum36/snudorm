@@ -18,16 +18,6 @@ a:link, a:visited, a:hover, a:active {
 	color: black;
 }
 
-// base.html의 헤더 배경 !important 적용 필요
-// html {
-//     background-color: #e9e9e9;
-// }
-
-a:link, a:visited, a:hover, a:active {
-	color: black;
-}
-
-
 // input 태그 focus 시 글자 사라지도록
 input:focus::-webkit-input-placeholder, 
 textarea:focus::-webkit-input-placeholder {
@@ -37,9 +27,9 @@ textarea:focus::-webkit-input-placeholder {
 // mypage 배경색 설정
 .background {
     width: 100vw;
-    height: 100vh;
     margin: -100px auto 0 auto;
     background-color: $gray_background;
+    height: 100vh;
 }
 
 // 전체 구조
@@ -114,7 +104,7 @@ textarea:focus::-webkit-input-placeholder {
             width: 584px;
             font-size: 20px;
             font-weight: 500;
-            border-bottom: 1px solid $mypage_under;
+            border-bottom: 2px solid $mypage_under;
             margin-left: -1px;
 
             span {
@@ -221,6 +211,8 @@ textarea:focus::-webkit-input-placeholder {
 
                 // pw_edit.html
                 .pw-field {
+                    display: flex;
+                    align-items: center;
                     width: 250px;
                     padding-left: 30px;
                 }
@@ -515,4 +507,23 @@ textarea:focus::-webkit-input-placeholder {
 // pw_error.html
 .error-title {
     background-color: #ffc2c2;
+}
+
+// information 버튼
+.infor {
+    position: relative;
+    margin-left: 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #000000;
+    border-radius: 10px;
+    margin-bottom: -1px;
+
+    span {
+        font-size: 12px;
+    }
 }

@@ -248,10 +248,15 @@
     display: flex;
 }
 
+.recomment-makebox {
+    width: 580px !important;
+}
+
 .comment-makebox {
     border: 0px solid;
     background-color: #f0f0f0;
     font-size: 15px;
+    width: 640px;
 }
 
 .noname {
@@ -268,6 +273,7 @@
     font-size: 15px;
     color: #016aff;
     cursor: pointer;
+    background: none;
 }
 
 
@@ -369,24 +375,31 @@
 
 /*댓글 수정*/
 
-.comment-edit, .recomment-edit {
+.comment-edit {
     height: 60px !important;
     position: relative;
-    background-color: #f0f0f0;
+    background-color: #F2F6FE;
     padding-right: 10px;
     padding-left: 10px;
 }
 
+.recomment-edit{
+    height: 40px !important;
+    position: relative;
+    background-color: #F2F6FE;
+}
 .comment-edit > input {
     border: 0px solid;
-    background-color: #f0f0f0;
+    background-color: #F2F6FE;
     font-size: 15px;
+    width: 580px;
 }
 
 .recomment-edit > input {
     border: 0px solid;
-    background-color: #f0f0f0;
+    background-color:  #F2F6FE;
     font-size: 15px;
+    width: 580px;
 }
 
 
@@ -395,6 +408,7 @@
     font-size: 15px;
     color: #016aff;
     cursor: pointer;
+    background: none;
 }
 
 .recomment-edit > button {
@@ -402,6 +416,7 @@
     font-size: 15px;
     color: #016aff;
     cursor: pointer;
+    background: none;
 }
 
 .comment-edit > form {
@@ -412,4 +427,13 @@
 .recomment-edit > form {
     display: flex;
     justify-content: space-between;
+}
+
+
+button, input[type="button"] {
+    outline: none;
+}
+
+.blue {
+    background-color: blue;
 }

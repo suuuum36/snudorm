@@ -5,6 +5,7 @@
    font-family: 'Noto Sans KR', sans-serif;
 }
 
+
 input:focus {outline:none;}
 select:focus {outline:none;}
 a {text-decoration-line:none}
@@ -14,17 +15,20 @@ a {text-decoration-line:none}
     height: 40px;
     width: 100%;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     margin-top: 50px;
 }
+
 .first-header-inner {
-    width: 95%;
     display: flex;
     justify-content: space-around;
 }
 
 .logo {
-    height: 100%;
+    margin-top: auto;
+    height: 30px;
+    width: 150px;
+    margin-bottom: auto;
 }
 
 .logo img {
@@ -71,8 +75,12 @@ a {text-decoration-line:none}
 .search-text {
     margin-top: auto;
     margin-bottom: auto;
+    display: flex;
 }
 
+.search-text > input {
+    width: 212px;
+}
 .search-option {
     font-size: 15px;
     border: 0px solid;
@@ -133,7 +141,7 @@ a {text-decoration-line:none}
     justify-content: center;
 }
 
-.signup > a {
+.signup > div {
     font-size: 15px;
     color: white;
     margin-top: auto;
@@ -230,3 +238,7 @@ a {text-decoration-line:none}
     margin-top: auto;
     margin-bottom: auto;
 } */
+
+button, input[type="button"] {
+    outline: none;
+}
