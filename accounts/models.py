@@ -25,7 +25,7 @@ class Profile(models.Model):
 class Message(models.Model):
     user_to = models.ForeignKey(User, on_delete=models.CASCADE, related_name='chatfrom')
     user_from = models.ForeignKey(User, on_delete=models.CASCADE, related_name='chatto')
-    content = models.CharField(max_length=100)
+    content = models.CharField(max_length=200)
     created_at = models.DateTimeField(default = timezone.now)
 
     def __str__(self):
