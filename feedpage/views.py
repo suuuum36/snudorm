@@ -103,7 +103,7 @@ def showMain(request):
         week_ago.strftime('%Y-%m-%d') 
 
         user_category = "학부"
-        user_building = "906"
+        user_building = "906동"
 
         if request.user.is_authenticated:
             if request.user.profile.nickname == '':
