@@ -163,8 +163,7 @@ def userEdit(request, id):
 
         # 현재 비밀번호와 입력한 비밀번호가 일치하지 않을 때
         else:
-            error = "현재 비밀번호가 일치하지 않습니다."
-            return render(request, 'accounts/pw_error.html', {'id': id, 'error': error})
+            return redirect('useredit', id=id)
 
 # 비밀번호 변경하기
 @login_required
