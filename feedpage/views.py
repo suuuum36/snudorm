@@ -63,7 +63,7 @@ def get_pages(feeds, request):
     posts = paginator.get_page(page)
 
     # 베스트 버튼 
-    best_feeds = feeds.order_by('-like_users', '-created_at')
+    best_feeds = feeds.order_by('like_users', '-created_at')
     paginator2 = Paginator(best_feeds, 11)
     best_page = request.GET.get('best_page')
     best_posts = paginator2.get_page(best_page)
@@ -106,6 +106,9 @@ def showMain(request):
         user_building = "906"
 
         if request.user.is_authenticated:
+            if request.user.profile.nickname == '':
+                return redirect('useredit', id=request.user.id)
+
             category = request.user.profile.building_category
             user_building = request.user.profile.building_dong
             user_category = "학부" if category.find("학부") != -1 else \
@@ -117,11 +120,11 @@ def showMain(request):
         dong_name = user_category + " " + user_building
 
         # 전체게시판 = [ 주간게시글, 일간게시글 ] - 좋아요 기준 정렬
-        gong_feeds = [ Minwon.objects.filter(category='gong', created_at__gte=week_ago).order_by('-like_users', '-created_at')[:5],
-                        Minwon.objects.filter(category='gong', created_at__gte=yesterday).order_by('-like_users', '-created_at')[:5] ]
+        gong_feeds = [ Minwon.objects.filter(category='gong', created_at__gte=week_ago).order_by('like_users', '-created_at')[:5],
+                        Minwon.objects.filter(category='gong', created_at__gte=yesterday).order_by('like_users', '-created_at')[:5] ]
         # 동별게시판 = [ 주간게시글, 일간게시글 ] - 좋아요 기준 정렬
-        dong_feeds = [ dong.filter(created_at__gte=week_ago).order_by('-like_users', '-created_at')[:5],
-                        dong.filter(created_at__gte=yesterday).order_by('-like_users', '-created_at')[:5] ]
+        dong_feeds = [ dong.filter(created_at__gte=week_ago).order_by('like_users', '-created_at')[:5],
+                        dong.filter(created_at__gte=yesterday).order_by('like_users', '-created_at')[:5] ]
 
         cobuy_feeds = CoBuy.objects.filter(created_at__gte=yesterday).order_by('-created_at')
         keep_feeds = Keep.objects.filter(created_at__gte=yesterday).order_by('-created_at')
@@ -132,7 +135,7 @@ def showMain(request):
         life_feeds = [ [cobuy_feeds[:5], cobuy_feeds[5:10]], [keep_feeds[:5], keep_feeds[5:10]],
                         [rent_feeds[:5], rent_feeds[5:10]], [resell_feeds[:5], resell_feeds[5:10]] ]
         # 자유게시판 - 좋아요 정렬
-        free_feeds = FreeBoard.objects.filter(created_at__gte=yesterday).order_by('-like_users', '-created_at')[:17]
+        free_feeds = FreeBoard.objects.filter(created_at__gte=yesterday).order_by('like_users', '-created_at')[:17]
 
         return render(request, 'feedpage/index.html', {'gong_feeds': gong_feeds, 'dong_feeds': dong_feeds,
                                 'life_feeds': life_feeds,'free_feeds': free_feeds, 'dong_name': dong_name })
@@ -157,6 +160,9 @@ def showBoard(request, board, category):
         ---------------------------------------------------------------------
     '''
     if request.method == 'GET': 
+        if request.user.is_authenticated:
+            if request.user.profile.nickname == '':
+                return redirect('useredit', id=request.user.id)
         board_info = get_board(board, category)           
         # 전체글 버튼
         feeds = get_feed(board, category).order_by('-created_at')
@@ -260,6 +266,9 @@ def showFeed(request, board, category, fid): # board, category 필요없음.
 
     if not request.user.is_authenticated:
         return render(request, 'accounts/login.html')
+
+    if request.user.profile.nickname == '':
+        return redirect('useredit', id=request.user.id)
 
     if board == "minwon":
         feed = Minwon.objects.get(id=fid)
@@ -562,6 +571,9 @@ def likeRecomment(request, board, category, fid, cid, rcid):
 
 def search(request):
     if request.method == 'GET':
+        if request.user.is_authenticated:
+            if request.user.profile.nickname == '':
+                return redirect('useredit', id=request.user.id)
         searchtype = request.GET
         query = request.GET['query']
         search_option = request.GET['select-option']
