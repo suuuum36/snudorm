@@ -249,15 +249,16 @@ def messageBox(request, id):
     lastmessages = list()
 
     for i in range(1, num+1):
-        if Message.objects.filter(user_to_id = i, user_from_id = id).count() > 0 and Message.objects.filter(user_to_id = id, user_from_id = i).count() > 0:
-            if Message.objects.filter(user_to_id = i, user_from_id = id).order_by('-created_at')[0].created_at < Message.objects.filter(user_to_id = id, user_from_id = i).order_by('-created_at')[0].created_at:
-                lastmessages.append(Message.objects.filter(user_to_id = id, user_from_id = i).order_by('-created_at')[0])
-            else:
+        if ( i != id):
+            if Message.objects.filter(user_to_id = i, user_from_id = id).count() > 0 and Message.objects.filter(user_to_id = id, user_from_id = i).count() > 0:
+                if Message.objects.filter(user_to_id = i, user_from_id = id).order_by('-created_at')[0].created_at < Message.objects.filter(user_to_id = id, user_from_id = i).order_by('-created_at')[0].created_at:
+                    lastmessages.append(Message.objects.filter(user_to_id = id, user_from_id = i).order_by('-created_at')[0])
+                else:
+                    lastmessages.append(Message.objects.filter(user_to_id = i, user_from_id = id).order_by('-created_at')[0])
+            elif Message.objects.filter(user_to_id = i, user_from_id = id).count() > 0 and Message.objects.filter(user_to_id = id, user_from_id = i).count() == 0:
                 lastmessages.append(Message.objects.filter(user_to_id = i, user_from_id = id).order_by('-created_at')[0])
-        elif Message.objects.filter(user_to_id = i, user_from_id = id).count() > 0 and Message.objects.filter(user_to_id = id, user_from_id = i).count() == 0:
-            lastmessages.append(Message.objects.filter(user_to_id = i, user_from_id = id).order_by('-created_at')[0])
-        elif Message.objects.filter(user_to_id = i, user_from_id = id).count() == 0 and Message.objects.filter(user_to_id = id, user_from_id = i).count() > 0:
-            lastmessages.append(Message.objects.filter(user_to_id = id, user_from_id = i).order_by('-created_at')[0])
+            elif Message.objects.filter(user_to_id = i, user_from_id = id).count() == 0 and Message.objects.filter(user_to_id = id, user_from_id = i).count() > 0:
+                lastmessages.append(Message.objects.filter(user_to_id = id, user_from_id = i).order_by('-created_at')[0])
 
         
 
