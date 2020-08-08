@@ -1,7 +1,7 @@
 //설정
 
-// var url = window.location.href
-var url = window.location.href.split('.com/')[1]
+var url = window.location.href
+// var url = window.location.href.split('.com/')[1]
 var urlPath = window.location.pathname.split('/').reverse()[1]
 var urlPath2 = window.location.pathname.split('/').reverse()[2]
 
