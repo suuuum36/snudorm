@@ -78,7 +78,9 @@ function nk_db_check() {
   });
 }
 
-function validateForm() {
+function validateForm(data) {
+  const $this = data;
+  const csrfmiddlewaretoken = $this.dataset.csrfmiddlewaretoken;
 
   // input 변수 지정
   var nameInput = document.getElementById("name");
@@ -126,7 +128,27 @@ function validateForm() {
     alert("생활관 및 동을 선택해주세요.")
     return false;
   }
-  
+
+  $.ajax({
+    type: 'POST',
+    url: "/accounts/passwordcheck/",
+    data: {
+      'csrfmiddlewaretoken': csrfmiddlewaretoken,
+      'origin_password' : pwInput.value
+    },
+    datatype: 'json',
+    success: function (data) {
+      console.log(data)
+      if (data['pwcheck'] == "false") {
+        alert("현재 비밀번호를 확인해 주세요!");
+        pwInput.focus();
+        return false;
+      } else {
+        return true;
+      }
+    }
+  })
+
   // 모든 유효성 검사 통과 시 form 제출
   document.getElementById("submit").submit();
 };

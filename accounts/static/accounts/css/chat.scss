@@ -96,6 +96,8 @@ input:focus::-webkit-input-placeholder {
                     span {
                         display: inline-block;
                         width: 260px;
+                        height: 24px;
+                        line-height: 24px;
                         color: $blackgray;
                         text-overflow: ellipsis;
                         white-space: nowrap;

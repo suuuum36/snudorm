@@ -106,6 +106,9 @@ def showMain(request):
         user_building = "906"
 
         if request.user.is_authenticated:
+            if request.user.profile.nickname == '':
+                return redirect('useredit', id=request.user.id)
+
             category = request.user.profile.building_category
             user_building = request.user.profile.building_dong
             user_category = "학부" if category.find("학부") != -1 else \
@@ -157,6 +160,9 @@ def showBoard(request, board, category):
         ---------------------------------------------------------------------
     '''
     if request.method == 'GET': 
+        if request.user.is_authenticated:
+            if request.user.profile.nickname == '':
+                return redirect('useredit', id=request.user.id)
         board_info = get_board(board, category)           
         # 전체글 버튼
         feeds = get_feed(board, category).order_by('-created_at')
@@ -260,6 +266,9 @@ def showFeed(request, board, category, fid): # board, category 필요없음.
 
     if not request.user.is_authenticated:
         return render(request, 'accounts/login.html')
+
+    if request.user.profile.nickname == '':
+        return redirect('useredit', id=request.user.id)
 
     if board == "minwon":
         feed = Minwon.objects.get(id=fid)
@@ -562,6 +571,9 @@ def likeRecomment(request, board, category, fid, cid, rcid):
 
 def search(request):
     if request.method == 'GET':
+        if request.user.is_authenticated:
+            if request.user.profile.nickname == '':
+                return redirect('useredit', id=request.user.id)
         searchtype = request.GET
         query = request.GET['query']
         search_option = request.GET['select-option']
