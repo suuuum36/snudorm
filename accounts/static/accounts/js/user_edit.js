@@ -264,6 +264,13 @@ familySelected.addEventListener("click", () => {
   familyContainer.classList.toggle("active");
 });
 
+familyOptions.forEach(d => {
+  d.addEventListener("click", () => {
+    familySelected.innerHTML = d.querySelector("label").innerHTML;
+    familyContainer.classList.remove("active");
+  });
+});
+
 // BK생활관 동 표시 변경
 var bkSelected = document.querySelector(".selected-bk");
 var bkContainer = document.querySelector(".bk-container");
