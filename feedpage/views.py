@@ -132,10 +132,10 @@ def showMain(request):
         resell_feeds = Resell.objects.filter(created_at__gte=yesterday).order_by('-created_at')
 
         # 자유게시판 - 좋아요 정렬
-        free_feeds = FreeBoard.objects.filter(created_at__gte=yesterday).order_by('like_users', '-created_at')[:17]
+        free_feeds = FreeBoard.objects.filter(created_at__gte=yesterday).order_by('like_users', '-created_at')[:23]
 
         if free_feeds.count() == 0:
-            free_feeds = FreeBoard.objects.all().order_by('like_users', '-created_at')[:17]
+            free_feeds = FreeBoard.objects.all().order_by('-created_at', 'like_users')[:23]
 
         if cobuy_feeds.count() == 0:
             cobuy_feeds = CoBuy.objects.all().order_by('-created_at')
