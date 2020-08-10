@@ -49,7 +49,11 @@
                 <div class="feed_like_count">
                     <a class="feed-like" data-board="{{ board }}" data-category="{{ category }}" data-fid='{{ feed.id }}' data-count='{{ feed.feedlike.count }}' data-csrfmiddlewaretoken="{{ csrf_token }}">
                         <div class = "like-img">
-                            <img class = "img1" src="/static/img/like.png">
+                            {% if user in feed.like_users.all %}
+                                <img class = "img1" src="/static/img/like2.png">
+                            {% else %}
+                                <img class = "img1" src="/static/img/like.png">
+                            {% endif %}
                         </div>
                         {{ feed.like_users.count }} 
                     </a>
