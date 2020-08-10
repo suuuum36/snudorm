@@ -161,6 +161,6 @@ if (url.indexOf("freeboard")!= -1 || urlPath == "" || urlPath == "feeds")  {
 
 }
 
-if (url.indexOf("/feeds/search/?select-option")!= -1) {
+if (url.indexOf("feeds/search/?select-option")!= -1) {
         headerWhole.style.height = 0;
 }
