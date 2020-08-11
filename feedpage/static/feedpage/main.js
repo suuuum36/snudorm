@@ -151,7 +151,7 @@ for(idx = 0; idx < 12; idx++) {
 var headerWhole = document.querySelector('.category-bar')
 var header3 = document.querySelector('.building')
 
-if (url.indexOf("freeboard")!= -1 || urlPath == "" || urlPath == "feeds" || url.indexOf("select-option")!= -1)  {
+if (url.indexOf("freeboard")!= -1 || urlPath == "" || urlPath == "feeds")  {
         headerWhole.style.height = 0;
 } else if (url.indexOf("bachelor")!= -1 || url.indexOf("master")!= -1 || url.indexOf("family")!= -1 || url.indexOf("bk")!= -1 || url.indexOf("accounts") != -1) {
         header3.style.height ='60px';
@@ -159,4 +159,8 @@ if (url.indexOf("freeboard")!= -1 || urlPath == "" || urlPath == "feeds" || url.
         header3.style.height = 0;
 } else {
 
+}
+
+if (url.indexOf("feeds/search/?select-option")!= -1) {
+        headerWhole.style.height = 0;
 }
