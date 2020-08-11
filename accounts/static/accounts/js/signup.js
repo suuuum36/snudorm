@@ -195,18 +195,55 @@ function blankCheck(field, message) {
 };
 
 
-// 기숙사 생활관 selected 표시 변경
+// selected 표시 변경
 var selected = document.querySelector(".selected");
-var categoryContainer = document.querySelector(".category-container");
-var categoryOptions = document.querySelectorAll(".category-option");
-
-// default 표시 변경
 var defaultSelected = document.querySelector(".selected-default");
-var defaultContainer = document.querySelector(".default-container");
-var defaultOptions = document.querySelectorAll(".default-option");
+var bachelorSelected = document.querySelector(".selected-bachelor");
+var masterSelected = document.querySelector(".selected-master");
+var familySelected = document.querySelector(".selected-family");
+var bkSelected = document.querySelector(".selected-bk");
 
+// container
+var categoryContainer = document.querySelector(".category-container");
+var defaultContainer = document.querySelector(".default-container");
+var bachelorContainer = document.querySelector(".bachelor-container");
+var masterContainer = document.querySelector(".master-container");
+var familyContainer = document.querySelector(".family-container");
+var bkContainer = document.querySelector(".bk-container");
+
+// 옵션
+var categoryOptions = document.querySelectorAll(".category-option");
+var defaultOptions = document.querySelectorAll(".default-option");
+var bachelorOptions = document.querySelectorAll(".bachelor-option");
+var masterOptions = document.querySelectorAll(".master-option");
+var familyOptions = document.querySelectorAll(".family-option");
+var bkOptions = document.querySelectorAll(".bk-option");
+
+
+// container active
 defaultSelected.addEventListener("click", () => {
   defaultContainer.classList.toggle("active");
+});
+
+bachelorSelected.addEventListener("click", () => {
+  bachelorContainer.classList.toggle("active");
+});
+
+masterSelected.addEventListener("click", () => {
+  masterContainer.classList.toggle("active");
+});
+
+familySelected.addEventListener("click", () => {
+  familyContainer.classList.toggle("active");
+});
+
+bkSelected.addEventListener("click", () => {
+  bkContainer.classList.toggle("active");
+});
+
+// selected 표시 변경 및 container deactive
+selected.addEventListener("click", () => {
+  categoryContainer.classList.toggle("active");
 });
 
 defaultOptions.forEach(d => {
@@ -214,15 +251,6 @@ defaultOptions.forEach(d => {
     defaultSelected.innerHTML = d.querySelector("label").innerHTML;
     defaultContainer.classList.remove("active");
   });
-});
-
-// 학부생활관 동 표시 변경
-var bachelorSelected = document.querySelector(".selected-bachelor");
-var bachelorContainer = document.querySelector(".bachelor-container");
-var bachelorOptions = document.querySelectorAll(".bachelor-option");
-
-bachelorSelected.addEventListener("click", () => {
-  bachelorContainer.classList.toggle("active");
 });
 
 bachelorOptions.forEach(d => {
@@ -233,30 +261,12 @@ bachelorOptions.forEach(d => {
   });
 });
 
-// 대학원생활관 동 표시 변경
-var masterSelected = document.querySelector(".selected-master");
-var masterContainer = document.querySelector(".master-container");
-var masterOptions = document.querySelectorAll(".master-option");
-
-masterSelected.addEventListener("click", () => {
-  masterContainer.classList.toggle("active");
-});
-
 masterOptions.forEach(d => {
   d.addEventListener("click", () => {
     masterSelected.style.color = "#000";
     masterSelected.innerHTML = d.querySelector("label").innerHTML;
     masterContainer.classList.remove("active");
   });
-});
-
-// 가족생활관 동 표시 변경
-var familySelected = document.querySelector(".selected-family");
-var familyContainer = document.querySelector(".family-container");
-var familyOptions = document.querySelectorAll(".family-option");
-
-familySelected.addEventListener("click", () => {
-  familyContainer.classList.toggle("active");
 });
 
 familyOptions.forEach(d => {
@@ -267,15 +277,6 @@ familyOptions.forEach(d => {
   });
 });
 
-// BK생활관 동 표시 변경
-var bkSelected = document.querySelector(".selected-bk");
-var bkContainer = document.querySelector(".bk-container");
-var bkOptions = document.querySelectorAll(".bk-option");
-
-bkSelected.addEventListener("click", () => {
-  bkContainer.classList.toggle("active");
-});
-
 bkOptions.forEach(d => {
   d.addEventListener("click", () => {
     bkSelected.style.color = "#000";
@@ -284,10 +285,6 @@ bkOptions.forEach(d => {
   });
 });
 
-// selected 선택시 toggle을 통해 옵션 보여주기
-selected.addEventListener("click", () => {
-  categoryContainer.classList.toggle("active");
-});
 
 // 옵션 선택시 selected의 innerHTML 값 변경을 통해 노출되는 innerHTML 변경
 // 옵션 선택시 toggle을 통해 옵션 숨기기
@@ -304,14 +301,13 @@ categoryOptions.forEach(o => {
     };
     opt.setAttribute("name", "building_category");
    
-    var dorm = document.getElementById("selected").innerHTML;
     var defaultOpt = document.getElementById("default-dong"); // 처음에 보여지는 default 옵션
     var bachelorOpt = document.getElementById("bachelor-dong"); // 학부생활관 동 옵션
     var masterOpt = document.getElementById("master-dong"); // 대학원생활관 동 옵션
     var familyOpt = document.getElementById("family-dong"); // 가족생활관 동 옵션
     var bkOpt = document.getElementById("bk-dong"); // BK생활관 동 옵션
 
-    if (dorm == "학부생활관") {
+    if (selected.innerHTML == "학부생활관") {
       defaultOpt.className='remove';
       bachelorOpt.className='building-bachelor';
       bachelorSelected.innerHTML='동';
@@ -319,7 +315,7 @@ categoryOptions.forEach(o => {
       masterOpt.className='remove';
       familyOpt.className='remove';
       bkOpt.className='remove';
-    } else if (dorm == "대학원생활관") {
+    } else if (selected.innerHTML == "대학원생활관") {
       defaultOpt.className='remove';
       bachelorOpt.className='remove';
       masterOpt.className='building-master';
@@ -327,7 +323,7 @@ categoryOptions.forEach(o => {
       masterSelected.style.color='#b9b9b9'
       familyOpt.className='remove';
       bkOpt.className='remove';
-    } else if (dorm == "가족생활관") {
+    } else if (selected.innerHTML == "가족생활관") {
       defaultOpt.className='remove';
       bachelorOpt.className='remove';
       masterOpt.className='remove';
@@ -335,7 +331,7 @@ categoryOptions.forEach(o => {
       familySelected.innerHTML='동';
       familySelected.style.color='#b9b9b9'
       bkOpt.className='remove';
-    } else if (dorm == "BK생활관") {
+    } else if (selected.innerHTML == "BK생활관") {
       defaultOpt.className='remove';
       bachelorOpt.className='remove';
       masterOpt.className='remove';
@@ -346,10 +342,6 @@ categoryOptions.forEach(o => {
     };
   });
 });
-
-
-
-
 
 // dong name 값 지정
 var choose = document.querySelectorAll(".dong-option");
