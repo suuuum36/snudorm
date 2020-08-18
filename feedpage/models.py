@@ -39,8 +39,8 @@ class Feed(models.Model):
     category = models.CharField(max_length=256)
 
     # 게시판 항목 이름 위해서 필요 
-    board_info1 = models.CharField(max_length=1000, blank=True, null=True)
-    board_info2 = models.CharField(max_length=1000, blank=True, null=True)
+    board_info1 = models.TextField(blank=True, null=True)
+    board_info2 = models.TextField(blank=True, null=True)
 
     status = MultiSelectField(choices=STAT_OPTION, default='ongoing')    
     class Meta:
