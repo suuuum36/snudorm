@@ -1,5 +1,6 @@
 # 서울대학교 기숙사 웹 커뮤니티 'DOMITORI'
 Django를 통해 개발
+Contributors : 이수민, 신승연, 정은주, 정재환, 최형석 (서울대학교 멋쟁이사자처럼 8기)
 
 ### 1. 메인 화면
 <img width="1017" alt="메인" src="https://user-images.githubusercontent.com/48682172/108069707-03c4a380-70a7-11eb-8fda-112771d97095.png">
