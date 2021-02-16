@@ -1,6 +1,5 @@
 # 서울대학교 기숙사 웹 커뮤니티 'DOMITORI'
 도미토리는 서울대학교 관악사 거주학생들을 위한 커뮤니티 웹 서비스 입니다. 기숙사 내 민원, 중고 거래 등과 관련된 게시글을 올리고 소통할 수 있습니다.
-Contributors : 이수민, 신승연, 정은주, 정재환, 최형석 (서울대학교 멋쟁이사자처럼 8기)
 
 ### 1. 메인 화면
 <img width="1017" alt="메인" src="https://user-images.githubusercontent.com/48682172/108069707-03c4a380-70a7-11eb-8fda-112771d97095.png">
@@ -23,4 +22,5 @@ Contributors : 이수민, 신승연, 정은주, 정재환, 최형석 (서울대�
 ### 7. 검색결과 창
 <img width="1100" alt="대지 1 사본 5" src="https://user-images.githubusercontent.com/48682172/108069263-8305a780-70a6-11eb-8f5d-f41df0d343e3.png">
 
-### URL : https://domitori.herokuapp.com/
+#### URL : https://domitori.herokuapp.com/
+#### Contributors : 이수민, 신승연, 정은주, 정재환, 최형석 (서울대학교 멋쟁이사자처럼 8기)
