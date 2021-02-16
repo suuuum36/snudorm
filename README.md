@@ -7,7 +7,7 @@
 <img width="1100" alt="민원-전체글list" src="https://user-images.githubusercontent.com/48682172/108068581-9b28f700-70a5-11eb-85ff-90934516c99e.png">
 
 ### 3. 글쓰기
-<img width="1100" alt="글쓰기-4" src="https://user-images.githubusercontent.com/48682172/108068841-f529bc80-70a5-11eb-94d6-2791206997a6.png">
+<img width="1100" alt="글쓰기-4" src="https://user-images.githubusercontent.com/48682172/108069407-acbece80-70a6-11eb-8961-15c00052d84f.png">
 
 ### 4. 로그인/회원가입
 <img width="1100" alt="메인 사본" src="https://user-images.githubusercontent.com/48682172/108068917-15597b80-70a6-11eb-9199-a2191a94bb53.png">
